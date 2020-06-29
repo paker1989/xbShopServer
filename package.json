@@ -1,0 +1,57 @@
+{
+  "name": "xbshopserver",
+  "version": "1.0.0",
+  "description": "e-shop server and admin management system",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-admin": "node xbShopAdmin/src/config/build.js",
+    "dev-admin": "webpack-dev-server --inline --progress --config xbShopAdmin/src/config/webpack.dev.config.js"
+  },
+  "keywords": [
+    "node-server",
+    "admin"
+  ],
+  "author": "xu bin",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "classnames": "^2.2.6",
+    "koa": "^2.3.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.1",
+    "redux-saga": "^1.1.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-plugin-zent": "^2.2.2",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chalk": "^4.1.0",
+    "copy-webpack-plugin": "^6.0.2",
+    "css-loader": "^3.6.0",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "install": "^0.13.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "npm": "^6.14.5",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "ora": "^4.0.4",
+    "rimraf": "^3.0.2",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2"
+  }
+}
