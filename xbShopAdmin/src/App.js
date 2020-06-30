@@ -1,8 +1,13 @@
-import React from "react";
+import React from 'react';
+import Dashboard from './pages/Dashboard/dashboard';
 import './style/app.scss';
 
 const App = () => {
-  return <div className="xb-admin">后台管理系统2.0</div>;
+    return (
+        <div className="dashboard">
+            <Dashboard />
+        </div>
+    );
 };
 
 export default App;

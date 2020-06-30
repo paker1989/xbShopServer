@@ -10,6 +10,7 @@
 - log: log4j(s) or `koa-logger`
 - api doc: koa2-swagger-ui
 - cache: redis
+- utils: ahooks (react hooks)
 
 ## (准备)采用的koa中间件 
 <!-- 参考 https://www.jianshu.com/p/c2b61e37988b -->

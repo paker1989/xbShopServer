@@ -1,4 +1,4 @@
-'use strcit'
+'use strcit';
 
 const path = require('path');
 
@@ -7,16 +7,16 @@ module.exports = {
         env: {
             NODE_ENV: '"development"',
         },
-        port: "1220",
+        port: '1220',
         devtool: 'cheap-module-eval-source-map',
-        assetsSubDirectory: "static",
+        assetsSubDirectory: 'static',
     },
     build: {
         env: {
             NODE_ENV: '"production"',
         },
         assetsRoot: path.resolve(__dirname, '../../build'),
-        port: "1220",
+        port: '1220',
         productionSourceMap: true,
         devtool: '#source-map',
         // Gzip off by default as many popular static hosts such as
@@ -26,7 +26,7 @@ module.exports = {
         productionGzip: false,
         productionGzipExtensions: ['jsx', 'js', 'css'],
         bundleAnalyzerReport: process.env.npm_config_report,
-        assetsSubDirectory: "static",
+        assetsSubDirectory: 'static',
         // dbUrl: 'mongodb://localhost:27019/calendar'
-    }
-}
+    },
+};
