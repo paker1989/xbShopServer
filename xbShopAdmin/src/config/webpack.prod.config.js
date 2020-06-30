@@ -1,15 +1,17 @@
-const webpackBaseConfig = require('./webpack.base.config');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const path = require('path');
-
-const config = require('./config');
-const assetsPath = require('./utils').assetsPath;
-
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+const config = require('./config');
+const { assetsPath } = require('./utils');
+
+const webpackBaseConfig = require('./webpack.base.config');
 
 const webpackProdConfig = merge(webpackBaseConfig, {
     mode: 'production',
@@ -24,6 +26,7 @@ const webpackProdConfig = merge(webpackBaseConfig, {
     },
     devtool: config.build.productionSourceMap ? config.build.devtool : false,
     optimization: {
+        usedExports: true,
         minimizer: [
             new UglifyJsPlugin({
                 uglifyOptions: {
@@ -83,7 +86,8 @@ const webpackProdConfig = merge(webpackBaseConfig, {
             patterns: [
                 {
                     from: path.join(__dirname, '../static'),
-                    to: config.build.assetsSubDirectory, //可以从devServer.publicPath + to访问
+                    to: config.build.assetsSubDirectory,
+                    // 可以从devServer.publicPath + to访问
                 },
             ],
         }),
@@ -107,9 +111,8 @@ const webpackProdConfig = merge(webpackBaseConfig, {
     },
 });
 
+/* eslint-disable */
 if (config.build.productionGzip) {
-    const CompressionWebpackPlugin = require('compression-webpack-plugin');
-
     webpackProdConfig.plugins.push(
         new CompressionWebpackPlugin({
             algorithm: 'gzip',
@@ -120,8 +123,8 @@ if (config.build.productionGzip) {
 
 if (config.build.bundleAnalyzerReport) {
     console.log('reporting');
-    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
     webpackProdConfig.plugins.push(new BundleAnalyzerPlugin());
 }
+/* eslint-enable */
 
 module.exports = webpackProdConfig;

@@ -1,4 +1,5 @@
 ## 配置eslint
+<!-- 参考: https://juejin.im/post/5d7b9863e51d456212049214 -->
 ```bash
 npm i -D eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-hooks
 # 然后

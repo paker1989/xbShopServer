@@ -49,5 +49,8 @@ module.exports = {
         'no-useless-escape': 2,
         indent: ['error', 4],
         'react/jsx-indent': ['warn', 4],
+        'react/self-closing-comp': ['off'],
+        'react/require-default-props': ['off'],
+        'react/jsx-indent-props': ['off', 4],
     },
 };
