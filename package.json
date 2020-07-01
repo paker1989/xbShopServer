@@ -15,6 +15,7 @@
   "author": "xu bin",
   "license": "ISC",
   "dependencies": {
+    "ahooks": "^2.1.0",
     "antd": "^3.26.18",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
+    "babel-plugin-import": "^1.13.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-plugin-zent": "^2.2.2",
     "babel-preset-env": "^1.7.0",

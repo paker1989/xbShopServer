@@ -42,6 +42,25 @@ module.exports = {
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
             {
+                test: /\.css$/,
+                // exclude: /node_module/, // 会忽略node_module/antd，会报错，应删去
+                use: ['style-loader', 'css-loader'],
+            },
+            // {
+            //     test: /\.less$/,
+            //     // exclude: /node_module/, // 会忽略node_module/antd，会报错，应删去
+            //     use: [
+            //         'style-loader',
+            //         'css-loader',
+            //         {
+            //             loader: 'less-loader',
+            //             options: {
+            //                 javascriptEnabled: true,
+            //             },
+            //         },
+            //     ],
+            // },
+            {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 loader: 'url-loader',
                 options: {

@@ -4,13 +4,15 @@ import { Layout } from 'antd';
 import MainSider from './MainSider/mainSider';
 import MainHeader from './MainHeader/mainHeader';
 
-import NavData from '../../static/data/navData';
+// import NavData from '../../static/data/navData';
+
+import './dashboard.scss';
 
 const { Content } = Layout;
 
 const Dashboard = () => {
     return (
-        <Layout>
+        <Layout className="page-container">
             <MainSider />
             <Layout>
                 <MainHeader />

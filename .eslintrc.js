@@ -52,5 +52,6 @@ module.exports = {
         'react/self-closing-comp': ['off'],
         'react/require-default-props': ['off'],
         'react/jsx-indent-props': ['off', 4],
+        'react/jsx-wrap-multilines': ['error', { declaration: false, assignment: false }],
     },
 };

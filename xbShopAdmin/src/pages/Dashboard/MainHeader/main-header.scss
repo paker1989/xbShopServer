@@ -1,0 +1,9 @@
+@import '../../../style/theme.scss';
+
+$main-header-height: 60px;
+
+.main-header {
+    height: $main-header-height;
+    background-color: #fff;
+    box-shadow: $container-main-boxshadow;
+}
