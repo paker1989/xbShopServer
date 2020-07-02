@@ -17,10 +17,15 @@ module.exports = {
     // "parser": "@typescript-eslint/parser",
     // 配置解析器支持的语法
     parserOptions: {
+        parser: 'babel-eslint',
+        parserOptions: {
+            sourceType: 'module',
+            allowImportExportEverywhere: true,
+        },
         ecmaFeatures: {
             jsx: true,
         },
-        ecmaVersion: 2018,
+        ecmaVersion: 2019,
         sourceType: 'module',
     },
     // ESLint 支持使用第三方插件。在使用插件之前，你必须使用 npm 安装它。
@@ -53,5 +58,6 @@ module.exports = {
         'react/require-default-props': ['off'],
         'react/jsx-indent-props': ['off', 4],
         'react/jsx-wrap-multilines': ['error', { declaration: false, assignment: false }],
+        'react/jsx-props-no-spreading': ['off'],
     },
 };

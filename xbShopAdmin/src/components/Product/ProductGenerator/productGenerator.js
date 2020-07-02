@@ -2,9 +2,9 @@
  * 添加，修改商品 Parent form
  */
 import React from 'react';
-import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
 import { Card } from 'antd';
 
+import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
 import HLPageMeta from '../../../static/data/componentMeta/HighLightHeaderMeta';
 
 import './productGenerator.scss';

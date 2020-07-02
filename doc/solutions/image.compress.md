@@ -25,4 +25,4 @@
 1. [nginx + fastDFS - 单机图片服务器解决方案](https://cloud.tencent.com/developer/article/1085098)
 
 ## 了解一下
-- 图片服务器 FastDFS
+- 图片服务器 FastDFS#

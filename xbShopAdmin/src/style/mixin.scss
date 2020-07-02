@@ -1,74 +1,74 @@
-@import "./theme.scss";
+@import './theme.scss';
 
 @mixin centralizeFlex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @mixin customizeScrollbar() {
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    background: transparent;
-  }
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background: transparent;
+    }
 
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
 
-  &::-webkit-scrollbar-thumb {
-    background: $appScrollBarColor;
-    border-radius: 5px;
-  }
+    &::-webkit-scrollbar-thumb {
+        background: $appScrollBarColor;
+        border-radius: 5px;
+    }
 
-  &::-webkit-scrollbar-button:start {
-    display: none;
-  }
+    &::-webkit-scrollbar-button:start {
+        display: none;
+    }
 
-  &::-webkit-scrollbar-button:end {
-    display: none;
-  }
+    &::-webkit-scrollbar-button:end {
+        display: none;
+    }
 }
 
 @mixin select-effect($hoverBgColor: #{$hoverBgColor}, $activeBgColor: #{$activeBgColor}) {
-  cursor: pointer;
-  transition: background 0.2s ease-in;
+    cursor: pointer;
+    transition: background 0.2s ease-in;
 
-  &:hover {
-    background: $hoverBgColor;
-  }
+    &:hover {
+        background: $hoverBgColor;
+    }
 
-  &:active {
-    background: $activeBgColor;
-  }
+    &:active {
+        background: $activeBgColor;
+    }
 }
 
 @mixin circle-bg($bgColor: #eeeded, $textColor: #fff, $dimension: 100%) {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: $dimension;
-  height: $dimension;
-  border-radius: 50%;
-  background-color: $bgColor;
-  color: $textColor;
-  transition: background 0.3s linear;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $dimension;
+    height: $dimension;
+    border-radius: 50%;
+    background-color: $bgColor;
+    color: $textColor;
+    transition: background 0.3s linear;
 }
 
 @mixin circle-bg-hover($bgColor: #eeeded, $textColor: #fff, $dimension: 100%) {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: $dimension;
-  height: $dimension;
-  border-radius: 50%;
-  cursor: pointer;
-  color: $textColor;
-  transition: background 0.3s linear;
-  &:hover {
-    background-color: $bgColor;
-  }
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $dimension;
+    height: $dimension;
+    border-radius: 50%;
+    cursor: pointer;
+    color: $textColor;
+    transition: background 0.3s linear;
+    &:hover {
+        background-color: $bgColor;
+    }
 }

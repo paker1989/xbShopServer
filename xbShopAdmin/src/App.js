@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
+/* eslint-disable */
 import Dashboard from './pages/Dashboard/dashboard';
+/* eslint-enable */
 import Login from './pages/Login/login';
 
 import './style/app.scss';

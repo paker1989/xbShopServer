@@ -17,7 +17,7 @@ const HighLightPageHeader = (props) => {
 };
 
 HighLightPageHeader.propTypes = {
-    breadCrumb: PropTypes.any,
+    breadCrumb: PropTypes.node,
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };

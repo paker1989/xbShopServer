@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-admin": "node xbShopAdmin/src/config/build.js",
     "dev-admin": "webpack-dev-server --inline --progress --config xbShopAdmin/src/config/webpack.dev.config.js",
-    "format-admin": "prettier --config ./.prettierrc.js --write ./xbShopAdmin/src/**/*.{ts,js,css,json}"
+    "lint-admin": "prettier --config ./.prettierrc.js --write ./xbShopAdmin/src/**/*.{js,scss}"
   },
   "keywords": [
     "node-server",
@@ -38,10 +38,12 @@
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
     "babel-loader": "^7.1.5",
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-transform-runtime": "^6.23.0",
