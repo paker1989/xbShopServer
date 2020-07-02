@@ -7,7 +7,7 @@ module.exports = {
         env: {
             NODE_ENV: '"development"',
         },
-        port: '1220',
+        port: '1221',
         devtool: 'cheap-module-eval-source-map',
         assetsSubDirectory: 'static',
     },
@@ -16,7 +16,7 @@ module.exports = {
             NODE_ENV: '"production"',
         },
         assetsRoot: path.resolve(__dirname, '../../build'),
-        port: '1220',
+        port: '1221',
         productionSourceMap: true,
         devtool: '#source-map',
         // Gzip off by default as many popular static hosts such as

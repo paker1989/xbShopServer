@@ -1,0 +1,18 @@
+@import '../../../style/app.scss';
+
+$skeleton-header-height: 90px;
+$skeleton-body-height: 300px;
+
+.container-skeleton {
+    position: relative;
+
+    .skeleton-header {
+        padding: 0 20px;
+        height: $skeleton-header-height;
+    }
+
+    .skeleton-body {
+        padding: 0 20px;
+        height: $skeleton-body-height;
+    }
+}
