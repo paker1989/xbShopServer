@@ -4,8 +4,6 @@
 import React from 'react';
 import { Steps } from 'antd';
 import PropTypes from 'prop-types';
-// import {useca} from 'ahooks';
-// import cx from 'classnames';
 
 const { Step } = Steps;
 
@@ -16,12 +14,12 @@ const FormSteps = ({ activeStep, data, onChange }) => {
                 {data.map((item, index) => {
                     return (
                         <Step
-                            key={`form-step-${index}`}
+                            key={`form-step-${item.title}`}
                             title={item.title}
                             onClick={() => {
                                 onChange(index);
                             }}
-                        ></Step>
+                        />
                     );
                 })}
             </Steps>

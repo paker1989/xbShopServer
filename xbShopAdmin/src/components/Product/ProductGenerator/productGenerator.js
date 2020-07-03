@@ -4,12 +4,12 @@
  * https://github.com/jarnugirdhar/antd-react-multistep-form/blob/master/src/components/FinalForm.js
  */
 import React from 'react';
-import { Card, Form, Row, Col } from 'antd';
+import { Card, Row, Col } from 'antd';
 import { useSelector } from 'react-redux';
 
 import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
-import HLPageMeta from '../../../static/data/componentMeta/HighLightHeaderMeta';
-import FormSteps from '../../../components/Common/FormSteps/formSteps';
+import HLPageMeta from '../../../static/data/componentMeta/product/addProductMeta';
+import FormSteps from '../../Common/FormSteps/formSteps';
 import AddStepOne from './addStepOne/addStepOne';
 import AddStepTwo from './addStepTwo/addStepTwo';
 
@@ -22,11 +22,11 @@ const ProductGenerator = () => {
     const renderFormStep = (step) => {
         switch (step) {
             case 0:
-            return <AddStepOne />;
+                return <AddStepOne />;
             case 1:
-            return <AddStepTwo />;
+                return <AddStepTwo />;
             default:
-            return <div></div>;
+                return <div></div>;
         }
     };
 
@@ -36,8 +36,12 @@ const ProductGenerator = () => {
             <div className="product-form-wrapper section-container">
                 <Card bordered={false}>
                     <Row>
-                        <Col md={{ span: 20, offset: 2 }} lg={{ span: 12, offset: 6 }}>
+                        <Col md={{ span: 20, offset: 2 }} lg={{ span: 16, offset: 4 }}>
                             <FormSteps activeStep={currentStep} data={steps} />
+                        </Col>
+                    </Row>
+                    <Row gutter={[0, 80]}>
+                        <Col md={{ span: 16, offset: 4 }} lg={{ span: 12, offset: 6 }}>
                             {renderFormStep(currentStep)}
                         </Col>
                     </Row>
