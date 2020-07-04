@@ -13,6 +13,8 @@ import FormSteps from '../../Common/FormSteps/formSteps';
 import AddStepOne from './addStepOne/addStepOne';
 import AddStepTwo from './addStepTwo/addStepTwo';
 
+// import GalleryUpload from './galleryUpload/galleryUpload';
+
 import './productGenerator.scss';
 
 const ProductGenerator = () => {
@@ -33,6 +35,7 @@ const ProductGenerator = () => {
     return (
         <div className="product-generator">
             <HLPageHeader title={title} description={description} />
+            {/* <GalleryUpload /> */}
             <div className="product-form-wrapper section-container">
                 <Card bordered={false}>
                     <Row>

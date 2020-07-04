@@ -9,6 +9,7 @@ const initialState = {
     shortDscp: '',
     categories: [],
     isOffShelf: true, // 是否暂时下架
+    galleries: [],
 };
 
 export default (state = initialState, action) => {

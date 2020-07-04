@@ -4,13 +4,14 @@ import { Form, Button, Switch, Row, Col } from 'antd';
 
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
 import * as ProductActionCreator from '../../../../store/action/productActions';
-
+import getValidators from '../validators';
 /**
  * 添加产品第一步
  */
 const Core = (props) => {
     const { form } = props;
     const { getFieldDecorator } = form;
+    const validators = getValidators(props);
     const disptch = useDispatch();
 
     const goPrev = (e) => {
@@ -19,7 +20,7 @@ const Core = (props) => {
     };
     const onSubmitStepTwo = (e) => {
         e.preventDefault();
-        form.validateFields((errors, values) => {
+        form.validateFields((errors) => {
             if (!errors) {
                 disptch(ProductActionCreator.submitAddProductStepTwo({}));
             }
@@ -29,9 +30,10 @@ const Core = (props) => {
     return (
         <Form onSubmit={onSubmitStepTwo} {...productGenerator.formLayout}>
             <Form.Item label="是否暂时下架">
-                {getFieldDecorator('isOffShelf', {
-                    valuePropName: 'checked',
-                })(<Switch checkedChildren="是" unCheckedChildren="否" />)}
+                {getFieldDecorator(
+                    'isOffShelf',
+                    validators.isOffShelf
+                )(<Switch checkedChildren="是" unCheckedChildren="否" />)}
             </Form.Item>
             <Row>
                 <Col xs={{ span: 24 }} sm={{ span: 18, offset: 6 }}>

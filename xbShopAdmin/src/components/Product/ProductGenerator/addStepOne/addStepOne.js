@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Button, Select } from 'antd';
+import { Form, Input, Button, Select, Row, Col } from 'antd';
+
+import GalleryUpload from '../galleryUpload/galleryUpload';
 
 import { getNoEmptyStr } from '../../../../utils/data.helper';
 import * as ProductActionCreator from '../../../../store/action/productActions';
 import * as CategoryActionCreator from '../../../../store/action/categoryActions';
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
-import getValidators from './validators';
+import getValidators from '../validators';
 
 import './addStepOne.scss';
 
@@ -71,9 +73,17 @@ const Core = (props) => {
                     </Select>
                 )}
             </Form.Item>
-            <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-                下一步
-            </Button>
+            <Form.Item label="产品图片" extra="最少一张，最多3张，只支持jpg/png">
+                {getFieldDecorator('galleries', validators.galleries)(<GalleryUpload />)}
+            </Form.Item>
+            <Row>
+                <Col xs={{ span: 0 }} sm={{ span: 6 }}></Col>
+                <Col xs={{ span: 24 }} sm={{ span: 17, offset: 1 }}>
+                    <Button type="primary" htmlType="submit">
+                        下一步
+                    </Button>
+                </Col>
+            </Row>
         </Form>
     );
 };
@@ -82,6 +92,7 @@ const mapStateToProps = (state) => ({
     productName: state.product.addProductReducer.productName,
     shortDscp: state.product.addProductReducer.shortDscp,
     categories: state.product.addProductReducer.categories,
+    galleries: state.product.addProductReducer.galleries,
 });
 
 const WrappedForm = connect(mapStateToProps)(
@@ -92,6 +103,7 @@ const WrappedForm = connect(mapStateToProps)(
                 productName: Form.createFormField({ value: props.productName }),
                 shortDscp: Form.createFormField({ value: props.shortDscp }),
                 categories: Form.createFormField({ value: props.categories }),
+                galleries: Form.createFormField({ value: props.galleries }),
             };
         },
     })(Core)

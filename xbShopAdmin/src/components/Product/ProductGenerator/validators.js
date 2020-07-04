@@ -17,5 +17,12 @@ export default function getValidators(props) {
                 },
             ],
         },
+        galleries: {
+            valuePropName: 'galleries',
+            initialValue: [],
+        },
+        isOffShelf: {
+            valuePropName: 'checked',
+        },
     };
 }
