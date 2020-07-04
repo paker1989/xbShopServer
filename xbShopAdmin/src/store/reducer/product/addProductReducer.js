@@ -7,7 +7,7 @@ const initialState = {
     currentStep: 0,
     productName: '',
     shortDscp: '',
-    category: [],
+    categories: [],
     isOffShelf: true, // 是否暂时下架
 };
 

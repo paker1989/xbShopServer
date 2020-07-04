@@ -5,8 +5,8 @@ import { Form, Input, Button, Select } from 'antd';
 import { getNoEmptyStr } from '../../../../utils/data.helper';
 import * as ProductActionCreator from '../../../../store/action/productActions';
 import * as CategoryActionCreator from '../../../../store/action/categoryActions';
-
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
+import getValidators from './validators';
 
 import './addStepOne.scss';
 
@@ -17,7 +17,10 @@ const { Option } = Select;
 const Core = (props) => {
     const { form } = props;
     const { getFieldDecorator } = form;
+
+    const validators = getValidators(props);
     const disptch = useDispatch();
+
     const categoryList = useSelector((state) => state.categoryReducer.categories);
     const isCatInited = useSelector((state) => state.categoryReducer.isInited);
 
@@ -45,9 +48,7 @@ const Core = (props) => {
     return (
         <Form onSubmit={onSubmitStepOne} {...productGenerator.formLayout}>
             <Form.Item label="产品名称(必填)">
-                {getFieldDecorator('productName', {
-                    rules: [{ required: true, message: '产品名称不能为空' }],
-                })(<Input placeholder="产品名称" />)}
+                {getFieldDecorator('productName', validators.productName)(<Input placeholder="产品名称" />)}
             </Form.Item>
             <Form.Item label="简短描述(选填)">
                 {getFieldDecorator('shortDscp')(
@@ -55,12 +56,17 @@ const Core = (props) => {
                 )}
             </Form.Item>
             <Form.Item label="分类" extra="至少选择一个">
-                {getFieldDecorator('categories')(
+                {getFieldDecorator(
+                    'categories',
+                    validators.categories
+                )(
                     <Select mode="multiple" placeholder="请选择分类">
                         {categoryList
                             .filter((item) => item.isActive && !item.isDeleted)
                             .map((item) => (
-                                <Option key={item.id}>{item.label}</Option>
+                                <Option key={item.id} value={item.id}>
+                                    {item.label}
+                                </Option>
                             ))}
                     </Select>
                 )}
@@ -75,6 +81,7 @@ const Core = (props) => {
 const mapStateToProps = (state) => ({
     productName: state.product.addProductReducer.productName,
     shortDscp: state.product.addProductReducer.shortDscp,
+    categories: state.product.addProductReducer.categories,
 });
 
 const WrappedForm = connect(mapStateToProps)(
@@ -84,6 +91,7 @@ const WrappedForm = connect(mapStateToProps)(
             return {
                 productName: Form.createFormField({ value: props.productName }),
                 shortDscp: Form.createFormField({ value: props.shortDscp }),
+                categories: Form.createFormField({ value: props.categories }),
             };
         },
     })(Core)
