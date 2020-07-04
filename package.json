@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-admin": "node xbShopAdmin/src/config/build.js",
-    "dev-admin": "webpack-dev-server --inline --progress --config xbShopAdmin/src/config/webpack.dev.config.js",
-    "lint-admin": "prettier --config ./.prettierrc.js --write ./xbShopAdmin/src/**/*.{js,scss}"
+    "dev-admin": "npm run start-admin-json & webpack-dev-server --inline --progress --config xbShopAdmin/src/config/webpack.dev.config.js",
+    "lint-admin": "prettier --config ./.prettierrc.js --write ./xbShopAdmin/src/**/*.{js,scss}",
+    "start-admin-json": "json-server --port 1220 --watch ./local-json-server/db.json --routes ./local-json-server/routes.json"
   },
   "keywords": [
     "node-server",

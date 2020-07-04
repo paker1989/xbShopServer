@@ -61,5 +61,6 @@ module.exports = {
         'react/jsx-props-no-spreading': ['off'],
         'react/prop-types': ['off'],
         'no-underscore-dangle': ['off'],
+        'import/prefer-default-export': ['off'],
     },
 };

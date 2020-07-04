@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "label": "大众热销",
+    "isActive": true,
+    "isDeleted": false,
+    "parentId": 0
+  },
+  {
+    "id": 2,
+    "label": "每周精选",
+    "isActive": true,
+    "isDeleted": false,
+    "parentId": 0
+  },
+  {
+    "id": 3,
+    "label": "优惠",
+    "isActive": true,
+    "isDeleted": false,
+    "parentId": 0
+  },
+  {
+    "id": 4,
+    "label": "推荐",
+    "isActive": true,
+    "isDeleted": false,
+    "parentId": 0
+  }
+]
