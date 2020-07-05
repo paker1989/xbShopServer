@@ -10,6 +10,10 @@ const initialState = {
     categories: [],
     isOffShelf: true, // 是否暂时下架
     galleries: [],
+    specs: [
+        { sku: '123', price: 121, stockNumber: 40, specType: 'XS' },
+        { sku: '456', price: 12, stockNumber: 10, specType: 'XL' },
+    ],
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +21,8 @@ export default (state = initialState, action) => {
         case ProductActionType._SUBMIT_ADD_PRODUCT_STEP_ONE:
             return { ...state, currentStep: 1, ...action.payload };
         case ProductActionType._GO_STEP_ADD_PRODUCT:
+            return { ...state, ...action.payload };
+        case ProductActionType._UPDATE_SPEC_ADD_PRODUCT:
             return { ...state, ...action.payload };
         default:
             return state;

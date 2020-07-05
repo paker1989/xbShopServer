@@ -4,12 +4,10 @@ import * as CategoryActionType from '../../actionType/categoryActionType';
 import { getRequestUrl } from '../../../static/api';
 
 function* getCategoriesSaga(reqObj) {
-    console.log('getCategoriesSaga');
     try {
         const res = yield axios.get(getRequestUrl('getCategories'), {
             params: { ...reqObj },
         });
-        console.log(res);
 
         if (res && res.data) {
             yield put({
@@ -21,7 +19,7 @@ function* getCategoriesSaga(reqObj) {
             });
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 }
 

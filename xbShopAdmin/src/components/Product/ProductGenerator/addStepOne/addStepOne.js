@@ -9,7 +9,7 @@ import { getNoEmptyStr } from '../../../../utils/data.helper';
 import * as ProductActionCreator from '../../../../store/action/productActions';
 import * as CategoryActionCreator from '../../../../store/action/categoryActions';
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
-import getValidators from '../validators';
+import validators from '../validators';
 
 import './addStepOne.scss';
 
@@ -18,10 +18,9 @@ const { Option } = Select;
  * 添加产品第一步
  */
 const Core = (props) => {
-    const { form } = props;
+    const { form, specs } = props;
     const { getFieldDecorator } = form;
 
-    const validators = getValidators(props);
     const disptch = useDispatch();
 
     const categoryList = useSelector((state) => state.categoryReducer.categories);
@@ -77,13 +76,14 @@ const Core = (props) => {
             <Form.Item label="产品图片" extra="最少一张，最多3张，只支持jpg/png">
                 {getFieldDecorator('galleries', validators.galleries)(<GalleryUpload />)}
             </Form.Item>
-            <Form.Item
-                label="产品规格"
-                extra="最少添加一项"
-                wrapperCol={{ xs: { span: 24 }, sm: { span: 19, offset: 1 } }}
-            >
-                {getFieldDecorator('specs', validators.specs)(<ProductSpecs />)}
-            </Form.Item>
+            <Row>
+                <Col xs={{ span: 24 }} sm={{ span: 4 }}>
+                    产品规格
+                </Col>
+                <Col xs={{ span: 24 }} sm={{ span: 19, offset: 1 }}>
+                    <ProductSpecs form={form} specs={specs} />
+                </Col>
+            </Row>
             <Row>
                 <Col xs={{ span: 0 }} sm={{ span: 4 }}></Col>
                 <Col xs={{ span: 24 }} sm={{ span: 12, offset: 1 }}>
@@ -101,6 +101,7 @@ const mapStateToProps = (state) => ({
     shortDscp: state.product.addProductReducer.shortDscp,
     categories: state.product.addProductReducer.categories,
     galleries: state.product.addProductReducer.galleries,
+    specs: state.product.addProductReducer.specs,
 });
 
 const WrappedForm = connect(mapStateToProps)(
@@ -112,6 +113,7 @@ const WrappedForm = connect(mapStateToProps)(
                 shortDscp: Form.createFormField({ value: props.shortDscp }),
                 categories: Form.createFormField({ value: props.categories }),
                 galleries: Form.createFormField({ value: props.galleries }),
+                specs: Form.createFormField({ value: props.specs }),
             };
         },
     })(Core)

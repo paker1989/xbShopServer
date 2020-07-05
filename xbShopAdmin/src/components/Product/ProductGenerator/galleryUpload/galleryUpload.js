@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { Upload, Icon, Modal, message } from 'antd';
+import { Upload, Icon, Modal } from 'antd';
 
 import { selectFileImage } from '../../../../utils/upload.helper';
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
@@ -9,7 +9,7 @@ import './galleryUpload.scss';
 const extraData = {}; // todo
 
 const GalleryUpload = (props, ref) => {
-    const { maxGalleries } = productGenerator;
+    const { maxGalleries, maxOriginFileSize } = productGenerator;
     const { galleries } = props;
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
@@ -40,7 +40,7 @@ const GalleryUpload = (props, ref) => {
             const index = fileList.findIndex((item) => item.uid === file.uid);
             if (index !== -1) {
                 fileList.splice(index, 1);
-                const thumb = await selectFileImage(file.originFileObj || file);
+                const thumb = await selectFileImage(file.originFileObj || file, maxOriginFileSize);
                 /* eslint-disable */
                 file.url = thumb;
                 file.thumbUrl = thumb;
@@ -51,11 +51,11 @@ const GalleryUpload = (props, ref) => {
             }
         },
 
-        beforeUpload: (file) => {
-            const isLt5M = file.size / 1024 / 1024 < 5;
-            if (!isLt5M) {
-                message.error('上传的图片需要小于5M!');
-            }
+        beforeUpload: () => {
+            // const isLt5M = file.size / 1024 / 1024 < 5;
+            // if (!isLt5M) {
+            //     message.error('上传的图片需要小于5M!');
+            // }
             return false;
         },
         // transformFile: (file) => {

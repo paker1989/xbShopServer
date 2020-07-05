@@ -4,14 +4,14 @@ import { Form, Button, Switch, Row, Col } from 'antd';
 
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
 import * as ProductActionCreator from '../../../../store/action/productActions';
-import getValidators from '../validators';
+import validators from '../validators';
 /**
  * 添加产品第一步
  */
 const Core = (props) => {
     const { form } = props;
     const { getFieldDecorator } = form;
-    const validators = getValidators(props);
+    // const validators = getValidators(props);
     const disptch = useDispatch();
 
     const goPrev = (e) => {

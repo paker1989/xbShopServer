@@ -29,22 +29,34 @@ export function resizeMe(img, type, maxWidth, maxHeight) {
     return canvas.toDataURL(`image/${_type}`, 0.9); // 这里的0.7值的是图片的质量
 }
 
-export function selectFileImage(file) {
+/**
+ *
+ * @param {*} file
+ * @param {Number} compressSizeLimit: size limit to compress
+ */
+export function selectFileImage(file, compressSizeLimit) {
     return new Promise((resolve) => {
         const reader = new FileReader();
         const fileType = file.name.split('.')[1];
-        reader.readAsArrayBuffer(file);
-
-        reader.onload = (ev) => {
-            const blob = new Blob([ev.target.result]);
-            const urlObj = window.URL || window.webkitURL;
-            const blobURL = urlObj.createObjectURL(blob);
-            const image = new Image();
-            image.src = blobURL;
-            image.onload = () => {
-                const thumb = resizeMe(image, fileType, 1400, 0); // 获得的路径是将图片转换成了base64
-                resolve(thumb);
+        if (file.size <= compressSizeLimit) {
+            // console.log('keep origin');
+            reader.readAsDataURL(file);
+            reader.onload = (e) => {
+                resolve(e.target.result);
             };
-        };
+        } else {
+            reader.readAsArrayBuffer(file);
+            reader.onload = (ev) => {
+                const blob = new Blob([ev.target.result]);
+                const urlObj = window.URL || window.webkitURL;
+                const blobURL = urlObj.createObjectURL(blob);
+                const image = new Image();
+                image.src = blobURL;
+                image.onload = () => {
+                    const thumb = resizeMe(image, fileType, 1400, 0); // 获得的路径是将图片转换成了base64
+                    resolve(thumb);
+                };
+            };
+        }
     });
 }
