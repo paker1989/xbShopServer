@@ -44,7 +44,7 @@ const ProductGenerator = () => {
                         </Col>
                     </Row>
                     <Row gutter={[0, 80]}>
-                        <Col md={{ span: 16, offset: 4 }} lg={{ span: 12, offset: 6 }}>
+                        <Col md={{ span: 18, offset: 2 }} lg={{ span: 16, offset: 4 }}>
                             {renderFormStep(currentStep)}
                         </Col>
                     </Row>

@@ -4,8 +4,8 @@
 export function resizeMe(img, type, maxWidth, maxHeight) {
     const canvas = document.createElement('canvas');
     const { width, height } = img;
-    let _width;
-    let _height;
+    let _width = width;
+    let _height = height;
     const _maxWidth = !Number.isNaN(maxWidth) ? maxWidth : 0;
     const _maxHeight = !Number.isNaN(maxHeight) ? maxHeight : 0;
 
@@ -26,7 +26,7 @@ export function resizeMe(img, type, maxWidth, maxHeight) {
     canvas.height = _height;
     ctx.drawImage(img, 0, 0, _width, _height);
     const _type = type === 'jpg' ? 'jpeg' : type;
-    return canvas.toDataURL(`image/${_type}`, 0.7); // 这里的0.7值的是图片的质量
+    return canvas.toDataURL(`image/${_type}`, 0.9); // 这里的0.7值的是图片的质量
 }
 
 export function selectFileImage(file) {
@@ -42,7 +42,7 @@ export function selectFileImage(file) {
             const image = new Image();
             image.src = blobURL;
             image.onload = () => {
-                const thumb = resizeMe(image, fileType, 400, 0); // 获得的路径是将图片转换成了base64
+                const thumb = resizeMe(image, fileType, 1400, 0); // 获得的路径是将图片转换成了base64
                 resolve(thumb);
             };
         };

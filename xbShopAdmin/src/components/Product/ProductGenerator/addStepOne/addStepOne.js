@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Button, Select, Row, Col } from 'antd';
 
+import ProductSpecs from '../productSpecs/productSpecs';
 import GalleryUpload from '../galleryUpload/galleryUpload';
 
 import { getNoEmptyStr } from '../../../../utils/data.helper';
@@ -76,9 +77,16 @@ const Core = (props) => {
             <Form.Item label="产品图片" extra="最少一张，最多3张，只支持jpg/png">
                 {getFieldDecorator('galleries', validators.galleries)(<GalleryUpload />)}
             </Form.Item>
+            <Form.Item
+                label="产品规格"
+                extra="最少添加一项"
+                wrapperCol={{ xs: { span: 24 }, sm: { span: 19, offset: 1 } }}
+            >
+                {getFieldDecorator('specs', validators.specs)(<ProductSpecs />)}
+            </Form.Item>
             <Row>
-                <Col xs={{ span: 0 }} sm={{ span: 6 }}></Col>
-                <Col xs={{ span: 24 }} sm={{ span: 17, offset: 1 }}>
+                <Col xs={{ span: 0 }} sm={{ span: 4 }}></Col>
+                <Col xs={{ span: 24 }} sm={{ span: 12, offset: 1 }}>
                     <Button type="primary" htmlType="submit">
                         下一步
                     </Button>

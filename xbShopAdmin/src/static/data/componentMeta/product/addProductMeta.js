@@ -8,12 +8,13 @@ module.exports = {
             // add product form lay out
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 6 },
+                sm: { span: 4 },
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 17, offset: 1 },
+                sm: { span: 12, offset: 1 },
             },
         },
+        maxGalleries: 3,
     },
 };

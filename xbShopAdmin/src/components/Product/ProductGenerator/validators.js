@@ -1,3 +1,7 @@
+import { productGenerator } from '../../../static/data/componentMeta/product/addProductMeta';
+
+const { maxGalleries } = productGenerator;
+
 export default function getValidators(props) {
     return {
         productName: {
@@ -20,6 +24,19 @@ export default function getValidators(props) {
         galleries: {
             valuePropName: 'galleries',
             initialValue: [],
+            rules: [
+                {
+                    validator: (rule, value, callback) => {
+                        if (value && value.length > maxGalleries) {
+                            callback(`您最多可以选择${maxGalleries}张图片`);
+                        } else if (value && value.length === 0) {
+                            callback(`您必须至少选择一张图片`);
+                        } else {
+                            callback();
+                        }
+                    },
+                },
+            ],
         },
         isOffShelf: {
             valuePropName: 'checked',

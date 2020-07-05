@@ -14,6 +14,7 @@
 -   cache: redis
 -   utils: ahooks (react hooks)
 -   mock-server: [json-server](./local-json-server/READ_ME.md)
+-   i8n: react-intl  <!-- to do -->
 
 ## (准备)采用的 koa 中间件
 
