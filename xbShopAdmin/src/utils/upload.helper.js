@@ -55,7 +55,6 @@ export function selectFileImage(file, compressSizeLimit, compressOptions) {
                 const image = new Image();
                 image.src = blobURL;
                 image.onload = () => {
-                    // 1400, 0
                     const thumb = resizeMe(image, fileType, compressOptions); // 获得的路径是将图片转换成了base64
                     resolve(thumb);
                 };
