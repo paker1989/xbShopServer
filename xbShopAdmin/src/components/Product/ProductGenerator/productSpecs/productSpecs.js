@@ -117,7 +117,7 @@ const ProductSpecs = (props, ref) => {
                 </Col>
             </Row>
             <Row style={{ margin: '24px 0' }}>
-                <Col lg={{ span: 24 }} xl={{ span: 18 }}>
+                <Col xl={{ span: 24 }} xxl={{ span: 18 }}>
                     <Table
                         size="large"
                         columns={columns}

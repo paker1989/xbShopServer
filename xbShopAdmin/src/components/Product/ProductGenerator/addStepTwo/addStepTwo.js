@@ -13,7 +13,6 @@ import validators from '../validators';
 const Core = (props) => {
     const { form } = props;
     const { getFieldDecorator } = form;
-    // const validators = getValidators(props);
     const disptch = useDispatch();
 
     const goPrev = (e) => {
@@ -22,9 +21,9 @@ const Core = (props) => {
     };
     const onSubmitStepTwo = (e) => {
         e.preventDefault();
-        form.validateFields((errors) => {
+        form.validateFields((errors, values) => {
             if (!errors) {
-                disptch(ProductActionCreator.submitAddProductStepTwo({}));
+                disptch(ProductActionCreator.submitAddProductStep({ ...values }));
             }
         });
     };
@@ -41,9 +40,8 @@ const Core = (props) => {
                 {getFieldDecorator('comment')(<Input.TextArea placeholder="备注" className="fixed-vert" rows={4} />)}
             </Form.Item>
             <Form.Item label="商品详情" wrapperCol={productGenerator.wrapperColLargeLayout}>
-                {getFieldDecorator('detailDscp')(<RichTextEditor />)}
+                {getFieldDecorator('detailDscp', validators.detailDscp)(<RichTextEditor />)}
             </Form.Item>
-            {/* <RichTextEditor /> */}
             <Row>
                 <Col xs={{ span: 24 }} sm={{ span: 18, offset: 5 }}>
                     <Button type="primary" htmlType="submit" style={{ marginRight: 20 }}>
@@ -60,6 +58,7 @@ const Core = (props) => {
 
 const mapStateToProps = (state) => ({
     isOffShelf: state.product.addProductReducer.isOffShelf,
+    detailDscp: state.product.addProductReducer.detailDscp,
 });
 
 const WrappedForm = connect(mapStateToProps)(
@@ -68,6 +67,7 @@ const WrappedForm = connect(mapStateToProps)(
         mapPropsToFields(props) {
             return {
                 isOffShelf: Form.createFormField({ value: props.isOffShelf }),
+                detailDscp: Form.createFormField({ value: props.detailDscp }),
             };
         },
     })(Core)

@@ -40,7 +40,11 @@ const GalleryUpload = (props, ref) => {
             const index = fileList.findIndex((item) => item.uid === file.uid);
             if (index !== -1) {
                 fileList.splice(index, 1);
-                const thumb = await selectFileImage(file.originFileObj || file, maxOriginFileSize);
+                const thumb = await selectFileImage(file.originFileObj || file, maxOriginFileSize, {
+                    maxWidth: 0,
+                    maxHeight: 800,
+                    qualityRatio: 0.9,
+                });
                 /* eslint-disable */
                 file.url = thumb;
                 file.thumbUrl = thumb;

@@ -21,6 +21,7 @@
     "antd": "^3.26.18",
     "axios": "^0.19.2",
     "braft-editor": "^2.3.9",
+    "braft-utils": "^3.0.12",
     "classnames": "^2.2.6",
     "compression-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^6.0.2",

@@ -3,9 +3,11 @@ import { productGenerator } from '../../../static/data/componentMeta/product/add
 const { maxGalleries } = productGenerator;
 
 export const _SPEC_STATUS_OK = 1;
+/* eslint-disable */
 export const _SPEC_STATUS_ERROR_NO_SPEC = _SPEC_STATUS_OK << 1;
 export const _SPEC_STATUS_ERROR_UNIQUE_TYPE = _SPEC_STATUS_OK << 2;
 export const _SPEC_STATUS_ERROR_UNIQUE_SKU = _SPEC_STATUS_OK << 3;
+/* eslint-enable */
 
 export default {
     productName: {
@@ -81,5 +83,8 @@ export default {
         specType: {
             rules: [{ required: true, message: '型号/规格不能为空' }],
         },
+    },
+    detailDscp: {
+        valuePropName: 'richContent',
     },
 };

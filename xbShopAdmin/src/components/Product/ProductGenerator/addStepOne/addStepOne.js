@@ -36,7 +36,9 @@ const Core = (props) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
             if (!errors) {
+                /* eslint-disable */
                 const { shortDscp, specs, ...otherValidatedProps } = values;
+                /* eslint-disable */
                 const { status, errorMsg } = validators.specs.global(specs);
 
                 if (status !== _SPEC_STATUS_OK) {
@@ -45,10 +47,11 @@ const Core = (props) => {
                 }
 
                 disptch(
-                    ProductActionCreator.submitAddProductStepOne({
+                    ProductActionCreator.submitAddProductStep({
                         shortDscp: getNoEmptyStr(shortDscp),
                         specs,
                         ...otherValidatedProps,
+                        currentStep: 1,
                     })
                 );
             }

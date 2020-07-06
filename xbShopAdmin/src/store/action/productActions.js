@@ -1,8 +1,8 @@
 import * as ProductActionType from '../actionType/productActionType';
 
-export const submitAddProductStepOne = (formDataStepOne) => ({
-    type: ProductActionType._SUBMIT_ADD_PRODUCT_STEP_ONE,
-    payload: formDataStepOne,
+export const submitAddProductStep = (formDataStep) => ({
+    type: ProductActionType._SUBMIT_ADD_PRODUCT_STEP,
+    payload: formDataStep,
 });
 
 export const goAddProductTargetStep = (step) => ({

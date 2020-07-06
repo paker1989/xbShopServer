@@ -1,7 +1,9 @@
 /**
  * focus on upload utilities
  */
-export function resizeMe(img, type, maxWidth, maxHeight) {
+export function resizeMe(img, type, compressOptions) {
+    const { maxWidth, maxHeight, qualityRatio = 0.9 } = compressOptions;
+
     const canvas = document.createElement('canvas');
     const { width, height } = img;
     let _width = width;
@@ -26,7 +28,7 @@ export function resizeMe(img, type, maxWidth, maxHeight) {
     canvas.height = _height;
     ctx.drawImage(img, 0, 0, _width, _height);
     const _type = type === 'jpg' ? 'jpeg' : type;
-    return canvas.toDataURL(`image/${_type}`, 0.9); // 这里的0.7值的是图片的质量
+    return canvas.toDataURL(`image/${_type}`, qualityRatio); // 这里的0.7值的是图片的质量
 }
 
 /**
@@ -34,12 +36,12 @@ export function resizeMe(img, type, maxWidth, maxHeight) {
  * @param {*} file
  * @param {Number} compressSizeLimit: size limit to compress
  */
-export function selectFileImage(file, compressSizeLimit) {
+export function selectFileImage(file, compressSizeLimit, compressOptions) {
     return new Promise((resolve) => {
         const reader = new FileReader();
         const fileType = file.name.split('.')[1];
+
         if (file.size <= compressSizeLimit) {
-            // console.log('keep origin');
             reader.readAsDataURL(file);
             reader.onload = (e) => {
                 resolve(e.target.result);
@@ -53,7 +55,8 @@ export function selectFileImage(file, compressSizeLimit) {
                 const image = new Image();
                 image.src = blobURL;
                 image.onload = () => {
-                    const thumb = resizeMe(image, fileType, 1400, 0); // 获得的路径是将图片转换成了base64
+                    // 1400, 0
+                    const thumb = resizeMe(image, fileType, compressOptions); // 获得的路径是将图片转换成了base64
                     resolve(thumb);
                 };
             };
