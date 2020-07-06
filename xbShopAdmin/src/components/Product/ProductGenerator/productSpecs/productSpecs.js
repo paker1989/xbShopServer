@@ -1,25 +1,27 @@
 /**
  * 产品规格
- * todo: 1. columns的validators 2. css 3. 剩下的columns
  */
-import React, { forwardRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { Button, Table, Popconfirm, Form, Input, InputNumber } from 'antd';
+import React, { forwardRef, useState } from 'react';
+import { Button, Table, Popconfirm, Form, Input, InputNumber, Row, Col } from 'antd';
 
-import * as ProductActionCreator from '../../../../store/action/productActions';
+import { getDefaultSpec } from '../../../../utils/default.factory';
 import { getPriceFormatter, getPriceParser } from '../../../../utils/data.helper';
 import validators from '../validators';
 
 import './productSpecs.scss';
 
 const ProductSpecs = (props, ref) => {
-    const dispatch = useDispatch();
     const { form, specs } = props;
+    const [localSpecs, setLocalSpecs] = useState([...specs]); // 这里必须maintain state specs, 不然validation之后别的状态会丢失状态
     const { getFieldDecorator } = form;
 
     const handleDelete = (index) => {
-        specs.splice(index, 1);
-        dispatch(ProductActionCreator.updateAddProductSpec([...specs]));
+        localSpecs.splice(index, 1);
+        setLocalSpecs([...localSpecs]);
+    };
+
+    const addSpec = () => {
+        setLocalSpecs([getDefaultSpec(localSpecs.length), ...localSpecs]);
     };
 
     const columns = [
@@ -27,9 +29,10 @@ const ProductSpecs = (props, ref) => {
             title: '商品SKU',
             dataIndex: 'sku',
             key: 'sku',
+            width: '25%',
             render: (text, record, index) => {
                 return (
-                    <Form.Item>
+                    <Form.Item wrapperCol={{ span: 24 }}>
                         {getFieldDecorator(`specs[${index}].sku`, {
                             ...validators.specs.sku,
                             initialValue: record.sku,
@@ -42,10 +45,10 @@ const ProductSpecs = (props, ref) => {
             title: '型号/规格',
             dataIndex: 'specType',
             key: 'specType',
-            width: '20%',
+            width: '25%',
             render: (text, record, index) => {
                 return (
-                    <Form.Item>
+                    <Form.Item wrapperCol={{ span: 24 }}>
                         {getFieldDecorator(`specs[${index}].specType`, {
                             ...validators.specs.specType,
                             initialValue: record.specType,
@@ -58,11 +61,11 @@ const ProductSpecs = (props, ref) => {
             title: '零售价',
             dataIndex: 'price',
             key: 'price',
+            width: '15%',
             render: (text, record, index) => {
                 return (
-                    <Form.Item>
+                    <Form.Item wrapperCol={{ span: 24 }}>
                         {getFieldDecorator(`specs[${index}].price`, {
-                            ...validators.specs.price,
                             initialValue: record.price,
                         })(
                             <InputNumber
@@ -81,11 +84,11 @@ const ProductSpecs = (props, ref) => {
             title: '库存',
             dataIndex: 'stockNumber',
             key: 'stockNumber',
+            width: '15%',
             render: (text, record, index) => {
                 return (
-                    <Form.Item>
+                    <Form.Item wrapperCol={{ span: 24 }}>
                         {getFieldDecorator(`specs[${index}].stockNumber`, {
-                            ...validators.specs.stockNumber,
                             initialValue: record.stockNumber,
                         })(<InputNumber min={0} placeholder="库存" />)}
                     </Form.Item>
@@ -96,29 +99,34 @@ const ProductSpecs = (props, ref) => {
             title: '操作',
             dataIndex: 'operation',
             key: 'operation',
-            render: (text, record, index) =>
-                specs.length > 1 ? (
-                    <Popconfirm title="确定删除?" onConfirm={() => handleDelete(index)}>
-                        删除
-                    </Popconfirm>
-                ) : null,
+            render: (text, record, index) => (
+                <Popconfirm title="确定删除?" onConfirm={() => handleDelete(index)} cancelText="取消" okText="确定">
+                    <span className="product-spec-form-item clickable danger inline-block">删除</span>
+                </Popconfirm>
+            ),
         },
     ];
 
     return (
         <div className="product-specs" ref={ref}>
-            <div>
-                <Button type="primary">添加规格</Button>
-            </div>
-            <div>
-                <Table
-                    size="middle"
-                    columns={columns}
-                    dataSource={specs}
-                    rowKey={(record) => record.sku}
-                    pagination={false}
-                />
-            </div>
+            <Row>
+                <Col span={24}>
+                    <Button type="primary" onClick={addSpec}>
+                        添加规格
+                    </Button>
+                </Col>
+            </Row>
+            <Row style={{ margin: '24px 0' }}>
+                <Col lg={{ span: 24 }} xl={{ span: 18 }}>
+                    <Table
+                        size="large"
+                        columns={columns}
+                        dataSource={localSpecs}
+                        rowKey={(record) => record.tmpId || record.sku}
+                        pagination={false}
+                    />
+                </Col>
+            </Row>
         </div>
     );
 };

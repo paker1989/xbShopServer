@@ -12,8 +12,12 @@ module.exports = {
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 12, offset: 1 },
+                sm: { span: 10, offset: 1 },
             },
+        },
+        wrapperColLargeLayout: {
+            xs: { span: 24 },
+            sm: { span: 19, offset: 1 },
         },
         maxGalleries: 3,
         maxOriginFileSize: 2 * 1024 * 1024, // 2M内不压缩

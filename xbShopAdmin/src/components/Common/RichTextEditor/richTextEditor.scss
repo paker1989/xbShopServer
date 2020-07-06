@@ -1,0 +1,11 @@
+@import '../../../style/app.scss';
+
+.rich-text-editor {
+    position: relative;
+    border: 1px solid $main-border-color;
+
+    .bf-content {
+        min-height: 200px;
+        height: auto;
+    }
+}

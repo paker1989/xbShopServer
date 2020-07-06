@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { Form, Button, Switch, Row, Col } from 'antd';
+import { Form, Button, Switch, Row, Col, Input } from 'antd';
+
+import RichTextEditor from '../../../Common/RichTextEditor/richTextEditor';
 
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
 import * as ProductActionCreator from '../../../../store/action/productActions';
@@ -35,8 +37,15 @@ const Core = (props) => {
                     validators.isOffShelf
                 )(<Switch checkedChildren="是" unCheckedChildren="否" />)}
             </Form.Item>
+            <Form.Item label="备注">
+                {getFieldDecorator('comment')(<Input.TextArea placeholder="备注" className="fixed-vert" rows={4} />)}
+            </Form.Item>
+            <Form.Item label="商品详情" wrapperCol={productGenerator.wrapperColLargeLayout}>
+                {getFieldDecorator('detailDscp')(<RichTextEditor />)}
+            </Form.Item>
+            {/* <RichTextEditor /> */}
             <Row>
-                <Col xs={{ span: 24 }} sm={{ span: 18, offset: 6 }}>
+                <Col xs={{ span: 24 }} sm={{ span: 18, offset: 5 }}>
                     <Button type="primary" htmlType="submit" style={{ marginRight: 20 }}>
                         点击以确认
                     </Button>

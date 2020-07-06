@@ -1,5 +1,10 @@
+@import '../../../../style/app.scss';
 
 .product-specs {
-  position: relative;
-  width: 100%;
+    position: relative;
+    width: 100%;
+
+    .product-spec-form-item {
+        margin-bottom: 24px;
+    }
 }

@@ -10,10 +10,8 @@ const initialState = {
     categories: [],
     isOffShelf: true, // 是否暂时下架
     galleries: [],
-    specs: [
-        { sku: '123', price: 121, stockNumber: 40, specType: 'XS' },
-        { sku: '456', price: 12, stockNumber: 10, specType: 'XL' },
-    ],
+    specs: [],
+    detailDscp: '',
 };
 
 export default (state = initialState, action) => {

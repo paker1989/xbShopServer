@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Button, Select, Row, Col } from 'antd';
+import { Form, Input, Button, Select, Row, Col, message } from 'antd';
 
 import ProductSpecs from '../productSpecs/productSpecs';
 import GalleryUpload from '../galleryUpload/galleryUpload';
@@ -9,7 +9,7 @@ import { getNoEmptyStr } from '../../../../utils/data.helper';
 import * as ProductActionCreator from '../../../../store/action/productActions';
 import * as CategoryActionCreator from '../../../../store/action/categoryActions';
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
-import validators from '../validators';
+import validators, { _SPEC_STATUS_OK } from '../validators';
 
 import './addStepOne.scss';
 
@@ -36,10 +36,18 @@ const Core = (props) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
             if (!errors) {
-                const { shortDscp, ...otherValidatedProps } = values;
+                const { shortDscp, specs, ...otherValidatedProps } = values;
+                const { status, errorMsg } = validators.specs.global(specs);
+
+                if (status !== _SPEC_STATUS_OK) {
+                    message.error(errorMsg);
+                    return;
+                }
+
                 disptch(
                     ProductActionCreator.submitAddProductStepOne({
                         shortDscp: getNoEmptyStr(shortDscp),
+                        specs,
                         ...otherValidatedProps,
                     })
                 );
@@ -77,16 +85,16 @@ const Core = (props) => {
                 {getFieldDecorator('galleries', validators.galleries)(<GalleryUpload />)}
             </Form.Item>
             <Row>
-                <Col xs={{ span: 24 }} sm={{ span: 4 }}>
-                    产品规格
+                <Col xs={{ span: 24 }} sm={{ span: 4 }} style={{ textAlign: 'right' }}>
+                    <span>产品规格:</span>
                 </Col>
-                <Col xs={{ span: 24 }} sm={{ span: 19, offset: 1 }}>
+                <Col {...productGenerator.wrapperColLargeLayout}>
                     <ProductSpecs form={form} specs={specs} />
                 </Col>
             </Row>
             <Row>
                 <Col xs={{ span: 0 }} sm={{ span: 4 }}></Col>
-                <Col xs={{ span: 24 }} sm={{ span: 12, offset: 1 }}>
+                <Col {...productGenerator.wrapperColLargeLayout}>
                     <Button type="primary" htmlType="submit">
                         下一步
                     </Button>

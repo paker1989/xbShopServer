@@ -2,6 +2,11 @@ import { productGenerator } from '../../../static/data/componentMeta/product/add
 
 const { maxGalleries } = productGenerator;
 
+export const _SPEC_STATUS_OK = 1;
+export const _SPEC_STATUS_ERROR_NO_SPEC = _SPEC_STATUS_OK << 1;
+export const _SPEC_STATUS_ERROR_UNIQUE_TYPE = _SPEC_STATUS_OK << 2;
+export const _SPEC_STATUS_ERROR_UNIQUE_SKU = _SPEC_STATUS_OK << 3;
+
 export default {
     productName: {
         rules: [{ required: true, message: '产品名称不能为空' }],
@@ -41,8 +46,40 @@ export default {
         valuePropName: 'checked',
     },
     specs: {
+        /**
+         * global check on specs
+         */
+        global: (specs) => {
+            let status = _SPEC_STATUS_OK;
+            let errorMsg = '';
+
+            if (typeof specs === 'undefined' || specs.length === 0) {
+                status = _SPEC_STATUS_ERROR_NO_SPEC;
+                errorMsg = '请至少添加一个规格/型号';
+                return { status, errorMsg };
+            }
+            let checkMap = new Map();
+            specs.forEach((item) => checkMap.set(item.sku, item));
+            if (checkMap.size < specs.length) {
+                status = _SPEC_STATUS_ERROR_UNIQUE_SKU;
+                errorMsg = '请不要输入相同的商品sku';
+                return { status, errorMsg };
+            }
+            checkMap = new Map();
+            specs.forEach((item) => checkMap.set(item.specType, item));
+            if (checkMap.size < specs.length) {
+                status = _SPEC_STATUS_ERROR_UNIQUE_TYPE;
+                errorMsg = '请不要输入相同的型号/规格';
+                return { status, errorMsg };
+            }
+
+            return { status, errorMsg };
+        },
         sku: {
             rules: [{ required: true, message: 'sku不能为空' }],
+        },
+        specType: {
+            rules: [{ required: true, message: '型号/规格不能为空' }],
         },
     },
 };

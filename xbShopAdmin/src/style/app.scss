@@ -16,3 +16,15 @@
 input[type='textarea'].fixed-vert {
     resize: vertical;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.danger {
+    color: $warning-color;
+}
+
+.inline-block {
+    display: inline-block;
+}

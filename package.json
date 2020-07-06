@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-admin": "node xbShopAdmin/src/config/build.js",
-    "dev-admin": "npm run start-admin-json & webpack-dev-server --inline --progress --config xbShopAdmin/src/config/webpack.dev.config.js",
+    "dev-admin": "webpack-dev-server --inline --progress --config xbShopAdmin/src/config/webpack.dev.config.js",
     "lint-admin": "prettier --config ./.prettierrc.js --write ./xbShopAdmin/src/**/*.{js,scss}",
-    "start-admin-json": "json-server --port 1220 --watch ./local-json-server/db.json --routes ./local-json-server/routes.json"
+    "json-server": "json-server --port 1220 --watch ./local-json-server/db.json --routes ./local-json-server/routes.json"
   },
   "keywords": [
     "node-server",
@@ -20,12 +20,14 @@
     "ahooks": "^2.1.0",
     "antd": "^3.26.18",
     "axios": "^0.19.2",
+    "braft-editor": "^2.3.9",
     "classnames": "^2.2.6",
     "compression-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^6.0.2",
     "html-webpack-plugin": "^4.3.0",
     "koa": "^2.3.0",
     "mini-css-extract-plugin": "^0.9.0",
+    "mysql": "^2.18.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -39,8 +41,7 @@
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^4.2.2",
-    "mysql": "^2.18.1"
+    "webpack-merge": "^4.2.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
