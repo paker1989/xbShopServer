@@ -1,0 +1,18 @@
+export default {
+    'product.name.mandatory': '产品名称 (必填)',
+    'product.name': '产品名称',
+    'product.shopdscp.optional': '简短描述(选填)',
+    'product.shopdscp': '简短描述',
+    'product.category': '分类',
+    'product.category.placeholder': '请选择分类',
+    'product.category.tooltip': '至少选择一个',
+    'product.gallery': '产品图片',
+    'product.gallery.clickadd': '点击添加',
+    'product.gallery.tooltip': '最少一张，最多3张，只支持jpg/png',
+    'product.spec': '产品规格',
+    'product.spec.add': '添加规格',
+    'product.spec.sku': '商品SKU',
+    'product.spec.type': '型号规格',
+    'product.spec.price': '零售价',
+    'product.spec.stock': '库存',
+};

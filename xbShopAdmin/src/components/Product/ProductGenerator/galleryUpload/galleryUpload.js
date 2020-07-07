@@ -1,10 +1,12 @@
 import React, { forwardRef, useState } from 'react';
 import { Upload, Icon, Modal } from 'antd';
+import { useSelector } from 'react-redux';
 
 import { selectFileImage } from '../../../../utils/upload.helper';
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
 
 import './galleryUpload.scss';
+
 
 const extraData = {}; // todo
 
@@ -13,6 +15,8 @@ const GalleryUpload = (props, ref) => {
     const { galleries } = props;
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
+    const compressOptions = useSelector((state) => state.meta.imageReducers.compress.gallery);
+    // console.log(compressOptions);
 
     const uploadProps = {
         action: '/',
@@ -40,11 +44,7 @@ const GalleryUpload = (props, ref) => {
             const index = fileList.findIndex((item) => item.uid === file.uid);
             if (index !== -1) {
                 fileList.splice(index, 1);
-                const thumb = await selectFileImage(file.originFileObj || file, maxOriginFileSize, {
-                    maxWidth: 0,
-                    maxHeight: 800,
-                    qualityRatio: 0.9,
-                });
+                const thumb = await selectFileImage(file.originFileObj || file, maxOriginFileSize, compressOptions);
                 /* eslint-disable */
                 file.url = thumb;
                 file.thumbUrl = thumb;

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Button, Select, Row, Col, message } from 'antd';
+import { FormattedMessage, IntlShape } from 'react-intl';
 
 import ProductSpecs from '../productSpecs/productSpecs';
 import GalleryUpload from '../galleryUpload/galleryUpload';
@@ -18,7 +19,8 @@ const { Option } = Select;
  * 添加产品第一步
  */
 const Core = (props) => {
-    const { form, specs } = props;
+    console.log(props);
+    const { form, specs, intl } = props;
     const { getFieldDecorator } = form;
 
     const disptch = useDispatch();
@@ -60,7 +62,7 @@ const Core = (props) => {
 
     return (
         <Form onSubmit={onSubmitStepOne} {...productGenerator.formLayout}>
-            <Form.Item label="产品名称(必填)">
+            <Form.Item label={<FormattedMessage id="product.name.mandatory" />}>
                 {getFieldDecorator('productName', validators.productName)(<Input placeholder="产品名称" />)}
             </Form.Item>
             <Form.Item label="简短描述(选填)">

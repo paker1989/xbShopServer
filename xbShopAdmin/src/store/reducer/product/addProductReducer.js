@@ -8,7 +8,7 @@ const initialState = {
     productName: '',
     shortDscp: '',
     categories: [],
-    isOffShelf: true, // 是否暂时下架
+    isOffShelf: false, // 是否暂时下架
     galleries: [],
     specs: [],
     comment: '',

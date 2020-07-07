@@ -8,6 +8,7 @@
  * icon issue check: https://github.com/margox/braft-editor/issues/357
  */
 import React, { forwardRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Upload, Icon } from 'antd';
 import BraftEditor from 'braft-editor';
 import { ContentUtils } from 'braft-utils';
@@ -39,6 +40,7 @@ const RichTextEditor = (
 ) => {
     const { onChange, richContent } = props;
     const [editorState, setEditorState] = useState(BraftEditor.createEditorState(richContent));
+    const compressOptions = useSelector((state) => state.meta.imageReducers.compress.gallery);
 
     const handleChange = (content) => {
         setEditorState(content);
@@ -51,11 +53,11 @@ const RichTextEditor = (
         if (!file) {
             return false;
         }
-        const thumbUrl = await selectFileImage(file.originFileObj || file, productGenerator.maxOriginFileSize, {
-            maxWidth: 1400,
-            maxHeight: 0,
-            qualityRatio: 0.9,
-        });
+        const thumbUrl = await selectFileImage(
+            file.originFileObj || file,
+            productGenerator.maxOriginFileSize,
+            compressOptions
+        );
         handleChange(
             ContentUtils.insertMedias(editorState, [
                 {
