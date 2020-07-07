@@ -1,12 +1,12 @@
 import React, { forwardRef, useState } from 'react';
 import { Upload, Icon, Modal } from 'antd';
 import { useSelector } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 
 import { selectFileImage } from '../../../../utils/upload.helper';
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
 
 import './galleryUpload.scss';
-
 
 const extraData = {}; // todo
 
@@ -16,7 +16,6 @@ const GalleryUpload = (props, ref) => {
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const compressOptions = useSelector((state) => state.meta.imageReducers.compress.gallery);
-    // console.log(compressOptions);
 
     const uploadProps = {
         action: '/',
@@ -82,7 +81,9 @@ const GalleryUpload = (props, ref) => {
                 {galleries.length < maxGalleries ? (
                     <p className="gallery-upload-body">
                         <Icon type="plus" />
-                        <span>点击添加</span>
+                        <span>
+                            <FormattedMessage id="product.gallery.clickadd" />
+                        </span>
                     </p>
                 ) : null}
             </Upload>

@@ -1,11 +1,10 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 
-import zh_CN from '../../translations/zh';
-// import en_US from '../../../lib/i18n/en-US';
-import fr_FR from '../../translations/fr';
+import zhCN from '../../translations/zh';
+import frFR from '../../translations/fr';
 
-const messages = { zh: zh_CN, fr: fr_FR };
+const messages = { zh: zhCN, fr: frFR };
 
 export const locales = [
     { label: '中文', code: 'zh' },

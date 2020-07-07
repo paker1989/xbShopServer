@@ -9,82 +9,89 @@ export const _SPEC_STATUS_ERROR_UNIQUE_TYPE = _SPEC_STATUS_OK << 2;
 export const _SPEC_STATUS_ERROR_UNIQUE_SKU = _SPEC_STATUS_OK << 3;
 /* eslint-enable */
 
-export default {
-    productName: {
-        rules: [{ required: true, message: '产品名称不能为空' }],
-    },
-    categories: {
-        rules: [
-            { type: 'array' },
-            {
-                validator: (rule, value, callback) => {
-                    if (value.length < 1) {
-                        callback('请您至少选择一个分类');
-                    } else {
-                        callback();
-                    }
-                },
-            },
-        ],
-    },
-    galleries: {
-        valuePropName: 'galleries',
-        initialValue: [],
-        rules: [
-            {
-                validator: (rule, value, callback) => {
-                    if (value && value.length > maxGalleries) {
-                        callback(`您最多可以选择${maxGalleries}张图片`);
-                    } else if (value && value.length === 0) {
-                        callback(`您必须至少选择一张图片`);
-                    } else {
-                        callback();
-                    }
-                },
-            },
-        ],
-    },
-    isOffShelf: {
-        valuePropName: 'checked',
-    },
-    specs: {
-        /**
-         * global check on specs
-         */
-        global: (specs) => {
-            let status = _SPEC_STATUS_OK;
-            let errorMsg = '';
+// function _translate(intl)
+export default ({ intl }) => {
+    function _translate(id, values = {}) {
+        return intl.formatMessage({ id }, values);
+    }
 
-            if (typeof specs === 'undefined' || specs.length === 0) {
-                status = _SPEC_STATUS_ERROR_NO_SPEC;
-                errorMsg = '请至少添加一个规格/型号';
-                return { status, errorMsg };
-            }
-            let checkMap = new Map();
-            specs.forEach((item) => checkMap.set(item.sku, item));
-            if (checkMap.size < specs.length) {
-                status = _SPEC_STATUS_ERROR_UNIQUE_SKU;
-                errorMsg = '请不要输入相同的商品sku';
-                return { status, errorMsg };
-            }
-            checkMap = new Map();
-            specs.forEach((item) => checkMap.set(item.specType, item));
-            if (checkMap.size < specs.length) {
-                status = _SPEC_STATUS_ERROR_UNIQUE_TYPE;
-                errorMsg = '请不要输入相同的型号/规格';
-                return { status, errorMsg };
-            }
+    return {
+        productName: {
+            rules: [{ required: true, message: _translate('product.add.error.empty.product') }],
+        },
+        categories: {
+            rules: [
+                { type: 'array' },
+                {
+                    validator: (rule, value, callback) => {
+                        if (value.length < 1) {
+                            callback(_translate('product.add.error.min.category', { nb: 1 }));
+                        } else {
+                            callback();
+                        }
+                    },
+                },
+            ],
+        },
+        galleries: {
+            valuePropName: 'galleries',
+            initialValue: [],
+            rules: [
+                {
+                    validator: (rule, value, callback) => {
+                        if (value && value.length > maxGalleries) {
+                            callback(_translate('product.add.error.max.gallery', { maxGalleries: 3 }));
+                        } else if (value && value.length === 0) {
+                            callback(_translate('product.add.error.min.gallery'));
+                        } else {
+                            callback();
+                        }
+                    },
+                },
+            ],
+        },
+        isOffShelf: {
+            valuePropName: 'checked',
+        },
+        specs: {
+            /**
+             * global check on specs
+             */
+            global: (specs) => {
+                let status = _SPEC_STATUS_OK;
+                let errorMsg = '';
 
-            return { status, errorMsg };
+                if (typeof specs === 'undefined' || specs.length === 0) {
+                    status = _SPEC_STATUS_ERROR_NO_SPEC;
+                    errorMsg = _translate('product.add.error.min.spec');
+                    return { status, errorMsg };
+                }
+                let checkMap = new Map();
+                specs.forEach((item) => checkMap.set(item.sku, item));
+                if (checkMap.size < specs.length) {
+                    status = _SPEC_STATUS_ERROR_UNIQUE_SKU;
+                    errorMsg = _translate('product.add.error.same.sku');
+                    return { status, errorMsg };
+                }
+                checkMap = new Map();
+                specs.forEach((item) => checkMap.set(item.specType, item));
+                if (checkMap.size < specs.length) {
+                    status = _SPEC_STATUS_ERROR_UNIQUE_TYPE;
+                    errorMsg = _translate('product.add.error.same.spec');
+                    return { status, errorMsg };
+                }
+
+                return { status, errorMsg };
+            },
+            sku: {
+                rules: [{ required: true, message: _translate('product.add.error.empty.sku') }],
+            },
+            specType: {
+                rules: [{ required: true, message: _translate('product.add.error.empty.spec') }],
+            },
         },
-        sku: {
-            rules: [{ required: true, message: 'sku不能为空' }],
+        detailDscp: {
+            valuePropName: 'richContent',
         },
-        specType: {
-            rules: [{ required: true, message: '型号/规格不能为空' }],
-        },
-    },
-    detailDscp: {
-        valuePropName: 'richContent',
-    },
+    };
 };

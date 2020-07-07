@@ -7,9 +7,10 @@
  * APIs: https://www.yuque.com/braft-editor/be/gz44tn
  * icon issue check: https://github.com/margox/braft-editor/issues/357
  */
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Upload, Icon } from 'antd';
+import { injectIntl } from 'react-intl';
 import BraftEditor from 'braft-editor';
 import { ContentUtils } from 'braft-utils';
 import 'braft-editor/dist/index.css';
@@ -17,6 +18,9 @@ import 'braft-editor/dist/index.css';
 import { selectFileImage } from '../../../utils/upload.helper';
 import { productGenerator } from '../../../static/data/componentMeta/product/addProductMeta';
 import './richTextEditor.scss';
+
+/* eslint-disable */
+const _supported_languages = ['zh', 'zh-hant', 'en'];
 
 const RichTextEditor = (
     {
@@ -32,15 +36,27 @@ const RichTextEditor = (
             'link',
             'separator',
         ],
-        placeholder = '请输入商品详情',
-        language = 'zh',
+        placeholder = 'product.add.detailDscp.placeholder',
+        language,
+        intl,
         ...props
     },
     ref
 ) => {
     const { onChange, richContent } = props;
     const [editorState, setEditorState] = useState(BraftEditor.createEditorState(richContent));
+    const [langProps, setLangProps] = useState(language || globalLocale);
     const compressOptions = useSelector((state) => state.meta.imageReducers.compress.gallery);
+    const globalLocale = useSelector((state) => state.meta.languageReducers.globalLocale);
+
+    /**
+     * define language, priority: language props -> global locale
+     */
+    useEffect(() => {
+        if (_supported_languages.findIndex((lang) => lang === langProps) === -1) {
+            setLangProps(_supported_languages[0]);
+        }
+    }, [language, globalLocale]);
 
     const handleChange = (content) => {
         setEditorState(content);
@@ -88,8 +104,8 @@ const RichTextEditor = (
             <BraftEditor
                 className="rich-text-editor"
                 controls={controls}
-                language={language}
-                placeholder={placeholder}
+                language={langProps}
+                placeholder={intl.formatMessage({ id: placeholder })}
                 onChange={handleChange}
                 value={editorState}
                 extendControls={extendControls}
@@ -98,4 +114,4 @@ const RichTextEditor = (
     );
 };
 
-export default forwardRef(RichTextEditor);
+export default injectIntl(forwardRef(RichTextEditor));

@@ -3,17 +3,19 @@
  */
 import React, { forwardRef, useState } from 'react';
 import { Button, Table, Popconfirm, Form, Input, InputNumber, Row, Col } from 'antd';
+import { injectIntl } from 'react-intl';
 
 import { getDefaultSpec } from '../../../../utils/default.factory';
 import { getPriceFormatter, getPriceParser } from '../../../../utils/data.helper';
-import validators from '../validators';
+import getValidators from '../validators';
 
 import './productSpecs.scss';
 
 const ProductSpecs = (props, ref) => {
-    const { form, specs } = props;
+    const { form, specs, intl } = props;
     const [localSpecs, setLocalSpecs] = useState([...specs]); // 这里必须maintain state specs, 不然validation之后别的状态会丢失状态
     const { getFieldDecorator } = form;
+    const validators = getValidators({ intl });
 
     const handleDelete = (index) => {
         localSpecs.splice(index, 1);
@@ -26,7 +28,7 @@ const ProductSpecs = (props, ref) => {
 
     const columns = [
         {
-            title: '商品SKU',
+            title: intl.formatMessage({ id: 'product.spec.sku' }),
             dataIndex: 'sku',
             key: 'sku',
             width: '25%',
@@ -36,13 +38,13 @@ const ProductSpecs = (props, ref) => {
                         {getFieldDecorator(`specs[${index}].sku`, {
                             ...validators.specs.sku,
                             initialValue: record.sku,
-                        })(<Input placeholder="商品sku" />)}
+                        })(<Input placeholder={intl.formatMessage({ id: 'product.spec.sku' })} />)}
                     </Form.Item>
                 );
             },
         },
         {
-            title: '型号/规格',
+            title: intl.formatMessage({ id: 'product.spec.type' }),
             dataIndex: 'specType',
             key: 'specType',
             width: '25%',
@@ -52,13 +54,13 @@ const ProductSpecs = (props, ref) => {
                         {getFieldDecorator(`specs[${index}].specType`, {
                             ...validators.specs.specType,
                             initialValue: record.specType,
-                        })(<Input placeholder="型号/规格" />)}
+                        })(<Input placeholder={intl.formatMessage({ id: 'product.spec.type' })} />)}
                     </Form.Item>
                 );
             },
         },
         {
-            title: '零售价',
+            title: intl.formatMessage({ id: 'product.spec.price' }),
             dataIndex: 'price',
             key: 'price',
             width: '15%',
@@ -81,7 +83,7 @@ const ProductSpecs = (props, ref) => {
             },
         },
         {
-            title: '库存',
+            title: intl.formatMessage({ id: 'product.spec.stock' }),
             dataIndex: 'stockNumber',
             key: 'stockNumber',
             width: '15%',
@@ -96,12 +98,17 @@ const ProductSpecs = (props, ref) => {
             },
         },
         {
-            title: '操作',
+            title: intl.formatMessage({ id: 'common.delete' }),
             dataIndex: 'operation',
             key: 'operation',
             render: (text, record, index) => (
-                <Popconfirm title="确定删除?" onConfirm={() => handleDelete(index)} cancelText="取消" okText="确定">
-                    <span className="product-spec-form-item clickable danger inline-block">删除</span>
+                <Popconfirm
+                    title={intl.formatMessage({ id: 'common.delete.confirm' })}
+                    onConfirm={() => handleDelete(index)}
+                >
+                    <span className="product-spec-form-item clickable danger inline-block">
+                        {intl.formatMessage({ id: 'common.delete' })}
+                    </span>
                 </Popconfirm>
             ),
         },
@@ -112,7 +119,7 @@ const ProductSpecs = (props, ref) => {
             <Row>
                 <Col span={24}>
                     <Button type="primary" onClick={addSpec}>
-                        添加规格
+                        {intl.formatMessage({ id: 'product.spec.add' })}
                     </Button>
                 </Col>
             </Row>
@@ -131,4 +138,4 @@ const ProductSpecs = (props, ref) => {
     );
 };
 
-export default forwardRef(ProductSpecs);
+export default injectIntl(forwardRef(ProductSpecs));

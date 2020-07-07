@@ -2,12 +2,13 @@
  * general Steps
  */
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { Steps } from 'antd';
 import PropTypes from 'prop-types';
 
 const { Step } = Steps;
 
-const FormSteps = ({ activeStep, data, onChange }) => {
+const FormSteps = ({ intl, activeStep, data, onChange }) => {
     return (
         <div className="form-steps">
             <Steps current={activeStep}>
@@ -15,7 +16,7 @@ const FormSteps = ({ activeStep, data, onChange }) => {
                     return (
                         <Step
                             key={`form-step-${item.title}`}
-                            title={item.title}
+                            title={intl.formatMessage({ id: item.title })}
                             onClick={() => {
                                 onChange(index);
                             }}
@@ -33,4 +34,4 @@ FormSteps.propTypes = {
     onChange: PropTypes.func,
 };
 
-export default FormSteps;
+export default injectIntl(FormSteps);

@@ -6,6 +6,7 @@
 import React from 'react';
 import { Card, Row, Col } from 'antd';
 import { useSelector } from 'react-redux';
+import { injectIntl } from 'react-intl';
 
 import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
 import HLPageMeta from '../../../static/data/componentMeta/product/addProductMeta';
@@ -17,7 +18,7 @@ import AddStepTwo from './addStepTwo/addStepTwo';
 
 import './productGenerator.scss';
 
-const ProductGenerator = () => {
+const ProductGenerator = ({ intl }) => {
     const currentStep = useSelector((state) => state.product.addProductReducer.currentStep);
     const { description, title, steps } = HLPageMeta.productGenerator;
 
@@ -34,7 +35,10 @@ const ProductGenerator = () => {
 
     return (
         <div className="product-generator">
-            <HLPageHeader title={title} description={description} />
+            <HLPageHeader
+                title={intl.formatMessage({ id: title })}
+                description={intl.formatMessage({ id: description })}
+            />
             {/* <GalleryUpload /> */}
             <div className="product-form-wrapper section-container">
                 <Card bordered={false}>
@@ -43,7 +47,7 @@ const ProductGenerator = () => {
                             <FormSteps activeStep={currentStep} data={steps} />
                         </Col>
                     </Row>
-                    <Row gutter={[0, 80]}>
+                    <Row style={{ margin: '40px 0' }}>
                         <Col md={{ span: 24 }} lg={{ span: 20, offset: 2 }}>
                             {renderFormStep(currentStep)}
                         </Col>
@@ -54,4 +58,4 @@ const ProductGenerator = () => {
     );
 };
 
-export default ProductGenerator;
+export default injectIntl(ProductGenerator);
