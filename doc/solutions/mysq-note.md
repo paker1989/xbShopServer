@@ -202,3 +202,104 @@ console.log(sql); // UPDATE posts SET modified = CURRENT_TIMESTAMP() WHERE id = 
 var query = 'SELECT * FROM posts WHERE title=' + mysql.escape('Hello MySQL');
 console.log(query); // SELECT * FROM posts WHERE title='Hello MySQL'
 ```
+
+## escapeId
+
+you can use `??` characters as placeholders for identifiers you would like to have escaped like this:
+
+```javascript
+var userId = 1;
+var columns = ['username', 'email'];
+var query = connection.query('SELECT ?? FROM ?? WHERE id = ?', [columns, 'users', userId], function (
+    error,
+    results,
+    fields
+) {
+    if (error) throw error;
+    // ...
+});
+
+console.log(query.sql); // SELECT `username`, `email` FROM `users` WHERE id = 1
+```
+
+## prepare query
+
+```javascript
+var sql = 'SELECT * FROM ?? WHERE ?? = ?';
+var inserts = ['users', 'id', userId];
+sql = mysql.format(sql, inserts);
+```
+
+## 自定义 format
+
+```javascript
+connection.config.queryFormat = function (query, values) {
+    if (!values) return query;
+    return query.replace(
+        /\:(\w+)/g,
+        function (txt, key) {
+            if (values.hasOwnProperty(key)) {
+                return this.escape(values[key]); // 可以使用escape
+            }
+            return txt;
+        }.bind(this)
+    );
+};
+
+connection.query('UPDATE posts SET title = :title', { title: 'Hello MySQL' });
+```
+
+## auto-incre 的 row 的 return key 获取方法
+
+```javascript
+connection.query('INSERT INTO posts SET ?', { title: 'test' }, function (error, results, fields) {
+    if (error) throw error;
+    console.log(results.insertId);
+});
+```
+
+-   `supportBigNumbers`: 如果超过 js number 限制，需要开启这个来把数字转化成 string。否则报错
+
+## affectedRows
+
+You can get the number of affected rows from an insert, update or delete statement.
+`results.affectedRows`
+
+## changed rows
+
+You can get the number of changed rows from an update statement.
+"changedRows" differs from "affectedRows" in that it does not count updated rows whose values were not changed.
+`results.changedRows`
+
+## connection thread id
+
+```javascript
+connection.connect(function (err) {
+    if (err) throw err;
+    console.log('connected as id ' + connection.threadId);
+});
+```
+
+## Streaming query rows
+
+```javascript
+var query = connection.query('SELECT * FROM posts');
+query
+    .on('error', function (err) {
+        // Handle error, an 'end' event will be emitted after this as well
+    })
+    .on('fields', function (fields) {
+        // the field packets for the rows to follow
+    })
+    .on('result', function (row) {
+        // Pausing the connnection is useful if your processing involves I/O
+        connection.pause();
+
+        processRow(row, function () {
+            connection.resume();
+        });
+    })
+    .on('end', function () {
+        // all rows have been received
+    });
+```

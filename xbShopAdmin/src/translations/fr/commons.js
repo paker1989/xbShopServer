@@ -3,7 +3,7 @@ export default {
     'common.next': 'Suivant',
     'common.operation': 'Operation',
     'common.delete.confirm': 'Vous êtes sûr de le supprimer?',
-    'common.comment': 'Commentaire',
+    'common.note': 'Commentaire',
     'common.yes': 'Oui',
     'common.no': 'Non',
     'common.click.confirm': 'Confirmer',
