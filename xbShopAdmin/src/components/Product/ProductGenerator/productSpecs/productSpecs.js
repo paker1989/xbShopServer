@@ -15,7 +15,7 @@ const ProductSpecs = (props, ref) => {
     const { form, specs, intl } = props;
     const [localSpecs, setLocalSpecs] = useState([...specs]); // 这里必须maintain state specs, 不然validation之后别的状态会丢失状态
     const { getFieldDecorator } = form;
-    const validators = getValidators({ intl });
+    const validators = getValidators({ intl }); 
 
     const handleDelete = (index) => {
         localSpecs.splice(index, 1);

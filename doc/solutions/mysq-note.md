@@ -1,3 +1,6 @@
+<!-- 
+https://github.com/mysqljs/mysql
+ -->
 ## terminate a connection
 
 ```javascript
@@ -302,4 +305,185 @@ query
     .on('end', function () {
         // all rows have been received
     });
+```
+
+-   It is very important not to leave the result paused too long, or you may encounter Error: `Connection lost: The server closed the connection`. The time limit for this is determined by the net_write_timeout setting on your MySQL server.
+
+## stream
+
+```javascript
+connection.query('SELECT * FROM posts')
+  .stream({highWaterMark: 5}) // with a max buffer of 5 objects
+  .pipe(...);
+
+var stream = require('stream');
+
+// example 2
+connection.query('select * from bigdata')
+  .stream()
+  .pipe(stream.Transform({
+    objectMode: true,
+    transform: function(data,encoding,callback) {
+      // do something with data...
+      callback()
+    }
+   })
+   .on('finish',function() { console.log('done');})
+
+// example 3
+connection.query('select id  from stats  limit 100')
+            .stream()
+            .pipe(stream.Transform({
+                    objectMode:true,
+                transform:function(data,encoding,callback){
+                                //This never be called
+                    res.write(util.inspect(data))
+                    callback()
+                }
+            }))
+            .on('finish',function(){console.log('done');res.end()})
+```
+
+-   The `objectMode` parameter of the stream is set to true and cannot be changed (if you need a byte stream, you will need to use a transform stream, like objstream for example).
+
+## multiple statement queries
+
+-   同时执行几个 statement，默认关闭
+
+```javascript
+var connection = mysql.createConnection({ multipleStatements: true }); // 开启
+connection.query('SELECT 1; SELECT 2', function (error, results, fields) {
+    if (error) throw error;
+    // `results` is an array with one element for every statement in the query:
+    console.log(results[0]); // [{1: 1}]
+    console.log(results[1]); // [{2: 2}]
+});
+```
+
+## 事务
+
+-   Simple transaction support is available at the connection level:
+
+```javascript
+connection.beginTransaction(function (err) {
+    if (err) {
+        throw err;
+    }
+    connection.query('INSERT INTO posts SET title=?', title, function (error, results, fields) {
+        if (error) {
+            return connection.rollback(function () {
+                throw error;
+            });
+        }
+
+        var log = 'Post ' + results.insertId + ' added';
+
+        connection.query('INSERT INTO log SET data=?', log, function (error, results, fields) {
+            if (error) {
+                return connection.rollback(function () {
+                    throw error;
+                });
+            }
+            connection.commit(function (err) {
+                if (err) {
+                    return connection.rollback(function () {
+                        throw err;
+                    });
+                }
+                console.log('success!');
+            });
+        });
+    });
+});
+```
+
+## Ping
+
+```javascript
+connection.ping(function (err) {
+    if (err) throw err;
+    console.log('Server responded to ping');
+});
+```
+
+## Timeouts
+
+-   注意，这是该包自己的设置，不是 mysql 协议的一部分，如果设置的 timeout 到了，那么 connection 会被 destroy and no further operations can be performed.
+
+```javascript
+// Kill query after 60s
+connection.query({ sql: 'SELECT COUNT(*) AS count FROM big_table', timeout: 60000 }, function (error, results, fields) {
+    if (error && error.code === 'PROTOCOL_SEQUENCE_TIMEOUT') {
+        throw new Error('too long to count table rows!');
+    }
+
+    if (error) {
+        throw error;
+    }
+
+    console.log(results[0].count + ' rows');
+});
+```
+
+## Error handling
+
+-   `err.code`: String, contains the MySQL server error symbol if the error is a MySQL server error (e.g. 'ER_ACCESS_DENIED_ERROR'), a Node.js error code if it is a Node.js error (e.g. 'ECONNREFUSED'), or an internal error code (e.g. 'PROTOCOL_CONNECTION_LOST').
+-   `err.errno`: Number, contains the MySQL server error number. Only populated from MySQL server error.
+-   `err.fatal`: Boolean, indicating if this error is terminal to the connection object. If the error is not from a MySQL protocol operation, this property will not be defined.
+-   `err.sql`: String, contains the full SQL of the failed query. This can be useful when using a higher level interface like an ORM that is generating the queries.
+-   `err.sqlState`: String, contains the five-character SQLSTATE value. Only populated from MySQL server error.
+-   `err.sqlMessage`: String, contains the message string that provides a textual description of the error. Only populated from MySQL server error.
+
+1. `fatal error`会 propagate 给所有 pending callback。
+2. 普通 error only delegate 给对应的 callback
+3. If a fatal errors occurs and there are no pending callbacks, or a normal error occurs which has no callback belonging to it, the error is emitted _as an 'error' event on the connection object_. This is demonstrated in the example below:
+
+```javascript
+connection.on('error', function (err) {
+    console.log(err.code); // 'ER_BAD_DB_ERROR'
+});
+
+connection.query('USE name_of_db_that_does_not_exist');
+```
+
+-   'error' events are special in node. If they occur without an attached listener, _a stack trace is printed and your process is killed._ (所以一定要提供 connection.on('error'))
+
+## type casting
+
+-   default: true
+-   cast mysql types to native js supported types;
+-   可以在 connection 或者 query 层面关闭:
+
+```javascript
+var connection = require('mysql').createConnection({ typeCast: false });
+// or
+var options = { sql: '...', typeCast: false };
+var query = connection.query(options, function (error, results, fields) {
+    if (error) throw error;
+    // ...
+});
+```
+
+## custom type casting
+
+-   `field`'s properties: db, table, name, type, length; methods: .string(), .buffer(), .geometry()
+
+```javascript
+connection = mysql.createConnection({
+    typeCast: function (field, next) {
+        if (field.type === 'TINY' && field.length === 1) {
+            return field.string() === '1'; // 1 = true, 0 = false
+        } else {
+            return next();
+        }
+    },
+});
+```
+
+## 开启 debug
+
+```javascript
+var connection = mysql.createConnection({ debug: true });
+//   This will print all incoming and outgoing packets on stdout. You can also restrict debugging to packet types by passing an array of types to debug:
+var connection = mysql.createConnection({ debug: ['ComQueryPacket', 'RowDataPacket'] });
 ```
