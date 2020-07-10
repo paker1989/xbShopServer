@@ -19,8 +19,8 @@ const LanguageMenu = ({ onChange, lang }) => {
             {language.map((item) => (
                 <Menu.Item key={item.code}>
                     <div className="flex-row-container middle">
-                        <span style={{marginRight: 10}}>{item.code}</span>
-                        <span style={{marginRight: 10}}>{item.label}</span>
+                        <span style={{ marginRight: 10 }}>{item.code}</span>
+                        <span style={{ marginRight: 10 }}>{item.label}</span>
                     </div>
                 </Menu.Item>
             ))}
