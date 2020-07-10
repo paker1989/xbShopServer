@@ -32,4 +32,7 @@ export default {
     'product.add.offShelf': '是否暂时下架',
     'product.add.detailDscp': '商品详情',
     'product.add.detailDscp.placeholder': '请输入商品详情',
+    'product.add.success': '编辑成功',
+    'product.general.pricerange': '价格区间',
+    'product.general.info': '产品信息',
 };

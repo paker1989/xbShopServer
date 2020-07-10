@@ -14,3 +14,23 @@ export const updateAddProductSpec = (specs) => ({
     type: ProductActionType._UPDATE_SPEC_ADD_PRODUCT,
     payload: { specs },
 });
+
+export const reediteProductSpec = () => ({
+    type: ProductActionType._REEDIT_PRODUCT,
+    payload: { currentStep: 0 },
+});
+
+export const resetAddProduct = () => ({
+    type: ProductActionType._RESET_ADD_PRODUCT_STATE,
+    payload: {
+        currentStep: 0,
+        productName: '',
+        shortDscp: '',
+        categories: [],
+        isOffShelf: false,
+        galleries: [],
+        specs: [],
+        comment: '',
+        detailDscp: '',
+    },
+});

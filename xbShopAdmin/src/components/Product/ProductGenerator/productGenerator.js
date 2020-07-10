@@ -5,31 +5,40 @@
  */
 import React from 'react';
 import { Card, Row, Col } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { injectIntl } from 'react-intl';
+import { useUnmount } from 'ahooks';
 
 import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
 import HLPageMeta from '../../../static/data/componentMeta/product/addProductMeta';
 import FormSteps from '../../Common/FormSteps/formSteps';
 import AddStepOne from './addStepOne/addStepOne';
 import AddStepTwo from './addStepTwo/addStepTwo';
+import AddStepThree from './addStepThree/addStepThree';
 
+import * as productActionCreator from '../../../store/action/productActions';
 // import GalleryUpload from './galleryUpload/galleryUpload';
 
 import './productGenerator.scss';
 
 const ProductGenerator = ({ intl }) => {
+    const dispatch = useDispatch();
     const currentStep = useSelector((state) => state.product.addProductReducer.currentStep);
     const { description, title, steps } = HLPageMeta.productGenerator;
 
+    useUnmount(() => {
+        dispatch(productActionCreator.resetAddProduct());
+    });
+
     const renderFormStep = (step) => {
         switch (step) {
+            default:
             case 0:
                 return <AddStepOne />;
             case 1:
                 return <AddStepTwo />;
-            default:
-                return <div></div>;
+            case 2:
+                return <AddStepThree />;
         }
     };
 

@@ -23,6 +23,10 @@ export default (state = initialState, action) => {
             return { ...state, ...action.payload };
         case ProductActionType._UPDATE_SPEC_ADD_PRODUCT:
             return { ...state, ...action.payload };
+        case ProductActionType._REEDIT_PRODUCT:
+            return { ...state, ...action.payload };
+        case ProductActionType._RESET_ADD_PRODUCT_STATE:
+            return { ...state, ...action.payload };
         default:
             return state;
     }

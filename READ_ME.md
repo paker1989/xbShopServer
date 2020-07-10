@@ -16,6 +16,7 @@
 -   mock-server: [json-server](./local-json-server/READ_ME.md)
 -   i8n: react-intl  <!-- to do -->
 -   rich-text editor: draft-editor
+-   ORM: sequelize
 
 ## (准备)采用的 koa 中间件
 

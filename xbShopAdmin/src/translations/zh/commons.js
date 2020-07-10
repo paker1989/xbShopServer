@@ -8,4 +8,6 @@ export default {
     'common.no': '否',
     'common.click.confirm': '点击以确定',
     'common.prev.step': '返回上一步',
+    'common.return.edition': '重新编辑',
+    'common.return.list': '返回列表',
 };

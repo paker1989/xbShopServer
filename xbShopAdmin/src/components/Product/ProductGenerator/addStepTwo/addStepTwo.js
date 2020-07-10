@@ -25,7 +25,7 @@ const Core = (props) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
             if (!errors) {
-                disptch(ProductActionCreator.submitAddProductStep({ ...values }));
+                disptch(ProductActionCreator.submitAddProductStep({ ...values, currentStep: 2 }));
             }
         });
     };

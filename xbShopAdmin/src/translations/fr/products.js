@@ -33,4 +33,7 @@ export default {
     'product.add.offShelf': 'Arrêtez temporairement la vente',
     'product.add.detailDscp': 'Description',
     'product.add.detailDscp.placeholder': 'Merci de saisir les détails du produit',
+    'product.add.success': 'Edition réussie',
+    'product.general.pricerange': 'Fourchette de prix',
+    'product.general.info': "Information d'article",
 };

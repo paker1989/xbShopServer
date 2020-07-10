@@ -19,6 +19,11 @@ module.exports = {
             xs: { span: 24 },
             sm: { span: 18, offset: 1 },
         },
+        stepThreeLayout: {
+            md: { span: 18, offset: 2 },
+            lg: { span: 16, offset: 4 },
+            xl: { span: 12, offset: 6 },
+        },
         maxGalleries: 3,
         maxOriginFileSize: 2 * 1024 * 1024, // 2M内不压缩
     },
