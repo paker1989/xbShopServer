@@ -2,9 +2,9 @@
  * 首页header的语言切换
  */
 import React from 'react';
+import { Dropdown, Menu } from 'antd';
 
 import { language } from '../../../static/data/componentMeta/global.meta';
-import { Dropdown, Menu } from 'antd';
 import langIcon from '../../../static/image/icon/language.svg';
 
 import './languageMenu.scss';
@@ -28,7 +28,7 @@ const LanguageMenu = ({ onChange, lang }) => {
     );
     return (
         <Dropdown overlay={menu} trigger={['click']}>
-            <img src={langIcon} className="xb-menu-icon clickable" />
+            <img src={langIcon} alt="language" className="xb-menu-icon clickable" />
         </Dropdown>
     );
 };

@@ -17,7 +17,7 @@ const Notification = ({ count = 0 }) => {
     return (
         <Dropdown overlay={menu} trigger={['click']}>
             <Badge count={count}>
-                <img src={notification} className="xb-menu-icon clickable" />
+                <img src={notification} alt="notification" className="xb-menu-icon clickable" />
             </Badge>
         </Dropdown>
     );

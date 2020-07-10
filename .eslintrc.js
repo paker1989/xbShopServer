@@ -62,5 +62,6 @@ module.exports = {
         'react/prop-types': ['off'],
         'no-underscore-dangle': ['off'],
         'import/prefer-default-export': ['off'],
+        'react/jsx-fragments': ['off'],
     },
 };

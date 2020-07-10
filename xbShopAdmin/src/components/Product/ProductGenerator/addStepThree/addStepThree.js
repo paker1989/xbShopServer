@@ -11,7 +11,7 @@ import './addStepThree.scss';
 
 const AddStepThree = ({ intl }) => {
     const dispatch = useDispatch();
-    const reEdite = () => dispatch(productActionCreator.reediteProductSpec());
+    const reEdite = () => dispatch(productActionCreator.reediteProductSpec);
 
     const productHighLight = useProductHL(true);
 

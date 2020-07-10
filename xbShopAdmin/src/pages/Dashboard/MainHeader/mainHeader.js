@@ -15,7 +15,6 @@ const MainHeader = () => {
     const dispatch = useDispatch();
     const locale = useSelector((state) => state.meta.languageReducers.globalLocale);
     const handleLocal = ({ key }) => {
-        console.log(key);
         dispatch(MetaActionCreator.changeLocale(key));
     };
 
