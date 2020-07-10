@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 import { Layout, Icon } from 'antd';
 import { useResponsive } from 'ahooks';
 
@@ -10,6 +9,10 @@ const { Sider } = Layout;
 const MainSider = () => {
     const responsive = useResponsive();
     const [collapsed, setCollapsed] = useState(!responsive.middle);
+
+    useEffect(() => {
+        setCollapsed(!responsive.middle);
+    }, [responsive.middle]);
 
     return (
         <Sider
@@ -32,10 +35,6 @@ const MainSider = () => {
             <div>sider</div>
         </Sider>
     );
-};
-
-MainSider.propTypes = {
-    // navData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 export default MainSider;

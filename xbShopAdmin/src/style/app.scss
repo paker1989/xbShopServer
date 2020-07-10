@@ -19,6 +19,21 @@
     background-color: $highlight-background-color;
 }
 
+.flex-row-container {
+    display: flex;
+    &.center {
+        justify-content: center;
+    }
+
+    &.end {
+        justify-content: flex-end;
+    }
+
+    &.middle {
+        align-items: center;
+    }
+}
+
 input[type='textarea'].fixed-vert {
     resize: vertical;
 }
@@ -33,4 +48,10 @@ input[type='textarea'].fixed-vert {
 
 .inline-block {
     display: inline-block;
+}
+
+// icon
+.xb-menu-icon {
+    width: 23px;
+    height: auto;
 }
