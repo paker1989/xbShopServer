@@ -34,49 +34,49 @@ client will emit some events about the state of the connection to the Redis serv
 
 -   options:
 
-        -   host port path(unix socket), url,
-        -   string_number (default null), if true, Node Redis will return Redis number values as Strings instead of javascript Numbers. Useful if you need to handle big numbers (above Number.MAX_SAFE_INTEGER === 2^53).
-        -   return_buffers (connection 层面)，detect_buffers (commands 层面。如果 key 是 buffer，就返回 buffer)
+-   host port path(unix socket), url,
+-   string_number (default null), if true, Node Redis will return Redis number values as Strings instead of javascript Numbers. Useful if you need to handle big numbers (above Number.MAX_SAFE_INTEGER === 2^53).
+-   return_buffers (connection 层面)，detect_buffers (commands 层面。如果 key 是 buffer，就返回 buffer)
 
-        ```javascript
-        // This will return a JavaScript String
-        client.get('foo_rand000000000000', function (err, reply) {
-            console.log(reply.toString()); // Will print `OK`
-        });
+```javascript
+// This will return a JavaScript String
+client.get('foo_rand000000000000', function (err, reply) {
+    console.log(reply.toString()); // Will print `OK`
+});
 
-        // This will return a Buffer since original key is specified as a Buffer
-        client.get(new Buffer('foo_rand000000000000'), function (err, reply) {
-            console.log(reply.toString()); // Will print `<Buffer 4f 4b>`
-        });
-        ```
+// This will return a Buffer since original key is specified as a Buffer
+client.get(new Buffer('foo_rand000000000000'), function (err, reply) {
+    console.log(reply.toString()); // Will print `<Buffer 4f 4b>`
+});
+```
 
-        - enable_offline_queue,
-        - passsword, db
-        - rename_commands, prefix, etc
-        - retry_stragegy
+- enable_offline_queue,
+- passsword, db
+- rename_commands, prefix, etc
+- retry_stragegy
 
-        ```javascript
-            const client = redis.createClient({
-            retry_strategy: function(options) {
-            if (options.error && options.error.code === "ECONNREFUSED") {
-            // End reconnecting on a specific error and flush all commands with
-            // a individual error
-            return new Error("The server refused the connection");
-            }
-            if (options.total_retry_time > 1000 _ 60 _ 60) {
-            // End reconnecting after a specific timeout and flush all commands
-            // with a individual error
-            return new Error("Retry time exhausted");
-            }
-            if (options.attempt > 10) {
-            // End reconnecting with built in error
-            return undefined;
-            }
-            // reconnect after
-            return Math.min(options.attempt \* 100, 3000);
-            },
-            });
-        ```
+```javascript
+    const client = redis.createClient({
+    retry_strategy: function(options) {
+    if (options.error && options.error.code === "ECONNREFUSED") {
+    // End reconnecting on a specific error and flush all commands with
+    // a individual error
+    return new Error("The server refused the connection");
+    }
+    if (options.total_retry_time > 1000 _ 60 _ 60) {
+    // End reconnecting after a specific timeout and flush all commands
+    // with a individual error
+    return new Error("Retry time exhausted");
+    }
+    if (options.attempt > 10) {
+    // End reconnecting with built in error
+    return undefined;
+    }
+    // reconnect after
+    return Math.min(options.attempt \* 100, 3000);
+    },
+    });
+```
 
 ## client.auth(password, [, callback]):
 

@@ -346,7 +346,7 @@ const { rows, count } = await Product.findAndCountAll({
 ```javascript
 const User = sequelize.define('user', {
     // Let's say we wanted to see every username in uppercase, even
-    // though they are not necessarily uppercase in the database itself
+    // though they are not necessarily uppercase in the database itselfØ
     username: {
         type: DataTypes.STRING,
         get() {

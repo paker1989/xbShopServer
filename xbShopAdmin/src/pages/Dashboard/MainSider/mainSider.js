@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Icon } from 'antd';
 import { useResponsive } from 'ahooks';
 
+import MenuContent from './menuContent';
+
 import './mainSider.scss';
 
 const { Sider } = Layout;
@@ -32,7 +34,7 @@ const MainSider = () => {
                 />
             }
         >
-            <div>sider</div>
+            <MenuContent />
         </Sider>
     );
 };
