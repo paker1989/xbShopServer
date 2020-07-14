@@ -1,6 +1,6 @@
 module.exports = {
     environnement: 'dev',
-    port: '3000',
+    port: 3000,
     database: {
         dialect: 'mysql',
         dbName: 'xbshop',
@@ -8,5 +8,12 @@ module.exports = {
         port: 3306,
         user: 'root',
         password: '',
+    },
+    redis: {
+        host: '127.0.0.1',
+        port: 6379,
+        password: '',
+        totalRetryTime: 1000 * 60 * 5, // 5 mins
+        maxAttempt: 5,
     },
 };
