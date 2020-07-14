@@ -10,4 +10,6 @@ export default {
     'common.prev.step': "L'étape précédante",
     'common.return.edition': 'Rééditer',
     'common.return.list': 'Retour à la liste',
+    'common.confirm.back': 'Sauvegardez et retournez',
+    'common.cancel': 'Annuler',
 };

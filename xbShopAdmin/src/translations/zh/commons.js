@@ -10,4 +10,6 @@ export default {
     'common.prev.step': '返回上一步',
     'common.return.edition': '重新编辑',
     'common.return.list': '返回列表',
+    'common.confirm.back': '保存并返回',
+    'common.cancel': '取消',
 };

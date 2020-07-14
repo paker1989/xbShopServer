@@ -26,7 +26,7 @@ module.exports = [
                     type: 'native',
                     name: 'unordered-list',
                 },
-                link: '',
+                link: '/dashboard/addProduct',
             },
         ],
     },
@@ -38,6 +38,6 @@ module.exports = [
             type: 'native',
             name: 'appstore',
         },
-        link: '/',
+        link: '/dashboard/category',
     },
 ];

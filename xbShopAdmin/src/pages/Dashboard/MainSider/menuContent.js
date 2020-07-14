@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, Icon } from 'antd';
 import { injectIntl } from 'react-intl';
+import { withRouter } from 'react-router-dom';
 
 import CustomIcon from '../../../components/Common/CustomIcon/customIcon';
 
@@ -9,14 +10,25 @@ import navData from '../../../static/data/navData';
 /**
  * 仅支持两层菜单
  */
-const MainMenu = ({ intl }) => {
+const MainMenu = ({ intl, history }) => {
+    // console.log(otherProps);
+    const navigateTo = (link) => {
+        // console.log(link);
+        history.push(link);
+    };
+
     const renderIcon = (icon) => {
         return icon.type === 'native' ? <Icon type={icon.name} /> : <CustomIcon name={icon.name} />;
     };
 
     const renderItem = (item) => {
         return (
-            <Menu.Item key={item.key}>
+            <Menu.Item
+                key={item.key}
+                onClick={() => {
+                    navigateTo(item.link);
+                }}
+            >
                 {renderIcon(item.icon)}
                 <span>{intl.formatMessage({ id: item.title })}</span>
             </Menu.Item>
@@ -47,4 +59,4 @@ const MainMenu = ({ intl }) => {
     );
 };
 
-export default injectIntl(MainMenu);
+export default withRouter(injectIntl(MainMenu));

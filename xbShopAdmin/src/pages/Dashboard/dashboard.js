@@ -1,20 +1,17 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import { Layout } from 'antd';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import MainSider from './MainSider/mainSider';
 import MainHeader from './MainHeader/mainHeader';
-
 import ContainerSkeleton from '../../components/Common/ContainerSkeleton/containerSkeleton';
-// import ProductGenerator from '../../components/Product/ProductGenerator/productGenerator';
-
-import NavData from '../../static/data/navData';
-
+/* eslint-disable */
+import LazyComponents from '../../static/data/lazyComponents';
+/* eslint-enable */
 import './dashboard.scss';
 
 const { Content } = Layout;
-
-const LazyProductGenerator = lazy(() => import('../../components/Product/ProductGenerator/productGenerator'));
+const { prefix, routes } = LazyComponents.dashboard;
 
 const Dashboard = () => {
     return (
@@ -25,8 +22,10 @@ const Dashboard = () => {
                 <Content>
                     <Suspense fallback={<ContainerSkeleton />}>
                         <Switch>
-                            <Route key="addProduct" path="/dashboard/addProduct" component={LazyProductGenerator} />
-                            <Redirect path="*" to="/dashboard/addProduct" />
+                            {routes.map((item) => (
+                                <Route key={item.key} path={`/${prefix}/${item.link}`} component={item.source} />
+                            ))}
+                            <Redirect path="*" to="/dashboard/product" />
                         </Switch>
                     </Suspense>
                 </Content>

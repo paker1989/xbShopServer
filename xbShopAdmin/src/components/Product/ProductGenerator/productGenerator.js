@@ -4,10 +4,11 @@
  * https://github.com/jarnugirdhar/antd-react-multistep-form/blob/master/src/components/FinalForm.js
  */
 import React from 'react';
-import { Card, Row, Col } from 'antd';
+import { Card, Row, Col, Button } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { useUnmount } from 'ahooks';
+import { NavLink } from 'react-router-dom';
 
 import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
 import HLPageMeta from '../../../static/data/componentMeta/product/addProductMeta';
@@ -17,7 +18,6 @@ import AddStepTwo from './addStepTwo/addStepTwo';
 import AddStepThree from './addStepThree/addStepThree';
 
 import * as productActionCreator from '../../../store/action/productActions';
-// import GalleryUpload from './galleryUpload/galleryUpload';
 
 import './productGenerator.scss';
 
@@ -47,8 +47,12 @@ const ProductGenerator = ({ intl }) => {
             <HLPageHeader
                 title={intl.formatMessage({ id: title })}
                 description={intl.formatMessage({ id: description })}
+                extra={
+                    <Button type="primary">
+                        <NavLink to="/dashboard/product">{intl.formatMessage({ id: 'common.return.list' })}</NavLink>
+                    </Button>
+                }
             />
-            {/* <GalleryUpload /> */}
             <div className="product-form-wrapper section-container">
                 <Card bordered={false}>
                     <Row>
