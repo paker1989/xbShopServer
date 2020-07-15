@@ -40,4 +40,7 @@ module.exports = [
         },
         link: '/dashboard/category',
     },
+    {
+        title: ''
+    }
 ];
