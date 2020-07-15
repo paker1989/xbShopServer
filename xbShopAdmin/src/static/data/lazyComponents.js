@@ -12,12 +12,12 @@ const lazies = {
             {
                 key: 'category',
                 link: 'category',
-                source:  lazy(() => import('../../components/Category/category.index')),
+                source: lazy(() => import('../../components/Category/category.index')),
             },
             {
                 key: 'addCategory',
                 link: 'addCategory',
-                source:  lazy(() => import('../../components/Category/categoryGenerator/categoryGenerator')),
+                source: lazy(() => import('../../components/Category/categoryGenerator/categoryGenerator')),
             },
         ],
     },

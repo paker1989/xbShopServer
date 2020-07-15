@@ -88,7 +88,7 @@ const Core = (props) => {
                         {categoryList
                             .filter((item) => item.isActive && !item.isDeleted)
                             .map((item) => (
-                                <Option key={item.id} value={item.id}>
+                                <Option key={item.idCategory} value={item.idCategory}>
                                     {item.label}
                                 </Option>
                             ))}

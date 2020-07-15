@@ -7,4 +7,4 @@
 
 ## routes
 
-1. `/api/categories/getCategories` => `/getCategories`
+1. `/api/v1/categories/getCategories` => `/getCategories`

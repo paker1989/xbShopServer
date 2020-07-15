@@ -1,3 +1,6 @@
 module.exports = {
-    getCategories: 'api/category/getCategories',
+    category: {
+        getCategories: 'get',
+        update: 'update',
+    },
 };
