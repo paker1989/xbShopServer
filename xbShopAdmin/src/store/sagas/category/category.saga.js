@@ -25,11 +25,16 @@ function* getCategoriesSaga(reqObj) {
 
 function* updateCategorySaga(reqObj) {
     try {
-        const { categoryName, isActive } = reqObj.payload;
+        const { categoryName, isActive, isDeleted = 0, idCategory = -2 } = reqObj.payload;
+        // const res = yield axios.post(getRequestUrl('category', 'update'), {
+        //     data: { categoryName, isActive, isDeleted, idCategory },
+        // });
         const res = yield axios.post(getRequestUrl('category', 'update'), {
-            params: { categoryName, isActive },
+            categoryName,
+            isActive,
+            isDeleted,
+            idCategory,
         });
-
         if (res && res.data) {
             // console.log(res);
         }

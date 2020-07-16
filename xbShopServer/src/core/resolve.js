@@ -1,5 +1,5 @@
 class Resolve {
-    static success(msg = 'success', errno = 0, statusCode = 200) {
+    static info(msg = 'success', errno = 0, statusCode = 200) {
         return {
             msg,
             statusCode,
