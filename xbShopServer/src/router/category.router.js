@@ -6,15 +6,6 @@ const { updateCategory } = require('../controller/category/category.controller')
 const router = new Router();
 
 /**
- * /api/v1/category/update
- */
-// const updateCategory = async (ctx) => {
-//     const result = await CategoryDAO.getList();
-//     console.log(result);
-//     ctx.body = Resolve.json(result);
-// };
-
-/**
  * /api/v1/category/get
  * @param {*} ctx 
  */

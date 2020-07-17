@@ -2,10 +2,8 @@
  * init redis client
  */
 const redis = require('redis');
-const Promisify = require('util').promisify;
-
 const config = require('../config/config');
-const { promisify } = require('util');
+
 
 const { port, host, password, totalRetryTime, maxAttempt } = config.redis;
 
@@ -49,5 +47,4 @@ redisClient.on('connect', () => {
     console.log(`redis is connected on ${host}:${port}`);
 });
 
-const zRangeAsync = promisify(redisClient.zrange);
-module.exports = { redisClient, zRangeAsync };
+module.exports = { redisClient };

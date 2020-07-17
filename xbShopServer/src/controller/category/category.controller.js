@@ -1,19 +1,17 @@
 const CategoryDAO = require('../../dao/category.dao');
-const {Resolve}  = require('../../core/resolve');
+const { Resolve } = require('../../core/resolve');
+const { HttpException } = require('../../core/httpException');
 /**
  * update category
  * @param {*} ctx
  */
 const updateCategory = async (ctx) => {
-      const updated = await CategoryDAO.update(ctx.request.body);
-      console.log(updated);
-      if (updated) {
+    const updated = await CategoryDAO.update(ctx.request.body);
+    if (updated) {
         ctx.body = Resolve.json(updated);
-      } else {
-          throw new Error('update category failed');
-      }
-
-    //   throw new Error('update failed');
+    } else {
+        throw new HttpException('update category failed');
+    }
 };
 
 module.exports = {

@@ -1,5 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
+
 const { sequelize } = require('../core/db');
+const { category } = require('../core/cache/cachePrefix');
+const { redisClient } = require('../core/cache/redis');
+const { getCacheKey } = require('../core/cache/redisHelper');
+
+const { prefix, keys } = category;
 
 class Category extends Model {}
 
@@ -13,7 +19,7 @@ Category.init(
         label: {
             type: DataTypes.STRING(64),
             allowNull: false,
-            unique: true
+            unique: true,
         },
         isDeleted: {
             type: DataTypes.BOOLEAN,
@@ -36,5 +42,28 @@ Category.init(
         modelName: 'category',
     }
 );
+
+const deleteListMethods = ['afterCreate', 'afterUpdate'];
+
+deleteListMethods.forEach((method) => {
+    Category[method]((instance, options) => {
+        if (options.transaction) {
+            options.transaction.afterCommit(() => {
+                redisClient.del(getCacheKey(prefix, keys.list));
+            });
+        }
+    });
+});
+
+/**
+ * ignore createdAt and updatedAt for toJSON
+ */
+Category.prototype.toJSON = function () {
+    var values = Object.assign({}, this.get());
+
+    delete values.createdAt;
+    delete values.updatedAt;
+    return values;
+};
 
 module.exports = Category;
