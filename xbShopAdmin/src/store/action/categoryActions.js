@@ -17,5 +17,7 @@ export const cancelEditCategories = () => ({
         name: '',
         isActive: true,
         parentId: -1,
+        backendMsg: '',
+        backendStatus: '',
     },
 });

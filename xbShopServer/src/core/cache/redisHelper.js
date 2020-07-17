@@ -1,13 +1,12 @@
 const { promisify } = require('util');
-
+const { redisClient } = require('../cache/redis');
 const zRangeAsync = promisify(redisClient.zrange);
 
-
-const getCacheKey(prefix, type) {
+const getCacheKey = (prefix, type) => {
     return `${prefix}-${type}`;
-}
+};
 
 module.exports = {
     async: { zRangeAsync },
-    getCacheKey
+    getCacheKey,
 };

@@ -14,7 +14,6 @@ import './categoryGenerator.scss';
 
 const CategoryGenerator = ({ intl }) => {
     const { description, title } = addCategoryMeta;
-
     const { layout } = addCategoryMeta;
     return (
         <div className="category-generator">

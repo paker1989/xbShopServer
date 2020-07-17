@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { Form, Button, Switch, Row, Col, Input } from 'antd';
+import { Form, Button, Switch, Row, Col, Input, message } from 'antd';
 import { injectIntl } from 'react-intl';
 import { useUnmount } from 'ahooks';
 import { NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { addCategory as addCategoryMeta } from '../../../static/data/componentMeta/category/categoryMeta';
+import * as CategoryActionType from '../../../store/actionType/categoryActionType';
 import * as CategoryActionCreator from '../../../store/action/categoryActions';
 import getValidators from './validators';
 
 const { layout } = addCategoryMeta;
 
 const Core = (props) => {
-    const { form, intl } = props;
+    const { form, intl, backendStatus, backendMsg, history } = props;
+    const [loading, setLoading] = useState(false);
     const { getFieldDecorator } = form;
     const disptch = useDispatch();
     const validators = getValidators({ intl });
@@ -21,10 +24,20 @@ const Core = (props) => {
         disptch(CategoryActionCreator.cancelEditCategories());
     });
 
+    useEffect(() => {
+        if (backendStatus === CategoryActionType._EDIT_CATEGORY_SUCCESS) {
+            history.push('/dashboard/category');
+        } else if (backendStatus === CategoryActionType._EDIT_CATEGORY_FAIL) {
+            message.error(backendMsg);
+            setLoading(false);
+        }
+    }, [backendStatus]);
+
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
             if (!errors) {
+                setLoading(true);
                 disptch(CategoryActionCreator.updateCategories({ ...values }));
             }
         });
@@ -55,7 +68,7 @@ const Core = (props) => {
             </Form.Item>
             <Row>
                 <Col {...layout.buttonRow}>
-                    <Button type="primary" htmlType="submit" style={{ marginRight: 20 }}>
+                    <Button type="primary" htmlType="submit" style={{ marginRight: 20 }} loading={loading}>
                         {intl.formatMessage({ id: 'common.click.confirm' })}
                     </Button>
                     <NavLink to="/dashboard/category">
@@ -68,9 +81,11 @@ const Core = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    categoryName: state.categoryReducer.editionStatus.name,
-    isActive: state.categoryReducer.editionStatus.isActive,
-    parentId: state.categoryReducer.editionStatus.parentId,
+    categoryName: state.categoryReducer.editionFields.name,
+    isActive: state.categoryReducer.editionFields.isActive,
+    parentId: state.categoryReducer.editionFields.parentId,
+    backendStatus: state.categoryReducer.backendStatus,
+    backendMsg: state.categoryReducer.backendMsg,
 });
 
 const WrappedForm = connect(mapStateToProps)(
@@ -83,7 +98,7 @@ const WrappedForm = connect(mapStateToProps)(
                 parentId: Form.createFormField({ value: props.parentId }),
             };
         },
-    })(injectIntl(Core))
+    })(withRouter(injectIntl(Core)))
 );
 
 export default WrappedForm;

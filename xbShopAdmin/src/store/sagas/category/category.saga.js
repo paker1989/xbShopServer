@@ -26,20 +26,36 @@ function* getCategoriesSaga(reqObj) {
 function* updateCategorySaga(reqObj) {
     try {
         const { categoryName, isActive, isDeleted = 0, idCategory = -2 } = reqObj.payload;
-        // const res = yield axios.post(getRequestUrl('category', 'update'), {
-        //     data: { categoryName, isActive, isDeleted, idCategory },
-        // });
+
         const res = yield axios.post(getRequestUrl('category', 'update'), {
             categoryName,
             isActive,
             isDeleted,
             idCategory,
         });
-        if (res && res.data) {
-            // console.log(res);
+        console.log(res);
+        if (res && res.data.statusCode === 200) {
+            console.log('succeed');
+            yield put({
+                type: CategoryActionType._EDIT_CATEGORY_SUCCESS,
+            });
+        } else {
+            yield put({
+                type: CategoryActionType._EDIT_CATEGORY_FAIL,
+                payload: {
+                    errorMsg: res.data.msg,
+                },
+            });
         }
     } catch (error) {
-        // console.log(error);
+        console.log('error');
+        console.log(res.data.msg);
+        yield put({
+            type: CategoryActionType._EDIT_CATEGORY_FAIL,
+            payload: {
+                errorMsg: error.message,
+            },
+        });
     }
 }
 

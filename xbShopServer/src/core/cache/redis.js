@@ -2,7 +2,7 @@
  * init redis client
  */
 const redis = require('redis');
-const config = require('../config/config');
+const config = require('../../config/config');
 
 
 const { port, host, password, totalRetryTime, maxAttempt } = config.redis;

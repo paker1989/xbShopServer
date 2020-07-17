@@ -45,6 +45,9 @@ Category.init(
 
 const deleteListMethods = ['afterCreate', 'afterUpdate'];
 
+/**
+ * delete redis cache everytime creates/updates
+ */
 deleteListMethods.forEach((method) => {
     Category[method]((instance, options) => {
         if (options.transaction) {

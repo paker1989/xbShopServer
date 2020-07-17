@@ -76,6 +76,7 @@ class CategoryDAO {
                         }
                     );
                 }
+                throw new HttpException('测试一下错误信息');
                 return category.toJSON();
             });
         } catch (err) {
