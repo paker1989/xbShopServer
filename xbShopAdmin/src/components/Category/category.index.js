@@ -1,36 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Button, Card, Table, Popconfirm, Row, Col } from 'antd';
+import { Button, Card, Table, Popconfirm, Row, Col, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { useMount } from 'ahooks';
 
 import HLPageHeader from '../Common/HighLightPageHeader/hLPageHeader';
 
+import * as CategoryActionType from '../../store/actionType/categoryActionType';
 import * as CategoryActionCreator from '../../store/action/categoryActions';
 import { homeCategory as homeCategoryMeta } from '../../static/data/componentMeta/category/categoryMeta';
 
 import './category.index.scss';
+import { useUnmount } from 'ahooks';
 
 const CategoryHome = ({ intl }) => {
     const dispatch = useDispatch();
     const categoryList = useSelector((state) => state.categoryReducer.categories);
     const isInited = useSelector((state) => state.categoryReducer.isInited);
+    const backendStatus = useSelector((state) => state.categoryReducer.backendStatus);
+    const backendMsg = useSelector((state) => state.categoryReducer.backendMsg);
+
     const [loading, setLoading] = useState(!isInited);
 
     const { title, description, layout } = homeCategoryMeta;
 
-    useMount(() => {
+    useEffect(() => {
         if (isInited === false) {
             dispatch(CategoryActionCreator.getCategories({}));
-        }
-    });
-
-    useEffect(() => {
-        if (isInited) {
+        } else {
             setLoading(false);
         }
     }, [isInited]);
+
+    useEffect(() => {
+        if (backendStatus === CategoryActionType._EDIT_CATEGORY_SUCCESS) {
+            dispatch(CategoryActionCreator.resetAddCategoryStatus()); // reset backend status
+        } else if (backendStatus === CategoryActionType._EDIT_CATEGORY_FAIL) {
+            dispatch(CategoryActionCreator.resetAddCategoryStatus()); // reset backend status
+            message.error(backendMsg);
+        }
+    }, [backendStatus]);
+
+    useUnmount(() => {
+        dispatch(CategoryActionCreator.resetAddCategoryStatus()); // reset backend status
+    });
 
     const handleDelete = (idCategory) => {
         dispatch(CategoryActionCreator.updateCategory({ idCategory, isDeleted: 1 }));

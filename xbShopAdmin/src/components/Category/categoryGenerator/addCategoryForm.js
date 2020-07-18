@@ -13,10 +13,14 @@ import getValidators from './validators';
 const { layout } = addCategoryMeta;
 
 const Core = (props) => {
-    const { form, intl, backendStatus, backendMsg, history, match } = props;
+    const { form, intl, history, match } = props;
     const [loading, setLoading] = useState(false);
+
     const isInited = useSelector((state) => state.categoryReducer.isInited);
     const categoryList = useSelector((state) => state.categoryReducer.categories);
+    const backendStatus = useSelector((state) => state.categoryReducer.backendStatus);
+    const backendMsg = useSelector((state) => state.categoryReducer.backendMsg);
+
     const dispatch = useDispatch();
 
     const { getFieldDecorator } = form;
@@ -52,7 +56,7 @@ const Core = (props) => {
         form.validateFields((errors, values) => {
             if (!errors) {
                 setLoading(true);
-                dispatch(CategoryActionCreator.updateCategory({ ...values }));
+                dispatch(CategoryActionCreator.updateCategory({ ...values, idCategory: idCat }));
             }
         });
     };
@@ -94,8 +98,6 @@ const mapStateToProps = (state) => ({
     categoryName: state.categoryReducer.editionFields.label,
     isActive: state.categoryReducer.editionFields.isActive,
     parentId: state.categoryReducer.editionFields.parentId,
-    backendStatus: state.categoryReducer.backendStatus,
-    backendMsg: state.categoryReducer.backendMsg,
 });
 
 const WrappedForm = connect(mapStateToProps)(

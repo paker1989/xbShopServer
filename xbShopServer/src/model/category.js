@@ -43,19 +43,22 @@ Category.init(
     }
 );
 
-const deleteListMethods = ['afterCreate', 'afterUpdate'];
+Category.afterCreate((instance, options) => {
+    if (options.transaction) {
+        options.transaction.afterCommit(() => {
+            redisClient.del(getCacheKey(prefix, keys.list));
+        });
+        return;
+    }
+});
 
-/**
- * delete redis cache everytime creates/updates
- */
-deleteListMethods.forEach((method) => {
-    Category[method]((instance, options) => {
-        if (options.transaction) {
-            options.transaction.afterCommit(() => {
-                redisClient.del(getCacheKey(prefix, keys.list));
-            });
-        }
-    });
+Category.afterBulkUpdate((options) => {
+    if (options.transaction) {
+        options.transaction.afterCommit(() => {
+            redisClient.del(getCacheKey(prefix, keys.list));
+        });
+        return;
+    }
 });
 
 /**
