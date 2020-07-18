@@ -1,4 +1,14 @@
 module.exports = {
+    homeCategory: {
+        title: 'cat.home.header.title',
+        description: 'cat.home.header.subtitle',
+        layout: {
+            table: {
+                md: { span: 24 },
+                lg: { span: 20, offset: 2 },
+            },
+        },
+    },
     addCategory: {
         title: 'cat.add.header.title',
         description: 'cat.add.header.subtitle',

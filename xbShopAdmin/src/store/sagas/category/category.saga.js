@@ -8,7 +8,6 @@ function* getCategoriesSaga(reqObj) {
         const res = yield axios.get(getRequestUrl('category', 'getCategories'), {
             params: { ...reqObj },
         });
-
         if (res && res.data) {
             yield put({
                 type: CategoryActionType._PUT_CATEGORIES,
@@ -25,7 +24,7 @@ function* getCategoriesSaga(reqObj) {
 
 function* updateCategorySaga(reqObj) {
     try {
-        const { categoryName, isActive, isDeleted = 0, idCategory = -2 } = reqObj.payload;
+        const { categoryName = '', isActive = 1, isDeleted = 0, idCategory = -1 } = reqObj.payload;
 
         const res = yield axios.post(getRequestUrl('category', 'update'), {
             categoryName,
@@ -33,9 +32,7 @@ function* updateCategorySaga(reqObj) {
             isDeleted,
             idCategory,
         });
-        console.log(res);
         if (res && res.data.statusCode === 200) {
-            console.log('succeed');
             yield put({
                 type: CategoryActionType._EDIT_CATEGORY_SUCCESS,
             });
@@ -48,8 +45,6 @@ function* updateCategorySaga(reqObj) {
             });
         }
     } catch (error) {
-        console.log('error');
-        console.log(res.data.msg);
         yield put({
             type: CategoryActionType._EDIT_CATEGORY_FAIL,
             payload: {
@@ -61,5 +56,5 @@ function* updateCategorySaga(reqObj) {
 
 export function* loadCategorySaga() {
     yield takeLatest(CategoryActionType._GET_CATEGORIES, getCategoriesSaga);
-    yield takeEvery(CategoryActionType._UPDATE_CATEGORIES, updateCategorySaga);
+    yield takeEvery(CategoryActionType._UPDATE_CATEGORY, updateCategorySaga);
 }

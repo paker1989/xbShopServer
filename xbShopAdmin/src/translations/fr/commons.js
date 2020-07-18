@@ -12,4 +12,6 @@ export default {
     'common.return.list': 'Retour à la liste',
     'common.confirm.back': 'Sauvegardez et retournez',
     'common.cancel': 'Annuler',
+    'common.id': 'ID',
+    'common.edit': 'Editer',
 };

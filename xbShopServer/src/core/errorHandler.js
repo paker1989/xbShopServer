@@ -15,7 +15,6 @@ const errorHandler = async (ctx, next) => {
         } else {
             ctx.body = Resolve.info(err.message, 10000, 401);
         }
-       
     }
 };
 

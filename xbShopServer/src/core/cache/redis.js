@@ -4,7 +4,6 @@
 const redis = require('redis');
 const config = require('../../config/config');
 
-
 const { port, host, password, totalRetryTime, maxAttempt } = config.redis;
 
 const redisClient = redis.createClient({

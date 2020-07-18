@@ -9,7 +9,7 @@ const sequelize = new Sequelize(dbName, user, password, {
     define: {
         timestamps: true,
         charset: 'utf8',
-        collate: 'utf8_general_ci'
+        collate: 'utf8_general_ci',
     },
 });
 

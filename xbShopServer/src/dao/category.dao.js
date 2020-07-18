@@ -47,24 +47,37 @@ class CategoryDAO {
 
     /**
      * update category in db only
-     * @param {*} category
+     * @param {*} requestBody
      */
     static async update(requestBody) {
         const { categoryName, idCategory, isActive, isDeleted } = requestBody;
         let updated;
         try {
             updated = sequelize.transaction(async (t) => {
-                let category;
+                let tmp;
                 if (idCategory <= 0) {
-                    category = await CategoryModel.create(
+                    // create case
+                    tmp = await CategoryModel.create(
                         {
                             label: categoryName,
                             isActive,
                         },
                         { transaction: t }
                     );
+                } else if (isDeleted === 1) {
+                    // delete case
+                    tmp = await CategoryModel.update(
+                        {
+                            isDeleted,
+                        },
+                        {
+                            where: { idCategory },
+                            transaction: t,
+                        }
+                    );
                 } else {
-                    category = await CategoryModel.update(
+                    // update case
+                    tmp = await CategoryModel.update(
                         {
                             label: categoryName,
                             isActive,
@@ -76,8 +89,9 @@ class CategoryDAO {
                         }
                     );
                 }
-                throw new HttpException('测试一下错误信息');
-                return category.toJSON();
+
+                // throw new HttpException('测试一下错误信息');
+                return tmp.toJSON();
             });
         } catch (err) {
             throw new HttpException(err.message);

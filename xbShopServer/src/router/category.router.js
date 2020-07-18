@@ -3,11 +3,12 @@ const Router = require('koa-router');
 const CategoryDAO = require('../dao/category.dao');
 const { Resolve } = require('../core/resolve');
 const { updateCategory } = require('../controller/category/category.controller');
+
 const router = new Router();
 
 /**
  * /api/v1/category/get
- * @param {*} ctx 
+ * @param {*} ctx
  */
 const getCategories = async (ctx) => {
     const result = await CategoryDAO.getList();

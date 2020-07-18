@@ -5,8 +5,13 @@ export const getCategories = (options) => ({
     payload: options,
 });
 
-export const updateCategories = (options) => ({
-    type: CategoryActionType._UPDATE_CATEGORIES,
+export const editCategory = (idCat) => ({
+    type: CategoryActionType._EDIT_CATEGORY,
+    payload: { idCat },
+});
+
+export const updateCategory = (options) => ({
+    type: CategoryActionType._UPDATE_CATEGORY,
     payload: options,
 });
 
@@ -17,6 +22,13 @@ export const cancelEditCategories = () => ({
         name: '',
         isActive: true,
         parentId: -1,
+        isDeleted: false,
+    },
+});
+
+export const resetAddCategoryStatus = () => ({
+    type: CategoryActionType._RESET_BACKEND_STATUS,
+    payload: {
         backendMsg: '',
         backendStatus: '',
     },

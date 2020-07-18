@@ -8,6 +8,7 @@
     "build-admin": "node xbShopAdmin/src/config/build.js",
     "dev-admin": "webpack-dev-server --inline --progress --config xbShopAdmin/src/config/webpack.dev.config.js",
     "lint-admin": "prettier --config ./.prettierrc.js --write ./xbShopAdmin/src/**/*.{js,scss}",
+    "lint-server": "prettier --config ./.prettierrc.js --write ./xbShopServer/src/**/*.js",
     "json-server": "json-server --port 1220 --watch ./local-json-server/db.json --routes ./local-json-server/routes.json",
     "start-server": "node xbShopServer/src/app.js"
   },

@@ -55,3 +55,10 @@ input[type='textarea'].fixed-vert {
     width: 23px;
     height: auto;
 }
+
+// separator wrapper class for options, icons, tags
+.option-sep-container {
+    & > *:not(:last-child) {
+        margin-right: 10px;
+    }
+}

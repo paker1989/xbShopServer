@@ -7,9 +7,11 @@ const initialState = {
     isInited: false,
     categories: [],
     editionFields: {
-        name: '',
+        idCategory: -1,
+        label: '',
         isActive: true,
         parentId: -1, // 保留字段
+        isDeleted: false,
     },
     backendStatus: '',
     backendMsg: '',
@@ -29,6 +31,17 @@ export default (state = initialState, action) => {
                 backendStatus: CategoryActionType._EDIT_CATEGORY_FAIL,
                 backendMsg: action.payload.errorMsg,
             };
+        case CategoryActionType._RESET_BACKEND_STATUS:
+            return { ...state, ...action.payload };
+        case CategoryActionType._EDIT_CATEGORY:
+            /* eslint-disable */
+            const { idCat } = action.payload;
+            const toEdit = state.categories.find((item) => item.idCategory === idCat);
+            /* eslint-enable */
+            if (toEdit) {
+                return { ...state, editionFields: { ...toEdit } };
+            }
+            return state;
         default:
             return state;
     }

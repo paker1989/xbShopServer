@@ -16,7 +16,7 @@ const lazies = {
             },
             {
                 key: 'addCategory',
-                link: 'addCategory',
+                link: 'addCategory/:idCat?',
                 source: lazy(() => import('../../components/Category/categoryGenerator/categoryGenerator')),
             },
         ],

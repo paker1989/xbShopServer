@@ -10,6 +10,7 @@ import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
 import AddForm from './addCategoryForm';
 
 import { addCategory as addCategoryMeta } from '../../../static/data/componentMeta/category/categoryMeta';
+
 import './categoryGenerator.scss';
 
 const CategoryGenerator = ({ intl }) => {

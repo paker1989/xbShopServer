@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Switch, Row, Col, Input, message } from 'antd';
 import { injectIntl } from 'react-intl';
 import { useUnmount } from 'ahooks';
-import { NavLink } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 import { addCategory as addCategoryMeta } from '../../../static/data/componentMeta/category/categoryMeta';
 import * as CategoryActionType from '../../../store/actionType/categoryActionType';
@@ -14,20 +13,35 @@ import getValidators from './validators';
 const { layout } = addCategoryMeta;
 
 const Core = (props) => {
-    const { form, intl, backendStatus, backendMsg, history } = props;
+    const { form, intl, backendStatus, backendMsg, history, match } = props;
     const [loading, setLoading] = useState(false);
+    const isInited = useSelector((state) => state.categoryReducer.isInited);
+    const categoryList = useSelector((state) => state.categoryReducer.categories);
+    const dispatch = useDispatch();
+
     const { getFieldDecorator } = form;
-    const disptch = useDispatch();
-    const validators = getValidators({ intl });
+    const { idCat = '-1' } = match.params;
+
+    const validators = getValidators({ intl, categoryList, idCat });
+
+    useEffect(() => {
+        // case: 直接hit this url for edit
+        if (isInited === false) {
+            dispatch(CategoryActionCreator.getCategories({}));
+        } else if (idCat !== '-1') {
+            dispatch(CategoryActionCreator.editCategory(Number.parseInt(idCat, 10)));
+        }
+    }, [isInited, idCat]);
 
     useUnmount(() => {
-        disptch(CategoryActionCreator.cancelEditCategories());
+        dispatch(CategoryActionCreator.cancelEditCategories());
     });
 
     useEffect(() => {
         if (backendStatus === CategoryActionType._EDIT_CATEGORY_SUCCESS) {
             history.push('/dashboard/category');
         } else if (backendStatus === CategoryActionType._EDIT_CATEGORY_FAIL) {
+            dispatch(CategoryActionCreator.resetAddCategoryStatus()); // reset backend status
             message.error(backendMsg);
             setLoading(false);
         }
@@ -38,14 +52,10 @@ const Core = (props) => {
         form.validateFields((errors, values) => {
             if (!errors) {
                 setLoading(true);
-                disptch(CategoryActionCreator.updateCategories({ ...values }));
+                dispatch(CategoryActionCreator.updateCategory({ ...values }));
             }
         });
     };
-
-    // const cancelEdition = (e) => {
-    //     e.preventDefault();
-    // };
 
     return (
         <Form onSubmit={onSubmit} {...layout.formLayout}>
@@ -81,7 +91,7 @@ const Core = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    categoryName: state.categoryReducer.editionFields.name,
+    categoryName: state.categoryReducer.editionFields.label,
     isActive: state.categoryReducer.editionFields.isActive,
     parentId: state.categoryReducer.editionFields.parentId,
     backendStatus: state.categoryReducer.backendStatus,

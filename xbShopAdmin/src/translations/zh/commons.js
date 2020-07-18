@@ -12,4 +12,6 @@ export default {
     'common.return.list': '返回列表',
     'common.confirm.back': '保存并返回',
     'common.cancel': '取消',
+    'common.id': 'ID',
+    'common.edit': '编辑',
 };
