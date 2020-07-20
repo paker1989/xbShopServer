@@ -25,7 +25,7 @@ const Dashboard = () => {
                             {routes.map((item) => (
                                 <Route key={item.key} path={`/${prefix}/${item.link}`} component={item.source} />
                             ))}
-                            <Redirect path="*" to="/dashboard/product" />
+                            <Redirect path="*" to="/dashboard/productList" />
                         </Switch>
                     </Suspense>
                 </Content>

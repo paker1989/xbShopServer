@@ -26,7 +26,7 @@ module.exports = [
                     type: 'native',
                     name: 'unordered-list',
                 },
-                link: '/dashboard/addProduct',
+                link: '/dashboard/productList',
             },
         ],
     },

@@ -36,4 +36,7 @@ export default {
     'product.add.success': 'Edition réussie',
     'product.general.pricerange': 'Fourchette de prix',
     'product.general.info': "Information d'article",
+    'product.add': 'Créer un produit',
+    'product.list.header.title': 'Liste de produits',
+    'product.list.header.subtitle': 'Vous pouvez trier, filtrer et rechercher parmi la liste de produits',
 };

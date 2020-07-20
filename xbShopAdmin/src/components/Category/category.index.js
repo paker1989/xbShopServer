@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Button, Card, Table, Popconfirm, Row, Col, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+import { useUnmount } from 'ahooks';
 
 import HLPageHeader from '../Common/HighLightPageHeader/hLPageHeader';
 
@@ -11,7 +12,6 @@ import * as CategoryActionCreator from '../../store/action/categoryActions';
 import { homeCategory as homeCategoryMeta } from '../../static/data/componentMeta/category/categoryMeta';
 
 import './category.index.scss';
-import { useUnmount } from 'ahooks';
 
 const CategoryHome = ({ intl }) => {
     const dispatch = useDispatch();

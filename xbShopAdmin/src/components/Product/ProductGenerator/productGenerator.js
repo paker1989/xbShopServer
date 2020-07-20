@@ -49,7 +49,9 @@ const ProductGenerator = ({ intl }) => {
                 description={intl.formatMessage({ id: description })}
                 extra={
                     <Button type="primary">
-                        <NavLink to="/dashboard/product">{intl.formatMessage({ id: 'common.return.list' })}</NavLink>
+                        <NavLink to="/dashboard/productList">
+                            {intl.formatMessage({ id: 'common.return.list' })}
+                        </NavLink>
                     </Button>
                 }
             />

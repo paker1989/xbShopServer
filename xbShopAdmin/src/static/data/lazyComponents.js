@@ -5,9 +5,14 @@ const lazies = {
         prefix: 'dashboard',
         routes: [
             {
-                key: 'product',
+                key: 'addProduct',
                 link: 'addProduct',
-                source: lazy(() => import('../../components/Product/ProductGenerator/productGenerator')),
+                source: lazy(() => import('../../components/Product/productGenerator/productGenerator')),
+            },
+            {
+                key: 'productList',
+                link: 'productList',
+                source: lazy(() => import('../../components/Product/productList/productList')),
             },
             {
                 key: 'category',
