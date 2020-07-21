@@ -8,11 +8,11 @@ const { errorHandler } = require('./core/errorHandler');
 
 const app = new Koa();
 
-const { port } = config;
+const { port, formData } = config;
 
 app.use(errorHandler);
 app.use(cors());
-app.use(koaBody());
+app.use(koaBody(formData));
 app.use(routers.routes()).use(routers.allowedMethods());
 
 app.listen(port, () => {

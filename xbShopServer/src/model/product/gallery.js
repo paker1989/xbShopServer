@@ -5,24 +5,24 @@ class Gallery extends Model {}
 
 Gallery.init(
     {
-        id: {
+        idGallery: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
         url: {
-            type: DataTypes.STRING(64),
+            type: DataTypes.STRING(256),
             allowNull: false,
         },
         isDeleted: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.TINYINT,
             allowNull: false,
+            defaultValue: 0
         },
     },
     {
         sequelize,
-        tableName: 'gallery',
-        modelName: 'gallery',
+        tableName: 'a_gallery',
     }
 );
 

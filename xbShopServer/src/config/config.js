@@ -16,4 +16,13 @@ module.exports = {
         totalRetryTime: 1000 * 60 * 5, // 5 mins
         maxAttempt: 5,
     },
+    //koa-body config
+    formData: {
+        formLimit: '2mb',
+        multipart: true,
+        formidable: {
+            maxFileSize: 3 * 3 * 1024 * 1024,
+            keepExtensions: true,
+        },
+    },
 };

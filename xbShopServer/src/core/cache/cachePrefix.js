@@ -5,6 +5,11 @@ const category = {
     },
 };
 
+const product = {
+    prefix: 'product',
+    
+}
+
 module.exports = {
     category,
 };
