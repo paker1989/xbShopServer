@@ -13,9 +13,8 @@ ProductSpec.init(
         sku: {
             type: DataTypes.STRING(64),
             allowNull: false,
-            unique: true,
         },
-        spec: {
+        specType: {
             type: DataTypes.STRING(64),
             allowNull: false,
         },
@@ -40,4 +39,4 @@ ProductSpec.init(
     }
 );
 
-module.exports = Gallery;
+module.exports = ProductSpec;

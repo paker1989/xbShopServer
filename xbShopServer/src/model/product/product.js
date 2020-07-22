@@ -14,7 +14,7 @@ Product.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        productname: {
+        productName: {
             type: DataTypes.STRING(512),
             allowNull: false,
             field: 'product_name',
@@ -25,17 +25,22 @@ Product.init(
             field: 'short_dscp',
         },
         comment: {
-            type: DataTypes.TEXT({length: 512*2}),
+            type: DataTypes.TEXT,
             allowNull: true,
         },
         thumbnail: {
             type: DataTypes.STRING(256),
-            allowNull: true
+            allowNull: true,
         },
         detailDscp: {
             type: DataTypes.BLOB,
-            allowNull: true
-        }
+            allowNull: true,
+        },
+        isOffshelf: {
+            type: DataTypes.TINYINT,
+            allowNull: false,
+            defaultValue: 0,
+        },
     },
     {
         sequelize,
@@ -43,15 +48,13 @@ Product.init(
     }
 );
 
-Product.hasMany(Category, { through: 'productCategory' });
-Category.belongsToMany(Product, { through: 'productCategory' });
+Product.belongsToMany(Category, { through: 'l_productCategory', foreignKey: 'productId', timestamps: false });
+Category.belongsToMany(Product, { through: 'l_productCategory', foreignKey: 'categoryId' });
 
-Product.hasMany(Gallery, { foreignKey: 'productId' });
-Gallery.belongsTo(Product);
+Product.hasMany(Gallery, { foreignKey: 'productId', as: 'galleries' });
+Gallery.belongsTo(Product, { foreignKey: 'productId' });
 
-
-Product.hasMany(ProductSpec, { foreignKey: 'productId' });
-Gallery.belongsTo(Product);
-
+Product.hasMany(ProductSpec, { foreignKey: 'productId', as: 'specs' });
+ProductSpec.belongsTo(Product, { foreignKey: 'productId', as: 'product' });
 
 module.exports = Product;

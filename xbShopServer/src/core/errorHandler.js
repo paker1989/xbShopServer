@@ -8,12 +8,13 @@ const errorHandler = async (ctx, next) => {
     try {
         await next();
     } catch (err) {
-        // console.log('captured by errorHandler');
+        console.log('captured by errorHandler');
+        console.log(err.message);
         if (err instanceof HttpException) {
-            const { msg, errno, statusCode } = err.get();
-            ctx.body = Resolve.info(msg, errno, statusCode);
+            const { msg, statusCode } = err.get();
+            ctx.body = Resolve.info(ctx, msg, statusCode);
         } else {
-            ctx.body = Resolve.info(err.message, 10000, 401);
+            ctx.body = Resolve.info(ctx, err.message, 401);
         }
     }
 };

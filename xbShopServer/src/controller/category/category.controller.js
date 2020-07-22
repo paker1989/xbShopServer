@@ -8,7 +8,7 @@ const { HttpException } = require('../../core/httpException');
 const updateCategory = async (ctx) => {
     const updated = await CategoryDAO.update(ctx.request.body);
     if (updated) {
-        ctx.body = Resolve.json(updated);
+        Resolve.json(ctx, updated);
     } else {
         throw new HttpException('update category failed');
     }

@@ -7,10 +7,10 @@ const { HttpException } = require('../../core/httpException');
  * @param {*} ctx
  */
 const saveProduct = async (ctx) => {
-    const updated = await ProductDAO.update(ctx.request.body);
-    if (updated) {
-        ctx.body = Resolve.json(updated);
-        ctx.
+    console.log('received save product');
+    const savedProduct = await ProductDAO.save(ctx.request.body);
+    if (true) {
+        Resolve.info(ctx, 'save succeed');
     } else {
         throw new HttpException('update category failed');
     }

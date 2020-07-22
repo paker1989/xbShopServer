@@ -1,19 +1,13 @@
 class Resolve {
-    static info(msg = 'success', errno = 0, statusCode = 200) {
-        return {
-            msg,
-            statusCode,
-            errno,
-        };
+    static info(ctx, msg = 'success', statusCode = 200) {
+        ctx.status = statusCode;
+        ctx.message = msg;
     }
 
-    static json(data, msg = 'success', errno = 0, statusCode = 200) {
-        return {
-            statusCode,
-            msg,
-            errno,
-            data,
-        };
+    static json(ctx, data, msg = 'success', statusCode = 200) {
+        ctx.status = statusCode;
+        ctx.message = msg;
+        ctx.body = data;
     }
 }
 

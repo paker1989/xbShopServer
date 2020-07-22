@@ -3,4 +3,7 @@ module.exports = {
         getCategories: 'get',
         update: 'update',
     },
+    product: {
+        save: 'save'
+    }
 };

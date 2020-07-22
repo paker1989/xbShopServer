@@ -12,7 +12,7 @@ const router = new Router();
  */
 const getCategories = async (ctx) => {
     const result = await CategoryDAO.getList();
-    ctx.body = Resolve.json(result);
+    Resolve.json(ctx, result);
 };
 
 router.post('/update', updateCategory);

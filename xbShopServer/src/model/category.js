@@ -19,7 +19,6 @@ Category.init(
         label: {
             type: DataTypes.STRING(64),
             allowNull: false,
-            unique: true,
         },
         isDeleted: {
             type: DataTypes.BOOLEAN,

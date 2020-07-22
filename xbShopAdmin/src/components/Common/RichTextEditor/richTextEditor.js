@@ -43,6 +43,7 @@ const RichTextEditor = (
     },
     ref
 ) => {
+    console.log(ref);
     const { onChange, richContent } = props;
     const [editorState, setEditorState] = useState(BraftEditor.createEditorState(richContent));
     const [langProps, setLangProps] = useState(language || globalLocale);

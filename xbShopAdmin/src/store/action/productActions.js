@@ -5,19 +5,14 @@ export const submitAddProductStep = (formDataStep) => ({
     payload: formDataStep,
 });
 
-export const goAddProductTargetStep = (step) => ({
-    type: ProductActionType._GO_STEP_ADD_PRODUCT,
-    payload: { currentStep: step },
-});
-
-export const updateAddProductSpec = (specs) => ({
-    type: ProductActionType._UPDATE_SPEC_ADD_PRODUCT,
-    payload: { specs },
-});
-
-export const reediteProductSpec = () => ({
+export const reEditeProductSpec = () => ({
     type: ProductActionType._REEDIT_PRODUCT,
     payload: { currentStep: 0 },
+});
+
+export const saveEditedProduct = (rawFormData) => ({
+    type: ProductActionType._SAVE_PRODUCT,
+    payload: rawFormData,
 });
 
 export const resetAddProduct = () => ({

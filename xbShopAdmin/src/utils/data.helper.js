@@ -43,3 +43,9 @@ export function getStockRange(stocks) {
 export function getPriceParser(val) {
     return val.replace(/\$\s?|(,*)/g, '');
 }
+
+export function setObjectArray(formData, key, array) {
+    // array.forEach((item) => formData.append(key, JSON.stringify(item)));
+    formData.set(key, JSON.stringify(array));
+    // array.forEach((item) => formData.get(key).push(JSON.stringify(item)));
+}

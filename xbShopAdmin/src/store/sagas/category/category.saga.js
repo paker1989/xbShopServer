@@ -1,5 +1,6 @@
 import { takeLatest, put, takeEvery } from 'redux-saga/effects';
 import axios from 'axios';
+
 import * as CategoryActionType from '../../actionType/categoryActionType';
 import { getRequestUrl } from '../../../static/api';
 
@@ -12,7 +13,7 @@ function* getCategoriesSaga(reqObj) {
             yield put({
                 type: CategoryActionType._PUT_CATEGORIES,
                 payload: {
-                    categories: res.data.data.res,
+                    categories: res.data.res,
                     isInited: true,
                 },
             });
@@ -32,7 +33,7 @@ function* updateCategorySaga(reqObj) {
             isDeleted,
             idCategory,
         });
-        if (res && res.data.statusCode === 200) {
+        if (res && res.status === 200) {
             yield put({
                 type: CategoryActionType._EDIT_CATEGORY_SUCCESS,
             });
@@ -40,7 +41,7 @@ function* updateCategorySaga(reqObj) {
             yield put({
                 type: CategoryActionType._EDIT_CATEGORY_FAIL,
                 payload: {
-                    errorMsg: res.data.msg,
+                    errorMsg: res.statusText,
                 },
             });
         }

@@ -13,15 +13,13 @@ const initialState = {
     specs: [],
     comment: '',
     detailDscp: '',
+    backendStatus: '',
+    backendMsg: '',
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case ProductActionType._SUBMIT_ADD_PRODUCT_STEP:
-            return { ...state, ...action.payload };
-        case ProductActionType._GO_STEP_ADD_PRODUCT:
-            return { ...state, ...action.payload };
-        case ProductActionType._UPDATE_SPEC_ADD_PRODUCT:
             return { ...state, ...action.payload };
         case ProductActionType._REEDIT_PRODUCT:
             return { ...state, ...action.payload };
