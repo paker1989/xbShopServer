@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { Upload, Icon, Modal } from 'antd';
+import { Upload, Icon, Modal, message } from 'antd';
 import { useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
@@ -12,7 +12,9 @@ const extraData = {}; // todo
 
 const GalleryUpload = (props, ref) => {
     const { maxGalleries, maxOriginFileSize } = productGenerator;
-    const { galleries } = props;
+    // const { galleries } = props;
+    const [localGalleries, setLocalGalleries] = useState([...props.galleries]);
+    // const [local]
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const compressOptions = useSelector((state) => state.meta.imageReducers.compress.gallery);
@@ -37,21 +39,43 @@ const GalleryUpload = (props, ref) => {
         onChange: async ({ file, fileList }) => {
             // 只上传前maxGalleries张
             /* eslint-disable */
-            fileList = fileList.slice(-maxGalleries);
+            // fileList = fileList.slice(-maxGalleries);
             /* eslint-enable */
+            // console.log('before compress');
+            // console.log(galleries);
+            // const _galleries = galleries;
+            // const index = galleries.findIndex((item) => item.uid === file.uid);
+            // console.log('index = ' + index);
+            // if (index !== -1) {
+            //     console.log('return');
+            //     return;
+            // }
+            // console.log('continue');
 
-            const index = fileList.findIndex((item) => item.uid === file.uid);
-            if (index !== -1) {
-                fileList.splice(index, 1);
-                const thumb = await selectFileImage(file.originFileObj || file, maxOriginFileSize, compressOptions);
-                /* eslint-disable */
-                file.url = thumb;
-                file.thumbUrl = thumb;
-                /* eslint-enable */
-                fileList.push(file);
-                const handleChange = props.onChange;
-                handleChange(fileList);
+            // console.log(file);
+            // console.log(file.uid);
+            if (fileList.length > maxGalleries) {
+                message.error('只能上传最多3张图片');
+                return;
             }
+
+            console.log('gallery length = ' + galleries.length);
+            if (galleries.length >= maxGalleries) {
+                galleries.shift();
+            }
+
+            // const index = fileList.findIndex((item) => item.uid === file.uid);
+            // fileList.splice(index, 1);
+            const thumb = await selectFileImage(file.originFileObj || file, maxOriginFileSize, compressOptions);
+            /* eslint-disable */
+            file.url = thumb;
+            file.thumbUrl = thumb;
+            /* eslint-enable */
+            console.log('push file');
+            console.log(file);
+            galleries.push(file);
+            const handleChange = props.onChange;
+            handleChange(galleries);
         },
 
         beforeUpload: () => {
@@ -77,8 +101,8 @@ const GalleryUpload = (props, ref) => {
 
     return (
         <div className="gallery-upload">
-            <Upload fileList={galleries} {...uploadProps} ref={ref}>
-                {galleries.length < maxGalleries ? (
+            <Upload fileList={localGalleries} {...uploadProps} ref={ref}>
+                {localGalleries.length < maxGalleries ? (
                     <p className="gallery-upload-body">
                         <Icon type="plus" />
                         <span>

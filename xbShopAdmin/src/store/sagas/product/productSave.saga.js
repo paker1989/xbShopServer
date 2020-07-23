@@ -17,10 +17,10 @@ export function* saveProductSaga(reqObj) {
 
     const formData = new FormData();
 
+    console.log(galleries);
     formData.set('categories', categories);
     formData.set('productName', productName);
     formData.set('shortDscp', shortDscp);
-    // formData.set('specs', specs); // JSON.stringify(specs)
     setObjectArray(formData, 'specs', specs);
     formData.set('galleries', galleries);
     formData.set('isOffShelf', isOffShelf ? 0 : 1);
