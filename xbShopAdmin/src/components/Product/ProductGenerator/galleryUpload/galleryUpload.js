@@ -12,8 +12,8 @@ const extraData = {}; // todo
 
 const GalleryUpload = (props, ref) => {
     const { maxGalleries, maxOriginFileSize } = productGenerator;
-    // const { galleries } = props;
-    const [localGalleries, setLocalGalleries] = useState([...props.galleries]);
+    const { galleries } = props;
+    const [localGalleries, setLocalGalleries] = useState([...galleries]);
     // const [local]
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
@@ -31,15 +31,16 @@ const GalleryUpload = (props, ref) => {
             setPreviewVisible(true);
         },
         onRemove: (file) => {
-            const index = galleries.findIndex((item) => item.uid === file.uid);
-            galleries.splice(index, 1);
-            props.onChange(galleries);
+            const index = localGalleries.findIndex((item) => item.uid === file.uid);
+            localGalleries.splice(index, 1);
+            // props.onChange(localGalleries);
+            setLocalGalleries(localGalleries);
             return true;
         },
         onChange: async ({ file, fileList }) => {
             // 只上传前maxGalleries张
             /* eslint-disable */
-            // fileList = fileList.slice(-maxGalleries);
+            fileList = fileList.slice(-maxGalleries);
             /* eslint-enable */
             // console.log('before compress');
             // console.log(galleries);
@@ -54,28 +55,31 @@ const GalleryUpload = (props, ref) => {
 
             // console.log(file);
             // console.log(file.uid);
-            if (fileList.length > maxGalleries) {
-                message.error('只能上传最多3张图片');
-                return;
-            }
 
-            console.log('gallery length = ' + galleries.length);
-            if (galleries.length >= maxGalleries) {
-                galleries.shift();
-            }
+            // if (fileList.length > maxGalleries) {
+            //     message.error('只能上传最多3张图片');
+            //     return;
+            // }
 
-            // const index = fileList.findIndex((item) => item.uid === file.uid);
-            // fileList.splice(index, 1);
-            const thumb = await selectFileImage(file.originFileObj || file, maxOriginFileSize, compressOptions);
-            /* eslint-disable */
-            file.url = thumb;
-            file.thumbUrl = thumb;
-            /* eslint-enable */
-            console.log('push file');
-            console.log(file);
-            galleries.push(file);
-            const handleChange = props.onChange;
-            handleChange(galleries);
+            // console.log('gallery length = ' + galleries.length);
+            // if (galleries.length >= maxGalleries) {
+            //     galleries.shift();
+            // }
+            const newGalleries = fileList.map(async (item) => {
+                console.log('loop');
+                const thumb = await selectFileImage(item.originFileObj || item, maxOriginFileSize, compressOptions);
+                /* eslint-disable */
+                item.url = thumb;
+                item.thumbUrl = thumb;
+                /* eslint-enable */
+                console.log('push file');
+                console.log(item);
+                return item;
+                // galleries.push(file);
+                // const handleChange = props.onChange;
+                // handleChange(galleries);
+            });
+            setLocalGalleries(newGalleries);
         },
 
         beforeUpload: () => {
