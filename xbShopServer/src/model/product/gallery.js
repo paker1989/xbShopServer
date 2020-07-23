@@ -17,7 +17,7 @@ Gallery.init(
         isDeleted: {
             type: DataTypes.TINYINT,
             allowNull: false,
-            defaultValue: 0
+            defaultValue: 0,
         },
     },
     {

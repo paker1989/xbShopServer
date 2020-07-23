@@ -7,13 +7,12 @@ const { uploadImg } = require('../../core/upload');
  * @param {*} ctx
  */
 const saveProduct = async (ctx) => {
-    console.log('received save product');
-    console.log(ctx.body.galleries);
-    const { galleries } = ctx.body;
+    // console.log(ctx.request.files);
+    console.log(ctx.request.files.galleries.name);
 
-    const galleryUrls = await uploadImg(galleries);
+    // const galleryUrls = await uploadImg(ctx.request.files);
 
-    const savedProduct = await ProductDAO.save(ctx.request.body);
+    // const savedProduct = await ProductDAO.save(ctx.request.body);
     // if (true) {
     //     Resolve.info(ctx, 'save succeed');
     // } else {

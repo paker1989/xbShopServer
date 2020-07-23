@@ -19,16 +19,18 @@ export function* saveProductSaga(reqObj) {
     formData.set('productName', productName);
     formData.set('shortDscp', shortDscp);
     setObjectArray(formData, 'specs', specs);
-    formData.set(
-        'galleries',
-        galleries.map((gallery) => ({ file: gallery.compressed, name: gallery.name }))
-    );
+    // formData.set(
+    //     'galleries',
+    //     galleries.map((gallery) => ({ file: gallery.compressed, name: gallery.name }))
+    // );
+    galleries.forEach((gallery) => formData.append('galleries', gallery.compressed, gallery.name));
     formData.set('isOffShelf', isOffShelf ? 0 : 1);
     formData.set('comment', comment);
     formData.set('detailDscp', detailDscp);
 
     console.log(galleries.map((gallery) => ({ file: gallery.compressed, name: gallery.name })));
     console.log(formData.get('galleries'));
+    formData.append('gallery_', 'test');
 
     try {
         const res = yield axios.post(getRequestUrl('product', 'save'), formData, {

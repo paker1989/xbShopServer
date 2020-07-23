@@ -7,12 +7,10 @@ const category = {
 
 const product = {
     prefix: 'product',
-    keys: {
-        
-    }
-}
+    keys: {},
+};
 
 module.exports = {
     category,
-    product
+    product,
 };

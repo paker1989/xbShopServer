@@ -3,7 +3,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const dateFormat = require('../utils/dateFormat.js');
+// const dateFormat = require('../utils/dateFormat.js');
 
 const config = require('../config/config');
 
@@ -25,12 +25,12 @@ const mkdirFile = (path) => {
     });
 };
 
-//Save file
-const saveFile = async (file, path) => {
+// Save file
+const saveFile = async (file, savePath) => {
     return new Promise((resolve, reject) => {
-        let render = fs.createReadStream(file);
+        const render = fs.createReadStream(file);
         // Create a write stream
-        let upStream = fs.createWriteStream(path);
+        const upStream = fs.createWriteStream(savePath);
         render.pipe(upStream);
         upStream.on('finish', () => {
             resolve(path);
@@ -46,7 +46,7 @@ const saveFile = async (file, path) => {
  * ps Generate file name SKD_date
  *     File paths are stored according to year and month
  */
-const uploadImg = async (galleries) => {
+const uploadImg1 = async (files) => {
     var time = Date.parse(new Date());
     let date = dateFormat.dateFormat(time, 'yyyyMMddhhmmss');
     let file = files;
@@ -70,6 +70,15 @@ const uploadImg = async (galleries) => {
                 error_message: 'Failed to upload file!',
             };
         });
+};
+
+const uploadImg = async (galleries) => {
+    galleries.map(async (item) => {
+        const dir = path.resolve(__dirname, '../../static/upload/gallery');
+        const savePath = path.resolve(dir, `${Date.now()}.png`);
+        await mkdirFile(dir);
+        await saveFile(item.file, savePath);
+    });
 };
 
 module.exports = {
