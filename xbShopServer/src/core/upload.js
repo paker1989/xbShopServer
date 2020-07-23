@@ -4,12 +4,10 @@
 const fs = require('fs');
 const path = require('path');
 const dateFormat = require('../utils/dateFormat.js');
-const upload = {
-    UPLOAD: '/upload',
-    IMAGE: '/image/',
-    FILE: '/file/',
-    MAXFILESIZE: 200 * 1024 * 1024, //Upload file size
-};
+
+const config = require('../config/config');
+
+const { upload } = config;
 // Create a file directory
 const mkdirFile = (path) => {
     let pathList = path.split('/');
@@ -28,7 +26,7 @@ const mkdirFile = (path) => {
 };
 
 //Save file
-const saveFile = (file, path) => {
+const saveFile = async (file, path) => {
     return new Promise((resolve, reject) => {
         let render = fs.createReadStream(file);
         // Create a write stream
@@ -48,10 +46,10 @@ const saveFile = (file, path) => {
  * ps Generate file name SKD_date
  *     File paths are stored according to year and month
  */
-const uploadImg = async (ctx) => {
+const uploadImg = async (galleries) => {
     var time = Date.parse(new Date());
     let date = dateFormat.dateFormat(time, 'yyyyMMddhhmmss');
-    let file = ctx.request.files.file;
+    let file = files;
     let fileName = 'SKD_ ' + upload.UPLOAD + upload.IMAGE; //Upload and save directory
     let fileYear = date.substring(4, 8) + '/' + date.substring(8, 10);
     let tail = file.name == 'blob' ? 'png' : file.name.split('.').pop();

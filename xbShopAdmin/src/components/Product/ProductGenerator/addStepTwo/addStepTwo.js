@@ -38,7 +38,7 @@ const Core = (props) => {
         form.validateFields((errors, values) => {
             if (!errors) {
                 // dispatch(ProductActionCreator.submitAddProductStep({ ...values, currentStep: 2 }));
-                dispatch(ProductActionCreator.saveEditedProduct({...values}));
+                dispatch(ProductActionCreator.saveEditedProduct({ ...values }));
             }
         });
     };

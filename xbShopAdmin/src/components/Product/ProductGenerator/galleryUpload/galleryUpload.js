@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-import { Upload, Icon, Modal, message } from 'antd';
+import { Upload, Icon, Modal } from 'antd';
 import { useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
@@ -13,8 +13,6 @@ const extraData = {}; // todo
 const GalleryUpload = (props, ref) => {
     const { maxGalleries, maxOriginFileSize } = productGenerator;
     const { galleries } = props;
-    const [localGalleries, setLocalGalleries] = useState([...galleries]);
-    // const [local]
     const [previewVisible, setPreviewVisible] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const compressOptions = useSelector((state) => state.meta.imageReducers.compress.gallery);
@@ -31,10 +29,9 @@ const GalleryUpload = (props, ref) => {
             setPreviewVisible(true);
         },
         onRemove: (file) => {
-            const index = localGalleries.findIndex((item) => item.uid === file.uid);
-            localGalleries.splice(index, 1);
-            // props.onChange(localGalleries);
-            setLocalGalleries(localGalleries);
+            const index = galleries.findIndex((item) => item.uid === file.uid);
+            galleries.splice(index, 1);
+            props.onChange(galleries);
             return true;
         },
         onChange: async ({ file, fileList }) => {
@@ -42,44 +39,30 @@ const GalleryUpload = (props, ref) => {
             /* eslint-disable */
             fileList = fileList.slice(-maxGalleries);
             /* eslint-enable */
-            // console.log('before compress');
-            // console.log(galleries);
-            // const _galleries = galleries;
-            // const index = galleries.findIndex((item) => item.uid === file.uid);
-            // console.log('index = ' + index);
-            // if (index !== -1) {
-            //     console.log('return');
-            //     return;
-            // }
-            // console.log('continue');
 
-            // console.log(file);
-            // console.log(file.uid);
-
-            // if (fileList.length > maxGalleries) {
-            //     message.error('只能上传最多3张图片');
-            //     return;
-            // }
-
-            // console.log('gallery length = ' + galleries.length);
-            // if (galleries.length >= maxGalleries) {
-            //     galleries.shift();
-            // }
-            const newGalleries = fileList.map(async (item) => {
-                console.log('loop');
-                const thumb = await selectFileImage(item.originFileObj || item, maxOriginFileSize, compressOptions);
+            const index = fileList.findIndex((item) => item.uid === file.uid);
+            if (index !== -1) {
+                const { thumb, fileObj } = await selectFileImage(
+                    file.originFileObj || file,
+                    maxOriginFileSize,
+                    compressOptions
+                );
+                console.log(thumb);
+                console.log(fileObj);
                 /* eslint-disable */
-                item.url = thumb;
-                item.thumbUrl = thumb;
+                file.url = thumb;
+                file.thumbUrl = thumb;
+                file.compressed = fileObj;
                 /* eslint-enable */
-                console.log('push file');
-                console.log(item);
-                return item;
-                // galleries.push(file);
-                // const handleChange = props.onChange;
-                // handleChange(galleries);
-            });
-            setLocalGalleries(newGalleries);
+                console.log('gallery length = ' + galleries.length);
+                if (galleries.length >= maxGalleries) {
+                    galleries.shift();
+                }
+                galleries.push(file);
+
+                const handleChange = props.onChange;
+                handleChange(galleries);
+            }
         },
 
         beforeUpload: () => {
@@ -105,8 +88,8 @@ const GalleryUpload = (props, ref) => {
 
     return (
         <div className="gallery-upload">
-            <Upload fileList={localGalleries} {...uploadProps} ref={ref}>
-                {localGalleries.length < maxGalleries ? (
+            <Upload fileList={galleries} {...uploadProps} ref={ref}>
+                {galleries.length < maxGalleries ? (
                     <p className="gallery-upload-body">
                         <Icon type="plus" />
                         <span>

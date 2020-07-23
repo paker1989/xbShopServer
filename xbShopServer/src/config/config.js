@@ -25,4 +25,10 @@ module.exports = {
             keepExtensions: true,
         },
     },
+    upload: {
+        UPLOAD: '/upload',
+        IMAGE: '/image/',
+        FILE: '/file/',
+        MAXFILESIZE: 200 * 1024 * 1024, //Upload file size
+    };
 };

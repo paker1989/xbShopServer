@@ -28,7 +28,23 @@ export function resizeMe(img, type, compressOptions) {
     canvas.height = _height;
     ctx.drawImage(img, 0, 0, _width, _height);
     const _type = type === 'jpg' ? 'jpeg' : type;
-    return canvas.toDataURL(`image/${_type}`, qualityRatio); // 这里的0.7值的是图片的质量
+
+    const thumb = canvas.toDataURL(`image/${_type}`, qualityRatio);
+    return new Promise((resolve) => {
+        canvas.toBlob(
+            (blob) => {
+                console.log(blob);
+                console.log(thumb);
+                resolve({
+                    fileObj: blob,
+                    thumb,
+                });
+            },
+            `image/${_type}`,
+            qualityRatio
+        );
+    });
+    // return canvas.toDataURL(`image/${_type}`, qualityRatio); // 这里的0.7值的是图片的质量
 }
 
 /**
@@ -44,7 +60,7 @@ export function selectFileImage(file, compressSizeLimit, compressOptions) {
         if (file.size <= compressSizeLimit) {
             reader.readAsDataURL(file);
             reader.onload = (e) => {
-                resolve(e.target.result);
+                resolve({ fileObj: file, thumb: e.target.result });
             };
         } else {
             reader.readAsArrayBuffer(file);
@@ -55,8 +71,9 @@ export function selectFileImage(file, compressSizeLimit, compressOptions) {
                 const image = new Image();
                 image.src = blobURL;
                 image.onload = () => {
-                    const thumb = resizeMe(image, fileType, compressOptions); // 获得的路径是将图片转换成了base64
-                    resolve(thumb);
+                    // const thumb = await resizeMe(image, fileType, compressOptions); // 获得的路径是将图片转换成了base64
+                    // resolve(thumb);
+                    resizeMe(image, fileType, compressOptions).then((data) => resolve(data));
                 };
             };
         }

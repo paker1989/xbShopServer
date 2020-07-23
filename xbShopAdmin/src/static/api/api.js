@@ -4,6 +4,6 @@ module.exports = {
         update: 'update',
     },
     product: {
-        save: 'save'
-    }
+        save: 'save',
+    },
 };
