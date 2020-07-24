@@ -1,5 +1,10 @@
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
+
+const md5sum = crypto.createHash('md5');
+
+const { getFormattedDate } = require('../core/dateHelper');
 
 module.exports = {
     environnement: 'dev',
@@ -26,22 +31,23 @@ module.exports = {
         formidable: {
             maxFileSize: 3 * 3 * 1024 * 1024,
             keepExtensions: true,
-            uploadDir: path.resolve(__dirname, '../../static/upload/img'),
+            uploadDir: path.join(__dirname, '../../static/upload/img'),
             onFileBegin: (name, file) => {
+                const { year, month, day } = getFormattedDate(new Date()); //
                 const parsed = path.parse(file.name);
-                const dir = path.join(__dirname, '../../static/upload/img', 'data');
+                const dir = path.resolve(__dirname, '../../static/upload/img', `${year}/${month}/${day}`);
                 if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir);
+                    fs.mkdirSync(dir, { recursive: true });
                 }
-                file.name = `${parsed.name}_${Date.now()}${parsed.ext}`;
-                file.path = `${dir}/${parsed.name}_${Date.now()}${parsed.ext}`;
+                file.name = `${md5sum.update(parsed.name).digest('hex')}_${year}${month}${day}${parsed.ext}`;
+                file.path = `${dir}/${file.name}`;
             },
         },
     },
-    upload: {
-        UPLOAD: '/upload',
-        IMAGE: '/image/',
-        FILE: '/file/',
-        MAXFILESIZE: 200 * 1024 * 1024, // Upload file size
-    },
+    // upload: {
+    //     UPLOAD: '/upload',
+    //     IMAGE: '/image/',
+    //     FILE: '/file/',
+    //     MAXFILESIZE: 200 * 1024 * 1024, // Upload file size
+    // },
 };
