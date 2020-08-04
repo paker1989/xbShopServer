@@ -64,7 +64,8 @@ class CategoryDAO {
                         { transaction: t }
                     );
                     return tmp.toJSON();
-                } else if (isDeleted === 1) {
+                }
+                if (isDeleted === 1) {
                     // console.log('is deleted case');
                     // delete case
                     const nbDeleted = await CategoryModel.update(
@@ -77,21 +78,20 @@ class CategoryDAO {
                         }
                     );
                     return { nbDeleted };
-                } else {
-                    // update case
-                    const nbUpdated = await CategoryModel.update(
-                        {
-                            label: categoryName,
-                            isActive,
-                            isDeleted,
-                        },
-                        {
-                            where: { idCategory },
-                            transaction: t,
-                        }
-                    );
-                    return { nbUpdated };
                 }
+                // update case
+                const nbUpdated = await CategoryModel.update(
+                    {
+                        label: categoryName,
+                        isActive,
+                        isDeleted,
+                    },
+                    {
+                        where: { idCategory },
+                        transaction: t,
+                    }
+                );
+                return { nbUpdated };
             });
         } catch (err) {
             throw new HttpException(err.message);

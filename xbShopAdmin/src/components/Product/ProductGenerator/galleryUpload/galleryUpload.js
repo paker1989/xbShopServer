@@ -47,14 +47,12 @@ const GalleryUpload = (props, ref) => {
                     maxOriginFileSize,
                     compressOptions
                 );
-                console.log(thumb);
-                console.log(fileObj);
+                // console.log(thumb);
+                // console.log(fileObj);
                 /* eslint-disable */
                 file.url = thumb;
                 file.thumbUrl = thumb;
                 file.compressed = fileObj;
-                /* eslint-enable */
-                console.log('gallery length = ' + galleries.length);
                 if (galleries.length >= maxGalleries) {
                     galleries.shift();
                 }

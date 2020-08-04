@@ -43,7 +43,6 @@ const RichTextEditor = (
     },
     ref
 ) => {
-    console.log(ref);
     const { onChange, richContent } = props;
     const [editorState, setEditorState] = useState(BraftEditor.createEditorState(richContent));
     const [langProps, setLangProps] = useState(language || globalLocale);
@@ -70,7 +69,7 @@ const RichTextEditor = (
         if (!file) {
             return false;
         }
-        const thumbUrl = await selectFileImage(
+        const { thumb } = await selectFileImage(
             file.originFileObj || file,
             productGenerator.maxOriginFileSize,
             compressOptions
@@ -79,7 +78,7 @@ const RichTextEditor = (
             ContentUtils.insertMedias(editorState, [
                 {
                     type: 'IMAGE',
-                    url: thumbUrl,
+                    url: thumb,
                 },
             ])
         );

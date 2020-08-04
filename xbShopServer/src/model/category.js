@@ -37,7 +37,7 @@ Category.init(
     },
     {
         sequelize,
-        tableName: 'category',
+        tableName: 'a_category',
         modelName: 'category',
     }
 );

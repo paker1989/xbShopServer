@@ -33,7 +33,7 @@ Product.init(
             allowNull: true,
         },
         detailDscp: {
-            type: DataTypes.BLOB,
+            type: DataTypes.BLOB('long'),
             allowNull: true,
         },
         isOffshelf: {

@@ -28,8 +28,8 @@ export function* saveProductSaga(reqObj) {
     formData.set('comment', comment);
     formData.set('detailDscp', detailDscp);
 
-    console.log(galleries.map((gallery) => ({ file: gallery.compressed, name: gallery.name })));
-    console.log(formData.get('galleries'));
+    // console.log(galleries.map((gallery) => ({ file: gallery.compressed, name: gallery.name })));
+    // console.log(formData.get('galleries'));
     formData.append('gallery_', 'test');
 
     try {

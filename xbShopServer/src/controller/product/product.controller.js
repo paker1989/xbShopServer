@@ -1,28 +1,30 @@
 const ProductDAO = require('../../dao/product.dao');
 const { Resolve } = require('../../core/resolve');
 const { HttpException } = require('../../core/httpException');
-const { uploadImg } = require('../../core/upload');
+
+const { normalizeGalleryPath } = require('../../core/dateHelper');
+const { basePath, port } = require('../../config/config');
+
 /**
- * update category
+ * save product
  * @param {*} ctx
  */
 const saveProduct = async (ctx) => {
-    console.log(ctx.request.files);
-    console.log(ctx.request.body);
+    try {
+        const requestBody = ctx.request.body;
+        const galleries = Array.isArray(ctx.request.files.galleries)
+            ? ctx.request.files.galleries
+            : [ctx.request.files.galleries];
 
-    /* 
-      1. get full url from ctx.request.files, return { thumbnail, galleries }
-      2. save galleries
-      3. save product
-    */
-    // const galleryUrls = await uploadImg(ctx.request.files);
+        requestBody.galleryPaths = galleries.map((file) => ({
+            url: normalizeGalleryPath(`${basePath}:${port}`, file.name),
+        }));
 
-    // const savedProduct = await ProductDAO.save(ctx.request.body);
-    // if (true) {
-    //     Resolve.info(ctx, 'save succeed');
-    // } else {
-    //     throw new HttpException('update category failed');
-    // }
+        await ProductDAO.save(requestBody);
+        Resolve.info(ctx, 'save succeed');
+    } catch (err) {
+        throw new HttpException(err.message);
+    }
 };
 
 module.exports = {
