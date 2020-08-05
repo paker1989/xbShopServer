@@ -53,6 +53,9 @@ export default ({ intl }) => {
         isOffShelf: {
             valuePropName: 'checked',
         },
+        comment: {
+            initialValue: '',
+        },
         specs: {
             /**
              * global check on specs

@@ -47,7 +47,6 @@ Category.afterCreate((instance, options) => {
         options.transaction.afterCommit(() => {
             redisClient.del(getCacheKey(prefix, keys.list));
         });
-        return;
     }
 });
 
@@ -56,15 +55,14 @@ Category.afterBulkUpdate((options) => {
         options.transaction.afterCommit(() => {
             redisClient.del(getCacheKey(prefix, keys.list));
         });
-        return;
     }
 });
 
 /**
  * ignore createdAt and updatedAt for toJSON
  */
-Category.prototype.toJSON = function () {
-    var values = Object.assign({}, this.get());
+Category.prototype.toJSON = () => {
+    const values = { ...this.get() };
 
     delete values.createdAt;
     delete values.updatedAt;

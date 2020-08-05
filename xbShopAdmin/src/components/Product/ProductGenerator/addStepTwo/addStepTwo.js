@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { Form, Button, Switch, Row, Col, Input } from 'antd';
+import { Form, Button, Switch, Row, Col, Input, message } from 'antd';
 import { injectIntl } from 'react-intl';
+// import { withRouter } from 'react-router-dom';
 
 import RichTextEditor from '../../../Common/RichTextEditor/richTextEditor';
 
@@ -15,19 +16,22 @@ import getValidators from '../validators';
 const Core = (props) => {
     const { form, intl, backendStatus, backendMsg } = props;
     const { getFieldDecorator } = form;
-    const dispatch = useDispatch();
     const validators = getValidators({ intl });
+
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         switch (backendStatus) {
-            case ProductActionType._EDIT_PRODUCT_SUCCESS:
-                return;
             case ProductActionType._EDIT_PRODUCT_FAIL:
-                return;
+                dispatch(ProductActionCreator.resetBackendStatus()); // reset backend status
+                message.error(backendMsg);
+                setLoading(false);
+                break;
             default:
-                return;
+                break;
         }
-    }, [backendStatus]);
+    }, [backendStatus, backendMsg]);
 
     const goPrev = (e) => {
         e.preventDefault();
@@ -35,9 +39,9 @@ const Core = (props) => {
     };
     const onSubmitStepTwo = (e) => {
         e.preventDefault();
+        setLoading(true);
         form.validateFields((errors, values) => {
             if (!errors) {
-                // dispatch(ProductActionCreator.submitAddProductStep({ ...values, currentStep: 2 }));
                 dispatch(ProductActionCreator.saveEditedProduct({ ...values }));
             }
         });
@@ -57,7 +61,10 @@ const Core = (props) => {
                 )}
             </Form.Item>
             <Form.Item label={intl.formatMessage({ id: 'common.note' })}>
-                {getFieldDecorator('comment')(
+                {getFieldDecorator(
+                    'comment',
+                    validators.comment
+                )(
                     <Input.TextArea
                         placeholder={intl.formatMessage({ id: 'common.note' })}
                         className="fixed-vert"
@@ -73,7 +80,7 @@ const Core = (props) => {
             </Form.Item>
             <Row>
                 <Col xs={{ span: 24 }} sm={{ span: 18, offset: 6 }}>
-                    <Button type="primary" htmlType="submit" style={{ marginRight: 20 }}>
+                    <Button type="primary" htmlType="submit" style={{ marginRight: 20 }} loading={loading}>
                         {intl.formatMessage({ id: 'common.click.confirm' })}
                     </Button>
                     <Button type="default" onClick={goPrev}>

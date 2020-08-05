@@ -15,10 +15,19 @@ export const saveEditedProduct = (rawFormData) => ({
     payload: rawFormData,
 });
 
+export const resetBackendStatus = () => ({
+    type: ProductActionType._RESET_ADD_PRODUCT_STATE,
+    payload: {
+        backendStatus: '',
+        backendMsg: '',
+    },
+});
+
 export const resetAddProduct = () => ({
     type: ProductActionType._RESET_ADD_PRODUCT_STATE,
     payload: {
         currentStep: 0,
+        idProduct: -1,
         productName: '',
         shortDscp: '',
         categories: [],

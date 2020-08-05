@@ -7,7 +7,10 @@ const category = {
 
 const product = {
     prefix: 'product',
-    keys: {},
+    keys: {
+        bref: 'bref',
+        detail: 'detail',
+    },
 };
 
 module.exports = {

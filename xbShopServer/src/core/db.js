@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
 const config = require('../config/config');
-const { FALSE } = require('node-sass');
 
 const { dialect, host, port, user, password, dbName } = config.database;
 const sequelize = new Sequelize(dbName, user, password, {
@@ -14,7 +13,7 @@ const sequelize = new Sequelize(dbName, user, password, {
     },
 });
 
-sequelize.sync({ force: true });
+sequelize.sync({ force: false });
 
 module.exports = {
     sequelize,

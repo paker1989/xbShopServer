@@ -2,6 +2,7 @@ import React from 'react';
 import { Result, Button, Descriptions, Row, Col, Tag } from 'antd';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import useProductHL from '../../../../utils/hooks/useProductHighLight';
 import { productGenerator } from '../../../../static/data/componentMeta/product/addProductMeta';
@@ -11,7 +12,7 @@ import './addStepThree.scss';
 
 const AddStepThree = ({ intl }) => {
     const dispatch = useDispatch();
-    const reEdite = () => dispatch(productActionCreator.reEditeProductSpec);
+    const reEdite = () => dispatch(productActionCreator.reEditeProductSpec());
 
     const productHighLight = useProductHL(true);
 
@@ -27,7 +28,9 @@ const AddStepThree = ({ intl }) => {
                                 <FormattedMessage id="common.return.edition" />
                             </Button>,
                             <Button size="large" key="2">
-                                <FormattedMessage id="common.return.list" />
+                                <NavLink to="/dashboard/productList">
+                                    <FormattedMessage id="common.return.list" />
+                                </NavLink>
                             </Button>,
                         ]}
                     />
@@ -55,7 +58,7 @@ const AddStepThree = ({ intl }) => {
                             </Descriptions.Item>
                             <Descriptions.Item label={intl.formatMessage({ id: 'product.category' })}>
                                 {productHighLight.categories.map((item) => (
-                                    <Tag title={item.label} key={item.id} color="purple">
+                                    <Tag title={item.label} key={item.idCategory} color="purple">
                                         {item.label}
                                     </Tag>
                                 ))}

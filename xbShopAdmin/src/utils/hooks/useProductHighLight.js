@@ -15,12 +15,11 @@ const useProductHL = (useStore, product) => {
         productState = product;
     }
     const { productName, shortDscp, isOffShelf, categories, specs, comment } = productState;
-
     return {
         productName,
         shortDscp,
         isOffShelf,
-        categories: categoryList.filter((item) => Array.prototype.includes.call(categories, item.id)),
+        categories: categoryList.filter((item) => Array.prototype.includes.call(categories, item.idCategory)),
         comment,
         priceRange: getPriceRange(specs.map((spec) => Number(spec.price))),
         stockRange: getStockRange(specs.map((spec) => Number(spec.stockNumber))),

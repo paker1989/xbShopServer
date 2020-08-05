@@ -5,6 +5,7 @@ import * as ProductActionType from '../../actionType/productActionType';
 
 const initialState = {
     currentStep: 0,
+    idProduct: -1,
     productName: '',
     shortDscp: '',
     categories: [],
@@ -25,6 +26,14 @@ export default (state = initialState, action) => {
             return { ...state, ...action.payload };
         case ProductActionType._RESET_ADD_PRODUCT_STATE:
             return { ...state, ...action.payload };
+        case ProductActionType._EDIT_PRODUCT_SUCCESS:
+            return { ...state, currentStep: 2 };
+        case ProductActionType._EDIT_PRODUCT_FAIL:
+            return {
+                ...state,
+                backendStatus: ProductActionType._EDIT_PRODUCT_FAIL,
+                backendMsg: action.payload.errorMsg,
+            };
         default:
             return state;
     }

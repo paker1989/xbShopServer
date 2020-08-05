@@ -4,11 +4,11 @@
  * https://github.com/jarnugirdhar/antd-react-multistep-form/blob/master/src/components/FinalForm.js
  */
 import React from 'react';
-import { Card, Row, Col, Button } from 'antd';
+import { Card, Row, Col, Button, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { useUnmount } from 'ahooks';
-import { NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
 import HLPageMeta from '../../../static/data/componentMeta/product/addProductMeta';
@@ -21,7 +21,7 @@ import * as productActionCreator from '../../../store/action/productActions';
 
 import './productGenerator.scss';
 
-const ProductGenerator = ({ intl }) => {
+const ProductGenerator = ({ intl, history }) => {
     const dispatch = useDispatch();
     const currentStep = useSelector((state) => state.product.addProductReducer.currentStep);
     const { description, title, steps } = HLPageMeta.productGenerator;
@@ -42,16 +42,28 @@ const ProductGenerator = ({ intl }) => {
         }
     };
 
+    const returnToList = (e) => {
+        e.preventDefault();
+        Modal.confirm({
+            title: intl.formatMessage({ id: 'product.list.cancel.edition' }),
+            okText: intl.formatMessage({ id: 'common.yes' }),
+            cancelText: intl.formatMessage({ id: 'common.cancel' }),
+            onOk: () => {
+                history.push('/dashboard/productList');
+            },
+        });
+    };
+
     return (
         <div className="product-generator">
             <HLPageHeader
                 title={intl.formatMessage({ id: title })}
                 description={intl.formatMessage({ id: description })}
                 extra={
-                    <Button type="primary">
-                        <NavLink to="/dashboard/productList">
-                            {intl.formatMessage({ id: 'common.return.list' })}
-                        </NavLink>
+                    <Button type="primary" onClick={returnToList}>
+                        {/* <NavLink to="/dashboard/productList"> */}
+                        {intl.formatMessage({ id: 'common.return.list' })}
+                        {/* </NavLink> */}
                     </Button>
                 }
             />
@@ -73,4 +85,4 @@ const ProductGenerator = ({ intl }) => {
     );
 };
 
-export default injectIntl(ProductGenerator);
+export default withRouter(injectIntl(ProductGenerator));

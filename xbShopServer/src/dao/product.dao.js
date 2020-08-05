@@ -6,6 +6,7 @@ const Gallery = require('../model/product/gallery');
 
 class ProductDAO {
     static async save(ctxBody) {
+        let pk;
         const {
             categories,
             specs,
@@ -20,8 +21,8 @@ class ProductDAO {
         const _specs = JSON.parse(specs);
 
         // save case
-        if (idProduct === -1) {
-            sequelize.transaction(async (t) => {
+        if (idProduct === '-1') {
+            pk = await sequelize.transaction(async (t) => {
                 const newProduct = await ProductModel.create(
                     {
                         productName,
@@ -51,9 +52,15 @@ class ProductDAO {
                 });
                 await Gallery.bulkCreate(galleryPaths, { transaction: t });
 
-                // return newProduct.idProduct;
+                return newProduct.idProduct;
             });
         }
+
+        return (
+            await ProductModel.findByPk(pk, {
+                include: ['categories', 'specs', 'galleries'],
+            })
+        ).toJSON();
     }
 }
 

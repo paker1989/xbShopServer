@@ -33,8 +33,8 @@ export function resizeMe(img, type, compressOptions) {
     return new Promise((resolve) => {
         canvas.toBlob(
             (blob) => {
-                console.log(blob);
-                console.log(thumb);
+                // console.log(blob);
+                // console.log(thumb);
                 resolve({
                     fileObj: blob,
                     thumb,
