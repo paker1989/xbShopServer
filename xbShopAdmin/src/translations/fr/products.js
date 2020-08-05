@@ -40,4 +40,10 @@ export default {
     'product.list.header.title': 'Liste de produits',
     'product.list.header.subtitle': 'Vous pouvez trier, filtrer et rechercher parmi la liste de produits',
     'product.list.cancel.edition': "Êtes-vous sûr de renoncer à l'édition?",
+    'product.list.allproduct': 'Tous les produits',
+    'product.list.selling': 'En vente',
+    'product.list.soldout': 'Stock épuisé',
+    'product.list.offShelf': 'retiré de la vente',
+    'product.list.thumbnail': 'Miniature',
+    'product.list.shelfStatus': 'En vente',
 };

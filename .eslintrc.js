@@ -63,5 +63,7 @@ module.exports = {
         'no-underscore-dangle': ['off'],
         'import/prefer-default-export': ['off'],
         'react/jsx-fragments': ['off'],
+        'react/jsx-closing-tag-location': ['off'],
+        'import/no-unresolved': ['off'],
     },
 };

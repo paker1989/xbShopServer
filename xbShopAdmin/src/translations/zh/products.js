@@ -39,4 +39,10 @@ export default {
     'product.list.header.title': '产品列表',
     'product.list.header.subtitle': '您可以对产品列表进行排序, 过滤以及搜索',
     'product.list.cancel.edition': '您确定放弃这次编辑吗?',
+    'product.list.allproduct': '所有商品',
+    'product.list.selling': '出售中',
+    'product.list.soldout': '已售完',
+    'product.list.offShelf': '暂时下架',
+    'product.list.thumbnail': '商品图片',
+    'product.list.shelfStatus': '上架',
 };
