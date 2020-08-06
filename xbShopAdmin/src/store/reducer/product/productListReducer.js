@@ -3,7 +3,13 @@
  */
 // import * as ProductActionType from '../../actionType/productActionType';
 
-const initialState = {};
+const initialState = {
+    stockCreteria: '-1',
+    soldCreteria: '-1',
+    selectedProducts: [],
+    fetchedProducts: [],
+    totalCnt: 0,
+};
 
 export default (state = initialState, action) => {
     switch (action.type) {

@@ -4,7 +4,7 @@ const { HttpException } = require('../../core/httpException');
 
 const { normalizeGalleryPath } = require('../../core/dateHelper');
 const { basePath, port } = require('../../config/config');
-const { deleteProductCache } = require('../../core/cache/helper/productHelper');
+const { deleteProductCache, } = require('../../core/cache/helper/productHelper');
 
 /**
  * save product
@@ -36,6 +36,15 @@ const saveProduct = async (ctx) => {
     }
 };
 
+const fetchList = async (ctx) => {
+    try {
+
+    } catch (err) {
+        throw new HttpException(err.message);
+    }
+};
+
 module.exports = {
     saveProduct,
+    fetchList,
 };

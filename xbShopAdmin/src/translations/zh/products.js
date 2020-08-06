@@ -45,4 +45,5 @@ export default {
     'product.list.offShelf': '暂时下架',
     'product.list.thumbnail': '商品图片',
     'product.list.shelfStatus': '上架',
+    'product.list.solded': '销量',
 };

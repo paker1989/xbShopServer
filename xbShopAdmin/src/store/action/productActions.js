@@ -38,3 +38,8 @@ export const resetAddProduct = () => ({
         detailDscp: '',
     },
 });
+
+export const fetchProductList = (params) => ({
+    type: ProductActionType._FETCH_PRODUCT,
+    payload: params,
+});

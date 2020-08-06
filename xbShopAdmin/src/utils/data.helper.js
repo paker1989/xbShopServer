@@ -49,3 +49,19 @@ export function setObjectArray(formData, key, array) {
     formData.set(key, JSON.stringify(array));
     // array.forEach((item) => formData.get(key).push(JSON.stringify(item)));
 }
+
+/**
+ *
+ * @param {*} currentPage
+ * @param {*} pageSize
+ * @param {*} nbPageFetched
+ */
+export function getProductFetchPagination(currentPage, nbSiblingFetched, pageSize) {
+    const startPage = Math.max(currentPage - nbSiblingFetched, 1);
+    const endPage = startPage + 2 * nbSiblingFetched;
+
+    return {
+        page: startPage,
+        limit: pageSize * (2 * nbSiblingFetched + 1),
+    };
+}

@@ -46,4 +46,5 @@ export default {
     'product.list.offShelf': 'retiré de la vente',
     'product.list.thumbnail': 'Miniature',
     'product.list.shelfStatus': 'En vente',
+    'product.list.solded': 'Vendu',
 };

@@ -9,3 +9,5 @@ export const _SAVE_PRODUCT = '_SAVE_PRODUCT';
 export const _EDIT_PRODUCT_SUCCESS = '_EDIT_PRODUCT_SUCCESS';
 
 export const _EDIT_PRODUCT_FAIL = '_EDIT_PRODUCT_FAIL';
+
+export const _FETCH_PRODUCT = '_FETCH_PRODUCT';

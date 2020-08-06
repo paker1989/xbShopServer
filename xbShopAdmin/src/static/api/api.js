@@ -5,5 +5,6 @@ module.exports = {
     },
     product: {
         save: 'save',
+        fetchList: 'fetchList',
     },
 };
