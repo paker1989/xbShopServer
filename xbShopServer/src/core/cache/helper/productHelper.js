@@ -1,8 +1,10 @@
 const { product } = require('../cachePrefix');
-const redisClient = require('../redis');
+const { redisClient } = require('../redis');
+const { async } = require('../redisHelper');
 
+const { lRangeAsync } = async;
 const { prefix, keys } = product;
-const { bref, detail } = keys;
+const { bref, detail, ids } = keys;
 
 /**
  * return product bref redis key;
@@ -17,6 +19,16 @@ const getBrefProductKey = (pk) => `${prefix}:${bref}:${pk}`;
  * @param {*} pk
  */
 const getDetailProductKey = (pk) => `${prefix}:${detail}:${pk}`;
+
+/**
+ * return sorted product id cache key
+ * e.g.: product:stock:desc:ids
+ * @param {*} sortedCreteria
+ * @param {*} sortedOrder
+ */
+const getSortedProductIdKey = (sortedCreteria, sortedOrder) => {
+    return `${prefix}:${sortedCreteria}:${sortedOrder}:${ids}`;
+};
 
 /**
  * delete all product id caches
@@ -39,6 +51,17 @@ const deleteProductCache = (idProduct, isNew) => {
     }
 };
 
+/**
+ * get all cached sorted product ids
+ * @param {*} sortedCreteria
+ * @param {*} sortedOrder
+ */
+const getSortedProductIds = async (sortedCreteria, sortedOrder) => {
+    const productIds = await lRangeAsync.call(redisClient, getSortedProductIdKey(sortedCreteria, sortedOrder), 0, -1);
+    return productIds;
+};
+
 module.exports = {
     deleteProductCache,
+    getSortedProductIds,
 };

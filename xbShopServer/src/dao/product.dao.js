@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const ProductModel = require('../model/product/product');
 const { sequelize } = require('../core/db');
 
@@ -16,6 +17,7 @@ class ProductDAO {
             comment,
             detailDscp,
             galleryPaths,
+            totalStock,
             idProduct = -1,
         } = ctxBody;
         const _specs = JSON.parse(specs);
@@ -30,6 +32,7 @@ class ProductDAO {
                         comment,
                         detailDscp,
                         isOffshelf,
+                        totalStock,
                         thumbnail: galleryPaths[0].url,
                     },
                     {
@@ -61,6 +64,42 @@ class ProductDAO {
                 include: ['categories', 'specs', 'galleries'],
             })
         ).toJSON();
+    }
+
+    /**
+     * return all sorted product ids
+     * @param {*} sortedCretia
+     * @param {*} sortedOrder
+     */
+    static async fetchProductIds(sortedCretia, sortedOrder) {
+        // console.log(sortedCretia);
+        // console.log(sortedOrder);
+        let orderStatement;
+        if (sortedCretia === 'NA' || sortedOrder === 'NA') {
+            orderStatement = [];
+        } else {
+            switch (sortedCretia) {
+                case 'stock':
+                    orderStatement = ['totalStock', sortedOrder];
+                    break;
+                default:
+                    orderStatement = [sortedCretia, sortedOrder];
+                    break;
+            }
+        }
+
+        const sortedIds = (
+            await ProductModel.findAll({
+                attributes: ['idProduct'],
+                where: {
+                    isDeleted: {
+                        [Op.eq]: 0,
+                    },
+                },
+                order: [orderStatement],
+            })
+        ).map((u) => u.get('idProduct'));
+        return sortedIds;
     }
 }
 

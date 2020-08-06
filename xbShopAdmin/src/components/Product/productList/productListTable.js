@@ -25,10 +25,10 @@ const ProductListTable = ({ intl }) => {
         // console.log('mount');
         dispatch(
             ProductActionCreator.fetchProductList({
-                limit: -1,
-                page: 0,
-                sortedCreteria: '-1',
-                sortedOrder: '',
+                limit: 50,
+                page: 1,
+                sortedCreteria: 'stock',
+                sortedOrder: 'desc',
                 sku: '',
                 name: '',
             })

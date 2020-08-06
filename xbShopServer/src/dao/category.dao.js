@@ -66,7 +66,6 @@ class CategoryDAO {
                     return tmp.toJSON();
                 }
                 if (isDeleted === 1) {
-                    // console.log('is deleted case');
                     // delete case
                     const nbDeleted = await CategoryModel.update(
                         {

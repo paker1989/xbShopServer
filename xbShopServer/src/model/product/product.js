@@ -24,6 +24,11 @@ Product.init(
             allowNull: true,
             field: 'short_dscp',
         },
+        isDeleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
+        },
         comment: {
             type: DataTypes.TEXT,
             allowNull: true,
@@ -38,6 +43,11 @@ Product.init(
         },
         isOffshelf: {
             type: DataTypes.TINYINT,
+            allowNull: false,
+            defaultValue: 0,
+        },
+        totalStock: {
+            type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0,
         },

@@ -61,7 +61,7 @@ Category.afterBulkUpdate((options) => {
 /**
  * ignore createdAt and updatedAt for toJSON
  */
-Category.prototype.toJSON = () => {
+Category.prototype.toJSON = function toJSON() {
     const values = { ...this.get() };
 
     delete values.createdAt;

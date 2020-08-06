@@ -19,11 +19,17 @@ export function* saveProductSaga(reqObj) {
     formData.set('categories', categories);
     formData.set('productName', productName);
     formData.set('shortDscp', shortDscp);
-    setObjectArray(formData, 'specs', specs);
-    galleries.forEach((gallery) => formData.append('galleries', gallery.compressed, gallery.name));
     formData.set('isOffShelf', isOffShelf ? 0 : 1);
     formData.set('comment', comment);
     formData.set('detailDscp', detailDscp);
+    /* eslint-disable */
+    formData.set(
+        'totalStock',
+        specs.reduce((sum, cur) => (sum += cur.stockNumber), 0)
+    );
+    /* eslint-enable */
+    setObjectArray(formData, 'specs', specs);
+    galleries.forEach((gallery) => formData.append('galleries', gallery.compressed, gallery.name));
 
     try {
         const res = yield axios.post(getRequestUrl('product', 'save'), formData, {

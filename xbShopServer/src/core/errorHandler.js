@@ -9,7 +9,7 @@ const errorHandler = async (ctx, next) => {
         await next();
     } catch (err) {
         console.log('captured by errorHandler');
-        // console.log(err.message);
+        console.log(err);
         if (err instanceof HttpException) {
             const { msg, statusCode } = err.get();
             Resolve.info(ctx, msg, statusCode);

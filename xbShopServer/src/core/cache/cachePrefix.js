@@ -10,6 +10,7 @@ const product = {
     keys: {
         bref: 'bref',
         detail: 'detail',
+        ids: 'ids',
     },
 };
 
