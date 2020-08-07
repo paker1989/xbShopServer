@@ -73,7 +73,7 @@ const fetchList = async (ctx) => {
         slices.forEach((id) => {
             data.push(fetchProductMeta(id));
         });
-        Resolve.json(ctx, await Promise.all(data));
+        Resolve.json(ctx, { products: await Promise.all(data), totalCnt: ids.length });
     } catch (err) {
         throw new HttpException(err.message);
     }

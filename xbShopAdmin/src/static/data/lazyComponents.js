@@ -6,7 +6,7 @@ const lazies = {
         routes: [
             {
                 key: 'addProduct',
-                link: 'addProduct',
+                link: 'addProduct/:idProduct?',
                 source: lazy(() => import('../../components/Product/productGenerator/productGenerator')),
             },
             {

@@ -96,7 +96,7 @@ class ProductDAO {
                         [Op.eq]: 0,
                     },
                 },
-                order: [orderStatement],
+                order: orderStatement.length === 0 ? [] : [orderStatement],
             })
         ).map((u) => u.get('idProduct'));
         return sortedIds;

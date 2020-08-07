@@ -10,21 +10,26 @@ export function* fetchProductSaga(reqObj) {
         // const res = yield axios.get(getRequestUrl('product', 'fetchList'), { ...reqObj.payload });
         console.log(res);
         if (res && res.status === 200) {
+            const { products, totalCnt } = res.data;
             yield put({
-                type: ProductActionType._EDIT_PRODUCT_SUCCESS,
+                type: ProductActionType._FETCH_PRODUCT_SUCCESS,
+                payload: {
+                    fetchedProducts: products,
+                    totalCnt,
+                },
             });
         } else {
             yield put({
-                type: ProductActionType._EDIT_PRODUCT_FAIL,
+                type: ProductActionType._FETCH_PRODUCT_FAIL,
                 payload: {
-                    errorMsg: res.data,
+                    errorMsg: res.statusText,
                 },
             });
         }
     } catch (error) {
         // console.log(error);
         yield put({
-            type: ProductActionType._EDIT_PRODUCT_FAIL,
+            type: ProductActionType._FETCH_PRODUCT_FAIL,
             payload: {
                 errorMsg: error.message,
             },

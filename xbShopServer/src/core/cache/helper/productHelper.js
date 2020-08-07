@@ -27,6 +27,7 @@ const getDetailProductKey = (pk) => `${prefix}:${detail}:${pk}`;
  * @param {*} sortedOrder
  */
 const getSortedProductIdKey = (sortedCreteria, sortedOrder) => {
+    console.log(`${prefix}:${sortedCreteria}:${sortedOrder}:${ids}`);
     return `${prefix}:${sortedCreteria}:${sortedOrder}:${ids}`;
 };
 
