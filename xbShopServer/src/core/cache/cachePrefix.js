@@ -8,7 +8,7 @@ const category = {
 const product = {
     prefix: 'product',
     keys: {
-        bref: 'bref',
+        meta: 'meta',
         detail: 'detail',
         ids: 'ids',
     },

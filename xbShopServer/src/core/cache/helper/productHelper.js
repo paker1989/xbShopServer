@@ -2,16 +2,16 @@ const { product } = require('../cachePrefix');
 const { redisClient } = require('../redis');
 const { async } = require('../redisHelper');
 
-const { lRangeAsync } = async;
+const { lRangeAsync, rpushAsync, getAsync } = async;
 const { prefix, keys } = product;
-const { bref, detail, ids } = keys;
+const { meta, detail, ids } = keys;
 
 /**
- * return product bref redis key;
- * format: product:bref:{{pk}}
+ * return product meta redis key;
+ * format: product:meta:{{pk}}
  * @param {*} pk
  */
-const getBrefProductKey = (pk) => `${prefix}:${bref}:${pk}`;
+const getProductMetaKey = (pk) => `${prefix}:${meta}:${pk}`;
 
 /**
  * return product detail redis key;
@@ -46,7 +46,7 @@ const deleteProductCache = (idProduct, isNew) => {
     if (isNew) {
         deleteListIdCache();
     } else {
-        redisClient.del(getBrefProductKey(idProduct));
+        redisClient.del(getProductMetaKey(idProduct));
         redisClient.del(getDetailProductKey(idProduct));
     }
 };
@@ -61,11 +61,51 @@ const getSortedProductIds = async (sortedCreteria, sortedOrder) => {
     return productIds;
 };
 
-const setSortedProductIds = async (sortedCreteria, sortedOrder, result) => {
-    redisClient.l
-}
+/**
+ * set sorted product ids in redis
+ * @param {*} sortedCreteria
+ * @param {*} sortedOrder
+ * @param {*} result
+ */
+const setSortedProductIds = (sortedCreteria, sortedOrder, result) => {
+    const sortedCacheKey = getSortedProductIdKey(sortedCreteria, sortedOrder);
+    redisClient.del(sortedCacheKey, (err) => {
+        if (!err) {
+            rpushAsync.call(redisClient, sortedCacheKey, result);
+        }
+    });
+};
+
+/**
+ * return cached product meta object
+ * @param {*} idProduct
+ */
+const getProductMeta = async (idProduct) => {
+    const productMetaKey = getProductMetaKey(idProduct);
+    const reply = await getAsync.call(redisClient, productMetaKey);
+    if (reply) {
+        return JSON.parse(reply);
+    }
+    return null;
+};
+
+/**
+ * cache product meta object
+ * @param {*} idProduct
+ * @param {*} productMeta
+ */
+const setProductMeta = (idProduct, productMeta) => {
+    if (idProduct < 0 || !productMeta) {
+        return;
+    }
+    const productMetaKey = getProductMetaKey(idProduct);
+    redisClient.set(productMetaKey, JSON.stringify(productMeta));
+};
 
 module.exports = {
     deleteProductCache,
     getSortedProductIds,
+    setSortedProductIds,
+    getProductMeta,
+    setProductMeta,
 };

@@ -44,14 +44,19 @@ const ProductGenerator = ({ intl, history }) => {
 
     const returnToList = (e) => {
         e.preventDefault();
-        Modal.confirm({
-            title: intl.formatMessage({ id: 'product.list.cancel.edition' }),
-            okText: intl.formatMessage({ id: 'common.yes' }),
-            cancelText: intl.formatMessage({ id: 'common.cancel' }),
-            onOk: () => {
-                history.push('/dashboard/productList');
-            },
-        });
+        if (currentStep === 2) {
+            // no need to confirm when edition is finished
+            history.push('/dashboard/productList');
+        } else {
+            Modal.confirm({
+                title: intl.formatMessage({ id: 'product.list.cancel.edition' }),
+                okText: intl.formatMessage({ id: 'common.yes' }),
+                cancelText: intl.formatMessage({ id: 'common.cancel' }),
+                onOk: () => {
+                    history.push('/dashboard/productList');
+                },
+            });
+        }
     };
 
     return (

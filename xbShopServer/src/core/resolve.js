@@ -5,6 +5,7 @@ class Resolve {
     }
 
     static json(ctx, data, msg = 'success', statusCode = 200) {
+        // console.log('resolve json');
         ctx.status = statusCode;
         ctx.message = msg;
         ctx.body = data;

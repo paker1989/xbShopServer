@@ -101,6 +101,24 @@ class ProductDAO {
         ).map((u) => u.get('idProduct'));
         return sortedIds;
     }
+
+    /**
+     * fetch product object for list display
+     * @param {*} idProduct
+     */
+    static async fetchProductMeta(idProduct) {
+        if (idProduct < 0) {
+            return null;
+        }
+        return (
+            await ProductModel.findByPk(idProduct, {
+                include: [{ model: ProductSpec, as: 'specs', attributes: { exclude: ['createdAt', 'updatedAt'] } }],
+                attributes: {
+                    exclude: ['shortDscp', 'detailDscp', 'comment', 'createdAt', 'updatedAt'],
+                },
+            })
+        ).toJSON();
+    }
 }
 
 module.exports = ProductDAO;
