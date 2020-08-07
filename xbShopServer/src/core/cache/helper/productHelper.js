@@ -61,6 +61,10 @@ const getSortedProductIds = async (sortedCreteria, sortedOrder) => {
     return productIds;
 };
 
+const setSortedProductIds = async (sortedCreteria, sortedOrder, result) => {
+    redisClient.l
+}
+
 module.exports = {
     deleteProductCache,
     getSortedProductIds,

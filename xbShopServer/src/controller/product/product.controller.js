@@ -4,7 +4,7 @@ const { HttpException } = require('../../core/httpException');
 
 const { normalizeGalleryPath } = require('../../core/dateHelper');
 const { basePath, port } = require('../../config/config');
-const { deleteProductCache, getSortedProductIds } = require('../../core/cache/helper/productHelper');
+const { deleteProductCache, getSortedProductIds, setSortedProductIds } = require('../../core/cache/helper/productHelper');
 
 /**
  * save product
@@ -39,16 +39,15 @@ const saveProduct = async (ctx) => {
 const fetchList = async (ctx) => {
     try {
         let ids;
-        console.log(ctx.request.body);
         const { sortedCreteria = 'NA', sortedOrder = 'NA' } = ctx.request.body;
         ids = await getSortedProductIds(sortedCreteria, sortedOrder);
-        console.log(ids);
+        // console.log(ids);
         if (!ids || ids.length === 0) {
             ids = await ProductDAO.fetchProductIds(sortedCreteria, sortedOrder);
-            console.log(ids[0]);
+
         }
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         throw new HttpException(err.message);
     }
 };

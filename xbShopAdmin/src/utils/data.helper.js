@@ -58,7 +58,7 @@ export function setObjectArray(formData, key, array) {
  */
 export function getProductFetchPagination(currentPage, nbSiblingFetched, pageSize) {
     const startPage = Math.max(currentPage - nbSiblingFetched, 1);
-    const endPage = startPage + 2 * nbSiblingFetched;
+    // const endPage = startPage + 2 * nbSiblingFetched;
 
     return {
         page: startPage,
