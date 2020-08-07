@@ -112,9 +112,25 @@ class ProductDAO {
         }
         return (
             await ProductModel.findByPk(idProduct, {
-                include: [{ model: ProductSpec, as: 'specs', attributes: { exclude: ['createdAt', 'updatedAt'] } }],
+                include: [
+                    {
+                        model: ProductSpec,
+                        as: 'specs',
+                        where: {
+                            isDeleted: {
+                                [Op.eq]: 0,
+                            },
+                        },
+                        attributes: { exclude: ['createdAt', 'updatedAt'] },
+                    },
+                ],
                 attributes: {
                     exclude: ['shortDscp', 'detailDscp', 'comment', 'createdAt', 'updatedAt'],
+                },
+                where: {
+                    isDeleted: {
+                        [Op.eq]: 0,
+                    },
                 },
             })
         ).toJSON();

@@ -5,7 +5,6 @@ import { Table } from 'antd';
 import { useMount } from 'ahooks';
 
 import * as ProductActionCreator from '../../../store/action/productActions';
-import { pageSize, nbSiblingFetch } from '../../../static/data/componentMeta/product/productListMeta';
 
 const ProductListTable = ({ intl }) => {
     // states
@@ -35,7 +34,7 @@ const ProductListTable = ({ intl }) => {
         );
     });
 
-    //methods
+    // methods
     const handleTableChange = (pagination, filters, sorter) => {
         console.log(pagination);
         console.log(filters);
@@ -89,6 +88,22 @@ const ProductListTable = ({ intl }) => {
         },
     ];
 
+    const expandedRowRender = (record, index, indent, expanded) => {
+        console.log(record);
+        const specColumn = [
+            { title: intl.formatMessage({ id: 'product.spec.sku' }), dataIndex: 'sku', key: 'sku' },
+            { title: intl.formatMessage({ id: 'product.spec.type' }), dataIndex: 'specType', key: 'specType' },
+            {
+                title: intl.formatMessage({ id: 'product.spec.price' }),
+                dataIndex: 'price',
+                key: 'price',
+            },
+            { title: intl.formatMessage({ id: 'product.spec.stock' }), dataIndex: 'stockNumber', key: 'stockNumber' },
+        ];
+        const data = [];
+        return <Table columns={specColumn} dataSource={data} pagination={false} />;
+    };
+
     return (
         <div>
             <Table
@@ -101,6 +116,7 @@ const ProductListTable = ({ intl }) => {
                 pagination={{
                     total: totalCnt,
                 }}
+                expandedRowRender={expandedRowRender}
             />
         </div>
     );
