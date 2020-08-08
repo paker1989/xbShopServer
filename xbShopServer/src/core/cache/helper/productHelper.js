@@ -6,6 +6,11 @@ const { lRangeAsync, rpushAsync, getAsync } = async;
 const { prefix, keys } = product;
 const { meta, detail, ids } = keys;
 
+const config = {
+    expire: {
+        productMeta: 60 * 60 * 4, // 4 小时
+    },
+};
 /**
  * return product meta redis key;
  * format: product:meta:{{pk}}
@@ -26,8 +31,11 @@ const getDetailProductKey = (pk) => `${prefix}:${detail}:${pk}`;
  * @param {*} sortedCreteria
  * @param {*} sortedOrder
  */
-const getSortedProductIdKey = (sortedCreteria, sortedOrder) => {
-    console.log(`${prefix}:${sortedCreteria}:${sortedOrder}:${ids}`);
+const getSortedProductIdKey = (sortedCreteria, sortedOrder, filter) => {
+    // console.log(`${prefix}:${sortedCreteria}:${sortedOrder}:${ids}`);
+    if (filter) {
+        return `${prefix}:${sortedCreteria}:${sortedOrder}:${filter}:${ids}`;
+    }
     return `${prefix}:${sortedCreteria}:${sortedOrder}:${ids}`;
 };
 
@@ -57,8 +65,13 @@ const deleteProductCache = (idProduct, isNew) => {
  * @param {*} sortedCreteria
  * @param {*} sortedOrder
  */
-const getSortedProductIds = async (sortedCreteria, sortedOrder) => {
-    const productIds = await lRangeAsync.call(redisClient, getSortedProductIdKey(sortedCreteria, sortedOrder), 0, -1);
+const getSortedProductIds = async (sortedCreteria, sortedOrder, filter) => {
+    const productIds = await lRangeAsync.call(
+        redisClient,
+        getSortedProductIdKey(sortedCreteria, sortedOrder, filter),
+        0,
+        -1
+    );
     return productIds;
 };
 
@@ -68,10 +81,10 @@ const getSortedProductIds = async (sortedCreteria, sortedOrder) => {
  * @param {*} sortedOrder
  * @param {*} result
  */
-const setSortedProductIds = (sortedCreteria, sortedOrder, result) => {
-    const sortedCacheKey = getSortedProductIdKey(sortedCreteria, sortedOrder);
+const setSortedProductIds = (sortedCreteria, sortedOrder, filter, result) => {
+    const sortedCacheKey = getSortedProductIdKey(sortedCreteria, sortedOrder, filter);
     redisClient.del(sortedCacheKey, (err) => {
-        if (!err) {
+        if (!err && result.length > 0) {
             rpushAsync.call(redisClient, sortedCacheKey, result);
         }
     });
@@ -100,7 +113,8 @@ const setProductMeta = (idProduct, productMeta) => {
         return;
     }
     const productMetaKey = getProductMetaKey(idProduct);
-    redisClient.set(productMetaKey, JSON.stringify(productMeta));
+    const expired = config.expire.productMeta;
+    redisClient.set(productMetaKey, JSON.stringify(productMeta), 'EX', expired);
 };
 
 module.exports = {

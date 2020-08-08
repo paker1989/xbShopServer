@@ -41,5 +41,10 @@ export const resetAddProduct = () => ({
 
 export const fetchProductList = (params) => ({
     type: ProductActionType._FETCH_PRODUCT,
-    payload: params,
+    payload: { limit: 50, page: 1, sortedCreteria: 'NA', sortedOrder: 'NA', ...params },
+});
+
+export const selectProducts = (keys) => ({
+    type: ProductActionType._LIST_SELECT_KEYS,
+    payload: { selectedProducts: keys },
 });

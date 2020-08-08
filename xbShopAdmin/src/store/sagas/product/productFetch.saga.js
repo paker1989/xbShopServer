@@ -27,7 +27,6 @@ export function* fetchProductSaga(reqObj) {
             });
         }
     } catch (error) {
-        // console.log(error);
         yield put({
             type: ProductActionType._FETCH_PRODUCT_FAIL,
             payload: {

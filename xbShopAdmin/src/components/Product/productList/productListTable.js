@@ -1,57 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, message, Row, Col, Switch, Popconfirm } from 'antd';
 import { NavLink } from 'react-router-dom';
 
-import { useMount } from 'ahooks';
-
-import * as ProductActionCreator from '../../../store/action/productActions';
 import * as ProductActionType from '../../../store/actionType/productActionType';
+import * as ProductActionCreator from '../../../store/action/productActions';
 
 import './productList.scss';
 
-const ProductListTable = ({ intl }) => {
+const ProductListTable = ({ intl, fetchedProducts = [], loading }) => {
     // states
     const dispatch = useDispatch();
-
-    // const stockCreteria = useSelector((state) => state.product.productListReducer.stockCreteria);
-    // const soldCreteria = useSelector((state) => state.product.productListReducer.soldCreteria);
     const selectedProducts = useSelector((state) => state.product.productListReducer.selectedProducts);
-    const fetchedProducts = useSelector((state) => state.product.productListReducer.fetchedProducts);
     const totalCnt = useSelector((state) => state.product.productListReducer.totalCnt);
-    const backendMsg = useSelector((state) => state.product.productListReducer.backendMsg);
-    const backendStatus = useSelector((state) => state.product.productListReducer.backendStatus);
-
-    const [loading, setLoading] = useState(false);
-
-    // side-effects
-    useMount(() => {
-        // console.log('mount');
-        dispatch(
-            ProductActionCreator.fetchProductList({
-                limit: 50,
-                page: 1,
-                sortedCreteria: 'ssdsdsdd',
-                sortedOrder: 'NA',
-                sku: '',
-                name: '',
-            })
-        );
-    });
-
-    useEffect(() => {
-        if (backendStatus === ProductActionType._FETCH_PRODUCT_FAIL) {
-            message.error(backendMsg);
-            dispatch(ProductActionType._RESET_LIST_BACKEND_STATUS);
-        }
-    }, [backendMsg, backendStatus]);
-
-    useEffect(() => {
-        if (fetchedProducts && fetchedProducts.length > 0) {
-            setLoading(false);
-        }
-    }, [fetchedProducts]);
 
     // methods
     const handleTableChange = (pagination, filters, sorter) => {
@@ -63,7 +25,7 @@ const ProductListTable = ({ intl }) => {
     const productSelections = {
         selectedRowKeys: selectedProducts,
         onChange: (selectedRowKeys) => {
-            console.log('on selection');
+            dispatch(ProductActionCreator.selectProducts(selectedRowKeys));
         },
     };
 
@@ -184,6 +146,7 @@ const ProductListTable = ({ intl }) => {
                 }}
                 rowKey={(record) => record.idProduct}
                 expandedRowRender={expandedRowRender}
+                scroll={{ x: 1000 }}
             />
         </div>
     );

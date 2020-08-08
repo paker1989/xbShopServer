@@ -71,10 +71,11 @@ class ProductDAO {
      * @param {*} sortedCretia
      * @param {*} sortedOrder
      */
-    static async fetchProductIds(sortedCretia, sortedOrder) {
+    static async fetchProductIds(sortedCretia, sortedOrder, filter) {
         // console.log(sortedCretia);
         // console.log(sortedOrder);
         let orderStatement;
+        let filterCondition = {};
         if (sortedCretia === 'NA' || sortedOrder === 'NA') {
             orderStatement = [];
         } else {
@@ -88,6 +89,35 @@ class ProductDAO {
             }
         }
 
+        if (filter) {
+            // sell, soldout, offShelf
+            switch (filter) {
+                case 'sell':
+                    filterCondition = {
+                        totalStock: {
+                            [Op.gt]: 0,
+                        },
+                    };
+                    break;
+                case 'soldout':
+                    filterCondition = {
+                        totalStock: {
+                            [Op.eq]: 0,
+                        },
+                    };
+                    break;
+                case 'offShelf':
+                    filterCondition = {
+                        isOffshelf: {
+                            [Op.eq]: 1,
+                        },
+                    };
+                    break;
+                default:
+                    break;
+            }
+        }
+
         const sortedIds = (
             await ProductModel.findAll({
                 attributes: ['idProduct'],
@@ -95,6 +125,7 @@ class ProductDAO {
                     isDeleted: {
                         [Op.eq]: 0,
                     },
+                    ...filterCondition,
                 },
                 order: orderStatement.length === 0 ? [] : [orderStatement],
             })
