@@ -24,6 +24,7 @@ const ProductList = ({ intl }) => {
     const backendStatus = useSelector((state) => state.product.productListReducer.backendStatus);
 
     const [loading, setLoading] = useState(fetchedProducts.length === 0);
+    const [currentTab, setCurrentTab] = useState('all');
 
     const { title, description } = productListMeta;
 
@@ -33,21 +34,7 @@ const ProductList = ({ intl }) => {
         dispatch(ProductActionCreator.fetchProductList({}));
     });
 
-    // useEffect(() => {
-    //     if (fetchedProducts && fetchedProducts.length > 0) {
-    //         setLoading(false);
-    //     }
-    // }, [fetchedProducts]);
-
     useEffect(() => {
-        // if (backendStatus === ProductActionType._FETCH_PRODUCT_FAIL) {
-        //     message.error(backendMsg);
-        //     dispatch({ type: ProductActionType._RESET_LIST_BACKEND_STATUS });
-        //     setLoading(false);
-        // } else if (backendStatus === ProductActionType._FETCH_PRODUCT_SUCCESS) {
-        //     dispatch({ type: ProductActionType._RESET_LIST_BACKEND_STATUS });
-        //     setLoading(false);
-        // }
         switch (backendStatus) {
             case ProductActionType._FETCH_PRODUCT_FAIL:
             case ProductActionType._BULK_UPDATE_FAIL:
@@ -67,9 +54,10 @@ const ProductList = ({ intl }) => {
 
     const onTabClick = (tab) => {
         setLoading(true);
+        setCurrentTab(tab);
         dispatch(
             ProductActionCreator.fetchProductList({
-                filter: tab, // sell, soldout, offShelf
+                filter: tab, // all, sell, soldout, offShelf
             })
         );
     };
@@ -80,6 +68,7 @@ const ProductList = ({ intl }) => {
             ProductActionCreator.bulkUpdateProducts({
                 action,
                 pks: selectedItems,
+                filter: currentTab,
             })
         );
     };
@@ -104,7 +93,7 @@ const ProductList = ({ intl }) => {
                     </Row>
                     <Row>
                         <Col>
-                            <Tabs defaultActiveKey="all" onTabClick={onTabClick}>
+                            <Tabs activeKey={currentTab} onTabClick={onTabClick}>
                                 <TabPane
                                     tab={intl.formatMessage({ id: 'product.list.allproduct' })}
                                     key="all"

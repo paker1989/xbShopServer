@@ -15,5 +15,6 @@ export default {
     'common.id': 'ID',
     'common.edit': '编辑',
     'common.offShelf': '下架',
+    'common.onShelf': '上架',
     'common.bulk.action': '批量操作',
 };

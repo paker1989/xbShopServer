@@ -7,7 +7,7 @@ import * as ProductActionCreator from '../../../store/action/productActions';
 
 const { Option } = Select;
 
-const BulkActionSelector = ({ intl, onSelect }) => {
+const BulkActionSelector = ({ onSelect }) => {
     const selectedItems = useSelector((state) => state.product.productListReducer.selectedProducts);
     const bulkAction = useSelector((state) => state.product.productListReducer.bulkAction);
 
@@ -33,6 +33,9 @@ const BulkActionSelector = ({ intl, onSelect }) => {
             </Option>
             <Option key="offShelf">
                 <FormattedMessage id="common.offShelf" />
+            </Option>
+            <Option key="onShelf">
+                <FormattedMessage id="common.onShelf" />
             </Option>
         </Select>
     );

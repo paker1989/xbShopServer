@@ -15,5 +15,6 @@ export default {
     'common.id': 'ID',
     'common.edit': 'Editer',
     'common.offShelf': 'retirez de la vente',
+    'common.onShelf': 'Mettez en vente',
     'common.bulk.action': 'Action en masse',
 };

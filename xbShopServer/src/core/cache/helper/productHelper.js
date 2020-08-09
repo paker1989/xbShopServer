@@ -1,6 +1,7 @@
 const { product } = require('../cachePrefix');
 const { redisClient } = require('../redis');
 const { async } = require('../redisHelper');
+const { HttpException } = require('../../httpException');
 
 const { lRangeAsync, rpushAsync, getAsync } = async;
 const { prefix, keys } = product;
@@ -32,11 +33,65 @@ const getDetailProductKey = (pk) => `${prefix}:${detail}:${pk}`;
  * @param {*} sortedOrder
  */
 const getSortedProductIdKey = (sortedCreteria, sortedOrder, filter) => {
-    // console.log(`${prefix}:${sortedCreteria}:${sortedOrder}:${ids}`);
     if (filter) {
         return `${prefix}:${sortedCreteria}:${sortedOrder}:${filter}:${ids}`;
     }
     return `${prefix}:${sortedCreteria}:${sortedOrder}:${ids}`;
+};
+
+/**
+ * clean cache on bulk update
+ * @param {*} idProducts
+ */
+const cleanCacheOnBulkUpdate = (idProducts, action) => {
+    return new Promise((resolve) => {
+        if (!Array.isArray(idProducts)) {
+            /* eslint-disable */
+            idProducts = [idProducts];
+            /* eslint-enable */
+        }
+        /* eslint-disable */
+        const productMetaKeys = idProducts.map((pk) => getProductMetaKey(pk));
+        const productDetailKeys = idProducts.map((pk) => getDetailProductKey(pk));
+
+        let otherCacheKeyPattern = '';
+        switch (action) {
+            case 'delete':
+            case 'update': // for delete or multi update, delete all keys
+                otherCacheKeyPattern = `*${prefix}*${ids}`;
+                break;
+            case 'onShelf':
+                otherCacheKeyPattern = `*${prefix}*offShelf*${ids}`;
+                break;
+            default:
+                // delete filter related keys
+                // offShelf
+                otherCacheKeyPattern = `*${prefix}*${action}*${ids}`;
+                break;
+        }
+        /* eslint-enable */
+
+        // delete product meta & detail obj cache, detail obj cache,
+        redisClient
+            .multi()
+            .del(...productMetaKeys)
+            .del(...productDetailKeys)
+            .keys(otherCacheKeyPattern)
+            .exec((err, replies) => {
+                if (err) {
+                    throw new HttpException('clean cache on delete failed');
+                } else {
+                    const relatedCachedKeys = replies[2];
+                    if (relatedCachedKeys.length > 0) {
+                        redisClient.del(...relatedCachedKeys, () => {
+                            resolve(true);
+                        });
+                    } else {
+                        resolve(true);
+                    }
+                }
+            });
+    });
 };
 
 /**
@@ -49,15 +104,14 @@ const deleteListIdCache = () => {
 /**
  *  delete product cache when product is updated
  * @param {*} idProduct
- * @param {*} isNew
  */
-const deleteProductCache = (idProduct, isNew) => {
-    if (isNew) {
-        deleteListIdCache();
-    } else {
-        redisClient.del(getProductMetaKey(idProduct));
-        redisClient.del(getDetailProductKey(idProduct));
-    }
+const cleanProductCache = async (idProduct) => {
+    // if (isNew) {
+    //     deleteListIdCache();
+    // } else {
+    //     await cleanCacheOnBulkUpdate(idProduct, 'update'); // delete all cached pks & obj cache
+    // }
+    await cleanCacheOnBulkUpdate(idProduct, 'update'); // delete all cached pks & obj cache
 };
 
 /**
@@ -118,9 +172,10 @@ const setProductMeta = (idProduct, productMeta) => {
 };
 
 module.exports = {
-    deleteProductCache,
+    cleanProductCache,
     getSortedProductIds,
     setSortedProductIds,
     getProductMeta,
     setProductMeta,
+    cleanCacheOnBulkUpdate,
 };

@@ -5,11 +5,12 @@ const { HttpException } = require('../../core/httpException');
 const { normalizeGalleryPath } = require('../../core/dateHelper');
 const { basePath, port } = require('../../config/config');
 const {
-    deleteProductCache,
+    cleanProductCache,
     getSortedProductIds,
     setSortedProductIds,
 } = require('../../core/cache/helper/productHelper');
 const productHelper = require('../../core/cache/helper/productHelper');
+const { product } = require('../../../../xbShopAdmin/src/static/api/api');
 
 /**
  * save product
@@ -32,8 +33,9 @@ const saveProduct = async (ctx) => {
 
         if (typeof saved === 'object') {
             // delete cache
-            const isNew = idProduct === '-1';
-            deleteProductCache(saved.idProduct, isNew);
+            // const isNew = idProduct === '-1';
+            // await cleanProductCache(saved.idProduct, isNew);
+            await cleanProductCache(saved.idProduct);
         }
         Resolve.info(ctx, 'save succeed');
     } catch (err) {
@@ -61,9 +63,8 @@ const fetchList = async (ctx) => {
     try {
         let ids;
         const data = [];
-        const { sortedCreteria = 'NA', sortedOrder = 'NA', limit = 50, page = 1, filter } = ctx.request.body;
+        const { sortedCreteria = 'NA', sortedOrder = 'NA', limit = 50, page = 1, filter = 'all' } = ctx.request.body;
 
-        // console.log(filter);
         ids = await getSortedProductIds(sortedCreteria, sortedOrder, filter); // get cached sorted ids
         if (!ids || ids.length === 0) {
             // console.log('sorted product id cache not exists');
@@ -81,8 +82,13 @@ const fetchList = async (ctx) => {
     }
 };
 
+/**
+ *
+ * @param {*} ctx
+ */
+/* eslint-disable */
 const bulkUpdate = async (ctx) => {
-    // console.log(ctx.request.body);
+    /* eslint-enable */
     const { action, pks } = ctx.request.body;
     let updated = 0;
     switch (action) {
@@ -92,13 +98,20 @@ const bulkUpdate = async (ctx) => {
         case 'offShelf':
             updated = await ProductDAO.bulkUpdateProduct(pks, { isOffshelf: 1 });
             break;
+        case 'onShelf':
+            updated = await ProductDAO.bulkUpdateProduct(pks, { isOffshelf: 0 });
+            break;
         default:
             break;
     }
-    console.log(updated);
-    if (updated > 0) {
-        // to do
+
+    if (updated && updated.length > 0) {
+        const cleanRes = await productHelper.cleanCacheOnBulkUpdate(pks, action);
+        if (cleanRes) {
+            return fetchList(ctx);
+        }
     }
+
     Resolve.info(ctx, 'bulk update succeed');
 };
 

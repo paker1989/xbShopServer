@@ -53,7 +53,7 @@ export const selectProducts = (keys) => ({
  * bulk action on product lists
  * @param {*} param0
  */
-export const bulkUpdateProducts = ({ action, pks }) => ({
+export const bulkUpdateProducts = ({ action, pks, filter }) => ({
     type: ProductActionType._BULK_UPDATE_PRODUCT,
-    payload: { action, pks },
+    payload: { action, pks, filter },
 });

@@ -130,6 +130,7 @@ class ProductDAO {
                 order: orderStatement.length === 0 ? [] : [orderStatement],
             })
         ).map((u) => u.get('idProduct'));
+
         return sortedIds;
     }
 

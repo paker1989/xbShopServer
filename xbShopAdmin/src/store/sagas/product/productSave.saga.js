@@ -74,8 +74,8 @@ export function* bulkUpdateProductSaga(reqObj) {
             yield put({
                 type: ProductActionType._BULK_UPDATE_SUCCESS,
                 payload: {
-                    // fetchedProducts: products,
-                    // totalCnt,
+                    fetchedProducts: products,
+                    totalCnt,
                 },
             });
         } else {
