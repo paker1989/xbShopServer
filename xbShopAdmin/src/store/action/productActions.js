@@ -48,3 +48,12 @@ export const selectProducts = (keys) => ({
     type: ProductActionType._LIST_SELECT_KEYS,
     payload: { selectedProducts: keys },
 });
+
+/**
+ * bulk action on product lists
+ * @param {*} param0
+ */
+export const bulkUpdateProducts = ({ action, pks }) => ({
+    type: ProductActionType._BULK_UPDATE_PRODUCT,
+    payload: { action, pks },
+});

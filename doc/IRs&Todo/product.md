@@ -1,5 +1,9 @@
 ## opened
 - todo: save/update product cache clean
+- todo: bulk update cache handle & front-end update strategy
+- todo: pagination strategy after (bulk) update
+- todo: sort action;
+- todo: edit product & save;
 
 ## closed
 - 似乎product list页的backendstatus和productGenerator的status混在一起了。list里fetch失败后edit product会显示modal

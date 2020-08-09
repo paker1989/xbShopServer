@@ -60,3 +60,38 @@ export function* saveProductSaga(reqObj) {
         });
     }
 }
+
+/**
+ * bulk action on product. supported action: delete, off shelf
+ * @param {*} reqObj
+ */
+export function* bulkUpdateProductSaga(reqObj) {
+    try {
+        const res = yield axios.post(getRequestUrl('product', 'bulkUpdate'), { ...reqObj.payload });
+        // console.log(res);
+        if (res && res.status === 200) {
+            const { products, totalCnt } = res.data;
+            yield put({
+                type: ProductActionType._BULK_UPDATE_SUCCESS,
+                payload: {
+                    // fetchedProducts: products,
+                    // totalCnt,
+                },
+            });
+        } else {
+            yield put({
+                type: ProductActionType._BULK_UPDATE_FAIL,
+                payload: {
+                    errorMsg: res.statusText,
+                },
+            });
+        }
+    } catch (error) {
+        yield put({
+            type: ProductActionType._BULK_UPDATE_FAIL,
+            payload: {
+                errorMsg: error.message,
+            },
+        });
+    }
+}

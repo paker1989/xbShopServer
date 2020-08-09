@@ -63,7 +63,7 @@ const fetchList = async (ctx) => {
         const data = [];
         const { sortedCreteria = 'NA', sortedOrder = 'NA', limit = 50, page = 1, filter } = ctx.request.body;
 
-        console.log(filter);
+        // console.log(filter);
         ids = await getSortedProductIds(sortedCreteria, sortedOrder, filter); // get cached sorted ids
         if (!ids || ids.length === 0) {
             // console.log('sorted product id cache not exists');
@@ -81,7 +81,29 @@ const fetchList = async (ctx) => {
     }
 };
 
+const bulkUpdate = async (ctx) => {
+    // console.log(ctx.request.body);
+    const { action, pks } = ctx.request.body;
+    let updated = 0;
+    switch (action) {
+        case 'delete':
+            updated = await ProductDAO.bulkUpdateProduct(pks, { isDeleted: 1 });
+            break;
+        case 'offShelf':
+            updated = await ProductDAO.bulkUpdateProduct(pks, { isOffshelf: 1 });
+            break;
+        default:
+            break;
+    }
+    console.log(updated);
+    if (updated > 0) {
+        // to do
+    }
+    Resolve.info(ctx, 'bulk update succeed');
+};
+
 module.exports = {
     saveProduct,
     fetchList,
+    bulkUpdate,
 };

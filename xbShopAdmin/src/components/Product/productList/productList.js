@@ -40,13 +40,28 @@ const ProductList = ({ intl }) => {
     // }, [fetchedProducts]);
 
     useEffect(() => {
-        if (backendStatus === ProductActionType._FETCH_PRODUCT_FAIL) {
-            message.error(backendMsg);
-            dispatch({ type: ProductActionType._RESET_LIST_BACKEND_STATUS });
-            setLoading(false);
-        } else if (backendStatus === ProductActionType._FETCH_PRODUCT_SUCCESS) {
-            dispatch({ type: ProductActionType._RESET_LIST_BACKEND_STATUS });
-            setLoading(false);
+        // if (backendStatus === ProductActionType._FETCH_PRODUCT_FAIL) {
+        //     message.error(backendMsg);
+        //     dispatch({ type: ProductActionType._RESET_LIST_BACKEND_STATUS });
+        //     setLoading(false);
+        // } else if (backendStatus === ProductActionType._FETCH_PRODUCT_SUCCESS) {
+        //     dispatch({ type: ProductActionType._RESET_LIST_BACKEND_STATUS });
+        //     setLoading(false);
+        // }
+        switch (backendStatus) {
+            case ProductActionType._FETCH_PRODUCT_FAIL:
+            case ProductActionType._BULK_UPDATE_FAIL:
+                message.error(backendMsg);
+                dispatch({ type: ProductActionType._RESET_LIST_BACKEND_STATUS });
+                setLoading(false);
+                break;
+            case ProductActionType._FETCH_PRODUCT_SUCCESS:
+            case ProductActionType._BULK_UPDATE_SUCCESS:
+                dispatch({ type: ProductActionType._RESET_LIST_BACKEND_STATUS });
+                setLoading(false);
+                break;
+            default:
+                break;
         }
     }, [backendMsg, backendStatus]);
 
@@ -55,6 +70,16 @@ const ProductList = ({ intl }) => {
         dispatch(
             ProductActionCreator.fetchProductList({
                 filter: tab, // sell, soldout, offShelf
+            })
+        );
+    };
+
+    const handleBulkActionSelect = (action, selectedItems) => {
+        setLoading(true);
+        dispatch(
+            ProductActionCreator.bulkUpdateProducts({
+                action,
+                pks: selectedItems,
             })
         );
     };
@@ -74,7 +99,7 @@ const ProductList = ({ intl }) => {
                 <Card bordered={false}>
                     <Row>
                         <Col>
-                            <BulkActionSelector />
+                            <BulkActionSelector onSelect={handleBulkActionSelect} />
                         </Col>
                     </Row>
                     <Row>

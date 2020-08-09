@@ -166,6 +166,27 @@ class ProductDAO {
             })
         ).toJSON();
     }
+
+    /**
+     * bulk update
+     * @param {*} idProducts
+     * @param {*} operation
+     */
+    static async bulkUpdateProduct(idProducts = [], operation) {
+        if (!Array.isArray(idProducts)) {
+            // 如果是单个删除，则转化成list
+            /* eslint-disable */
+            idProducts = [idProducts];
+            /* eslint-enable */
+        }
+
+        const updatedRows = await ProductModel.update(operation, {
+            where: {
+                idProduct: idProducts,
+            },
+        });
+        return updatedRows;
+    }
 }
 
 module.exports = ProductDAO;

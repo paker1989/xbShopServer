@@ -6,8 +6,8 @@ import { getRequestUrl } from '../../../static/api';
 
 export function* fetchProductSaga(reqObj) {
     try {
-        // const res = yield axios.post(getRequestUrl('product', 'fetchList'), { ...reqObj.payload });
-        const res = yield axios.get(getRequestUrl('product', 'fetchList'), { ...reqObj.payload });
+        const res = yield axios.post(getRequestUrl('product', 'fetchList'), { ...reqObj.payload });
+        // const res = yield axios.get(getRequestUrl('product', 'fetchList'), { ...reqObj.payload });
         console.log(res);
         if (res && res.status === 200) {
             const { products, totalCnt } = res.data;

@@ -6,5 +6,6 @@ module.exports = {
     product: {
         save: 'save',
         fetchList: 'fetchList',
+        bulkUpdate: 'bulkUpdate',
     },
 };
