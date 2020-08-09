@@ -1,6 +1,5 @@
 ## opened
-- todo: save/update product cache clean
-- todo: bulk update cache handle & front-end update strategy
+- todo: bulk selector & selectedRowKeys's reset & confirm after success
 - todo: pagination strategy after (bulk) update
 - todo: sort action;
 - todo: edit product & save;
@@ -10,3 +9,5 @@
 - todo: 随便set key，也返回cached
 - todo: 前端在后端fetch出错的时候action error
 - todo: set expire time for product meta cache;
+- todo: save/update product cache clean
+- todo: bulk update cache handle & front-end update strategy
