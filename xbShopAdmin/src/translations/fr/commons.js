@@ -14,4 +14,6 @@ export default {
     'common.cancel': 'Annuler',
     'common.id': 'ID',
     'common.edit': 'Editer',
+    'common.offShelf': 'retirez de la vente',
+    'common.batch.action': 'Action en masse',
 };

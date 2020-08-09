@@ -14,4 +14,6 @@ export default {
     'common.cancel': '取消',
     'common.id': 'ID',
     'common.edit': '编辑',
+    'common.offShelf': '下架',
+    'common.batch.action': '批量操作',
 };

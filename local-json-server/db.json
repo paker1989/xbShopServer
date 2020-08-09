@@ -33,53 +33,56 @@
       ]
     }
   },
-  "fetchList": [
-    {
-      "idProduct": 1,
-      "productName": "测试产品sdsd",
-      "isDeleted": false,
-      "thumbnail": "http://localhost:3000/upload/img/2020/8/6/a53f35aa10080fb7ea9beff5386381c1_202086.jpg",
-      "isOffshelf": 0,
-      "totalStock": 820,
-      "specs": [
-        {
-          "idProductSpec": 1,
-          "sku": "sds",
-          "specType": "sd",
-          "price": "7.00",
-          "stockNumber": 520,
-          "isDeleted": 0,
-          "productId": 1
-        },
-        {
-          "idProductSpec": 2,
-          "sku": "ss",
-          "specType": "sdd",
-          "price": "2.00",
-          "stockNumber": 300,
-          "isDeleted": 0,
-          "productId": 1
-        }
-      ]
-    },
-    {
-      "idProduct": 2,
-      "productName": "sds",
-      "isDeleted": false,
-      "thumbnail": "http://localhost:3000/upload/img/2020/8/7/bd072da619b5bd34fff16d09493b1836_202087.png",
-      "isOffshelf": 0,
-      "totalStock": 1,
-      "specs": [
-        {
-          "idProductSpec": 3,
-          "sku": "sd",
-          "specType": "sd",
-          "price": "2.00",
-          "stockNumber": 1,
-          "isDeleted": 0,
-          "productId": 2
-        }
-      ]
-    }
-  ]
+  "fetchList": {
+    "products": [
+      {
+        "idProduct": 1,
+        "productName": "测试产品sdsd",
+        "isDeleted": false,
+        "thumbnail": "http://localhost:3000/upload/img/2020/8/6/a53f35aa10080fb7ea9beff5386381c1_202086.jpg",
+        "isOffshelf": 0,
+        "totalStock": 820,
+        "specs": [
+          {
+            "idProductSpec": 1,
+            "sku": "sds",
+            "specType": "sd",
+            "price": "7.00",
+            "stockNumber": 520,
+            "isDeleted": 0,
+            "productId": 1
+          },
+          {
+            "idProductSpec": 2,
+            "sku": "ss",
+            "specType": "sdd",
+            "price": "2.00",
+            "stockNumber": 300,
+            "isDeleted": 0,
+            "productId": 1
+          }
+        ]
+      },
+      {
+        "idProduct": 2,
+        "productName": "sds",
+        "isDeleted": false,
+        "thumbnail": "http://localhost:3000/upload/img/2020/8/7/bd072da619b5bd34fff16d09493b1836_202087.png",
+        "isOffshelf": 0,
+        "totalStock": 1,
+        "specs": [
+          {
+            "idProductSpec": 3,
+            "sku": "sd",
+            "specType": "sd",
+            "price": "2.00",
+            "stockNumber": 1,
+            "isDeleted": 0,
+            "productId": 2
+          }
+        ]
+      }
+    ],
+    "totalCnt": 2
+  }
 }
