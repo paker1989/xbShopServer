@@ -17,4 +17,5 @@ export default {
     'common.offShelf': 'retirez de la vente',
     'common.onShelf': 'Mettez en vente',
     'common.bulk.action': 'Action en masse',
+    'common.bulk.action.confirm': 'Etes-vous sûr de vouloir effectuer cette opération?',
 };

@@ -4,8 +4,9 @@
 import * as ProductActionType from '../../actionType/productActionType';
 
 const initialState = {
-    // stockCreteria: '-1',
-    // soldCreteria: '-1',
+    sortCreteria: 'NA',
+    orderCretia: 'NA',
+    currentPage: 1,
     selectedProducts: [],
     fetchedProducts: [],
     totalCnt: 0,
@@ -19,7 +20,12 @@ export default (state = initialState, action) => {
         case ProductActionType._FETCH_PRODUCT_SUCCESS:
             return { ...state, ...action.payload, backendStatus: ProductActionType._FETCH_PRODUCT_SUCCESS };
         case ProductActionType._BULK_UPDATE_SUCCESS:
-            return { ...state, ...action.payload, backendStatus: ProductActionType._BULK_UPDATE_SUCCESS };
+            return {
+                ...state,
+                ...action.payload,
+                backendStatus: ProductActionType._BULK_UPDATE_SUCCESS,
+                selectedProducts: [],
+            };
         case ProductActionType._FETCH_PRODUCT_FAIL:
             return {
                 ...state,
@@ -31,6 +37,7 @@ export default (state = initialState, action) => {
                 ...state,
                 backendStatus: ProductActionType._BULK_UPDATE_FAIL,
                 backendMsg: action.payload.errorMsg,
+                selectedProducts: [],
             };
         case ProductActionType._RESET_LIST_BACKEND_STATUS:
             return { ...state, backendMsg: '', backendStatus: '' };

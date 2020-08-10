@@ -17,4 +17,5 @@ export default {
     'common.offShelf': '下架',
     'common.onShelf': '上架',
     'common.bulk.action': '批量操作',
+    'common.bulk.action.confirm': '确定要执行此操作吗',
 };

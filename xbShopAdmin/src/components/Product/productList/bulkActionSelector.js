@@ -1,19 +1,24 @@
 import React from 'react';
-import { Select } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
+import { Select, Modal } from 'antd';
+import { useSelector } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
-
-import * as ProductActionCreator from '../../../store/action/productActions';
 
 const { Option } = Select;
 
-const BulkActionSelector = ({ onSelect }) => {
+const BulkActionSelector = ({ intl, onSelect }) => {
     const selectedItems = useSelector((state) => state.product.productListReducer.selectedProducts);
     const bulkAction = useSelector((state) => state.product.productListReducer.bulkAction);
 
     const handleBulkAction = (label) => {
         if (label !== 'select' && onSelect) {
-            onSelect(label, selectedItems);
+            Modal.confirm({
+                title: intl.formatMessage({ id: 'common.bulk.action.confirm' }),
+                okText: intl.formatMessage({ id: 'common.yes' }),
+                cancelText: intl.formatMessage({ id: 'common.cancel' }),
+                onOk: () => {
+                    onSelect(label, selectedItems);
+                },
+            });
         }
     };
 

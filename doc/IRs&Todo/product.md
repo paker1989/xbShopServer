@@ -1,5 +1,4 @@
 ## opened
-- todo: bulk selector & selectedRowKeys's reset & confirm after success
 - todo: pagination strategy after (bulk) update
 - todo: sort action;
 - todo: edit product & save;
@@ -11,3 +10,4 @@
 - todo: set expire time for product meta cache;
 - todo: save/update product cache clean
 - todo: bulk update cache handle & front-end update strategy
+- todo: bulk selector & selectedRowKeys's reset & confirm after success

@@ -14,12 +14,14 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading }) => {
     const dispatch = useDispatch();
     const selectedProducts = useSelector((state) => state.product.productListReducer.selectedProducts);
     const totalCnt = useSelector((state) => state.product.productListReducer.totalCnt);
+    // const currentPage = useSelector((state) => state.product.productListReducer.currentPage);
 
     // methods
     const handleTableChange = (pagination, filters, sorter) => {
         console.log(pagination);
         console.log(filters);
         console.log(sorter);
+        
     };
 
     const productSelections = {
@@ -33,6 +35,7 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading }) => {
         console.log('idProduct = ' + idProduct);
         console.log('index = ' + index);
         console.log('checked = ' + checked);
+        
     };
 
     const handleDelete = (idProduct) => {
@@ -143,6 +146,7 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading }) => {
                 dataSource={fetchedProducts}
                 pagination={{
                     total: totalCnt,
+                    pageSize: 1,
                 }}
                 rowKey={(record) => record.idProduct}
                 expandedRowRender={expandedRowRender}
