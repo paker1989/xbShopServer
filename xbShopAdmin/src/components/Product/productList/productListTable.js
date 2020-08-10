@@ -9,7 +9,7 @@ import * as ProductActionCreator from '../../../store/action/productActions';
 
 import './productList.scss';
 
-const ProductListTable = ({ intl, fetchedProducts = [], loading }) => {
+const ProductListTable = ({ intl, fetchedProducts = [], loading, handleChange }) => {
     // states
     const dispatch = useDispatch();
     const selectedProducts = useSelector((state) => state.product.productListReducer.selectedProducts);
@@ -21,7 +21,6 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading }) => {
         console.log(pagination);
         console.log(filters);
         console.log(sorter);
-        
     };
 
     const productSelections = {
@@ -31,12 +30,18 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading }) => {
         },
     };
 
-    const handleOnShelfChange = (idProduct, index, checked) => {
-        console.log('idProduct = ' + idProduct);
-        console.log('index = ' + index);
-        console.log('checked = ' + checked);
-        
-    };
+    // const handleOnShelfChange = (idProduct, index, checked) => {
+    //     console.log('idProduct = ' + idProduct);
+    //     console.log('index = ' + index);
+    //     console.log('checked = ' + checked);
+    //     dispatch(
+    //         ProductActionCreator.bulkUpdateProducts({
+    //             action: checked ? 'offShelf' : 'onShelf',
+    //             pks: selectedItems,
+    //             filter: currentTab,
+    //         })
+    //     );
+    // };
 
     const handleDelete = (idProduct) => {
         console.log('idProduct = ' + idProduct);
@@ -78,13 +83,15 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading }) => {
             title: intl.formatMessage({ id: 'product.list.shelfStatus' }),
             dataIndex: 'isOffshelf',
             key: 'isOffshelf',
-            render: (text, record, index) => {
+            render: (text, record) => {
                 return (
                     <Switch
                         checkedChildren={intl.formatMessage({ id: 'common.yes' })}
                         unCheckedChildren={intl.formatMessage({ id: 'common.no' })}
                         checked={text === 0}
-                        onChange={(checked) => handleOnShelfChange(record.idProduct, index, checked)}
+                        onChange={(checked) => {
+                            handleChange(record.idProduct, checked ? 'onShelf' : 'offShelf');
+                        }}
                     />
                 );
             },

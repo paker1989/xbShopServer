@@ -73,6 +73,17 @@ const ProductList = ({ intl }) => {
         );
     };
 
+    const handleItemActionSelect = (idProduct, action) => {
+        switch (action) {
+            case 'onShelf':
+            case 'offShelf':
+                handleBulkActionSelect(action, [idProduct]);
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
         <div className="product-home">
             <HLPageHeader
@@ -110,7 +121,11 @@ const ProductList = ({ intl }) => {
                             </Tabs>
                         </Col>
                         <Col>
-                            <ListTable fetchedProducts={fetchedProducts} loading={loading} />
+                            <ListTable
+                                fetchedProducts={fetchedProducts}
+                                loading={loading}
+                                handleChange={handleItemActionSelect}
+                            />
                         </Col>
                     </Row>
                 </Card>

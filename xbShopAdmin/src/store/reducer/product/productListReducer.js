@@ -9,6 +9,7 @@ const initialState = {
     currentPage: 1,
     selectedProducts: [],
     fetchedProducts: [],
+    // cachedPages: [], // 缓存的pages:
     totalCnt: 0,
     backendStatus: '',
     backendMsg: '',
