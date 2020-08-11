@@ -41,7 +41,7 @@ export const resetAddProduct = () => ({
 
 export const fetchProductList = (params) => ({
     type: ProductActionType._FETCH_PRODUCT,
-    payload: { limit: 50, page: 1, sortedCreteria: 'NA', sortedOrder: 'NA', ...params },
+    payload: params,
 });
 
 export const selectProducts = (keys) => ({
@@ -53,7 +53,15 @@ export const selectProducts = (keys) => ({
  * bulk action on product lists
  * @param {*} param0
  */
-export const bulkUpdateProducts = ({ action, pks, filter }) => ({
+export const bulkUpdateProducts = ({ action, pks }) => ({
     type: ProductActionType._BULK_UPDATE_PRODUCT,
-    payload: { action, pks, filter },
+    payload: {
+        action,
+        pks,
+    },
+});
+
+export const paging = (pagiParams) => ({
+    type: ProductActionType._PAGINATION_UPDATE,
+    payload: pagiParams,
 });

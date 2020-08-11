@@ -1,20 +1,29 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, message, Row, Col, Switch, Popconfirm } from 'antd';
+import { Table, Row, Col, Switch, Popconfirm } from 'antd';
 import { NavLink } from 'react-router-dom';
 
-import * as ProductActionType from '../../../store/actionType/productActionType';
+import productListMeta from '../../../static/data/componentMeta/product/productListMeta';
+// import * as ProductActionType from '../../../store/actionType/productActionType';
 import * as ProductActionCreator from '../../../store/action/productActions';
 
 import './productList.scss';
+
+const { pageSize } = productListMeta;
 
 const ProductListTable = ({ intl, fetchedProducts = [], loading, handleChange }) => {
     // states
     const dispatch = useDispatch();
     const selectedProducts = useSelector((state) => state.product.productListReducer.selectedProducts);
     const totalCnt = useSelector((state) => state.product.productListReducer.totalCnt);
-    // const currentPage = useSelector((state) => state.product.productListReducer.currentPage);
+    const currentPage = useSelector((state) => state.product.productListReducer.currentPage);
+    const startPage = useSelector((state) => state.product.productListReducer.startPage);
+
+    const displayedProducts = fetchedProducts.slice(
+        (currentPage - startPage) * pageSize,
+        (currentPage - startPage) * pageSize + pageSize
+    );
 
     // methods
     const handleTableChange = (pagination, filters, sorter) => {
@@ -29,19 +38,6 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading, handleChange })
             dispatch(ProductActionCreator.selectProducts(selectedRowKeys));
         },
     };
-
-    // const handleOnShelfChange = (idProduct, index, checked) => {
-    //     console.log('idProduct = ' + idProduct);
-    //     console.log('index = ' + index);
-    //     console.log('checked = ' + checked);
-    //     dispatch(
-    //         ProductActionCreator.bulkUpdateProducts({
-    //             action: checked ? 'offShelf' : 'onShelf',
-    //             pks: selectedItems,
-    //             filter: currentTab,
-    //         })
-    //     );
-    // };
 
     const handleDelete = (idProduct) => {
         console.log('idProduct = ' + idProduct);
@@ -150,10 +146,11 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading, handleChange })
                 loading={loading}
                 onChange={handleTableChange}
                 rowSelection={productSelections}
-                dataSource={fetchedProducts}
+                dataSource={displayedProducts}
                 pagination={{
                     total: totalCnt,
-                    pageSize: 1,
+                    pageSize,
+                    current: currentPage,
                 }}
                 rowKey={(record) => record.idProduct}
                 expandedRowRender={expandedRowRender}

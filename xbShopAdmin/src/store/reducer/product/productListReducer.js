@@ -4,12 +4,13 @@
 import * as ProductActionType from '../../actionType/productActionType';
 
 const initialState = {
-    sortCreteria: 'NA',
-    orderCretia: 'NA',
+    sortedCretia: 'NA',
+    sortedOrder: 'NA',
+    startPage: 1,
     currentPage: 1,
+    filter: 'all',
     selectedProducts: [],
     fetchedProducts: [],
-    // cachedPages: [], // 缓存的pages:
     totalCnt: 0,
     backendStatus: '',
     backendMsg: '',

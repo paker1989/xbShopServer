@@ -19,6 +19,7 @@ const { TabPane } = Tabs;
  */
 const ProductList = ({ intl }) => {
     const dispatch = useDispatch();
+
     const fetchedProducts = useSelector((state) => state.product.productListReducer.fetchedProducts);
     const backendMsg = useSelector((state) => state.product.productListReducer.backendMsg);
     const backendStatus = useSelector((state) => state.product.productListReducer.backendStatus);
@@ -58,6 +59,7 @@ const ProductList = ({ intl }) => {
         dispatch(
             ProductActionCreator.fetchProductList({
                 filter: tab, // all, sell, soldout, offShelf
+                startPage: 1,
             })
         );
     };
@@ -68,7 +70,6 @@ const ProductList = ({ intl }) => {
             ProductActionCreator.bulkUpdateProducts({
                 action,
                 pks: selectedItems,
-                filter: currentTab,
             })
         );
     };

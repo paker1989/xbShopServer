@@ -10,7 +10,7 @@ const {
     setSortedProductIds,
 } = require('../../core/cache/helper/productHelper');
 const productHelper = require('../../core/cache/helper/productHelper');
-const { product } = require('../../../../xbShopAdmin/src/static/api/api');
+// const { product } = require('../../../../xbShopAdmin/src/static/api/api');
 
 /**
  * save product
@@ -20,7 +20,6 @@ const saveProduct = async (ctx) => {
     try {
         const requestBody = ctx.request.body;
 
-        const { idProduct } = requestBody;
         const galleries = Array.isArray(ctx.request.files.galleries)
             ? ctx.request.files.galleries
             : [ctx.request.files.galleries];
@@ -33,8 +32,6 @@ const saveProduct = async (ctx) => {
 
         if (typeof saved === 'object') {
             // delete cache
-            // const isNew = idProduct === '-1';
-            // await cleanProductCache(saved.idProduct, isNew);
             await cleanProductCache(saved.idProduct);
         }
         Resolve.info(ctx, 'save succeed');
@@ -59,11 +56,24 @@ const fetchProductMeta = async (idProduct) => {
     return productMeta;
 };
 
+/**
+ * return { data, totalCnt, refined_startPage }
+ * @param {*} ctx
+ */
 const fetchList = async (ctx) => {
     try {
         let ids;
+        let _startPage;
         const data = [];
-        const { sortedCreteria = 'NA', sortedOrder = 'NA', limit = 50, page = 1, filter = 'all' } = ctx.request.body;
+        const {
+            sortedCreteria = 'NA',
+            sortedOrder = 'NA',
+            limit,
+            pageSize,
+            startPage = 1,
+            filter = 'all',
+        } = ctx.request.body;
+        console.log(ctx.request.body);
 
         ids = await getSortedProductIds(sortedCreteria, sortedOrder, filter); // get cached sorted ids
         if (!ids || ids.length === 0) {
@@ -72,11 +82,18 @@ const fetchList = async (ctx) => {
             setSortedProductIds(sortedCreteria, sortedOrder, filter, ids); // set in cache
         }
 
-        const slices = ids.slice(limit * (page - 1), limit * page); // pagination
+        if (ids.length < pageSize * startPage) {
+            _startPage = 1;
+        } else {
+            _startPage = startPage;
+        }
+        console.log(ids);
+        console.log(`${pageSize * (_startPage - 1)} ---  ${pageSize * (_startPage - 1) + limit}`);
+        const slices = ids.slice(pageSize * (_startPage - 1), pageSize * (_startPage - 1) + limit); // pagination
         slices.forEach((id) => {
             data.push(fetchProductMeta(id));
         });
-        Resolve.json(ctx, { products: await Promise.all(data), totalCnt: ids.length });
+        Resolve.json(ctx, { products: await Promise.all(data), totalCnt: ids.length, startPage: _startPage });
     } catch (err) {
         throw new HttpException(err.message);
     }

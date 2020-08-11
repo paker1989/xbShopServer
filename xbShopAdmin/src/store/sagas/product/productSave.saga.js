@@ -2,8 +2,9 @@ import { put, select } from 'redux-saga/effects';
 import axios from 'axios';
 
 import * as ProductActionType from '../../actionType/productActionType';
-import { setObjectArray } from '../../../utils/data.helper';
+import { setObjectArray, getCurrentPage } from '../../../utils/data.helper';
 import { getRequestUrl } from '../../../static/api';
+import { pageSize, nbPageFetched } from '../../../static/data/componentMeta/product/productListMeta';
 
 export function* saveProductSaga(reqObj) {
     // try {
@@ -67,15 +68,32 @@ export function* saveProductSaga(reqObj) {
  */
 export function* bulkUpdateProductSaga(reqObj) {
     try {
-        const res = yield axios.post(getRequestUrl('product', 'bulkUpdate'), { ...reqObj.payload });
-        // console.log(res);
+        const { currentPage, filter, startPage, sortedCretia, sortedOrder } = yield select(
+            (state) => state.product.productListReducer
+        );
+
+        const res = yield axios.post(getRequestUrl('product', 'bulkUpdate'), {
+            filter,
+            startPage,
+            sortedCretia,
+            sortedOrder,
+            limit: pageSize * nbPageFetched,
+            pageSize,
+            ...reqObj.payload,
+        });
+
         if (res && res.status === 200) {
             const { products, totalCnt } = res.data;
+            const _startPage = res.data.startPage;
+
             yield put({
                 type: ProductActionType._BULK_UPDATE_SUCCESS,
                 payload: {
                     fetchedProducts: products,
                     totalCnt,
+                    startPage: _startPage,
+                    currentPage: getCurrentPage(currentPage, _startPage, products.length),
+                    filter: reqObj.payload.filter || filter,
                 },
             });
         } else {

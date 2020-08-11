@@ -7,6 +7,6 @@ module.exports = {
             lg: { span: 22, offset: 1 },
         },
     },
-    pageSize: 20,
-    nbSiblingFetched: 1, // 每次fetch的时候fetch前后{{nbSiblingFetched}}个page
+    pageSize: 1, // 20
+    nbPageFetched: 3, // 每次fetch的时候fetch{{nbPageFetched}}页
 };

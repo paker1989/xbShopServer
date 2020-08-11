@@ -1,6 +1,7 @@
 /**
  *  put all data convert util function here
  */
+import { pageSize } from '../static/data/componentMeta/product/productListMeta';
 
 export function getNoEmptyStr(val) {
     return typeof val === 'undefined' || val === null ? '' : val.trim();
@@ -56,12 +57,28 @@ export function setObjectArray(formData, key, array) {
  * @param {*} pageSize
  * @param {*} nbPageFetched
  */
-export function getProductFetchPagination(currentPage, nbSiblingFetched, pageSize) {
-    const startPage = Math.max(currentPage - nbSiblingFetched, 1);
-    // const endPage = startPage + 2 * nbSiblingFetched;
+export function getProductFetchPagination(currentPage, nbPageFetched) {
+    const startPage = Math.max(currentPage - nbPageFetched, 1);
 
     return {
         page: startPage,
-        limit: pageSize * (2 * nbSiblingFetched + 1),
+        limit: pageSize * (2 * nbPageFetched + 1),
     };
+}
+
+export function getEndPage(startPage, nbProducts) {
+    const nbPages = Math.floor(nbProducts / pageSize);
+    return startPage + nbPages;
+}
+
+export function getCurrentPage(oldCurrentPage, startPage, nbProducts) {
+    let currentPage;
+    const endPage = getEndPage(startPage, nbProducts);
+
+    if (oldCurrentPage < startPage || oldCurrentPage > endPage) {
+        currentPage = startPage;
+    } else {
+        currentPage = oldCurrentPage;
+    }
+    return currentPage;
 }
