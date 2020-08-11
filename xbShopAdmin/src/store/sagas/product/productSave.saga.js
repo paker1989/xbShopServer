@@ -93,7 +93,6 @@ export function* bulkUpdateProductSaga(reqObj) {
                     totalCnt,
                     startPage: _startPage,
                     currentPage: getCurrentPage(currentPage, _startPage, products.length),
-                    filter: reqObj.payload.filter || filter,
                 },
             });
         } else {

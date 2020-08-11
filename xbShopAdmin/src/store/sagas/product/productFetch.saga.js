@@ -13,7 +13,8 @@ export function* fetchProductSaga(reqObj) {
         const { currentPage, filter, startPage, sortedCretia, sortedOrder } = yield select(
             (state) => state.product.productListReducer
         );
-
+        // const store = yield select((state) => state.product.productListReducer);
+        // console.log(store);
         const res = yield axios.post(getRequestUrl('product', 'fetchList'), {
             filter,
             limit: nbPageFetched * pageSize,
@@ -36,7 +37,6 @@ export function* fetchProductSaga(reqObj) {
                     totalCnt,
                     startPage: _startPage,
                     currentPage: getCurrentPage(currentPage, _startPage, products.length),
-                    filter: reqObj.payload.filter || filter,
                 },
             });
         } else {

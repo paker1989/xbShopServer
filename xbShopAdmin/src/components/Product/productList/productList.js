@@ -56,12 +56,9 @@ const ProductList = ({ intl }) => {
     const onTabClick = (tab) => {
         setLoading(true);
         setCurrentTab(tab);
-        dispatch(
-            ProductActionCreator.fetchProductList({
-                filter: tab, // all, sell, soldout, offShelf
-                startPage: 1,
-            })
-        );
+
+        dispatch(ProductActionCreator.paging({ filter: tab, startPage: 1, currentPage: 1 })); // all, sell, soldout, offShelf
+        dispatch(ProductActionCreator.fetchProductList({}));
     };
 
     const handleBulkActionSelect = (action, selectedItems) => {

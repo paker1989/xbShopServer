@@ -45,6 +45,8 @@ export default (state = initialState, action) => {
             return { ...state, backendMsg: '', backendStatus: '' };
         case ProductActionType._LIST_SELECT_KEYS:
             return { ...state, ...action.payload };
+        case ProductActionType._PAGINATION_UPDATE:
+            return { ...state, ...action.payload };
         default:
             return state;
     }
