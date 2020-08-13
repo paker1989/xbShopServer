@@ -18,4 +18,6 @@ export default {
     'common.onShelf': '上架',
     'common.bulk.action': '批量操作',
     'common.bulk.action.confirm': '确定要执行此操作吗',
+    'common.account': '账户登录',
+    'common.mobile.login': '手机登录',
 };

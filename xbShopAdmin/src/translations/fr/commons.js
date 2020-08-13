@@ -18,4 +18,6 @@ export default {
     'common.onShelf': 'Mettez en vente',
     'common.bulk.action': 'Action en masse',
     'common.bulk.action.confirm': 'Etes-vous sûr de vouloir effectuer cette opération?',
+    'common.account': 'Compte',
+    'common.mobile.login': 'Mobile',
 };

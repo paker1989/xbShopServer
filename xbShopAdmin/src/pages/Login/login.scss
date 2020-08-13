@@ -1,1 +1,23 @@
 @import '../../style/app.scss';
+
+$login-option-title-height: 40px;
+
+.login-form {
+    position: relative;
+
+    .login-options {
+        position: relative;
+        width: 100%;
+        height: $login-option-title-height;
+        display: flex;
+        justify-content: center;
+
+        .login-option {
+          
+            &.is-active {
+                color: $active-color;
+                border-bottom: 2px solid $active-color;
+            }
+        }
+    }
+}
