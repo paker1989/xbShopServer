@@ -20,4 +20,9 @@ export default {
     'common.bulk.action.confirm': '确定要执行此操作吗',
     'common.account': '账户登录',
     'common.mobile.login': '手机登录',
+    'common.login': '用户名',
+    'common.password': '密码',
+    'common.forgetpwd': '忘记密码',
+    'common.action.login': '登录',
+    'common.rememberme': '自动登录',
 };

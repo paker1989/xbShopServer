@@ -20,4 +20,9 @@ export default {
     'common.bulk.action.confirm': 'Etes-vous sûr de vouloir effectuer cette opération?',
     'common.account': 'Compte',
     'common.mobile.login': 'Mobile',
+    'common.login': 'Login',
+    'common.password': 'Mot de passe',
+    'common.forgetpwd': 'Oubliez mot de passe',
+    'common.action.login': 'Log In',
+    'common.rememberme': 'Souvenez de moi',
 };

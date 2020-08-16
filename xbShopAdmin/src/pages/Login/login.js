@@ -7,9 +7,9 @@ import './login.scss';
 
 const Login = () => {
     return (
-        <div className="page-container">
-            <Row style={{ marginTop: 100 }}>
-                <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
+        <div className="login-container">
+            <Row className="login-row">
+                <Col md={{ offset: 7, span: 10 }} lg={{ offset: 9, span: 6 }}>
                     <Row>
                         <Col span={24}>
                             <LoginForm />
@@ -17,6 +17,9 @@ const Login = () => {
                     </Row>
                 </Col>
             </Row>
+            <div className="copyright">
+                <span>Copyright @ 2019 XU Bin</span>
+            </div>
         </div>
     );
 };

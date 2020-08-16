@@ -62,3 +62,9 @@ input[type='textarea'].fixed-vert {
         margin-right: 10px;
     }
 }
+
+.float {
+    &.right {
+        float: right;
+    }
+}

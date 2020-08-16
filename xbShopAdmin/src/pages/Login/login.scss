@@ -1,6 +1,25 @@
 @import '../../style/app.scss';
 
-$login-option-title-height: 40px;
+$login-option-title-height: 50px;
+$login-form-flex-basis: 500px;
+$footer-height: 150px;
+
+.login-container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../../static/image/sample1_backdrop.svg');
+    background-repeat: no-repeat;
+    background-position: center 110px;
+    background-size: 100%;
+}
+
+.login-row {
+    flex: 1 0;
+    flex-basis: $login-form-flex-basis;
+    padding-top: 100px;
+}
 
 .login-form {
     position: relative;
@@ -13,11 +32,27 @@ $login-option-title-height: 40px;
         justify-content: center;
 
         .login-option {
-          
+            padding: 10px 30px;
+
             &.is-active {
                 color: $active-color;
                 border-bottom: 2px solid $active-color;
             }
         }
     }
+
+    .login-submit-btn {
+        width: 100%;
+        margin-top: 20px;
+    }
+}
+
+.copyright {
+    flex: 0 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: $footer-height;
+    // line-height: 120px;
 }
