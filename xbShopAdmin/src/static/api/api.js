@@ -8,4 +8,8 @@ module.exports = {
         fetchList: 'fetchList',
         bulkUpdate: 'bulkUpdate',
     },
+    auth: {
+        login: 'login',
+        autoLogin: 'autoLogin',
+    },
 };

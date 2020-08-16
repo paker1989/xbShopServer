@@ -1,10 +1,11 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import cx from 'classnames';
-import { connect, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { NavLink, withRouter } from 'react-router-dom';
 import { Form, Input, Icon, Checkbox, Button } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
+import * as AuthActionType from '../../store/actionType/authActionType';
 import * as AuthActionCreator from '../../store/action/authAction';
 import getValidators from './validators';
 
@@ -32,16 +33,36 @@ const LoginOption = forwardRef(({ value, onChange }, ref) => {
     );
 });
 
-const Core = ({ form, intl }) => {
+const Core = ({ form, intl, history }) => {
     const dispatch = useDispatch();
 
     const validators = getValidators({ intl, form });
+
     const { getFieldDecorator } = form;
+
+    const backendMsg = useSelector((state) => state.auth.backendMsg);
+    const backendStatus = useSelector((state) => state.auth.backendStatus);
+
+    const [localErrorMsg, setLocalErrorMsg] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (backendStatus === AuthActionType._AUTH_LOGIN_SUCCESS) {
+            dispatch(AuthActionCreator.resetBackendStatus());
+            history.push('/dashboard');
+        } else if (backendStatus === AuthActionType._AUTH_LOGIN_FAIL) {
+            dispatch(AuthActionCreator.resetBackendStatus());
+            setLocalErrorMsg(backendMsg);
+            setLoading(false);
+        }
+    }, [backendStatus]);
 
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
             if (!errors) {
+                setLoading(true);
+                setLocalErrorMsg('');
                 dispatch(AuthActionCreator.login(values));
             }
         });
@@ -60,7 +81,7 @@ const Core = ({ form, intl }) => {
             <NavLink className="float right" to="/dashboard/admin">
                 <FormattedMessage id="common.forgetpwd" />
             </NavLink>
-            <Button type="primary" htmlType="submit" className="login-submit-btn" size="large">
+            <Button type="primary" htmlType="submit" className="login-submit-btn" size="large" loading={loading}>
                 <FormattedMessage id="common.action.login" />
             </Button>
         </FormItem>
@@ -93,6 +114,7 @@ const Core = ({ form, intl }) => {
                     />
                 )}
             </FormItem>
+            <div>{localErrorMsg}</div>
             {LoginAction}
         </Form>
     );
@@ -115,7 +137,7 @@ const WrappedForm = connect(mapStateToProps)(
                 specs: Form.createFormField({ value: props.specs }),
             };
         },
-    })(injectIntl(Core))
+    })(withRouter(injectIntl(Core)))
 );
 
 export default WrappedForm;

@@ -19,3 +19,10 @@ https://juejin.im/post/6844903854006337549
 
 js原生cookie封装函数
 https://www.jianshu.com/p/bd3a64f454a0
+
+# 思路
+- App.js, 
+  1. 先 useAuthenticated(), 如果已经登录了，则跳转dashboard， 否则跳转login;
+
+- login.js:
+  useMount(), 从cookie里提取rememberme，如果没有，显示，有，try login;
