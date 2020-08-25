@@ -25,6 +25,22 @@ module.exports = {
         totalRetryTime: 1000 * 60 * 5, // 5 mins
         maxAttempt: 5,
     },
+    auth: {
+        bcryptCost: 8,
+        appKeys: ['xb_server_app'],
+        session: {
+            key: 'xb_server',
+            maxAge: 86400000,
+            autoCommit: true,
+            overwrite: true,
+            httpOnly: false,
+            signed: true,
+            rolling: false,
+            renew: false,
+            secure: true,
+            sameSite: null,
+        },
+    },
     // koa-body config
     formData: {
         formLimit: '2mb',

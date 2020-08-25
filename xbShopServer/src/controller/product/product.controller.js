@@ -73,7 +73,7 @@ const fetchList = async (ctx) => {
             startPage = 1,
             filter = 'all',
         } = ctx.request.body;
-        console.log(ctx.request.body);
+        // console.log(ctx.request.body);
 
         ids = await getSortedProductIds(sortedCreteria, sortedOrder, filter); // get cached sorted ids
         if (!ids || ids.length === 0) {
