@@ -27,7 +27,7 @@ module.exports = {
     },
     auth: {
         bcryptCost: 8,
-        appKeys: ['xb_server_app'],
+        appKeys: ['xb_server'],
         session: {
             key: 'xb_server',
             maxAge: 86400000,
@@ -37,7 +37,8 @@ module.exports = {
             signed: true,
             rolling: false,
             renew: false,
-            secure: true,
+            secure: false,
+            // cookie: { secure: false, maxAge: 4 * 60 * 60 * 1000 },
             sameSite: null,
         },
     },

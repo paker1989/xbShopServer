@@ -5,7 +5,7 @@ const koaBody = require('koa-body');
 const cors = require('@koa/cors');
 const koaStatic = require('koa-static');
 const koaSession = require('koa-session');
-const passport = require('koa-passport');
+const passport = require('./controller/authentication/passport');
 
 const config = require('./config/config');
 const routers = require('./router');
@@ -20,14 +20,15 @@ app.use(errorHandler);
 // auth middlewares
 app.keys = auth.appKeys;
 app.use(koaSession(auth.session, app));
+
+app.use(koaBody(formData));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(koaStatic(path.join(__dirname, '../static')));
 
-app.use(cors());
-
-app.use(koaBody(formData));
+app.use(cors({ credentials: true }));
 
 app.use(routers.routes()).use(routers.allowedMethods());
 

@@ -91,8 +91,8 @@ const Core = ({ form, intl, history }) => {
             <FormItem>{getFieldDecorator('loginOpt', validators.loginOpt)(<LoginOption />)}</FormItem>
             <FormItem>
                 {getFieldDecorator(
-                    'login',
-                    validators.login
+                    'username',
+                    validators.username
                 )(
                     <Input
                         size="large"

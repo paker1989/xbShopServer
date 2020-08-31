@@ -12,10 +12,16 @@ import { getRequestUrl } from '../../../static/api';
 export function* loginSaga(reqObj) {
     try {
         const { loginType = 'login' } = reqObj.payload; // login or autoLogin
-        // console.log(reqObj);
-        const res = yield axios.post(getRequestUrl('auth', loginType), {
-            ...reqObj.payload,
-        });
+
+        const res = yield axios.post(
+            getRequestUrl('auth', loginType),
+            {
+                ...reqObj.payload,
+            },
+            { withCredentials: true }
+        );
+
+        console.log(res);
 
         if (res && res.data) {
             yield put({

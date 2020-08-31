@@ -11,7 +11,7 @@ export default ({ intl, form }) => {
         loginOpt: {
             initialValue: 'account', // account, mobile
         },
-        login: {
+        username: {
             rules: [
                 {
                     validator: (rule, value, callback) => {
