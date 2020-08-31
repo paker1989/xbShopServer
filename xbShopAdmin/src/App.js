@@ -4,7 +4,6 @@ import { ConfigProvider } from 'antd';
 import frFR from 'antd/es/locale/fr_FR';
 import zhCN from 'antd/es/locale/zh_CN';
 import { useSelector } from 'react-redux';
-import { useMount } from 'ahooks';
 
 import I18nProvider from './components/Common/i18nProvider';
 /* eslint-disable */
@@ -13,10 +12,8 @@ import Dashboard from './pages/Dashboard/dashboard';
 import Login from './pages/Login/login';
 
 import './style/app.scss';
-import useAuthenticated from './utils/hooks/useAuthenticated';
 
 const App = () => {
-    const [authUser, authFlag] = useAuthenticated();
     const globalLocale = useSelector((state) => state.meta.languageReducers.globalLocale);
     let antLocale;
     switch (globalLocale) {
@@ -38,13 +35,15 @@ const App = () => {
                             <Route
                                 path="/login"
                                 render={() => {
-                                    return authFlag ? <Redirect to="/dashboard" /> : <Login />;
+                                    // return authFlag ? <Redirect to="/dashboard" /> : <Login />;
+                                    return <Login />;
                                 }}
                             />
                             <Route
                                 path="/dashboard"
                                 render={() => {
-                                    return authFlag ? <Dashboard /> : <Redirect to="/login" />;
+                                    // return authFlag ? <Dashboard /> : <Redirect to="/login" />;
+                                    return <Dashboard />;
                                 }}
                             />
                             <Redirect from="*" to="/login" />

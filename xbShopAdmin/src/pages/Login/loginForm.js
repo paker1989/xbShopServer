@@ -4,12 +4,18 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { NavLink, withRouter } from 'react-router-dom';
 import { Form, Input, Icon, Checkbox, Button } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { useMount } from 'ahooks';
+import cookie from 'react-cookies';
 
 import * as AuthActionType from '../../store/actionType/authActionType';
 import * as AuthActionCreator from '../../store/action/authAction';
 import getValidators from './validators';
 
 import './login.scss';
+import useAuthenticated from '../../utils/hooks/useAuthenticated';
+import AuthMeta from '../../static/data/componentMeta/auth/authMeta';
+
+const { autoLoginKey } = AuthMeta;
 
 const { Item: FormItem } = Form;
 
@@ -39,6 +45,7 @@ const Core = ({ form, intl, history }) => {
     const validators = getValidators({ intl, form });
 
     const { getFieldDecorator } = form;
+    const [authUser, authFlag] = useAuthenticated();
 
     const backendMsg = useSelector((state) => state.auth.backendMsg);
     const backendStatus = useSelector((state) => state.auth.backendStatus);
@@ -46,10 +53,21 @@ const Core = ({ form, intl, history }) => {
     const [localErrorMsg, setLocalErrorMsg] = useState('');
     const [loading, setLoading] = useState(false);
 
+    useMount(() => {
+        if (authFlag) {
+            history.push(authUser.pref.indexPage);
+            return;
+        }
+        const userLogin = cookie.load(autoLoginKey);
+        if (userLogin) {
+            dispatch(AuthActionCreator.autoLogin({ userLogin }));
+        }
+    });
+
     useEffect(() => {
         if (backendStatus === AuthActionType._AUTH_LOGIN_SUCCESS) {
             dispatch(AuthActionCreator.resetBackendStatus());
-            history.push('/dashboard');
+            history.push(authUser.pref.indexPage);
         } else if (backendStatus === AuthActionType._AUTH_LOGIN_FAIL) {
             dispatch(AuthActionCreator.resetBackendStatus());
             setLocalErrorMsg(backendMsg);

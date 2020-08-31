@@ -1,30 +1,11 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import { useMount } from 'ahooks';
-import cookie from 'react-cookies';
-
-import { useDispatch } from 'react-redux';
 
 import LoginForm from './loginForm';
 
-import AuthMeta from '../../static/data/componentMeta/auth/authMeta';
-import * as AuthActionCreator from '../../store/action/authAction';
-
 import './login.scss';
 
-const { autoLoginKey } = AuthMeta;
-
 const Login = () => {
-    const dispatch = useDispatch();
-
-    useMount(() => {
-        const userLogin = cookie.load(autoLoginKey);
-
-        if (userLogin) {
-            dispatch(AuthActionCreator.autoLogin({ userLogin }));
-        }
-    });
-
     return (
         <div className="login-container">
             <Row className="login-row">

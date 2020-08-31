@@ -1,5 +1,4 @@
 import * as AuthActionType from '../../actionType/authActionType';
-import { saveAuthUser } from '../../../utils/auth.helper';
 
 const initialState = {
     loginOpt: 'account', // account, mobile
@@ -12,9 +11,8 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case AuthActionType._AUTH_LOGIN_SUCCESS:
             /* eslint-disable */
-            const { authUser, backendStatus } = action.payload;
+            const { backendStatus } = action.payload;
             /* eslint-enable */
-            saveAuthUser(authUser);
             return { ...state, backendStatus };
         case AuthActionType._AUTH_LOGIN_FAIL:
             return { ...state, ...action.payload };

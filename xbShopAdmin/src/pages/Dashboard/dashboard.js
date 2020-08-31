@@ -1,19 +1,29 @@
 import React, { Suspense } from 'react';
 import { Layout } from 'antd';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { useMount } from 'ahooks';
 
 import MainSider from './MainSider/mainSider';
 import MainHeader from './MainHeader/mainHeader';
 import ContainerSkeleton from '../../components/Common/ContainerSkeleton/containerSkeleton';
 /* eslint-disable */
 import LazyComponents from '../../static/data/lazyComponents';
+import useAuthenticated from '../../utils/hooks/useAuthenticated';
 /* eslint-enable */
 import './dashboard.scss';
 
 const { Content } = Layout;
 const { prefix, routes } = LazyComponents.dashboard;
 
-const Dashboard = () => {
+const Dashboard = ({ history }) => {
+    const [authUser, authFlag] = useAuthenticated();
+
+    useMount(() => {
+        if (!authFlag) {
+            history.push('/login');
+        }
+    });
+
     return (
         <Layout className="page-container">
             <MainSider />
@@ -34,4 +44,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default withRouter(Dashboard);

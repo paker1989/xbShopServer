@@ -41,9 +41,10 @@ User.init(
     }
 );
 
-UserPrefModel.belongsTo(User, { foreignKey: 'userprefId', as: 'preference' });
+UserPrefModel.belongsTo(User, { foreignKey: 'userprefId', as: 'pref' });
 User.hasOne(UserPrefModel, {
     foreignKey: 'userprefId',
+    as: 'pref',
     onDelete: 'CASCADE',
 });
 /**

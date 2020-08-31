@@ -23,6 +23,7 @@ class AuthDAO {
                 include: [
                     {
                         model: UserPrefModel,
+                        as: 'pref',
                         attributes: { exclude: ['userprefId'] },
                     },
                 ],

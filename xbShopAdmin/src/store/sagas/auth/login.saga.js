@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { put } from 'redux-saga/effects';
+import cookie from 'react-cookies';
 
+import config from '../../../static/data/componentMeta/auth/authMeta';
 import * as AuthActionType from '../../actionType/authActionType';
 import { getRequestUrl } from '../../../static/api';
 
@@ -10,6 +12,7 @@ import { getRequestUrl } from '../../../static/api';
  * @param {*} reqObj
  */
 export function* loginSaga(reqObj) {
+    const { authedKey, userSessionMaxAge } = config;
     try {
         const { loginType = 'login' } = reqObj.payload; // login or autoLogin
 
@@ -20,15 +23,16 @@ export function* loginSaga(reqObj) {
             },
             { withCredentials: true }
         );
-
-        console.log(res);
-
+        // console.log(res);
         if (res && res.data) {
+            cookie.save(authedKey, res.data, {
+                // set user in cookie
+                maxAge: userSessionMaxAge,
+            });
             yield put({
                 type: AuthActionType._AUTH_LOGIN_SUCCESS,
                 payload: {
                     backendStatus: AuthActionType._AUTH_LOGIN_SUCCESS,
-                    authUser: res.data.authUser,
                 },
             });
         } else {
