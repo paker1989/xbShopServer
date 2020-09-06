@@ -5,4 +5,10 @@ module.exports = {
     autoLoginKey: 'xbshop_auto_login',
     authedKey: 'authed_profile',
     userSessionMaxAge: 60 * 60 * 1, // 1 hours
+    userMenuItems: {
+        userSetting: { privileges: [] },
+        userCenter: { privileges: [] },
+        loggout: { privileges: [] },
+        vipSetting: { privileges: ['vip'] },
+    },
 };
