@@ -40,4 +40,25 @@ module.exports = [
         },
         link: '/dashboard/category',
     },
+    {
+        title: 'menu.userMgnt',
+        key: 'usrL',
+        type: 'subMenu',
+        icon: {
+            type: 'native',
+            name: 'user',
+        },
+        children: [
+            {
+                title: 'menu.user.list',
+                key: 'usrList',
+                type: 'item',
+                icon: {
+                    type: 'native',
+                    name: 'user',
+                },
+                link: '/dashboard/userList',
+            },
+        ],
+    },
 ];

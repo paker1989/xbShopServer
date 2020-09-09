@@ -2,7 +2,7 @@ import axios from 'axios';
 import { put } from 'redux-saga/effects';
 import cookie from 'react-cookies';
 
-import config from '../../../static/data/componentMeta/auth/authMeta';
+import config, { authedKey } from '../../../static/data/componentMeta/auth/authMeta';
 import * as AuthActionType from '../../actionType/authActionType';
 import { getRequestUrl } from '../../../static/api';
 
@@ -50,6 +50,21 @@ export function* loginSaga(reqObj) {
             payload: {
                 backendStatus: AuthActionType._AUTH_LOGIN_FAIL,
                 backendMsg: error.message,
+            },
+        });
+    }
+}
+
+export function* logoutSaga(reqObj) {
+    console.log(reqObj);
+    const res = yield axios.post(getRequestUrl('auth', 'logout'), { withCredentials: true });
+    console.log(res);
+    if (res && res.status === 200) {
+        cookie.remove(authedKey);
+        yield put({
+            type: AuthActionType._AUTH_LOGOUT_SUCCESS,
+            payload: {
+                backendStatus: AuthActionType._AUTH_LOGOUT_SUCCESS,
             },
         });
     }

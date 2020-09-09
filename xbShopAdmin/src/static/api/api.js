@@ -11,5 +11,6 @@ module.exports = {
     auth: {
         login: 'login',
         autoLogin: 'autoLogin',
+        logout: 'logout',
     },
 };

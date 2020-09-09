@@ -1,9 +1,7 @@
 const Router = require('koa-router');
 
-// const CategoryDAO = require('../dao/category.dao');
-const { Resolve } = require('../core/resolve');
-const { login } = require('../controller/authentication/auth.controller');
-// const { updateCategory } = require('../controller/category/category.controller');
+// const { Resolve } = require('../core/resolve');
+const { login, logout } = require('../controller/authentication/auth.controller');
 
 const router = new Router();
 
@@ -14,5 +12,6 @@ const autoLogin = async (ctx) => {};
  */
 router.post('/login', login);
 router.get('/autoLogin', autoLogin);
+router.post('/logout', logout);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 import config from '../../static/data/componentMeta/auth/authMeta';
 
-const useUserOptions = (user) => {
+const useUserOptions = (user = { preference: [] }) => {
     const { userMenuItems } = config;
     const { preference = [] } = user;
 
@@ -16,7 +16,7 @@ const useUserOptions = (user) => {
         );
     });
 
-    return toDisplay;
+    return [toDisplay];
 };
 
 export default useUserOptions;

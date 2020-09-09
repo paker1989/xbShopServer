@@ -6,9 +6,9 @@ module.exports = {
     authedKey: 'authed_profile',
     userSessionMaxAge: 60 * 60 * 1, // 1 hours
     userMenuItems: {
-        userSetting: { privileges: [] },
-        userCenter: { privileges: [] },
-        loggout: { privileges: [] },
-        vipSetting: { privileges: ['vip'] },
+        userSetting: { privileges: [], code: 'usetting', label: 'user.setting' },
+        // userCenter: { privileges: [],  code: 'usetting', label: 'user.center', link: '#' },
+        loggout: { privileges: [], code: 'logout', label: 'user.logout' },
+        vipSetting: { privileges: ['vip'], code: 'vip', label: 'user.vip' },
     },
 };

@@ -56,6 +56,10 @@ input[type='textarea'].fixed-vert {
     height: auto;
 }
 
+.xb-menu-item {
+    padding: 8px 20px;
+}
+
 // separator wrapper class for options, icons, tags
 .option-sep-container {
     & > *:not(:last-child) {

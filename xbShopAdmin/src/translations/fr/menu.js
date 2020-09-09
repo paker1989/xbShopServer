@@ -2,5 +2,7 @@ export default {
     'menu.dashboard': 'Dashboard',
     'menu.product': 'Produit',
     'menu.category': 'Catégorie',
-    'menu.product.list': 'Liste de Produit',
+    'menu.userMgnt': 'Utilisateur',
+    'menu.product.list': 'Liste des Produits',
+    'menu.user.list': 'Liste des utilisateurs',
 };

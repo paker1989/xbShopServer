@@ -27,4 +27,6 @@ todo
 ## 2020/07/16
 制定下一步的计划: [TO_DO.md](./todo/TO_DO.md)
 
-## 2020/09/05
+## 2020/09/09
+- user log out, auto login;
+- product edit module;

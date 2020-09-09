@@ -24,6 +24,11 @@ const lazies = {
                 link: 'addCategory/:idCat?',
                 source: lazy(() => import('../../components/Category/categoryGenerator/categoryGenerator')),
             },
+            {
+                key: 'userList',
+                link: 'userList',
+                source: lazy(() => import('../../components/User/UserList/userList')),
+            },
         ],
     },
 };

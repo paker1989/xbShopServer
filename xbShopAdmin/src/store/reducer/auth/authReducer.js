@@ -10,6 +10,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case AuthActionType._AUTH_LOGIN_SUCCESS:
+        case AuthActionType._AUTH_LOGOUT_SUCCESS:
             /* eslint-disable */
             const { backendStatus } = action.payload;
             /* eslint-enable */

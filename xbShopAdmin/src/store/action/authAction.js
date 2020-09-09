@@ -9,6 +9,11 @@ export const login = (params) => ({
     payload: params,
 });
 
+export const logout = (params) => ({
+    type: AuthActionType._AUTH_LOGOUT,
+    payload: params,
+});
+
 /**
  * 自动登录, 发送login,
  * payload example: { userLogin: 'xb', loginType: 'autoLogin' }
