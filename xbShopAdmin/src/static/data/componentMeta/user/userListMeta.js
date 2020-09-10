@@ -5,7 +5,7 @@ module.exports = {
         layout: {
             table: {
                 md: { span: 24 },
-                lg: { span: 22, offset: 1 },
+                lg: { span: 20 },
             },
         },
         pageSize: 20, // 20

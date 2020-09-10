@@ -1,42 +1,21 @@
 import React from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Table, Switch, Popconfirm } from 'antd';
+import { Table, Popconfirm } from 'antd';
 import { NavLink } from 'react-router-dom';
 
-import AttributSearcher from '../../../Common/AttributSearcher/attributSearcher';
-
-const TeamTable = ({ intl, loading }) => {
-    const handleChange = () => {};
-
+const RoleTable = ({ intl, loading }) => {
     const handleDelete = () => {};
 
     const columns = [
         {
             title: intl.formatMessage({ id: 'common.id' }),
-            dataIndex: 'idAdmin',
-            key: 'idAdmin',
+            dataIndex: 'idRole',
+            key: 'idRole',
         },
         {
-            title: intl.formatMessage({ id: 'common.email' }),
-            dataIndex: 'email',
-            key: 'email',
-        },
-        {
-            title: intl.formatMessage({ id: 'common.active' }),
-            dataIndex: 'isActive',
-            key: 'isActive',
-            render: (text, record) => {
-                return (
-                    <Switch
-                        checkedChildren={intl.formatMessage({ id: 'common.yes' })}
-                        unCheckedChildren={intl.formatMessage({ id: 'common.no' })}
-                        checked={text === 0}
-                        onChange={(checked) => {
-                            handleChange(record.idProduct, checked ? 'activate' : 'deactivate');
-                        }}
-                    />
-                );
-            },
+            title: intl.formatMessage({ id: 'common.role' }),
+            dataIndex: 'role',
+            key: 'role',
         },
         {
             title: intl.formatMessage({ id: 'common.operation' }),
@@ -47,13 +26,13 @@ const TeamTable = ({ intl, loading }) => {
                     <div className="option-sep-container">
                         <Popconfirm
                             title={intl.formatMessage({ id: 'common.delete.confirm' })}
-                            onConfirm={() => handleDelete(record.idAdmin)}
+                            onConfirm={() => handleDelete(record.idRole)}
                         >
                             <span className="clickable danger inline-block">
                                 {intl.formatMessage({ id: 'common.delete' })}
                             </span>
                         </Popconfirm>
-                        <NavLink to={`/dashboard/addAdmin/${record.idAdmin}`}>
+                        <NavLink to={`/dashboard/editRole/${record.idRole}`}>
                             <FormattedMessage id="common.edit" />
                         </NavLink>
                     </div>
@@ -64,16 +43,15 @@ const TeamTable = ({ intl, loading }) => {
 
     return (
         <div className="team-list-table">
-            <AttributSearcher />
             <Table
                 size="large"
                 columns={columns}
                 dataSource={[]}
-                rowKey={(record) => record.idAdmin}
+                rowKey={(record) => record.idRole}
                 loading={loading}
             />
         </div>
     );
 };
 
-export default injectIntl(TeamTable);
+export default injectIntl(RoleTable);

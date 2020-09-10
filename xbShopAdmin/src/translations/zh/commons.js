@@ -28,4 +28,7 @@ export default {
     'common.email': '邮箱',
     'common.role': '角色',
     'common.active': '激活',
+    'common.search.item': '搜索条目',
+    'common.typing': '请输入',
+    'common.search': '搜索',
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Menu, Dropdown, Typography, Avatar } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +7,6 @@ import config from '../../../../static/data/componentMeta/auth/authMeta';
 import useUserOptions from '../../../../utils/hooks/useUserOptions';
 import * as AuthActionCreator from '../../../../store/action/authAction';
 import * as AuthActionType from '../../../../store/actionType/authActionType';
-
-// import { arguments } from 'file-loader';
 
 const { Text } = Typography;
 const { userMenuItems } = config;
