@@ -25,4 +25,7 @@ export default {
     'common.forgetpwd': '忘记密码',
     'common.action.login': '登录',
     'common.rememberme': '自动登录',
+    'common.email': '邮箱',
+    'common.role': '角色',
+    'common.active': '激活',
 };

@@ -5,4 +5,5 @@ export default {
     'menu.userMgnt': 'Utilisateur',
     'menu.product.list': 'Liste des Produits',
     'menu.user.list': 'Liste des utilisateurs',
+    'menu.team.list': 'Administration',
 };

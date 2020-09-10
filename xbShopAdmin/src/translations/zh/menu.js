@@ -5,4 +5,5 @@ export default {
     'menu.userMgnt': '用户管理',
     'menu.product.list': '产品列表',
     'menu.user.list': '用户列表',
+    'menu.team.list': '管理员',
 };

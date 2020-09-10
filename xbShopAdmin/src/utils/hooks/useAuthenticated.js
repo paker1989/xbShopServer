@@ -3,7 +3,6 @@ import cookie from 'react-cookies';
 import config from '../../static/data/componentMeta/auth/authMeta';
 
 const useAuthenticated = () => {
-    debugger;
     const { authedKey } = config;
 
     const authUser = cookie.load(authedKey);

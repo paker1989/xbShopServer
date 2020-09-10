@@ -25,4 +25,7 @@ export default {
     'common.forgetpwd': 'Oubliez mot de passe',
     'common.action.login': 'Log In',
     'common.rememberme': 'Souvenez de moi',
+    'common.email': 'Email',
+    'common.role': 'Rôle',
+    'common.active': 'Activer',
 };

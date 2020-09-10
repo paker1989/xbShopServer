@@ -2,9 +2,11 @@ import axios from 'axios';
 import { put } from 'redux-saga/effects';
 import cookie from 'react-cookies';
 
-import config, { authedKey } from '../../../static/data/componentMeta/auth/authMeta';
+import config from '../../../static/data/componentMeta/auth/authMeta';
 import * as AuthActionType from '../../actionType/authActionType';
 import { getRequestUrl } from '../../../static/api';
+
+const { authedKey, userSessionMaxAge } = config;
 
 /**
  * login saga,
@@ -12,7 +14,6 @@ import { getRequestUrl } from '../../../static/api';
  * @param {*} reqObj
  */
 export function* loginSaga(reqObj) {
-    const { authedKey, userSessionMaxAge } = config;
     try {
         const { loginType = 'login' } = reqObj.payload; // login or autoLogin
 

@@ -59,6 +59,16 @@ module.exports = [
                 },
                 link: '/dashboard/userList',
             },
+            {
+                title: 'menu.team.list',
+                key: 'teamList',
+                type: 'item',
+                icon: {
+                    type: 'native',
+                    name: 'user',
+                },
+                link: '/dashboard/teamList',
+            },
         ],
     },
 ];

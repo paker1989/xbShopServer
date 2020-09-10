@@ -29,6 +29,11 @@ const lazies = {
                 link: 'userList',
                 source: lazy(() => import('../../components/User/UserList/userList')),
             },
+            {
+                key: 'teamList',
+                link: 'teamList',
+                source: lazy(() => import('../../components/User/TeamList/teamList')),
+            },
         ],
     },
 };
