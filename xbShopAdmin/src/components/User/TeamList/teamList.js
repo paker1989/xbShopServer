@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Card, Row, Col, Tabs } from 'antd';
+import { Card, Row, Col, Tabs, Button } from 'antd';
 import { injectIntl } from 'react-intl';
+import { NavLink } from 'react-router-dom';
 
 import TeamTable from './teamTable/teamTable';
 import RoleTable from './roleTable/roleTable';
@@ -24,6 +25,11 @@ const TeamList = ({ intl }) => {
             <HLPageHeader
                 title={intl.formatMessage({ id: title })}
                 description={intl.formatMessage({ id: description })}
+                extra={
+                    <Button type="primary">
+                        <NavLink to="/dashboard/addAdmin">{intl.formatMessage({ id: 'user.team.addAdmin' })}</NavLink>
+                    </Button>
+                }
             />
             <div className="section-container">
                 <Card bordered={false}>
@@ -41,7 +47,7 @@ const TeamList = ({ intl }) => {
                                     tab={intl.formatMessage({ id: 'user.team.list.permissions' })}
                                     key="permission"
                                 >
-                                    <RoleTable />
+                                    <RoleTable {...layout.table} />
                                 </TabPane>
                             </Tabs>
                         </Col>

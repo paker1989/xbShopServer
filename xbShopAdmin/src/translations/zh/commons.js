@@ -30,5 +30,5 @@ export default {
     'common.active': '激活',
     'common.search.item': '搜索条目',
     'common.typing': '请输入',
-    'common.search': '搜索',
+    'common.search': '查询',
 };

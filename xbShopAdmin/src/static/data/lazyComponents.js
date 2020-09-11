@@ -34,6 +34,11 @@ const lazies = {
                 link: 'teamList',
                 source: lazy(() => import('../../components/User/TeamList/teamList')),
             },
+            {
+                key: 'addAdmin',
+                link: 'addAdmin/:idAdmin?',
+                source: lazy(() => import('../../components/User/AdminGenerator/adminGenerator')),
+            },
         ],
     },
 };

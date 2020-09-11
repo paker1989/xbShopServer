@@ -1,0 +1,15 @@
+$attribut-pairs-padding: 10px;
+$attribut-pairs-label-margin: 8px;
+
+.attribut-searcher {
+    margin-bottom: 10px;
+}
+
+.attribut-pairs {
+    position: relative;
+    padding: 0 $attribut-pairs-padding;
+
+    .label {
+        margin-right: $attribut-pairs-label-margin;
+    }
+}

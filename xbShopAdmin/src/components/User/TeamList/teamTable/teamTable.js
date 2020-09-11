@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Table, Switch, Popconfirm } from 'antd';
 import { NavLink } from 'react-router-dom';
@@ -6,9 +6,15 @@ import { NavLink } from 'react-router-dom';
 import AttributSearcher from '../../../Common/AttributSearcher/attributSearcher';
 
 const TeamTable = ({ intl, loading }) => {
+    const [searchStr, setSearchStr] = useState('');
+
     const handleChange = () => {};
 
     const handleDelete = () => {};
+
+    const handleSearch = (e) => {
+        setSearchStr(e.target.value);
+    };
 
     const columns = [
         {
@@ -62,9 +68,13 @@ const TeamTable = ({ intl, loading }) => {
         },
     ];
 
+    const searchPairs = [
+        { inputVal: searchStr, labelText: 'common.email', placeholder: 'common.email', onChange: handleSearch },
+    ];
+
     return (
         <div className="team-list-table">
-            <AttributSearcher />
+            <AttributSearcher searchPairs={searchPairs} />
             <Table
                 size="large"
                 columns={columns}

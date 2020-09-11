@@ -56,10 +56,10 @@ export function* loginSaga(reqObj) {
     }
 }
 
-export function* logoutSaga(reqObj) {
-    console.log(reqObj);
+export function* logoutSaga() {
+    // console.log(reqObj);
     const res = yield axios.post(getRequestUrl('auth', 'logout'), { withCredentials: true });
-    console.log(res);
+    // console.log(res);
     if (res && res.status === 200) {
         cookie.remove(authedKey);
         yield put({

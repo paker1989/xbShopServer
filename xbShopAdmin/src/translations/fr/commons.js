@@ -30,5 +30,5 @@ export default {
     'common.active': 'Activer',
     'common.search.item': 'Terme de recherche',
     'common.typing': 'Tapez quelque chose',
-    'common.search': 'Rechercher',
+    'common.search': 'Consulter',
 };

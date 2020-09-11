@@ -1,22 +1,32 @@
 import React from 'react';
-import { Input, Button } from 'antd';
+import { Input, Button, Typography } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
+
+import './attributSearcher.scss';
+
+const { Text } = Typography;
 
 const AttributSearcher = ({
     intl,
-    searchPairs = [{ labelText: 'common.search.item', placeholder: 'common.typing', onChange: () => {} }],
+    searchPairs = [{ inputVal: '', labelText: 'common.search.item', placeholder: 'common.typing', onChange: () => {} }],
     btnText = 'common.search',
     onSubmit,
 }) => {
     return (
-        <div className="flex-row-container middle">
-            <div className="attribut-pairs">
+        <div className="attribut-searcher flex-row-container middle">
+            <div className="flex-row-container middle">
                 {searchPairs.map((pair) => (
-                    <span key={pair.labelText} className="flex-row-container middle">
-                        <span>
-                            <FormattedMessage id={pair.labelText} />
-                        </span>
-                        <Input placeholder={intl.formatMessage({ id: pair.placeholder })} onChange={pair.onChange} />
+                    <span key={pair.labelText} className="attribut-pairs flex-row-container middle">
+                        {pair.labelText && (
+                            <Text className="no-shrink label">
+                                <FormattedMessage id={pair.labelText} />
+                            </Text>
+                        )}
+                        <Input
+                            value={pair.inputVal}
+                            placeholder={intl.formatMessage({ id: pair.placeholder })}
+                            onChange={pair.onChange}
+                        />
                     </span>
                 ))}
             </div>
