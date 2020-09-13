@@ -10,4 +10,12 @@ export default {
     'user.team.addAdmin': '添加管理员',
     'user.addAdmin.header.title': '增加或编辑您团队中的成员',
     'user.addAdmin.header.subtitle': '完成添加或者修改后，点击保存或者取消完成当前修改。产品将在列表中更新',
+    'user.addAdmin.error.noRole': '您必须选择一个角色.',
+    'user.addAdmin.error.noEmail': '邮箱地址不能为空',
+    'user.addAdmin.error.formatEmail': '邮箱格式不正确',
+    'user.addAdmin.error.noPwd': '密码不能为空',
+    'user.addAdmin.email.mandatory': '邮箱 (必填)',
+    'user.addAdmin.email': '邮箱',
+    'user.addAdmin.isActive': '是否激活',
+    'user.addAdmin.yourRole': '您的角色',
 };

@@ -1,7 +1,7 @@
 /**
  * add product form
  */
-import * as userActionType from '../../actionType/userActionType';
+// import * as userActionType from '../../actionType/userActionType';
 
 const initialState = {};
 

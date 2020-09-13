@@ -22,6 +22,7 @@ export default {
     'common.mobile.login': '手机登录',
     'common.login': '用户名',
     'common.password': '密码',
+    'common.password.repeat': '重复您的密码',
     'common.forgetpwd': '忘记密码',
     'common.action.login': '登录',
     'common.rememberme': '自动登录',
@@ -31,4 +32,6 @@ export default {
     'common.search.item': '搜索条目',
     'common.typing': '请输入',
     'common.search': '查询',
+    'common.phone': '手机号码',
+    'common.generate.pwd': '自动生成密码',
 };

@@ -12,4 +12,12 @@ export default {
     'user.addAdmin.header.title': 'Ajoutez, modifiez un membre d"équipe',
     'user.addAdmin.header.subtitle':
         "Une fois l'ajout ou la modification terminé, cliquez sur Enregistrer ou sur Annuler pour terminer la modification en cours. Les produits seront mis à jour dans la liste",
+    'user.addAdmin.error.noRole': 'Vous devez sélectionner le role.',
+    'user.addAdmin.error.noEmail': "Vous devez saisir l'email",
+    'user.addAdmin.error.formatEmail': "Le format de l'e-mail est incorrect",
+    'user.addAdmin.error.noPwd': 'Le mot de passe ne peut pas être vide',
+    'user.addAdmin.email.mandatory': 'Email (obligatoire)',
+    'user.addAdmin.email': 'Email',
+    'user.addAdmin.isActive': 'Activé',
+    'user.addAdmin.yourRole': 'Votre Rôle',
 };

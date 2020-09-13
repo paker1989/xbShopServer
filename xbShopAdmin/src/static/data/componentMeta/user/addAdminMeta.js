@@ -4,14 +4,13 @@ module.exports = {
         description: 'user.addAdmin.header.subtitle',
         formName: 'addAdmin', // form name
         formLayout: {
-            // add product form lay out
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 5 },
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 10, offset: 1 },
+                sm: { span: 15, offset: 1 },
             },
         },
         wrapperColLargeLayout: {

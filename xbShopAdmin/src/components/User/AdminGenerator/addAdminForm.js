@@ -1,94 +1,93 @@
-import React from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Button, Select, Row, Col, message } from 'antd';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Form, Input, Button, Select, Row, Col, Switch } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
+import PasswordConfirmer from '../../Common/PasswordConfirmer/pwdConfirmer';
 import addAdminMeta from '../../../static/data/componentMeta/user/addAdminMeta';
+import getValidators from './validators';
 
 const { adminGenerator: generatorMeta } = addAdminMeta;
+const { Option } = Select;
 
-const AdminForm = () => {
+const AdminForm = (props) => {
+    const { form, intl } = props;
+    const { getFieldDecorator } = form;
+    const validators = getValidators({ intl });
+
+    const [editMode, setEditMode] = useState(false);
+
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
             if (!errors) {
-                /* eslint-disable */
-                const { shortDscp, specs, ...otherValidatedProps } = values;
-                /* eslint-disable */
-                const { status, errorMsg } = validators.specs.global(specs);
-
-                if (status !== _SPEC_STATUS_OK) {
-                    message.error(errorMsg);
-                    return;
-                }
-
-                disptch(
-                    ProductActionCreator.submitAddProductStep({
-                        shortDscp: getNoEmptyStr(shortDscp),
-                        specs,
-                        ...otherValidatedProps,
-                        currentStep: 1,
-                    })
-                );
+                // /* eslint-disable */
+                // const { shortDscp, specs, ...otherValidatedProps } = values;
+                // /* eslint-disable */
+                // const { status, errorMsg } = validators.specs.global(specs);
+                // if (status !== _SPEC_STATUS_OK) {
+                //     message.error(errorMsg);
+                //     return;
+                // }
+                // disptch(
+                //     ProductActionCreator.submitAddProductStep({
+                //         shortDscp: getNoEmptyStr(shortDscp),
+                //         specs,
+                //         ...otherValidatedProps,
+                //         currentStep: 1,
+                //     })
+                // );
             }
         });
     };
 
     return (
-        <Form onSubmit={onSubmit} {...productGenerator.formLayout}>
-            <Form.Item label={intl.formatMessage({ id: 'product.name.mandatory' })}>
+        <Form onSubmit={onSubmit} {...generatorMeta.formLayout}>
+            <Form.Item label={intl.formatMessage({ id: 'user.addAdmin.email.mandatory' })}>
                 {getFieldDecorator(
-                    'productName',
-                    validators.productName
-                )(<Input placeholder={intl.formatMessage({ id: 'product.name' })} />)}
+                    'email',
+                    validators.email
+                )(<Input style={{ width: 230 }} placeholder={intl.formatMessage({ id: 'user.addAdmin.email' })} />)}
             </Form.Item>
-            <Form.Item label={intl.formatMessage({ id: 'product.shortdscp.optional' })}>
-                {getFieldDecorator('shortDscp')(
-                    <Input.TextArea
-                        placeholder={intl.formatMessage({ id: 'product.shortdscp' })}
-                        className="fixed-vert"
-                        rows={4}
-                    />
-                )}
-            </Form.Item>
-            <Form.Item
-                label={intl.formatMessage({ id: 'product.category' })}
-                extra={intl.formatMessage({ id: 'product.category.tooltip' })}
-            >
+            <Form.Item label={intl.formatMessage({ id: 'common.phone' })}>
                 {getFieldDecorator(
-                    'categories',
-                    validators.categories
+                    'phone',
+                    validators.phoneNumber
+                )(<Input style={{ width: 200 }} placeholder={intl.formatMessage({ id: 'common.phone' })} />)}
+            </Form.Item>
+            <Form.Item label={intl.formatMessage({ id: 'user.addAdmin.yourRole' })}>
+                {getFieldDecorator(
+                    'role',
+                    validators.idRole
                 )(
-                    <Select mode="multiple" placeholder={intl.formatMessage({ id: 'product.category' })}>
-                        {categoryList
-                            .filter((item) => item.isActive && !item.isDeleted)
-                            .map((item) => (
-                                <Option key={item.idCategory} value={item.idCategory}>
-                                    {item.label}
-                                </Option>
-                            ))}
+                    <Select style={{ width: 200 }} placeholder="请选择您的角色">
+                        <Option value={1}>超级管理员</Option>
+                        <Option value={2}>物流管理员</Option>
                     </Select>
                 )}
             </Form.Item>
-            <Form.Item
-                label={intl.formatMessage({ id: 'product.gallery' })}
-                extra={intl.formatMessage({ id: 'product.gallery.tooltip' })}
-            >
-                {getFieldDecorator('galleries', validators.galleries)(<GalleryUpload />)}
+            <Form.Item label={intl.formatMessage({ id: 'user.addAdmin.isActive' })}>
+                {getFieldDecorator(
+                    'isActive',
+                    validators.isActive
+                )(
+                    <Switch
+                        checkedChildren={intl.formatMessage({ id: 'common.yes' })}
+                        unCheckedChildren={intl.formatMessage({ id: 'common.no' })}
+                    />
+                )}
+            </Form.Item>
+            <Form.Item wrapperCol={24}>
+                {getFieldDecorator(
+                    'password',
+                    validators.isActive
+                )(<PasswordConfirmer isRepeat={editMode === false} showGenerate />)}
             </Form.Item>
             <Row>
-                <Col xs={{ span: 24 }} sm={{ span: 5 }} style={{ textAlign: 'right' }}>
-                    <FormattedMessage id="product.spec" />
-                </Col>
-                <Col {...productGenerator.wrapperColLargeLayout}>
-                    <ProductSpecs form={form} specs={specs} />
-                </Col>
-            </Row>
-            <Row>
                 <Col xs={{ span: 0 }} sm={{ span: 5 }}></Col>
-                <Col {...productGenerator.wrapperColLargeLayout}>
+                <Col {...generatorMeta.wrapperColLargeLayout}>
                     <Button type="primary" htmlType="submit">
-                        <FormattedMessage id="common.next" />
+                        <FormattedMessage id="common.confirm.back" />
                     </Button>
                 </Col>
             </Row>
@@ -96,19 +95,19 @@ const AdminForm = () => {
     );
 };
 
+const mapStateToProps = (state) => ({
+    // productName: state.product.addProductReducer.productName,
+});
+
 const WrappedForm = connect(mapStateToProps)(
     Form.create({
         name: generatorMeta.formName,
         mapPropsToFields(props) {
             return {
-                productName: Form.createFormField({ value: props.productName }),
-                shortDscp: Form.createFormField({ value: props.shortDscp }),
-                categories: Form.createFormField({ value: props.categories }),
-                galleries: Form.createFormField({ value: props.galleries }),
-                specs: Form.createFormField({ value: props.specs }),
+                // productName: Form.createFormField({ value: props.productName }),
             };
         },
-    })(injectIntl(Core))
+    })(injectIntl(AdminForm))
 );
 
 export default WrappedForm;

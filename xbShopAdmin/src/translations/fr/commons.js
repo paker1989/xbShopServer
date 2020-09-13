@@ -22,6 +22,7 @@ export default {
     'common.mobile.login': 'Mobile',
     'common.login': 'Login',
     'common.password': 'Mot de passe',
+    'common.password.repeat': 'Confirmer votre mot de passe',
     'common.forgetpwd': 'Oubliez mot de passe',
     'common.action.login': 'Log In',
     'common.rememberme': 'Souvenez de moi',
@@ -31,4 +32,6 @@ export default {
     'common.search.item': 'Terme de recherche',
     'common.typing': 'Tapez quelque chose',
     'common.search': 'Consulter',
+    'common.phone': 'Numéro Tél.',
+    'common.generate.pwd': 'Générer un mot de passe'
 };

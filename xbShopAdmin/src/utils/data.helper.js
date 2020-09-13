@@ -7,6 +7,16 @@ export function getNoEmptyStr(val) {
     return typeof val === 'undefined' || val === null ? '' : val.trim();
 }
 
+export function validateEmail(email) {
+    const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    return re.test(String(email).toLowerCase());
+}
+
+export function validePassword(password) {
+    const error = '';
+    return error;
+}
+
 /**
  * return formatted price divide by 1,000
  * @param {*} val
