@@ -22,6 +22,7 @@ const AdminForm = (props) => {
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
+            console.log(values);
             if (!errors) {
                 // /* eslint-disable */
                 // const { shortDscp, specs, ...otherValidatedProps } = values;
@@ -105,8 +106,8 @@ const AdminForm = (props) => {
             </Form.Item> */}
             <PasswordConfirmer isRepeat={editMode === false} showGenerate form={form} validators={validators} />
             <Row>
-                <Col xs={{ span: 0 }} sm={{ span: 5 }}></Col>
-                <Col {...generatorMeta.wrapperColLargeLayout}>
+                <Col {...generatorMeta.formLayout.labelCol}></Col>
+                <Col {...generatorMeta.formLayout.wrapperCol}>
                     <Button htmlType="button" style={{ marginRight: 10 }} onClick={cancelEdition}>
                         <FormattedMessage id="common.cancel" />
                     </Button>

@@ -34,4 +34,5 @@ export default {
     'common.search': '查询',
     'common.phone': '手机号码',
     'common.generate.pwd': '自动生成密码',
+    'common.password.length.required': '密码至少为八位',
 };
