@@ -13,9 +13,11 @@ const { Option } = Select;
 const AdminForm = (props) => {
     const { form, intl } = props;
     const { getFieldDecorator } = form;
-    const validators = getValidators({ intl });
+    const validators = getValidators({ intl, form });
 
     const [editMode, setEditMode] = useState(false);
+
+    const cancelEdition = () => {};
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -47,20 +49,38 @@ const AdminForm = (props) => {
                 {getFieldDecorator(
                     'email',
                     validators.email
-                )(<Input style={{ width: 230 }} placeholder={intl.formatMessage({ id: 'user.addAdmin.email' })} />)}
+                )(<Input style={{ width: 250 }} placeholder={intl.formatMessage({ id: 'user.addAdmin.email' })} />)}
             </Form.Item>
             <Form.Item label={intl.formatMessage({ id: 'common.phone' })}>
                 {getFieldDecorator(
                     'phone',
                     validators.phoneNumber
-                )(<Input style={{ width: 200 }} placeholder={intl.formatMessage({ id: 'common.phone' })} />)}
+                )(<Input style={{ width: 250 }} placeholder={intl.formatMessage({ id: 'common.phone' })} />)}
             </Form.Item>
             <Form.Item label={intl.formatMessage({ id: 'user.addAdmin.yourRole' })}>
                 {getFieldDecorator(
                     'role',
                     validators.idRole
                 )(
-                    <Select style={{ width: 200 }} placeholder="请选择您的角色">
+                    <Select
+                        style={{ width: 250 }}
+                        placeholder={intl.formatMessage({ id: 'user.addAdmin.placeholder.role' })}
+                    >
+                        <Option value={1}>超级管理员</Option>
+                        <Option value={2}>物流管理员</Option>
+                    </Select>
+                )}
+            </Form.Item>
+            <Form.Item label={intl.formatMessage({ id: 'user.addAdmin.defaultPage' })}>
+                {getFieldDecorator(
+                    'defaultPage',
+                    validators.defaultPage
+                )(
+                    <Select
+                        disabled
+                        style={{ width: 250 }}
+                        placeholder={intl.formatMessage({ id: 'user.addAdmin.placeholder.defaultPage' })}
+                    >
                         <Option value={1}>超级管理员</Option>
                         <Option value={2}>物流管理员</Option>
                     </Select>
@@ -77,15 +97,19 @@ const AdminForm = (props) => {
                     />
                 )}
             </Form.Item>
-            <Form.Item wrapperCol={24}>
+            {/* <Form.Item wrapperCol={24}>
                 {getFieldDecorator(
                     'password',
-                    validators.isActive
-                )(<PasswordConfirmer isRepeat={editMode === false} showGenerate />)}
-            </Form.Item>
+                    validators.password
+                )(<PasswordConfirmer isRepeat={editMode === false} showGenerate form={form} validators={validators} />)}
+            </Form.Item> */}
+            <PasswordConfirmer isRepeat={editMode === false} showGenerate form={form} validators={validators} />
             <Row>
                 <Col xs={{ span: 0 }} sm={{ span: 5 }}></Col>
                 <Col {...generatorMeta.wrapperColLargeLayout}>
+                    <Button htmlType="button" style={{ marginRight: 10 }} onClick={cancelEdition}>
+                        <FormattedMessage id="common.cancel" />
+                    </Button>
                     <Button type="primary" htmlType="submit">
                         <FormattedMessage id="common.confirm.back" />
                     </Button>

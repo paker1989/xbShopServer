@@ -33,5 +33,5 @@ export default {
     'common.typing': 'Tapez quelque chose',
     'common.search': 'Consulter',
     'common.phone': 'Numéro Tél.',
-    'common.generate.pwd': 'Générer un mot de passe'
+    'common.generate.pwd': 'Générer un mot de passe',
 };
