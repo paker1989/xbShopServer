@@ -42,13 +42,16 @@ export default ({ intl, form }) => {
                         const pwdRepeat = getNoEmptyStr(getFieldValue('passwordRepeat'));
                         const wrappedVal = getNoEmptyStr(value);
 
-                        // console.log(pwdRepeat);
                         if (wrappedVal.length < 1) {
                             callback(_translate('user.addAdmin.error.noPwd'));
                         } else if (pwdRepeat.length > 0 && pwdRepeat !== wrappedVal) {
                             callback(_translate('user.addAdmin.error.pwd.match'));
                         } else {
-                            callback(!validePassword(wrappedVal));
+                            const error = validePassword(wrappedVal);
+                            if (error.length > 0) {
+                                return callback(_translate(error));
+                            }
+                            callback();
                         }
                     },
                 },

@@ -30,3 +30,12 @@ todo
 ## 2020/09/09
 - user log out, auto login;
 - product edit module;
+
+## 2020/09/16
+todo:
+- back fn
+- redux store;
+- validate password fn,
+- role population;
+- default page population;
+- save&back fn

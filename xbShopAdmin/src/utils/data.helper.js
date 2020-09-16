@@ -49,7 +49,7 @@ export function generatePwd(_length) {
 }
 
 export function validePassword(password) {
-    const error = null;
+    const error = '';
     return error;
 }
 

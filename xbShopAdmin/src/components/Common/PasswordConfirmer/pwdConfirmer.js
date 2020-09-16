@@ -41,7 +41,7 @@ const PasswordConfirmer = ({
                         'password',
                         validators.password
                     )(
-                        <Input
+                        <Input.Password
                             style={{ width: 250 }}
                             type="password"
                             placeholder={intl.formatMessage({ id: 'common.password' })}
@@ -60,7 +60,7 @@ const PasswordConfirmer = ({
                         'passwordRepeat',
                         validators.passwordRepeat
                     )(
-                        <Input
+                        <Input.Password
                             style={{ width: 250 }}
                             type="password"
                             placeholder={intl.formatMessage({ id: 'common.password.repeat' })}
