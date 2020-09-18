@@ -33,9 +33,9 @@ todo
 
 ## 2020/09/16
 todo:
-- back fn
-- redux store;
-- validate password fn,
+- back fn (done)
+- redux store; (done)
+- validate password fn, (done)
 - role population;
 - default page population;
 - save&back fn

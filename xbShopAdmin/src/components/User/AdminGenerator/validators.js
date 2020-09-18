@@ -49,16 +49,32 @@ export default ({ intl, form }) => {
                         } else {
                             const error = validePassword(wrappedVal);
                             if (error.length > 0) {
-                                return callback(_translate(error));
+                                callback(_translate(error));
                             }
-                            callback();
                         }
+                        callback();
                     },
                 },
             ],
         },
         passwordRepeat: {
-            rules: [{ required: true, message: _translate('user.addAdmin.error.noPwdRepeat') }],
+            rules: [
+                { required: true, message: _translate('user.addAdmin.error.noPwdRepeat') },
+                {
+                    validator: (rule, value, callback) => {
+                        const pwdRepeat = getNoEmptyStr(getFieldValue('password'));
+                        const wrappedVal = getNoEmptyStr(value);
+                        if (wrappedVal.length === 0) {
+                            callback();
+                        } else if (pwdRepeat.length > 0) {
+                            form.validateFields(['password'], (err, val) => {
+                                callback();
+                            });
+                        }
+                        callback();
+                    },
+                },
+            ],
         },
     };
 };

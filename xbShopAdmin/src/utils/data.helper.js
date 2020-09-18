@@ -49,7 +49,12 @@ export function generatePwd(_length) {
 }
 
 export function validePassword(password) {
-    const error = '';
+    let error = '';
+
+    // condition 1
+    if (password && password.length < 6) {
+        error = 'user.addAdmin.info.pwdRule';
+    }
     return error;
 }
 

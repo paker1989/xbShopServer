@@ -34,5 +34,5 @@ export default {
     'common.search': 'Consulter',
     'common.phone': 'Numéro Tél.',
     'common.generate.pwd': 'Générer un mot de passe',
-    'common.password.length.required': 'Le mot de passe doit comporter au moins huit chiffres',
+    'common.password.length.required': 'Le mot de passe doit comporter au moins six chiffres',
 };

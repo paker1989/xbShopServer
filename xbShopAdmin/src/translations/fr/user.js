@@ -24,7 +24,7 @@ export default {
     'user.addAdmin.defaultPage': 'Page par default',
     'user.addAdmin.placeholder.role': 'Sélectionner votre rôle',
     'user.addAdmin.placeholder.defaultPage': 'Sélectionner votre page de default',
-    'user.addAdmin.info.pwdRule': 'Le mot de passe doit contenir au moins 8 caractères',
+    'user.addAdmin.info.pwdRule': 'Le mot de passe doit contenir au moins 6 caractères',
     'user.addAdmin.error.noDefaultPage': 'Vous devez sélectionner la page de default',
     'user.addAdmin.error.pwd.match': 'Les deux Mots de passes ne sont pas incohérents',
 };

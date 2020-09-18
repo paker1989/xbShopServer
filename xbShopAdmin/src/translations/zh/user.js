@@ -22,7 +22,7 @@ export default {
     'user.addAdmin.defaultPage': '默认页面',
     'user.addAdmin.placeholder.role': '选择您的角色',
     'user.addAdmin.placeholder.defaultPage': '选择默认页面',
-    'user.addAdmin.info.pwdRule': '密码需要包含至少8个字符',
+    'user.addAdmin.info.pwdRule': '密码需要包含至少6个字符',
     'user.addAdmin.error.noDefaultPage': '您必须选择默认页面',
     'user.addAdmin.error.pwd.match': '密码不一致',
 };
