@@ -1,5 +1,8 @@
 const UserModel = require('../model/user/user');
 const UserPrefModel = require('../model/user/userPref');
+const UserRoleModel = require('../model/user/userRole');
+const UserAccessModel = require('../model/user/userAccess');
+
 const encryptHelper = require('../core/encryptionHelper');
 const variables = require('../core/authHelper');
 
@@ -24,10 +27,38 @@ class AuthDAO {
                     {
                         model: UserPrefModel,
                         as: 'pref',
-                        attributes: { exclude: ['userprefId'] },
+                        attributes: { exclude: ['userroleId', 'userId', 'userAccessId'] },
+                        include: [
+                            {
+                                model: UserRoleModel,
+                                as: 'role',
+                                // 如何avoid extra joinction table as below for belongs-to-many relationship
+                                // include: [
+                                //     {
+                                //         model: UserAccessModel,
+                                //         as: 'accesses',
+                                //         through: {
+                                //             attributes: [],
+                                //         },
+                                //     },
+                                // ],
+                            },
+                            {
+                                model: UserAccessModel,
+                                as: 'indexPage',
+                            },
+                        ],
                     },
                 ],
             });
+
+            // const completedUser = await UserModel.findByPk(finded.get('idUser'), {
+            //     include: {
+            //         all: true,
+            //         nested: true,
+            //     },
+            // });
+
             return {
                 user: completedUser.toJSON(),
             };

@@ -10,10 +10,11 @@ import cookie from 'react-cookies';
 import * as AuthActionType from '../../store/actionType/authActionType';
 import * as AuthActionCreator from '../../store/action/authAction';
 import getValidators from './validators';
-
-import './login.scss';
 import useAuthenticated from '../../utils/hooks/useAuthenticated';
 import AuthMeta from '../../static/data/componentMeta/auth/authMeta';
+import { getIndexPage } from '../../utils/url.helper';
+
+import './login.scss';
 
 const { autoLoginKey } = AuthMeta;
 
@@ -55,7 +56,8 @@ const Core = ({ form, intl, history }) => {
 
     useMount(() => {
         if (authFlag) {
-            history.push(authUser.pref.indexPage);
+            // console.log(authUser);
+            history.push(getIndexPage(authUser.pref.indexPage.code));
             return;
         }
         const userLogin = cookie.load(autoLoginKey);
@@ -67,7 +69,7 @@ const Core = ({ form, intl, history }) => {
     useEffect(() => {
         if (backendStatus === AuthActionType._AUTH_LOGIN_SUCCESS) {
             dispatch(AuthActionCreator.resetBackendStatus());
-            history.push(authUser.pref.indexPage);
+            history.push(authUser.pref.indexPage.code);
         } else if (backendStatus === AuthActionType._AUTH_LOGIN_FAIL) {
             dispatch(AuthActionCreator.resetBackendStatus());
             setLocalErrorMsg(backendMsg);

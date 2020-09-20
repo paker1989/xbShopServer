@@ -14,7 +14,7 @@ import HLPageMeta from '../../../static/data/componentMeta/user/addAdminMeta';
 import './adminGenerator.scss';
 
 const AdminGenerator = ({ intl, history }) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const { description, title } = HLPageMeta.adminGenerator;
 
     // useUnmount(() => {

@@ -14,17 +14,6 @@ const formInitialState = {
     passwordRepeat: '',
 };
 
-// const formInitialState = {
-//     idAdmin: -1,
-//     idRole: 2,
-//     isActive: false,
-//     phoneNumber: '0659657708',
-//     email: 'xubinqz@gmail.com',
-//     defaultPage: 'user list',
-//     password: '1235',
-//     passwordRepeat: '5231',
-// };
-
 const initialState = {
     ...formInitialState,
 };
