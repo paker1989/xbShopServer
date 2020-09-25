@@ -25,4 +25,5 @@ export default {
     'user.addAdmin.info.pwdRule': '密码需要包含至少6个字符',
     'user.addAdmin.error.noDefaultPage': '您必须选择默认页面',
     'user.addAdmin.error.pwd.match': '密码不一致',
+    'user.addAdmin.superAdmin': '超级管理员',
 };

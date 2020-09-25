@@ -5,7 +5,7 @@ import * as userActionType from '../../actionType/userActionType';
 
 const formInitialState = {
     idAdmin: -1,
-    idRole: -1,
+    idRole: 1,
     isActive: true,
     phoneNumber: '',
     email: '',

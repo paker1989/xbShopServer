@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { Form, Input, Button, Select, Row, Col, Switch } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
@@ -18,8 +18,8 @@ const AdminForm = (props) => {
     const { getFieldDecorator } = form;
     const validators = getValidators({ intl, form });
     const dispatch = useDispatch();
-    const userRoles = useSelector((state) => state.user.admins.allUserRoles);
-
+    // const userRoles = useSelector((state) => state.user.admins.allUserRoles);
+    const userRoles = [{ idRole: 1, label: 'superAdmin', accesses: [{ code: 'teamList', idUserAccess: 1 }] }];
     console.log(userRoles);
 
     const [editMode, setEditMode] = useState(idAdmin !== -1);
@@ -82,8 +82,11 @@ const AdminForm = (props) => {
                         style={{ width: 250 }}
                         placeholder={intl.formatMessage({ id: 'user.addAdmin.placeholder.role' })}
                     >
-                        {/* <Option value={1}>超级管理员</Option>
-                        <Option value={2}>物流管理员</Option> */}
+                        {userRoles.map((role) => (
+                            <Option value={role.idRole} key={`role-${role.idRole}`}>
+                                {intl.formatMessage({ id: `user.addAdmin.${role.label}` })}
+                            </Option>
+                        ))}
                     </Select>
                 )}
             </Form.Item>
