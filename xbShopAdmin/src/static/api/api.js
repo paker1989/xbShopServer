@@ -12,5 +12,6 @@ module.exports = {
         login: 'login',
         autoLogin: 'autoLogin',
         logout: 'logout',
+        allUserRoles: 'allUserRoles',
     },
 };

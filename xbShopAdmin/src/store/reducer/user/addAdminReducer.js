@@ -1,5 +1,5 @@
 /**
- * add product form
+ * add admin form
  */
 import * as userActionType from '../../actionType/userActionType';
 

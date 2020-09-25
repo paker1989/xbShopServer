@@ -67,6 +67,42 @@ class AuthDAO {
             error: variables._PASSWORD_ERROR,
         };
     }
+
+    static async fetchUserAccess() {
+        const finded = await UserAccessModel.findAll({ raw: true });
+
+        if (!finded) {
+            return {
+                error: variables._FETCH_USERACCESS_ERROR,
+            };
+        }
+
+        return finded;
+    }
+
+    static async fetchUserRoles() {
+        const finded = (
+            await UserRoleModel.findAll({
+                include: [
+                    {
+                        model: UserAccessModel,
+                        as: 'accesses',
+                        through: {
+                            attributes: [],
+                        },
+                    },
+                ],
+            })
+        ).map((el) => el.toJSON());
+
+        if (!finded) {
+            return {
+                error: variables._FETC_USERROLE_ERROR,
+            };
+        }
+
+        return finded;
+    }
 }
 
 module.exports = AuthDAO;

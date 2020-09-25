@@ -14,7 +14,16 @@ const product = {
     },
 };
 
+const auth = {
+    prefix: 'auth',
+    keys: {
+        access: 'access',
+        userRole: 'userrole',
+    },
+};
+
 module.exports = {
     category,
     product,
+    auth,
 };

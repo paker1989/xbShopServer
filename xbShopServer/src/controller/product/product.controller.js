@@ -10,7 +10,7 @@ const {
     setSortedProductIds,
 } = require('../../core/cache/helper/productHelper');
 const productHelper = require('../../core/cache/helper/productHelper');
-// const { product } = require('../../../../xbShopAdmin/src/static/api/api');
+
 
 /**
  * save product

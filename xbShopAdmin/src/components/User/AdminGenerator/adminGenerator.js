@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, Row, Col, Button } from 'antd';
-import { useDispatch } from 'react-redux';
 import { injectIntl } from 'react-intl';
-// import { useUnmount } from 'ahooks';
 import { withRouter } from 'react-router-dom';
 
 import AddAdminForm from './addAdminForm';
+
 import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
 import HLPageMeta from '../../../static/data/componentMeta/user/addAdminMeta';
 
