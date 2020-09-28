@@ -3,19 +3,32 @@
  */
 import * as userActionType from '../../actionType/userActionType';
 
+// const formInitialState = {
+//     idAdmin: -1,
+//     idRole: undefined,
+//     isActive: true,
+//     phoneNumber: '',
+//     email: '',
+//     defaultPage: undefined,
+//     password: '',
+//     passwordRepeat: '',
+// };
+
 const formInitialState = {
     idAdmin: -1,
     idRole: 1,
     isActive: true,
-    phoneNumber: '',
-    email: '',
-    defaultPage: '',
-    password: '',
-    passwordRepeat: '',
+    phoneNumber: '+33659657708',
+    email: 'xubinqz@gmail.com',
+    defaultPage: 1,
+    password: '0659657708',
+    passwordRepeat: '0659657708',
 };
 
 const initialState = {
     ...formInitialState,
+    backendStatus: '',
+    backendMsg: '',
 };
 
 export default (state = initialState, action) => {

@@ -2,6 +2,7 @@ const passport = require('./passport');
 const { Resolve } = require('../../core/resolve');
 const authHelper = require('../../core/cache/helper/authHelper');
 const AuthDAO = require('../../dao/auth.dao');
+const { HttpException } = require('../../core/httpException');
 
 const login = async (ctx, next) => {
     // console.log(ctx.isAuthenticated());
@@ -40,7 +41,7 @@ const getAllUserAccess = async (ctx) => {
     const cached = await authHelper.getCachedUserAccess();
     if (cached) {
         // if found in cache, returned
-        console.log('cached user access');
+        // console.log('cached user access');
         Resolve.json(ctx, cached);
         return;
     }
@@ -58,7 +59,7 @@ const getAllUserRoles = async (ctx) => {
     const cached = await authHelper.getCachedUserRoles();
     if (cached) {
         // if found in cache, returned
-        console.log('cached user roles');
+        // console.log('cached user roles');
         Resolve.json(ctx, cached);
         return;
     }
@@ -72,9 +73,22 @@ const getAllUserRoles = async (ctx) => {
     }
 };
 
+const updateAdmin = async (ctx) => {
+    try {
+        const requestBody = ctx.request.body;
+        console.log(requestBody);
+        const updatedAdmin = await AuthDAO.saveAdmin(requestBody);
+        console.log(updatedAdmin);
+        Resolve.json(ctx, updatedAdmin);
+    } catch (err) {
+        throw new HttpException(err.message);
+    }
+};
+
 module.exports = {
     login,
     logout,
     getAllUserAccess,
     getAllUserRoles,
+    updateAdmin,
 };

@@ -1,3 +1,5 @@
+const { sequelize } = require('../core/db');
+
 const UserModel = require('../model/user/user');
 const UserPrefModel = require('../model/user/userPref');
 const UserRoleModel = require('../model/user/userRole');
@@ -7,6 +9,51 @@ const encryptHelper = require('../core/encryptionHelper');
 const variables = require('../core/authHelper');
 
 class AuthDAO {
+    static async findUserByPK(idUser) {
+        const completedUser = await UserModel.findByPk(idUser, {
+            include: [
+                {
+                    model: UserPrefModel,
+                    as: 'pref',
+                    attributes: { exclude: ['userroleId', 'userId', 'userAccessId'] },
+                    include: [
+                        {
+                            model: UserRoleModel,
+                            as: 'role',
+                            // 如何avoid extra joinction table as below for belongs-to-many relationship
+                            // include: [
+                            //     {
+                            //         model: UserAccessModel,
+                            //         as: 'accesses',
+                            //         through: {
+                            //             attributes: [],
+                            //         },
+                            //     },
+                            // ],
+                        },
+                        {
+                            model: UserAccessModel,
+                            as: 'indexPage',
+                        },
+                    ],
+                },
+            ],
+        });
+
+        // const completedUser = await UserModel.findByPk(finded.get('idUser'), {
+        //     include: {
+        //         all: true,
+        //         nested: true,
+        //     },
+        // });
+        return completedUser.toJSON();
+    }
+
+    /**
+     * find user for authentication
+     * @param {*} username 
+     * @param {*} pwd 
+     */
     static async findUser(username, pwd) {
         const finded = await UserModel.findOne({
             where: { isDeleted: false, username },
@@ -22,42 +69,7 @@ class AuthDAO {
         const isPasswordMatch = encryptHelper.comparePassword(pwd, passwordHash);
 
         if (isPasswordMatch) {
-            const completedUser = await UserModel.findByPk(finded.get('idUser'), {
-                include: [
-                    {
-                        model: UserPrefModel,
-                        as: 'pref',
-                        attributes: { exclude: ['userroleId', 'userId', 'userAccessId'] },
-                        include: [
-                            {
-                                model: UserRoleModel,
-                                as: 'role',
-                                // 如何avoid extra joinction table as below for belongs-to-many relationship
-                                // include: [
-                                //     {
-                                //         model: UserAccessModel,
-                                //         as: 'accesses',
-                                //         through: {
-                                //             attributes: [],
-                                //         },
-                                //     },
-                                // ],
-                            },
-                            {
-                                model: UserAccessModel,
-                                as: 'indexPage',
-                            },
-                        ],
-                    },
-                ],
-            });
-
-            // const completedUser = await UserModel.findByPk(finded.get('idUser'), {
-            //     include: {
-            //         all: true,
-            //         nested: true,
-            //     },
-            // });
+            const completedUser = await AuthDAO.findUserByPK(finded.get('idUser'));
 
             return {
                 user: completedUser.toJSON(),
@@ -80,6 +92,9 @@ class AuthDAO {
         return finded;
     }
 
+    /**
+     * fetch all user roles
+     */
     static async fetchUserRoles() {
         const finded = (
             await UserRoleModel.findAll({
@@ -102,6 +117,52 @@ class AuthDAO {
         }
 
         return finded;
+    }
+
+    /**
+     * save or update admin user
+     * @param {*} ctxBody
+     */
+    static async saveAdmin(ctxBody) {
+        let pk;
+        const { email, phoneNumber, idRole, defaultPage, isActive, password, idAdmin = -1 } = ctxBody;
+        const encryptedPassword = encryptHelper.bcryptHashSync(password);
+
+        if (Number(idAdmin) === -1) {
+            pk = await sequelize.transaction(async (t) => {
+                const newAdmin = await UserModel.create(
+                    {
+                        username: email,
+                        password: encryptedPassword,
+                        phoneNumber,
+                        email,
+                        // isActive,
+                    },
+                    {
+                        transaction: t,
+                    }
+                );
+
+                const userPref = await UserPrefModel.create(
+                    {
+                        userroleId: Number(idRole),
+                        userAccessId: Number(defaultPage),
+                        userId: newAdmin.idUser,
+                    },
+                    { transaction: t }
+                );
+
+                // set categories
+                await newAdmin.setPref(userPref, { transaction: t });
+
+                return newAdmin.idUser;
+            });
+        }
+
+        if (pk) {
+            return AuthDAO.findUserByPK(pk);
+        }
+        return pk; // undefined
     }
 }
 

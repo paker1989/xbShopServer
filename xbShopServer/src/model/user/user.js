@@ -21,7 +21,7 @@ User.init(
             allowNull: false,
         },
         phoneNumber: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(64),
             allowNull: true,
         },
         email: {

@@ -19,7 +19,7 @@ module.exports = [
         },
         children: [
             {
-                title: 'menu.product.list',
+                title: 'menu.productList',
                 key: 'prdList',
                 type: 'item',
                 icon: {
@@ -50,7 +50,7 @@ module.exports = [
         },
         children: [
             {
-                title: 'menu.user.list',
+                title: 'menu.userList',
                 key: 'usrList',
                 type: 'item',
                 icon: {
@@ -60,7 +60,7 @@ module.exports = [
                 link: '/dashboard/userList',
             },
             {
-                title: 'menu.team.list',
+                title: 'menu.teamList',
                 key: 'teamList',
                 type: 'item',
                 icon: {

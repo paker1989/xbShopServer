@@ -13,5 +13,6 @@ module.exports = {
         autoLogin: 'autoLogin',
         logout: 'logout',
         allUserRoles: 'allUserRoles',
+        updateAdmin: 'updateAdmin',
     },
 };

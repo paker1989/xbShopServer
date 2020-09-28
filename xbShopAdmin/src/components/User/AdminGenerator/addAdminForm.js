@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Button, Select, Row, Col, Switch } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
@@ -14,13 +14,15 @@ const { adminGenerator: generatorMeta } = addAdminMeta;
 const { Option } = Select;
 
 const AdminForm = (props) => {
-    const { form, intl, history, idAdmin } = props;
+    const { form, intl, history, idAdmin, idRole } = props;
     const { getFieldDecorator } = form;
     const validators = getValidators({ intl, form });
     const dispatch = useDispatch();
-    // const userRoles = useSelector((state) => state.user.admins.allUserRoles);
-    const userRoles = [{ idRole: 1, label: 'superAdmin', accesses: [{ code: 'teamList', idUserAccess: 1 }] }];
-    console.log(userRoles);
+    const userRoles = useSelector((state) => state.user.admins.allUserRoles);
+    // const userRoles = [{ idRole: 1, label: 'superAdmin', accesses: [{ code: 'teamList', idUserAccess: 1 }] }];
+    // console.log(userRoles);
+    const initUserAccess = idRole ? userRoles.find((role) => role.idRole === idRole).accesses : [];
+    const [userAccesses, setUserAccesses] = useState(initUserAccess);
 
     const [editMode, setEditMode] = useState(idAdmin !== -1);
 
@@ -34,27 +36,22 @@ const AdminForm = (props) => {
         };
     }, []);
 
+    const onSelectRole = (val) => {
+        const selectedUserRole = userRoles.find((item) => item.idRole === val);
+        if (selectedUserRole != null) {
+            setUserAccesses(selectedUserRole.accesses);
+        }
+    };
+
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
-            console.log(values);
+            // console.log(values);
             if (!errors) {
-                // /* eslint-disable */
-                // const { shortDscp, specs, ...otherValidatedProps } = values;
-                // /* eslint-disable */
-                // const { status, errorMsg } = validators.specs.global(specs);
-                // if (status !== _SPEC_STATUS_OK) {
-                //     message.error(errorMsg);
-                //     return;
-                // }
-                // disptch(
-                //     ProductActionCreator.submitAddProductStep({
-                //         shortDscp: getNoEmptyStr(shortDscp),
-                //         specs,
-                //         ...otherValidatedProps,
-                //         currentStep: 1,
-                //     })
-                // );
+                /* eslint-disable */
+                delete values.passwordRepeat;
+                /* eslint-enable */
+                dispatch(UserActionCreator.submitAdminEdition({ idAdmin, ...values }));
             }
         });
     };
@@ -79,6 +76,7 @@ const AdminForm = (props) => {
                     validators.idRole
                 )(
                     <Select
+                        onChange={onSelectRole}
                         style={{ width: 250 }}
                         placeholder={intl.formatMessage({ id: 'user.addAdmin.placeholder.role' })}
                     >
@@ -96,12 +94,15 @@ const AdminForm = (props) => {
                     validators.defaultPage
                 )(
                     <Select
-                        disabled
+                        disabled={userAccesses.length === 0}
                         style={{ width: 250 }}
                         placeholder={intl.formatMessage({ id: 'user.addAdmin.placeholder.defaultPage' })}
                     >
-                        <Option value={1}>超级管理员</Option>
-                        <Option value={2}>物流管理员</Option>
+                        {userAccesses.map((access) => (
+                            <Option value={access.idUserAccess} key={`role-${access.idUserAccess}`}>
+                                {intl.formatMessage({ id: `menu.${access.code}` })}
+                            </Option>
+                        ))}
                     </Select>
                 )}
             </Form.Item>

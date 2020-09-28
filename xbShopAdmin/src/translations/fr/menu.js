@@ -3,7 +3,7 @@ export default {
     'menu.product': 'Produit',
     'menu.category': 'Catégorie',
     'menu.userMgnt': 'Utilisateur',
-    'menu.product.list': 'Liste des Produits',
-    'menu.user.list': 'Liste des utilisateurs',
-    'menu.team.list': 'Administration',
+    'menu.productList': 'Liste des Produits',
+    'menu.userList': 'Liste des utilisateurs',
+    'menu.teamList': 'Administration',
 };
