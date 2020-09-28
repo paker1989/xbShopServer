@@ -18,6 +18,8 @@ const AdminForm = (props) => {
     const { getFieldDecorator } = form;
     const validators = getValidators({ intl, form });
     const dispatch = useDispatch();
+    const backendStatus = useSelector((state) => state.user.addAdmin.backendStatus);
+    const backendMsg = useSelector((state) => state.user.addAdmin.backendMsg);
     const userRoles = useSelector((state) => state.user.admins.allUserRoles);
     // const userRoles = [{ idRole: 1, label: 'superAdmin', accesses: [{ code: 'teamList', idUserAccess: 1 }] }];
     // console.log(userRoles);
@@ -35,6 +37,10 @@ const AdminForm = (props) => {
             dispatch(UserActionCreator.resetAddAdminStates());
         };
     }, []);
+
+    useEffect(() => {
+
+    }, [])
 
     const onSelectRole = (val) => {
         const selectedUserRole = userRoles.find((item) => item.idRole === val);

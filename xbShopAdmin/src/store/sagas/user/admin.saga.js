@@ -13,7 +13,7 @@ import { getRequestUrl } from '../../../static/api';
  * @param {*} reqObj
  */
 export function* updateAdminSaga(reqObj) {
-    debugger;
+    // debugger;
     try {
         const res = yield axios.post(getRequestUrl('auth', 'updateAdmin'), {
             ...reqObj.payload,

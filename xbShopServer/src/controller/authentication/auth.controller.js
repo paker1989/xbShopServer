@@ -76,10 +76,15 @@ const getAllUserRoles = async (ctx) => {
 const updateAdmin = async (ctx) => {
     try {
         const requestBody = ctx.request.body;
-        console.log(requestBody);
+        // console.log(requestBody);
         const updatedAdmin = await AuthDAO.saveAdmin(requestBody);
-        console.log(updatedAdmin);
-        Resolve.json(ctx, updatedAdmin);
+        // console.log(updatedAdmin);
+        if (updateAdmin) {
+            // todo: handle cache
+            Resolve.json(ctx, updatedAdmin);
+        } else {
+            Resolve.info(ctx, 'failed due to unknown reason');
+        }
     } catch (err) {
         throw new HttpException(err.message);
     }

@@ -35,6 +35,10 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case userActionType._USER_ADMIN_RESET_STATES:
             return { ...state, ...formInitialState };
+        case userActionType._USER_ADMIN_UPDATE_SUCCESS:
+            return { ...state, ...action.payload };
+        case userActionType._USER_ADMIN_UPDATE_FAILED:
+            return { ...state, ...action.payload };
         default:
             return state;
     }
