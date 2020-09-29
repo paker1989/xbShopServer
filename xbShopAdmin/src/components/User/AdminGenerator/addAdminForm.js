@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Button, Select, Row, Col, Switch } from 'antd';
+import { Form, Input, Button, Select, Row, Col, Switch, message } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import PasswordConfirmer from '../../Common/PasswordConfirmer/pwdConfirmer';
 import addAdminMeta from '../../../static/data/componentMeta/user/addAdminMeta';
 import getValidators from './validators';
 import * as UserActionCreator from '../../../store/action/userAction';
+import * as UserActionTypes from '../../../store/actionType/userActionType';
 
 const { adminGenerator: generatorMeta } = addAdminMeta;
 const { Option } = Select;
@@ -17,13 +18,15 @@ const AdminForm = (props) => {
     const { form, intl, history, idAdmin, idRole } = props;
     const { getFieldDecorator } = form;
     const validators = getValidators({ intl, form });
+
     const dispatch = useDispatch();
     const backendStatus = useSelector((state) => state.user.addAdmin.backendStatus);
     const backendMsg = useSelector((state) => state.user.addAdmin.backendMsg);
     const userRoles = useSelector((state) => state.user.admins.allUserRoles);
+
     // const userRoles = [{ idRole: 1, label: 'superAdmin', accesses: [{ code: 'teamList', idUserAccess: 1 }] }];
-    // console.log(userRoles);
-    const initUserAccess = idRole ? userRoles.find((role) => role.idRole === idRole).accesses : [];
+    const matchedRole = userRoles.find((role) => role.idRole === idRole);
+    const initUserAccess = matchedRole ? matchedRole.accesses : [];
     const [userAccesses, setUserAccesses] = useState(initUserAccess);
 
     const [editMode, setEditMode] = useState(idAdmin !== -1);
@@ -39,8 +42,16 @@ const AdminForm = (props) => {
     }, []);
 
     useEffect(() => {
-
-    }, [])
+        if (backendStatus.length === 0) {
+            return;
+        }
+        if (backendStatus === UserActionTypes._USER_ADMIN_UPDATE_SUCCESS) {
+            history.push('/dashboard/teamList');
+        } else if (backendStatus === UserActionTypes._USER_ADMIN_UPDATE_FAILED) {
+            message.error(backendMsg);
+        }
+        dispatch(UserActionCreator.resetAddAdminBackendStatus());
+    }, [backendStatus, backendMsg]);
 
     const onSelectRole = (val) => {
         const selectedUserRole = userRoles.find((item) => item.idRole === val);

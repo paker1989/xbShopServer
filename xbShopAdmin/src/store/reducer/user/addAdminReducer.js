@@ -39,6 +39,8 @@ export default (state = initialState, action) => {
             return { ...state, ...action.payload };
         case userActionType._USER_ADMIN_UPDATE_FAILED:
             return { ...state, ...action.payload };
+        case userActionType._USER_ADMIN_RESET_BACKEND_STATUS:
+            return { ...state, ...action.payload };
         default:
             return state;
     }

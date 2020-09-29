@@ -18,6 +18,7 @@ getAllUserRoles().then((res) => {
 
 const initialState = {
     allUserRoles,
+    allAdmins: [],
 };
 
 export default (state = initialState, action) => {

@@ -19,6 +19,7 @@ const auth = {
     keys: {
         access: 'access',
         userRole: 'userrole',
+        adminList: 'admins',
     },
 };
 

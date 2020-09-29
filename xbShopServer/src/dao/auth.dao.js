@@ -51,8 +51,8 @@ class AuthDAO {
 
     /**
      * find user for authentication
-     * @param {*} username 
-     * @param {*} pwd 
+     * @param {*} username
+     * @param {*} pwd
      */
     static async findUser(username, pwd) {
         const finded = await UserModel.findOne({
@@ -117,6 +117,37 @@ class AuthDAO {
         }
 
         return finded;
+    }
+
+    /**
+     * return all admins
+     */
+    static async getAllAdmins() {
+        const { rows } = await UserModel.findAndCountAll({
+            include: [
+                {
+                    model: UserPrefModel,
+                    as: 'pref',
+                    attributes: { exclude: ['userroleId', 'userId', 'userAccessId'] },
+                    include: [
+                        {
+                            model: UserRoleModel,
+                            as: 'role',
+                        },
+                        {
+                            model: UserAccessModel,
+                            as: 'indexPage',
+                        },
+                    ],
+                },
+            ],
+            where: {
+                isDeleted: 0,
+            },
+            order: ['idUser'],
+        });
+
+        return rows.map((item) => item.toJSON());
     }
 
     /**

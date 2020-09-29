@@ -7,6 +7,12 @@ const { lRangeAsync, rpushAsync, getAsync } = async;
 const { prefix, keys } = auth;
 const { meta, detail, ids } = keys;
 
+const config = {
+    expire: {
+        admins: 60 * 60 * 4, // 4 小时
+    },
+};
+
 /**
  * return user access redis key;
  * format: auth:useraccess
@@ -18,6 +24,12 @@ const _USER_ACCESS_KEY = `${prefix}:${keys.access}`;
  * format: auth:userrole
  */
 const _USER_ROLES_KEY = `${prefix}:${keys.userRole}`;
+
+/**
+ * return admin list redis key;
+ * format: auth:admins
+ */
+const _ADMIN_LIST_KEY = `${prefix}:${keys.adminList}`;
 
 const getCachedUserAccess = async () => {
     const allUserAccess = await getAsync.call(redisClient, _USER_ACCESS_KEY);
@@ -51,6 +63,49 @@ const delCachedUserRoles = () => {
     redisClient.del(_USER_ROLES_KEY);
 };
 
+/**
+ * get cached admin lists
+ * @param {*} allAdmins
+ */
+const getCachedAdminList = async () => {
+    const allAdmins = await getAsync.call(redisClient, _ADMIN_LIST_KEY);
+    if (allAdmins) {
+        return JSON.parse(allAdmins);
+    }
+    return null;
+};
+
+/**
+ * set cached admin lists
+ * @param {*} allAdmins
+ */
+const setCachedAdminList = async (allAdmins) => {
+    redisClient.set(_USER_ROLES_KEY, JSON.stringify(allAdmins), 'EX', config.expire.admins);
+};
+
+/**
+ * update an admin, including creation case
+ * @param {*} updated
+ */
+const updateAdmin = async (updated) => {
+    if (!updated) {
+        return;
+    }
+
+    const cached = await getCachedAdminList();
+    if (!cached) {
+        return;
+    }
+
+    const index = cached.findIndex((item) => item.idUser === cached.idUser);
+    if (index > -1) {
+        cached.splice(index, 1, updated);
+    } else {
+        cached.unshift(updated);
+    }
+    setCachedAdminList(cached);
+};
+
 module.exports = {
     getCachedUserAccess,
     setCachedUserAccess,
@@ -58,4 +113,7 @@ module.exports = {
     getCachedUserRoles,
     setCachedUserRoles,
     delCachedUserRoles,
+    getCachedAdminList,
+    setCachedAdminList,
+    updateAdmin,
 };

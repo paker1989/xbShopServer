@@ -14,5 +14,6 @@ module.exports = {
         logout: 'logout',
         allUserRoles: 'allUserRoles',
         updateAdmin: 'updateAdmin',
+        allAdmins: 'allAdmins',
     },
 };

@@ -80,7 +80,7 @@ const updateAdmin = async (ctx) => {
         const updatedAdmin = await AuthDAO.saveAdmin(requestBody);
         // console.log(updatedAdmin);
         if (updateAdmin) {
-            // todo: handle cache
+            authHelper.updateAdmin(updatedAdmin);
             Resolve.json(ctx, updatedAdmin);
         } else {
             Resolve.info(ctx, 'failed due to unknown reason');
@@ -90,10 +90,28 @@ const updateAdmin = async (ctx) => {
     }
 };
 
+/**
+ * return all admins
+ * @param {*} ctx
+ */
+const allAdmins = async (ctx) => {
+    const cached = await authHelper.getCachedAdminList();
+    if (cached) {
+        Resolve.json(ctx, cached);
+    } else {
+        const admins = await AuthDAO.getAllAdmins();
+        console.log('all admins:');
+        console.log(admins);
+        authHelper.setCachedAdminList(admins);
+        Resolve.json(ctx, admins);
+    }
+};
+
 module.exports = {
     login,
     logout,
     getAllUserAccess,
     getAllUserRoles,
     updateAdmin,
+    allAdmins,
 };

@@ -39,3 +39,10 @@ todo:
 - role population;
 - default page population;
 - save&back fn
+
+## 2020/09/28
+to test:
+- backendstatus, msg cases: 1. 成功跳转 2. 失败 3. reset
+- update admin cache fn;
+- authMiddleware test
+- get all admin fn, cached fn
