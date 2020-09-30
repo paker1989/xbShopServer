@@ -22,11 +22,12 @@ const deleteUserrole = async (ctx) => {
         Resolve.json(
             ctx,
             linkedAdmins.map((admin) => admin.username),
-            'remove related admins before delete'
+            'remove related admins before delete',
+            401
         );
         return;
     }
-    // const result = await AuthDAO.deleteUserrole(idRole);
+    const result = await AuthDAO.deleteUserrole(idRole);
 };
 
 module.exports = {
