@@ -80,7 +80,7 @@ const getCachedAdminList = async () => {
  * @param {*} allAdmins
  */
 const setCachedAdminList = async (allAdmins) => {
-    redisClient.set(_USER_ROLES_KEY, JSON.stringify(allAdmins), 'EX', config.expire.admins);
+    redisClient.set(_ADMIN_LIST_KEY, JSON.stringify(allAdmins), 'EX', config.expire.admins);
 };
 
 /**

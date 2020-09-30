@@ -47,7 +47,11 @@ const TeamList = ({ intl }) => {
                                     tab={intl.formatMessage({ id: 'user.team.list.permissions' })}
                                     key="permission"
                                 >
-                                    <RoleTable {...layout.table} />
+                                    <Row>
+                                        <Col {...layout.table}>
+                                            <RoleTable />
+                                        </Col>
+                                    </Row>
                                 </TabPane>
                             </Tabs>
                         </Col>

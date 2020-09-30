@@ -42,7 +42,7 @@ todo:
 
 ## 2020/09/28
 to test:
-- backendstatus, msg cases: 1. 成功跳转 2. 失败 3. reset
-- update admin cache fn;
-- authMiddleware test
-- get all admin fn, cached fn
+- backendstatus, msg cases: 1. 成功跳转 2. 失败 3. reset --> good
+- update admin cache fn; --> to test
+- authMiddleware test --> good
+- get all admin fn, cached fn --> to test

@@ -10,13 +10,16 @@ const {
     allAdmins,
 } = require('../controller/authentication/auth.controller');
 
+const { deleteUserrole } = require('../controller/user/user.controller');
+
 const router = new Router();
 
 const autoLogin = async (ctx) => {};
 
 const authMiddleware = async (ctx, next) => {
     if (ctx.isAuthenticated() && ctx.state.user) {
-        next();
+        console.log('next');
+        await next();
     } else {
         Resolve.info(ctx, 'please authenticate before calling this API.');
     }
@@ -32,5 +35,6 @@ router.post('/allUserAccess', authMiddleware, getAllUserAccess);
 router.post('/allUserRoles', authMiddleware, getAllUserRoles);
 router.post('/updateAdmin', authMiddleware, updateAdmin);
 router.post('/allAdmins', authMiddleware, allAdmins);
+router.post('/deleteUserrole', authMiddleware, deleteUserrole);
 
 module.exports = router;

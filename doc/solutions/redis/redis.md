@@ -9,7 +9,7 @@ ref: [node-redis](./node-redis.md)
 
 ```bash
 redis-server.exe redis.windows.conf # 启动redis
- redis-cli.exe -h 127.0.0.1 -p 6379 # 启动服务
+redis-cli.exe -h 127.0.0.1 -p 6379 # 启动服务
 ```
 
 ## 配置文件

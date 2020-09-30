@@ -8,6 +8,7 @@ import PasswordConfirmer from '../../Common/PasswordConfirmer/pwdConfirmer';
 
 import addAdminMeta from '../../../static/data/componentMeta/user/addAdminMeta';
 import getValidators from './validators';
+
 import * as UserActionCreator from '../../../store/action/userAction';
 import * as UserActionTypes from '../../../store/actionType/userActionType';
 
@@ -25,9 +26,13 @@ const AdminForm = (props) => {
     const userRoles = useSelector((state) => state.user.admins.allUserRoles);
 
     // const userRoles = [{ idRole: 1, label: 'superAdmin', accesses: [{ code: 'teamList', idUserAccess: 1 }] }];
-    const matchedRole = userRoles.find((role) => role.idRole === idRole);
-    const initUserAccess = matchedRole ? matchedRole.accesses : [];
-    const [userAccesses, setUserAccesses] = useState(initUserAccess);
+
+    const populateUserAccesses = () => {
+        const matchedRole = userRoles.find((role) => role.idRole === idRole);
+        return matchedRole ? matchedRole.accesses : [];
+    };
+
+    const [userAccesses, setUserAccesses] = useState(populateUserAccesses());
 
     const [editMode, setEditMode] = useState(idAdmin !== -1);
 
@@ -36,10 +41,17 @@ const AdminForm = (props) => {
     };
 
     useEffect(() => {
+        if (userRoles.length === 0) {
+            dispatch(UserActionCreator.fetchAllUserroles());
+        }
         return () => {
             dispatch(UserActionCreator.resetAddAdminStates());
         };
     }, []);
+
+    useEffect(() => {
+        setUserAccesses(populateUserAccesses());
+    }, [userRoles.length]);
 
     useEffect(() => {
         if (backendStatus.length === 0) {

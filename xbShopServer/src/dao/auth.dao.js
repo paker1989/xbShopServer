@@ -70,9 +70,9 @@ class AuthDAO {
 
         if (isPasswordMatch) {
             const completedUser = await AuthDAO.findUserByPK(finded.get('idUser'));
-
+            console.log(completedUser);
             return {
-                user: completedUser.toJSON(),
+                user: completedUser,
             };
         }
         return {

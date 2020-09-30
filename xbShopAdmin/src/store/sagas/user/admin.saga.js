@@ -15,9 +15,13 @@ import { getRequestUrl } from '../../../static/api';
 export function* updateAdminSaga(reqObj) {
     // debugger;
     try {
-        const res = yield axios.post(getRequestUrl('auth', 'updateAdmin'), {
-            ...reqObj.payload,
-        });
+        const res = yield axios.post(
+            getRequestUrl('auth', 'updateAdmin'),
+            {
+                ...reqObj.payload,
+            },
+            { withCredentials: true }
+        );
         if (res && res.data) {
             yield put({
                 type: UserActionType._USER_ADMIN_UPDATE_SUCCESS,
@@ -51,7 +55,7 @@ export function* updateAdminSaga(reqObj) {
 export function* loadAllAdminSaga() {
     // debugger;
     try {
-        const res = yield axios.post(getRequestUrl('auth', 'allAdmins'));
+        const res = yield axios.post(getRequestUrl('auth', 'allAdmins'), {}, { withCredentials: true });
         if (res && res.data) {
             yield put({
                 type: UserActionType._USER_ADMIN_UPDATE_SUCCESS,
@@ -76,5 +80,48 @@ export function* loadAllAdminSaga() {
                 backendMsg: error.message,
             },
         });
+    }
+}
+
+/**
+ * fetch all user roles for selection
+ */
+export function* getAllUserRoles() {
+    try {
+        const res = yield axios.post(getRequestUrl('auth', 'allUserRoles'), {}, { withCredentials: true });
+        if (res && res.data) {
+            yield put({
+                type: UserActionType._USER_ADMIN_PUT_ALL_USERROLES,
+                payload: {
+                    allUserRoles: res.data,
+                },
+            });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+/**
+ * attempt to delete user role
+ */
+export function* attemptDeleteUserrole(reqObj) {
+    try {
+        const res = yield axios.post(
+            getRequestUrl('auth', 'deleteUserrole'),
+            { ...reqObj.payload },
+            { withCredentials: true }
+        );
+        console.log(res);
+        // if (res && res.data) {
+        //     yield put({
+        //         type: UserActionType._USER_ADMIN_PUT_ALL_USERROLES,
+        //         payload: {
+        //             allUserRoles: res.data,
+        //         },
+        //     });
+        // }
+    } catch (error) {
+        console.log(error);
     }
 }

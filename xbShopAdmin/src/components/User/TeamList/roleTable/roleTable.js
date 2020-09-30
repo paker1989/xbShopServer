@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Table, Popconfirm } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import * as UserActionCreator from '../../../../store/action/userAction';
 
 const RoleTable = ({ intl, loading }) => {
-    const handleDelete = () => {};
+    const dispatch = useDispatch();
+    const handleDelete = (idRole) => {
+        dispatch(UserActionCreator.attemptDeleteUserrole({ idRole }));
+    };
+
+    const userRoles = useSelector((state) => state.user.admins.allUserRoles);
+
+    useEffect(() => {
+        if (userRoles.length === 0) {
+            dispatch(UserActionCreator.fetchAllUserroles());
+        }
+    }, []);
+
+    // console.log(userRoles);
 
     const columns = [
         {
@@ -14,8 +30,11 @@ const RoleTable = ({ intl, loading }) => {
         },
         {
             title: intl.formatMessage({ id: 'common.role' }),
-            dataIndex: 'role',
-            key: 'role',
+            dataIndex: 'label',
+            key: 'label',
+            render: (text) => {
+                return <FormattedMessage id={`user.addAdmin.${text}`} />;
+            },
         },
         {
             title: intl.formatMessage({ id: 'common.operation' }),
@@ -46,7 +65,7 @@ const RoleTable = ({ intl, loading }) => {
             <Table
                 size="large"
                 columns={columns}
-                dataSource={[]}
+                dataSource={userRoles}
                 rowKey={(record) => record.idRole}
                 loading={loading}
             />
