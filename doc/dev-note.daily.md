@@ -46,3 +46,7 @@ to test:
 - update admin cache fn; --> to test
 - authMiddleware test --> good
 - get all admin fn, cached fn --> to test
+
+## 2020/10/01
+to test:
+- delete role action & impact on front;

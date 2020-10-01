@@ -88,7 +88,7 @@ export function* loadAllAdminSaga() {
             type: UserActionType._USER_ADMIN_UPDATE_FAILED,
             payload: {
                 backendStatus: UserActionType._USER_ADMIN_UPDATE_FAILED,
-                backendMsg: error.message,
+                backendMsg: error.response.statusText,
             },
         });
     }
@@ -124,16 +124,25 @@ export function* attemptDeleteUserrole(reqObj) {
             { withCredentials: true }
         );
         console.log(res);
-        // if (res && res.data) {
-        //     yield put({
-        //         type: UserActionType._USER_ADMIN_PUT_ALL_USERROLES,
-        //         payload: {
-        //             allUserRoles: res.data,
-        //         },
-        //     });
-        // }
+        if (res && res.statusCode === 200) {
+            yield put({
+                // fetch all userroles for update
+                type: UserActionType._USER_ADMIN_FETCH_ALL_USERROLES,
+            });
+            yield put({
+                type: UserActionType._USER_ADMIN_DELETE_USERROLE_SUCCEED,
+            });
+        }
     } catch (error) {
-        // console.log(error);
         console.log(error.response);
+        if (error.response.statusCode === 401) {
+            yield put({
+                type: UserActionType._USER_ADMIN_DELETE_USERROLE_FAILD,
+                payload: {
+                    backendMsg: error.response.statusText,
+                    backendStatus: UserActionType._USER_ADMIN_DELETE_USERROLE_FAILD,
+                },
+            });
+        }
     }
 }

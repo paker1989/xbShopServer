@@ -195,6 +195,20 @@ class AuthDAO {
         }
         return pk; // undefined
     }
+
+    /**
+     * delete definitely a role
+     * @param {*} idRole
+     */
+    static async deleteUserrole(idRole) {
+        const affectedRows = await UserRoleModel.destroy({
+            where: {
+                idRole,
+            },
+        });
+        console.log('affected row nb = ' + affectedRows);
+        return affectedRows === 1;
+    }
 }
 
 module.exports = AuthDAO;

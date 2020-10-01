@@ -1,7 +1,7 @@
 const AuthDAO = require('../../dao/auth.dao');
 const { Resolve } = require('../../core/resolve');
-// const { HttpException } = require('../../core/httpException');
 const authHelper = require('../../core/cache/helper/authHelper');
+
 /**
  * attempt to delete a user role
  * @param {*} ctx
@@ -27,7 +27,13 @@ const deleteUserrole = async (ctx) => {
         );
         return;
     }
-    const result = await AuthDAO.deleteUserrole(idRole);
+    const result = await AuthDAO.deleteUserrole(idRole); // boolean result
+    if (result) {
+        authHelper.delCachedUserRoles(); // delete user roles
+        Resolve.info(ctx, 'delete succeed');
+    } else {
+        Resolve.info(ctx, 'delete failed', 401);
+    }
 };
 
 module.exports = {
