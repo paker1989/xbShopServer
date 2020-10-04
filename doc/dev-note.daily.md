@@ -50,3 +50,7 @@ to test:
 ## 2020/10/01
 to test:
 - delete role action & impact on front;
+
+## 2020/10/03
+to test:
+- set active tab in store

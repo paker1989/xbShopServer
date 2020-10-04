@@ -19,12 +19,18 @@ import * as userActionType from '../../actionType/userActionType';
 
 const initialState = {
     allUserRoles: [],
+    allUserAccesses: [],
     allAdmins: [],
+    activeTab: 'team', // team or role
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case userActionType._USER_ADMIN_PUT_ALL_USERROLES:
+            return { ...state, ...action.payload };
+        case userActionType._USER_ROLE_PUT_ALL_USERACCESSES:
+            return { ...state, ...action.payload };
+        case userActionType._USER_ADMIN_SET_TEAM_TAB:
             return { ...state, ...action.payload };
         default:
             return state;

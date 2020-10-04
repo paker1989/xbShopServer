@@ -13,6 +13,7 @@ module.exports = {
         autoLogin: 'autoLogin',
         logout: 'logout',
         allUserRoles: 'allUserRoles',
+        allUserAccesses: 'allUserAccesses',
         updateAdmin: 'updateAdmin',
         allAdmins: 'allAdmins',
         deleteUserrole: 'deleteUserrole',

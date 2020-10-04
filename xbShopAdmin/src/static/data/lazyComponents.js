@@ -39,6 +39,11 @@ const lazies = {
                 link: 'addAdmin/:idAdmin?',
                 source: lazy(() => import('../../components/User/AdminGenerator/adminGenerator')),
             },
+            {
+                key: 'addRole',
+                link: 'addRole/:idRole?',
+                source: lazy(() => import('../../components/User/RoleGenerator/roleGenerator')),
+            },
         ],
     },
 };

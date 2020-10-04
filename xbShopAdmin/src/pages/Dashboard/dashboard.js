@@ -18,11 +18,11 @@ const { prefix, routes } = LazyComponents.dashboard;
 const Dashboard = ({ history }) => {
     const [authUser, authFlag] = useAuthenticated();
 
-    useMount(() => {
-        if (!authFlag) {
-            history.push('/login');
-        }
-    });
+    // useMount(() => {
+    //     if (!authFlag) {
+    //         history.push('/login');
+    //     }
+    // });
 
     return (
         <Layout className="page-container">

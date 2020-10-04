@@ -4,8 +4,20 @@ export const resetAddAdminStates = () => ({
     type: UserActionType._USER_ADMIN_RESET_STATES,
 });
 
+export const resetAddRoleStates = () => ({
+    type: UserActionType._USER_ROLE_RESET_STATES,
+});
+
 export const resetAddAdminBackendStatus = () => ({
     type: UserActionType._USER_ADMIN_RESET_BACKEND_STATUS,
+    payload: {
+        backendStatus: '',
+        backendMsg: '',
+    },
+});
+
+export const resetAddRoleBackendStatus = () => ({
+    type: UserActionType._USER_ROLE_RESET_BACKEND_STATUS,
     payload: {
         backendStatus: '',
         backendMsg: '',
@@ -28,7 +40,19 @@ export const fetchAllUserroles = () => ({
     type: UserActionType._USER_ADMIN_FETCH_ALL_USERROLES,
 });
 
+/**
+ * @param {*} params
+ */
+export const fetchAllUserAccesses = () => ({
+    type: UserActionType._USER_ROLE_FETCH_ALL_USERACCESSES,
+});
+
 export const attemptDeleteUserrole = (params) => ({
     type: UserActionType._USER_ADMIN_ATTEMPT_DELETE_USERROLE,
     payload: params,
+});
+
+export const setActiveTeamListTab = (activeTab) => ({
+    type: UserActionType._USER_ADMIN_SET_TEAM_TAB,
+    payload: { activeTab },
 });
