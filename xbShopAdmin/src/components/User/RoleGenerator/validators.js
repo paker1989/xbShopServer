@@ -11,6 +11,19 @@ export default ({ intl, form }) => {
         roleName: {
             rules: [{ required: true, message: _translate('user.addRole.error.noName') }],
         },
-        accesses: {},
+        accesses: {
+            rules: [
+                { type: 'array' },
+                {
+                    validator: (rule, value, callback) => {
+                        if (value.length < 1) {
+                            callback(_translate('user.addRole.error.access'));
+                        } else {
+                            callback();
+                        }
+                    },
+                },
+            ],
+        },
     };
 };

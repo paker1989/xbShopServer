@@ -24,6 +24,14 @@ export const resetAddRoleBackendStatus = () => ({
     },
 });
 
+export const resetAdminsBackendStatus = () => ({
+    type: UserActionType._USER_ADMINS_RESET_BACKEND_STATUS,
+    payload: {
+        backendStatus: '',
+        backendMsg: '',
+    },
+});
+
 /**
  * payload example: { email, defaultPage, idRole, isActive, password, phoneNumber }
  * @param {*} params

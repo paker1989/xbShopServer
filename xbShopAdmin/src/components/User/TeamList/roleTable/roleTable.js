@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Table, Popconfirm } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import * as UserActionCreator from '../../../../store/action/userAction';
+import useUserRoles from '../../../../utils/hooks/useUserRoles';
 
 const RoleTable = ({ intl, loading }) => {
     const dispatch = useDispatch();
@@ -12,15 +13,7 @@ const RoleTable = ({ intl, loading }) => {
         dispatch(UserActionCreator.attemptDeleteUserrole({ idRole }));
     };
 
-    const userRoles = useSelector((state) => state.user.admins.allUserRoles);
-
-    useEffect(() => {
-        if (userRoles.length === 0) {
-            dispatch(UserActionCreator.fetchAllUserroles());
-        }
-    }, []);
-
-    // console.log(userRoles);
+    const userRoles = useUserRoles();
 
     const columns = [
         {

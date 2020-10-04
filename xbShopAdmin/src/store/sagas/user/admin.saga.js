@@ -4,7 +4,6 @@ import { put } from 'redux-saga/effects';
 import * as UserActionType from '../../actionType/userActionType';
 import { getRequestUrl } from '../../../static/api';
 
-
 // axios.interceptors.response.use(
 //     function (response) {
 //         return response;
@@ -106,7 +105,14 @@ export function* getAllUserRoles() {
             });
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
+        yield put({
+            type: UserActionType._USER_ADMIN_FETCH_ALL_USERROLES_FAILED,
+            payload: {
+                backendMsg: `get user roles: ${error.message}`,
+                backendStatus: UserActionType._USER_ADMIN_FETCH_ALL_USERROLES_FAILED,
+            },
+        });
     }
 }
 
@@ -125,7 +131,15 @@ export function* getAllUserAccesses() {
             });
         }
     } catch (error) {
-        console.log(error);
+        // console.log('return error');
+        // console.log(error);
+        yield put({
+            type: UserActionType._USER_ROLE_FETCH_ALL_USERACCESSES_FAILED,
+            payload: {
+                backendMsg: `get user accesses: ${error.message}`,
+                backendStatus: UserActionType._USER_ROLE_FETCH_ALL_USERACCESSES_FAILED,
+            },
+        });
     }
 }
 

@@ -9,6 +9,7 @@ import getValidators from './validators';
 
 import * as UserActionCreator from '../../../store/action/userAction';
 import * as UserActionTypes from '../../../store/actionType/userActionType';
+import useUserAccesses from '../../../utils/hooks/useUserAccesses';
 
 const { roleGenerator: generatorMeta } = addRoleMeta;
 // const { Option } = Select;
@@ -21,7 +22,7 @@ const RoleForm = (props) => {
     const dispatch = useDispatch();
     const backendStatus = useSelector((state) => state.user.addRole.backendStatus);
     const backendMsg = useSelector((state) => state.user.addRole.backendMsg);
-    const allUserAccesses = useSelector((state) => state.user.admins.allUserAccesses);
+    const allUserAccesses = useUserAccesses();
 
     // const [editMode, setEditMode] = useState(idRole !== -1);
 
@@ -30,9 +31,6 @@ const RoleForm = (props) => {
     };
 
     useEffect(() => {
-        if (allUserAccesses.length === 0) {
-            dispatch(UserActionCreator.fetchAllUserAccesses());
-        }
         return () => {
             dispatch(UserActionCreator.resetAddRoleStates());
         };
@@ -53,7 +51,7 @@ const RoleForm = (props) => {
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
-            console.log(values);
+            // console.log(values);
             if (!errors) {
                 // dispatch(UserActionCreator.submitAdminEdition({ idRole, ...values }));
             }
@@ -69,8 +67,6 @@ const RoleForm = (props) => {
                 )(<Input style={{ width: 250 }} placeholder={intl.formatMessage({ id: 'user.addRole.name' })} />)}
             </Form.Item>
             <Form.Item
-                // labelCol={generatorMeta.formLayout.labelCol}
-                // wrapperCol={{ xs: { span: 24 }, sm: { span: 14, offset: 1 } }}
                 label={intl.formatMessage({ id: 'user.addRole.access' })}
                 extra={intl.formatMessage({ id: 'user.addRole.access.tooltip' })}
             >
@@ -80,21 +76,13 @@ const RoleForm = (props) => {
                 )(
                     <Checkbox.Group style={{ width: '100%' }}>
                         <Row>
-                            <Col span={8}>
-                                <Checkbox value="A">A</Checkbox>
-                            </Col>
-                            <Col span={8}>
-                                <Checkbox value="B">B</Checkbox>
-                            </Col>
-                            <Col span={8}>
-                                <Checkbox value="C">C</Checkbox>
-                            </Col>
-                            <Col span={8}>
-                                <Checkbox value="D">D</Checkbox>
-                            </Col>
-                            <Col span={8}>
-                                <Checkbox value="E">E</Checkbox>
-                            </Col>
+                            {allUserAccesses.map((access) => (
+                                <Col span={8} className="useraccess-item" key={`access-${access.idUserAccess}`}>
+                                    <Checkbox value={access.idUserAccess}>
+                                        {intl.formatMessage({ id: `menu.${access.code}` })}
+                                    </Checkbox>
+                                </Col>
+                            ))}
                         </Row>
                     </Checkbox.Group>
                 )}

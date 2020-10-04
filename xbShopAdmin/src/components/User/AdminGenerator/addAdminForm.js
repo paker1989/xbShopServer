@@ -11,6 +11,7 @@ import getValidators from './validators';
 
 import * as UserActionCreator from '../../../store/action/userAction';
 import * as UserActionTypes from '../../../store/actionType/userActionType';
+import useUserRoles from '../../../utils/hooks/useUserRoles';
 
 const { adminGenerator: generatorMeta } = addAdminMeta;
 const { Option } = Select;
@@ -23,7 +24,8 @@ const AdminForm = (props) => {
     const dispatch = useDispatch();
     const backendStatus = useSelector((state) => state.user.addAdmin.backendStatus);
     const backendMsg = useSelector((state) => state.user.addAdmin.backendMsg);
-    const userRoles = useSelector((state) => state.user.admins.allUserRoles);
+
+    const userRoles = useUserRoles();
 
     // const userRoles = [{ idRole: 1, label: 'superAdmin', accesses: [{ code: 'teamList', idUserAccess: 1 }] }];
 
@@ -41,9 +43,6 @@ const AdminForm = (props) => {
     };
 
     useEffect(() => {
-        if (userRoles.length === 0) {
-            dispatch(UserActionCreator.fetchAllUserroles());
-        }
         return () => {
             dispatch(UserActionCreator.resetAddAdminStates());
         };

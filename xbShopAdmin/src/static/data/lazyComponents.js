@@ -11,11 +11,13 @@ const lazies = {
             },
             {
                 key: 'productList',
+                access: true,
                 link: 'productList',
                 source: lazy(() => import('../../components/Product/productList/productList')),
             },
             {
                 key: 'category',
+                access: true,
                 link: 'category',
                 source: lazy(() => import('../../components/Category/category.index')),
             },
@@ -26,11 +28,13 @@ const lazies = {
             },
             {
                 key: 'userList',
+                access: true,
                 link: 'userList',
                 source: lazy(() => import('../../components/User/UserList/userList')),
             },
             {
                 key: 'teamList',
+                access: true,
                 link: 'teamList',
                 source: lazy(() => import('../../components/User/TeamList/teamList')),
             },
