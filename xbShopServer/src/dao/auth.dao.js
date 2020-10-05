@@ -70,7 +70,6 @@ class AuthDAO {
 
         if (isPasswordMatch) {
             const completedUser = await AuthDAO.findUserByPK(finded.get('idUser'));
-            console.log(completedUser);
             return {
                 user: completedUser,
             };
@@ -206,7 +205,6 @@ class AuthDAO {
                 idRole,
             },
         });
-        console.log('affected row nb = ' + affectedRows);
         return affectedRows === 1;
     }
 }

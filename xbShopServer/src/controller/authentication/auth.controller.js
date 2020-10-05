@@ -101,7 +101,7 @@ const allAdmins = async (ctx) => {
     } else {
         const admins = await AuthDAO.getAllAdmins();
         console.log('all admins:');
-        console.log(admins);
+        // console.log(admins);
         authHelper.setCachedAdminList(admins);
         Resolve.json(ctx, admins);
     }
