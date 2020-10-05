@@ -6,7 +6,7 @@ import * as userActionType from '../../actionType/userActionType';
 const formInitialState = {
     idRole: -1,
     roleName: '',
-    accesses: [],
+    accesses: ['A'],
 };
 
 const initialState = {
@@ -20,6 +20,9 @@ export default (state = initialState, action) => {
         case userActionType._USER_ROLE_RESET_STATES:
             return { ...state, ...formInitialState };
         case userActionType._USER_ROLE_RESET_BACKEND_STATUS:
+            return { ...state, ...action.payload };
+        case userActionType._USER_ROLE_UPDATE_SUCCESS:
+        case userActionType._USER_ROLE_UPDATE_FAILED:
             return { ...state, ...action.payload };
         default:
             return state;

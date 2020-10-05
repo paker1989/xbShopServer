@@ -57,6 +57,46 @@ export function* updateAdminSaga(reqObj) {
 }
 
 /**
+ * updateRole saga,
+ * @param {*} reqObj
+ */
+export function* updateRoleSaga(reqObj) {
+    try {
+        const res = yield axios.post(
+            getRequestUrl('auth', 'updateRole'),
+            {
+                ...reqObj.payload,
+            },
+            { withCredentials: true }
+        );
+        if (res && res.data) {
+            yield put({
+                type: UserActionType._USER_ROLE_UPDATE_SUCCESS,
+                payload: {
+                    backendStatus: UserActionType._USER_ROLE_UPDATE_SUCCESS,
+                },
+            });
+        } else {
+            yield put({
+                type: UserActionType._USER_ROLE_UPDATE_FAILED,
+                payload: {
+                    backendStatus: UserActionType._USER_ROLE_UPDATE_FAILED,
+                    backendMsg: res.statusText,
+                },
+            });
+        }
+    } catch (error) {
+        yield put({
+            type: UserActionType._USER_ROLE_UPDATE_FAILED,
+            payload: {
+                backendStatus: UserActionType._USER_ROLE_UPDATE_FAILED,
+                backendMsg: error.message,
+            },
+        });
+    }
+}
+
+/**
  * getAllAdmin saga,
  */
 export function* loadAllAdminSaga() {

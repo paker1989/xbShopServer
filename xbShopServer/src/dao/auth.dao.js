@@ -207,6 +207,35 @@ class AuthDAO {
         });
         return affectedRows === 1;
     }
+
+    /**
+     * save or update admin user
+     * @param {*} ctxBody
+     */
+    static async saveRole(ctxBody) {
+        let updatedRole;
+        const { idRole = -1, roleName: label, accesses } = ctxBody;
+
+        if (Number(idRole) === -1) {
+            updatedRole = await sequelize.transaction(async (t) => {
+                const newRole = await UserRoleModel.create(
+                    {
+                        label,
+                    },
+                    {
+                        transaction: t,
+                    }
+                );
+
+                // set accesses
+                await newRole.setAccesses(/* JSON.parse(categories) */ accesses, { transaction: t });
+
+                return newRole;
+            });
+        }
+
+        return updatedRole; // could be undefined
+    }
 }
 
 module.exports = AuthDAO;

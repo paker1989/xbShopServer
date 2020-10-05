@@ -18,7 +18,7 @@ const autoLogin = async (ctx) => {};
 
 const authMiddleware = async (ctx, next) => {
     if (ctx.isAuthenticated() && ctx.state.user) {
-        console.log('next');
+        // console.log('next');
         await next();
     } else {
         Resolve.info(ctx, 'please authenticate before calling this API.');
@@ -31,7 +31,7 @@ const authMiddleware = async (ctx, next) => {
 router.post('/login', login);
 router.get('/autoLogin', autoLogin);
 router.post('/logout', logout);
-router.post('/allUserAccess', authMiddleware, getAllUserAccess);
+router.post('/allUserAccesses', authMiddleware, getAllUserAccess);
 router.post('/allUserRoles', authMiddleware, getAllUserRoles);
 router.post('/updateAdmin', authMiddleware, updateAdmin);
 router.post('/allAdmins', authMiddleware, allAdmins);

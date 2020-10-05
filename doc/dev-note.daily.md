@@ -55,3 +55,7 @@ to test:
 to test:
 - set active tab in store
 - get all user access fn,
+- update role (create)
+
+- updateAdmin 回顾一下。update完之后然后呢???
+- todo: admin's email unique check,  edition.

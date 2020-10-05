@@ -106,6 +106,25 @@ const updateAdmin = async (updated) => {
     setCachedAdminList(cached);
 };
 
+const updateRole = async (updated) => {
+    if (!updated) {
+        return;
+    }
+
+    const cached = await getCachedUserRoles();
+    if (!cached) {
+        return;
+    }
+
+    const index = cached.findIndex((item) => item.idRole === cached.idRole);
+    if (index > -1) {
+        cached.splice(index, 1, updated);
+    } else {
+        cached.unshift(updated);
+    }
+    setCachedUserRoles(cached);
+};
+
 module.exports = {
     getCachedUserAccess,
     setCachedUserAccess,
@@ -116,4 +135,5 @@ module.exports = {
     getCachedAdminList,
     setCachedAdminList,
     updateAdmin,
+    updateRole,
 };

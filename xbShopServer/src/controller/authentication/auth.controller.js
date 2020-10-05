@@ -79,7 +79,7 @@ const updateAdmin = async (ctx) => {
         // console.log(requestBody);
         const updatedAdmin = await AuthDAO.saveAdmin(requestBody);
         // console.log(updatedAdmin);
-        if (updateAdmin) {
+        if (updatedAdmin) {
             authHelper.updateAdmin(updatedAdmin);
             Resolve.json(ctx, updatedAdmin);
         } else {
@@ -91,6 +91,26 @@ const updateAdmin = async (ctx) => {
 };
 
 /**
+ * create or update role
+ * @param {*} ctx
+ */
+const updateRole = async (ctx) => {
+    try {
+        const requestBody = ctx.request.body;
+        const updatedRole = await AuthDAO.saveRole(requestBody);
+        if (updatedRole) {
+            authHelper.updatedRole(updatedRole);
+            Resolve.json(ctx, updatedRole);
+        } else {
+            Resolve.info(ctx, 'update role failed due to unknown reason');
+        }
+    } catch (err) {
+        throw new HttpException(err.message);
+    }
+};
+
+
+/**
  * return all admins
  * @param {*} ctx
  */
@@ -100,7 +120,7 @@ const allAdmins = async (ctx) => {
         Resolve.json(ctx, cached);
     } else {
         const admins = await AuthDAO.getAllAdmins();
-        console.log('all admins:');
+        // console.log('all admins:');
         // console.log(admins);
         authHelper.setCachedAdminList(admins);
         Resolve.json(ctx, admins);
@@ -114,4 +134,5 @@ module.exports = {
     getAllUserRoles,
     updateAdmin,
     allAdmins,
+    updateRole,
 };

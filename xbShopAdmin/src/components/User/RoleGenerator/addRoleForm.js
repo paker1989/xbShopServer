@@ -53,7 +53,7 @@ const RoleForm = (props) => {
         form.validateFields((errors, values) => {
             // console.log(values);
             if (!errors) {
-                // dispatch(UserActionCreator.submitAdminEdition({ idRole, ...values }));
+                dispatch(UserActionCreator.submitRoleEdition({ idRole, ...values }));
             }
         });
     };

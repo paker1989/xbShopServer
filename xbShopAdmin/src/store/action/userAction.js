@@ -64,3 +64,8 @@ export const setActiveTeamListTab = (activeTab) => ({
     type: UserActionType._USER_ADMIN_SET_TEAM_TAB,
     payload: { activeTab },
 });
+
+export const submitRoleEdition = (params) => ({
+    type: UserActionType._USER_ROLE_UPDATE,
+    payload: params,
+});

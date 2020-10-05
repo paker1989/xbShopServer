@@ -15,6 +15,7 @@ module.exports = {
         allUserRoles: 'allUserRoles',
         allUserAccesses: 'allUserAccesses',
         updateAdmin: 'updateAdmin',
+        updateRole: 'updateRole',
         allAdmins: 'allAdmins',
         deleteUserrole: 'deleteUserrole',
     },

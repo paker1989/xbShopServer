@@ -1,4 +1,6 @@
+/* eslint-disable */
 import LazyComponents from '../static/data/lazyComponents';
+/* eslint-enable */
 
 const { routes, prefix } = LazyComponents.dashboard;
 
