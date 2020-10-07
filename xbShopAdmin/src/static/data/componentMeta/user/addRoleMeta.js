@@ -13,5 +13,7 @@ module.exports = {
                 sm: { span: 16, offset: 1 },
             },
         },
+        newUpdateMaxAge: 8 * 1, // new or updated signal duration
+        newUpdateKey: 'newUserroleId',
     },
 };

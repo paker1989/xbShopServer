@@ -213,11 +213,11 @@ class AuthDAO {
      * @param {*} ctxBody
      */
     static async saveRole(ctxBody) {
-        let updatedRole;
+        let pk;
         const { idRole = -1, roleName: label, accesses } = ctxBody;
 
         if (Number(idRole) === -1) {
-            updatedRole = await sequelize.transaction(async (t) => {
+            pk = await sequelize.transaction(async (t) => {
                 const newRole = await UserRoleModel.create(
                     {
                         label,
@@ -230,11 +230,27 @@ class AuthDAO {
                 // set accesses
                 await newRole.setAccesses(/* JSON.parse(categories) */ accesses, { transaction: t });
 
-                return newRole;
+                return newRole.idRole;
             });
         }
 
-        return updatedRole; // could be undefined
+        if (pk) {
+            return (
+                await UserRoleModel.findByPk(pk, {
+                    include: [
+                        {
+                            model: UserAccessModel,
+                            as: 'accesses',
+                            through: {
+                                attributes: [],
+                            },
+                        },
+                    ],
+                })
+            ).toJSON(); // could be undefined
+        }
+
+        return pk;
     }
 }
 

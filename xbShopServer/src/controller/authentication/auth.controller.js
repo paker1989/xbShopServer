@@ -41,7 +41,8 @@ const getAllUserAccess = async (ctx) => {
     const cached = await authHelper.getCachedUserAccess();
     if (cached) {
         // if found in cache, returned
-        // console.log('cached user access');
+        console.log('cached user access');
+        console.log(cached);
         Resolve.json(ctx, cached);
         return;
     }
@@ -98,8 +99,10 @@ const updateRole = async (ctx) => {
     try {
         const requestBody = ctx.request.body;
         const updatedRole = await AuthDAO.saveRole(requestBody);
+        console.log('auth.controller: updateRole');
+        console.log(updatedRole);
         if (updatedRole) {
-            authHelper.updatedRole(updatedRole);
+            authHelper.updateRole(updatedRole);
             Resolve.json(ctx, updatedRole);
         } else {
             Resolve.info(ctx, 'update role failed due to unknown reason');
@@ -108,7 +111,6 @@ const updateRole = async (ctx) => {
         throw new HttpException(err.message);
     }
 };
-
 
 /**
  * return all admins

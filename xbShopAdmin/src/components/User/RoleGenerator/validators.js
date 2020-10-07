@@ -5,7 +5,7 @@ export default ({ intl, form }) => {
         return intl.formatMessage({ id }, values);
     }
 
-    const { getFieldValue } = form;
+    // const { getFieldValue } = form;
 
     return {
         roleName: {

@@ -16,6 +16,10 @@ UserRole.init(
             type: DataTypes.STRING(64),
             allowNull: false,
         },
+        reserved: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
     },
     {
         sequelize,

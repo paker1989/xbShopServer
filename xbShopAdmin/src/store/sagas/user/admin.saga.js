@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { put } from 'redux-saga/effects';
+import cookie from 'react-cookies';
 
+import { roleGenerator } from '../../../static/data/componentMeta/user/addRoleMeta';
 import * as UserActionType from '../../actionType/userActionType';
 import { getRequestUrl } from '../../../static/api';
 
@@ -70,6 +72,12 @@ export function* updateRoleSaga(reqObj) {
             { withCredentials: true }
         );
         if (res && res.data) {
+            // cookie.setItem('newUserRoleId', res.data.idRole);
+            cookie.save(roleGenerator.newUpdateKey, res.data.idRole, { maxAge: roleGenerator.newUpdateMaxAge });
+            yield put({
+                // fetch all userroles for update
+                type: UserActionType._USER_ADMIN_FETCH_ALL_USERROLES,
+            });
             yield put({
                 type: UserActionType._USER_ROLE_UPDATE_SUCCESS,
                 payload: {
@@ -193,8 +201,8 @@ export function* attemptDeleteUserrole(reqObj) {
             { ...reqObj.payload },
             { withCredentials: true }
         );
-        console.log(res);
-        if (res && res.statusCode === 200) {
+        // console.log(res);
+        if (res && res.status === 200) {
             yield put({
                 // fetch all userroles for update
                 type: UserActionType._USER_ADMIN_FETCH_ALL_USERROLES,
@@ -205,7 +213,7 @@ export function* attemptDeleteUserrole(reqObj) {
         }
     } catch (error) {
         console.log(error.response);
-        if (error.response.statusCode === 401) {
+        if (error.response.status === 401) {
             yield put({
                 type: UserActionType._USER_ADMIN_DELETE_USERROLE_FAILD,
                 payload: {

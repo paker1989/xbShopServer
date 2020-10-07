@@ -53,9 +53,9 @@ to test:
 
 ## 2020/10/03
 to test:
-- set active tab in store
-- get all user access fn,
-- update role (create)
+- set active tab in store (done)
+- get all user access fn, (done)
+- update role (done) 
 
 - updateAdmin 回顾一下。update完之后然后呢???
-- todo: admin's email unique check,  edition.
+- todo: admin's email unique check,  edition. 

@@ -6,7 +6,7 @@ import * as userActionType from '../../actionType/userActionType';
 const formInitialState = {
     idRole: -1,
     roleName: '',
-    accesses: ['A'],
+    accesses: [],
 };
 
 const initialState = {

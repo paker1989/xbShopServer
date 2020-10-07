@@ -15,6 +15,8 @@ const RoleTable = ({ intl, loading }) => {
 
     const userRoles = useUserRoles();
 
+    // console.log(userRoles);
+
     const columns = [
         {
             title: intl.formatMessage({ id: 'common.id' }),
@@ -25,8 +27,8 @@ const RoleTable = ({ intl, loading }) => {
             title: intl.formatMessage({ id: 'common.role' }),
             dataIndex: 'label',
             key: 'label',
-            render: (text) => {
-                return <FormattedMessage id={`user.addAdmin.${text}`} />;
+            render: (text, record) => {
+                return record.reserved ? <FormattedMessage id={`user.addAdmin.${text}`} /> : text;
             },
         },
         {
@@ -36,14 +38,16 @@ const RoleTable = ({ intl, loading }) => {
             render: (text, record) => {
                 return (
                     <div className="option-sep-container">
-                        <Popconfirm
-                            title={intl.formatMessage({ id: 'common.delete.confirm' })}
-                            onConfirm={() => handleDelete(record.idRole)}
-                        >
-                            <span className="clickable danger inline-block">
-                                {intl.formatMessage({ id: 'common.delete' })}
-                            </span>
-                        </Popconfirm>
+                        {!record.reserved && (
+                            <Popconfirm
+                                title={intl.formatMessage({ id: 'common.delete.confirm' })}
+                                onConfirm={() => handleDelete(record.idRole)}
+                            >
+                                <span className="clickable danger inline-block">
+                                    {intl.formatMessage({ id: 'common.delete' })}
+                                </span>
+                            </Popconfirm>
+                        )}
                         <NavLink to={`/dashboard/editRole/${record.idRole}`}>
                             <FormattedMessage id="common.edit" />
                         </NavLink>
@@ -61,6 +65,7 @@ const RoleTable = ({ intl, loading }) => {
                 dataSource={userRoles}
                 rowKey={(record) => record.idRole}
                 loading={loading}
+                rowClassName={(record) => (record.new ? 'new' : null)}
             />
         </div>
     );

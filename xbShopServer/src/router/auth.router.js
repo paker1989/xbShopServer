@@ -8,6 +8,7 @@ const {
     getAllUserRoles,
     updateAdmin,
     allAdmins,
+    updateRole,
 } = require('../controller/authentication/auth.controller');
 
 const { deleteUserrole } = require('../controller/user/user.controller');
@@ -33,6 +34,7 @@ router.get('/autoLogin', autoLogin);
 router.post('/logout', logout);
 router.post('/allUserAccesses', authMiddleware, getAllUserAccess);
 router.post('/allUserRoles', authMiddleware, getAllUserRoles);
+router.post('/updateRole', authMiddleware, updateRole);
 router.post('/updateAdmin', authMiddleware, updateAdmin);
 router.post('/allAdmins', authMiddleware, allAdmins);
 router.post('/deleteUserrole', authMiddleware, deleteUserrole);
