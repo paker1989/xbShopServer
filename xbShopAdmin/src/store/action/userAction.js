@@ -69,3 +69,8 @@ export const submitRoleEdition = (params) => ({
     type: UserActionType._USER_ROLE_UPDATE,
     payload: params,
 });
+
+export const editUserRole = (params) => ({
+    type: UserActionType._USER_ROLE_EDIT,
+    payload: params,
+});

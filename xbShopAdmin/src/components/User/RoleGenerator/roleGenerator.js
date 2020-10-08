@@ -11,7 +11,6 @@ import HLPageMeta from '../../../static/data/componentMeta/user/addRoleMeta';
 import './roleGenerator.scss';
 
 const RoleGenerator = ({ intl, history }) => {
-    // const dispatch = useDispatch();
     const { description, title } = HLPageMeta.roleGenerator;
 
     const returnToList = (e) => {

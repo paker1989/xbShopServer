@@ -33,6 +33,8 @@ export default {
     'user.addRole.header.subtitle':
         "Une fois l'ajout ou la modification terminé, cliquez sur Enregistrer ou sur Annuler pour terminer la modification en cours. La liste de roles seront mis à jour dans la liste",
     'user.addRole.error.noName': 'Le nom de rôle ne peut pas être vide',
+    'user.addRole.error.dupliName': 'Le nom du rôle existe déjà',
+    'user.addRole.error.invalidRoleId': 'Le rôle cible ne semble pas exister',
     'user.addRole.name.mandatory': 'Nom de rôle (obligatoire)',
     'user.addRole.name': 'Nom de rôle',
     'user.addRole.access.tooltip': 'Veuillez sélectionner au moins une page accessible',

@@ -59,3 +59,8 @@ to test:
 
 - updateAdmin 回顾一下。update完之后然后呢???
 - todo: admin's email unique check,  edition. 
+
+## 2020/10/07
+to test:
+- duplicate user role check;
+- fake role id check;

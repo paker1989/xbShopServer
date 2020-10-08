@@ -19,7 +19,9 @@ const useUserRoles = () => {
     const newUserRoleId = cookie.load(roleGenerator.newUpdateKey);
     if (newUserRoleId) {
         allUserRoles.forEach((item) => {
+            /* eslint-disable */
             item.new = item.idRole === Number(newUserRoleId);
+            /* eslint-enable */
         });
     }
 
@@ -35,7 +37,6 @@ const useUserRoles = () => {
             dispatch(UserActionCreator.resetAdminsBackendStatus());
         }
     }, [backendStatus, backendMsg]);
-
     return allUserRoles;
 };
 

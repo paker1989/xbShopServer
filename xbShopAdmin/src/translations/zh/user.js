@@ -30,6 +30,8 @@ export default {
     'user.addRole.header.title': '增加或编辑您团队中的角色',
     'user.addRole.header.subtitle': '完成添加或者修改后，点击保存或者取消完成当前修改。角色列表将自动更新',
     'user.addRole.error.noName': '角色名称不能为空',
+    'user.addRole.error.dupliName': '角色名称已存在',
+    'user.addRole.error.invalidRoleId': '目标角色似乎不存在',
     'user.addRole.name.mandatory': '角色名称(必填)',
     'user.addRole.name': '角色名称',
     'user.addRole.access.tooltip': '请选择至少一个可进入页面',

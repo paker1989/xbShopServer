@@ -2,20 +2,6 @@
  * add product form
  */
 import * as userActionType from '../../actionType/userActionType';
-// import Axios from 'axios';
-// import { getRequestUrl } from '../../../static/api';
-
-// const allUserRoles = [];
-
-// const getAllUserRoles = async () => {
-//     const res = await Axios.post(getRequestUrl('auth', 'allUserRoles'), {}, { withCredentials: true });
-//     console.log(res);
-//     return res;
-// };
-
-// getAllUserRoles().then((res) => {
-//     allUserRoles.push(...res.data);
-// });
 
 const initialState = {
     allUserRoles: [],
