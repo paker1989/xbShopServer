@@ -16,6 +16,7 @@ const { roleGenerator: generatorMeta } = addRoleMeta;
 
 const RoleForm = (props) => {
     const { form, intl, history, match } = props;
+    // console.log(props);
 
     let idRole = match.params.idRole ? Number(match.params.idRole) : -1;
 
@@ -70,7 +71,7 @@ const RoleForm = (props) => {
                 const duplicatedUserRole = allUserRoles.find(
                     (role) => role.label === values.roleName && role.idRole !== idRole
                 );
-                if (!duplicatedUserRole) {
+                if (duplicatedUserRole) {
                     form.setFields({
                         roleName: {
                             value: values.roleName,

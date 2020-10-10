@@ -21,7 +21,7 @@ const RoleTable = ({ intl, loading, history }) => {
      */
     const editRole = (userRole) => {
         const { idRole, label: roleName, accesses } = userRole;
-        dispatch(UserActionCreator.editUserRole({ roleName, accesses }));
+        dispatch(UserActionCreator.editUserRole({ roleName, accesses: accesses.map((item) => item.idUserAccess) }));
         history.push(`/dashboard/addRole/${idRole}`);
     };
 
