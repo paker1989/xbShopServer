@@ -67,7 +67,7 @@ export default ({ intl, form }) => {
                         if (wrappedVal.length === 0) {
                             callback();
                         } else if (pwdRepeat.length > 0) {
-                            form.validateFields(['password'], (err, val) => {
+                            form.validateFields(['password'], () => {
                                 callback();
                             });
                         }

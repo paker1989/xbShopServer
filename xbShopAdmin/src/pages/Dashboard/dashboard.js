@@ -16,7 +16,9 @@ const { Content } = Layout;
 const { prefix, routes } = LazyComponents.dashboard;
 
 const Dashboard = ({ history }) => {
+    /* eslint-disable */
     const [authUser, authFlag] = useAuthenticated();
+    /* eslint-enable */
 
     useMount(() => {
         if (!authFlag) {

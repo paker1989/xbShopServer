@@ -36,7 +36,7 @@ const AdminForm = (props) => {
 
     const [userAccesses, setUserAccesses] = useState(populateUserAccesses());
 
-    const [editMode, setEditMode] = useState(idAdmin !== -1);
+    const [editMode /* setEditMode */] = useState(idAdmin !== -1);
 
     const cancelEdition = () => {
         history.push('/dashboard/teamList');

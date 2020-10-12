@@ -1,22 +1,19 @@
+import { Button, Checkbox, Col, Form, Input, message, Row } from 'antd';
 import React, { useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Button, Row, Col, message, Checkbox } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
 import addRoleMeta from '../../../static/data/componentMeta/user/addRoleMeta';
-import getValidators from './validators';
-
 import * as UserActionCreator from '../../../store/action/userAction';
 import * as UserActionTypes from '../../../store/actionType/userActionType';
 import useUserAccesses from '../../../utils/hooks/useUserAccesses';
 import useUserRoles from '../../../utils/hooks/useUserRoles';
+import getValidators from './validators';
 
 const { roleGenerator: generatorMeta } = addRoleMeta;
 
 const RoleForm = (props) => {
-    const { form, intl, history, match } = props;
-    // console.log(props);
+    const { form, intl, history, match, roleName, accesses } = props;
 
     let idRole = match.params.idRole ? Number(match.params.idRole) : -1;
 
@@ -47,6 +44,14 @@ const RoleForm = (props) => {
             if (!valideRole) {
                 message.warn(intl.formatMessage({ id: 'user.addRole.error.invalidRoleId' }));
                 idRole = -1;
+            } else if (!roleName || accesses.length === 0) {
+                // 可能是刷新了页面但是idRole != 0
+                dispatch(
+                    UserActionCreator.editUserRole({
+                        roleName: valideRole.label,
+                        accesses: valideRole.accesses.map((item) => item.idUserAccess),
+                    })
+                );
             }
         }
     }, [allUserRoles.length]);
@@ -78,8 +83,18 @@ const RoleForm = (props) => {
                             errors: [new Error(intl.formatMessage({ id: 'user.addRole.error.dupliName' }))],
                         },
                     });
-                } else {
+                    return;
+                }
+                if (idRole === -1) {
                     dispatch(UserActionCreator.submitRoleEdition({ idRole, ...values }));
+                } else {
+                    const touchedValues = validators.getTouchedFields(values);
+                    if (touchedValues.length === 0) {
+                        cancelEdition();
+                    } else {
+                        // only update impacted fields
+                        dispatch(UserActionCreator.submitRoleEdition({ idRole, ...touchedValues }));
+                    }
                 }
             }
         });

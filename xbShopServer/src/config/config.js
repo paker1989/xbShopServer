@@ -16,7 +16,7 @@ module.exports = {
         host: 'localhost',
         port: 3306,
         user: 'root',
-        password: '',
+        password: 'paker1989', // macos - no password for windows
     },
     redis: {
         host: '127.0.0.1',

@@ -42,7 +42,6 @@ const getAllUserAccess = async (ctx) => {
     if (cached) {
         // if found in cache, returned
         console.log('cached user access');
-        console.log(cached);
         Resolve.json(ctx, cached);
         return;
     }
@@ -99,8 +98,8 @@ const updateRole = async (ctx) => {
     try {
         const requestBody = ctx.request.body;
         const updatedRole = await AuthDAO.saveRole(requestBody);
-        console.log('auth.controller: updateRole');
-        console.log(updatedRole);
+        // console.log('auth.controller: updateRole');
+        // console.log(updatedRole);
         if (updatedRole) {
             authHelper.updateRole(updatedRole);
             Resolve.json(ctx, updatedRole);

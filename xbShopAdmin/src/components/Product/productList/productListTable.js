@@ -26,10 +26,10 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading, handleChange })
     );
 
     // methods
-    const handleTableChange = (pagination, filters, sorter) => {
-        console.log(pagination);
-        console.log(filters);
-        console.log(sorter);
+    const handleTableChange = (/* pagination, filters, sorter */) => {
+        // console.log(pagination);
+        // console.log(filters);
+        // console.log(sorter);
     };
 
     const productSelections = {
@@ -39,8 +39,8 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading, handleChange })
         },
     };
 
-    const handleDelete = (idProduct) => {
-        console.log('idProduct = ' + idProduct);
+    const handleDelete = (/* idProduct */) => {
+        // console.log('idProduct = ' + idProduct);
     };
 
     const columns = [
@@ -116,7 +116,7 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading, handleChange })
         },
     ];
 
-    const expandedRowRender = (record, index, indent, expanded) => {
+    const expandedRowRender = (record /* index, indent, expanded */) => {
         // console.log(record);
         const specColumn = [
             { title: intl.formatMessage({ id: 'product.spec.sku' }), dataIndex: 'sku', key: 'sku' },

@@ -15,7 +15,7 @@ const { Header } = Layout;
 
 const MainHeader = () => {
     const dispatch = useDispatch();
-    const [authUser, authFlag] = useAuthenticated();
+    const [authUser /* authFlag */] = useAuthenticated();
     const locale = useSelector((state) => state.meta.languageReducers.globalLocale);
     const handleLocal = ({ key }) => {
         dispatch(MetaActionCreator.changeLocale(key));

@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { put } from 'redux-saga/effects';
 import cookie from 'react-cookies';
-
+import { put } from 'redux-saga/effects';
+import { getRequestUrl } from '../../../static/api';
 import { roleGenerator } from '../../../static/data/componentMeta/user/addRoleMeta';
 import * as UserActionType from '../../actionType/userActionType';
-import { getRequestUrl } from '../../../static/api';
 
 // axios.interceptors.response.use(
 //     function (response) {
@@ -63,6 +62,8 @@ export function* updateAdminSaga(reqObj) {
  * @param {*} reqObj
  */
 export function* updateRoleSaga(reqObj) {
+    // console.log(reqObj);
+    // return;
     try {
         const res = yield axios.post(
             getRequestUrl('auth', 'updateRole'),
@@ -212,7 +213,7 @@ export function* attemptDeleteUserrole(reqObj) {
             });
         }
     } catch (error) {
-        console.log(error.response);
+        // console.log(error.response);
         if (error.response.status === 401) {
             yield put({
                 type: UserActionType._USER_ADMIN_DELETE_USERROLE_FAILD,

@@ -18,7 +18,7 @@ const TeamList = ({ intl }) => {
     const dispatch = useDispatch();
     const { title, description, layout } = userListMeta.team;
     const activeTab = useSelector((state) => state.user.admins.activeTab);
-    const [loading, setLoading] = useState(false);
+    const [loading /* setLoading */] = useState(false);
 
     const onTabClick = (tab) => {
         dispatch(UserActionCreator.setActiveTeamListTab(tab));

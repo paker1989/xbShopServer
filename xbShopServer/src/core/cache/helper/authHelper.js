@@ -116,7 +116,7 @@ const updateRole = async (updated) => {
         return;
     }
 
-    const index = cached.findIndex((item) => item.idRole === cached.idRole);
+    const index = cached.findIndex((item) => item.idRole === updated.idRole);
     if (index > -1) {
         cached.splice(index, 1, updated);
     } else {

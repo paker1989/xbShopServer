@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Card, Row, Col, Button } from 'antd';
 import { injectIntl } from 'react-intl';
 import { withRouter } from 'react-router-dom';

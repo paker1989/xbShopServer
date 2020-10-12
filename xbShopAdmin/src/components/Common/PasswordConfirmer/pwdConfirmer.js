@@ -14,8 +14,8 @@ const PasswordConfirmer = ({
     form,
     validators,
     isRepeat = true,
-    password,
-    onChange,
+    // password,
+    // onChange,
     showGenerate = false,
     // layout = defaultLayout,
 }) => {
