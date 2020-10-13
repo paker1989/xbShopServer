@@ -119,7 +119,12 @@ const RoleForm = (props) => {
                     <Checkbox.Group style={{ width: '100%' }}>
                         <Row>
                             {allUserAccesses.map((access) => (
-                                <Col span={8} className="useraccess-item" key={`access-${access.idUserAccess}`}>
+                                <Col
+                                    span={8}
+                                    style={{ marginBottom: 10 }}
+                                    className="useraccess-item"
+                                    key={`access-${access.idUserAccess}`}
+                                >
                                     <Checkbox value={access.idUserAccess}>
                                         {intl.formatMessage({ id: `menu.${access.code}` })}
                                     </Checkbox>

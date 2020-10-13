@@ -31,7 +31,7 @@ export default ({ intl, form }) => {
                 .reduce((obj, key) => {
                     /* eslint-disable */
                     obj[key] = values[key];
-                     /* eslint-enable */
+                    /* eslint-enable */
                     return obj;
                 }, {});
         },
