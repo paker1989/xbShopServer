@@ -99,7 +99,7 @@ export function* updateRoleSaga(reqObj) {
             type: UserActionType._USER_ROLE_UPDATE_FAILED,
             payload: {
                 backendStatus: UserActionType._USER_ROLE_UPDATE_FAILED,
-                backendMsg: error.message,
+                backendMsg: error.response ? error.response.statusText : error.message,
             },
         });
     }

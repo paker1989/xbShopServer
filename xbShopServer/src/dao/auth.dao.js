@@ -233,18 +233,31 @@ class AuthDAO {
             });
         } else {
             const updateCondition = {};
+            let updateFlag = false;
             if (label) {
                 updateCondition.label = label;
+                updateFlag = true;
             }
+            // if (accesses) {
+            //     updateCondition.accesses = accesses;
+            // }
+
+            if (updateFlag) {
+                const [updatedRow] = await UserRoleModel.update(updateCondition, { where: { idRole } });
+                if (updatedRow === 1) {
+                    pk = idRole;
+                }
+            }
+
             if (accesses) {
-                updateCondition.accesses = accesses;
-            }
-            // console.log(updateCondition);
-            const [updatedRow] = await UserRoleModel.update(updateCondition, { where: { idRole } });
-            if (updatedRow === 1) {
-                pk = idRole;
+                const toUpdate = await UserRoleModel.findByPk(idRole);
+                if (toUpdate) {
+                    await toUpdate.setAccesses(accesses);
+                    pk = idRole;
+                }
             }
         }
+
         if (pk) {
             return (
                 await UserRoleModel.findByPk(pk, {

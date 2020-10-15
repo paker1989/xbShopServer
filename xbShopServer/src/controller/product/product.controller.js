@@ -86,6 +86,7 @@ const fetchList = async (ctx) => {
         } else {
             _startPage = startPage;
         }
+        console.log('product: fetch list');
         console.log(ids);
         console.log(`${pageSize * (_startPage - 1)} ---  ${pageSize * (_startPage - 1) + limit}`);
         const slices = ids.slice(pageSize * (_startPage - 1), pageSize * (_startPage - 1) + limit); // pagination

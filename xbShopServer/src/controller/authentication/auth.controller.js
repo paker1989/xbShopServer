@@ -104,7 +104,7 @@ const updateRole = async (ctx) => {
             authHelper.updateRole(updatedRole);
             Resolve.json(ctx, updatedRole);
         } else {
-            Resolve.info(ctx, 'update role failed due to unknown reason');
+            Resolve.info(ctx, 'update role failed due to unknown reason', 503);
         }
     } catch (err) {
         throw new HttpException(err.message);

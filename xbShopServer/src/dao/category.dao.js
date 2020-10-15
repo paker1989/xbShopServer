@@ -14,7 +14,7 @@ class CategoryDAO {
         //   first, check from redis
         const reply = await zRangeAsync.call(redisClient, cacheKey, 0, -1);
         if (reply && reply.length > 0) {
-            console.log('hit cache');
+            // console.log('hit cache');
             return {
                 cnt: reply.length,
                 res: reply.map((str) => JSON.parse(str)),
