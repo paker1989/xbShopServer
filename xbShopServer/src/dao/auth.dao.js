@@ -1,3 +1,5 @@
+const { fn, col, where, Op } = require('sequelize');
+
 const { sequelize } = require('../core/db');
 
 const UserModel = require('../model/user/user');
@@ -7,6 +9,8 @@ const UserAccessModel = require('../model/user/userAccess');
 
 const encryptHelper = require('../core/encryptionHelper');
 const variables = require('../core/authHelper');
+
+const authTypes = require('../core/type/authType');
 
 class AuthDAO {
     static async findUserByPK(idUser) {
@@ -275,6 +279,33 @@ class AuthDAO {
         }
 
         return pk;
+    }
+
+    /**
+     * check if dupliacate email for given edited admin
+     * @param {*} ctxBody
+     */
+    static async checkDuplica(ctxBody) {
+        const { idAdmin, email } = ctxBody;
+        if (typeof idAdmin === 'undefined') {
+            return authTypes._AUTH_ADMIN_ID_NOT_PRESENT;
+        }
+        if (typeof email === 'undefined') {
+            return authTypes._AUTH_ADMIN_EMAIL_NOT_PRESENT;
+        }
+        const find = await UserModel.findOne({
+            where: {
+                $col: where(fn('lower', col('email')), fn('lower', email)),
+                idUser: {
+                    [Op.not]: idAdmin,
+                },
+            },
+        });
+
+        if (find) {
+            return authTypes._AUTH_ADMIN_EMAIL_DUPLICATED;
+        }
+        return '';
     }
 }
 

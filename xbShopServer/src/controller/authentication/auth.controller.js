@@ -76,6 +76,14 @@ const getAllUserRoles = async (ctx) => {
 const updateAdmin = async (ctx) => {
     try {
         const requestBody = ctx.request.body;
+
+        const error = await AuthDAO.checkDuplica(requestBody);
+
+        if (error.length > 0) {
+            Resolve.info(ctx, error, 403);
+            return;
+        }
+
         // console.log(requestBody);
         const updatedAdmin = await AuthDAO.saveAdmin(requestBody);
         // console.log(updatedAdmin);

@@ -28,6 +28,7 @@ export default {
     'user.addAdmin.info.pwdRule': 'Le mot de passe doit contenir au moins 6 caractères',
     'user.addAdmin.error.noDefaultPage': 'Vous devez sélectionner la page de default',
     'user.addAdmin.error.pwd.match': 'Les deux Mots de passes ne sont pas incohérents',
+    'user.addAdmin.error.email.duplica': "L'email existe déja existé",
     'user.addAdmin.superAdmin': 'Super Admin',
     'user.addRole.header.title': 'Ajoutez, modifiez un rôle',
     'user.addRole.header.subtitle':

@@ -26,6 +26,7 @@ export default {
     'user.addAdmin.info.pwdRule': '密码需要包含至少6个字符',
     'user.addAdmin.error.noDefaultPage': '您必须选择默认页面',
     'user.addAdmin.error.pwd.match': '密码不一致',
+    'user.addAdmin.error.email.duplica': '邮箱已经存在',
     'user.addAdmin.superAdmin': '超级管理员',
     'user.addRole.header.title': '增加或编辑您团队中的角色',
     'user.addRole.header.subtitle': '完成添加或者修改后，点击保存或者取消完成当前修改。角色列表将自动更新',

@@ -11,6 +11,7 @@ import getValidators from './validators';
 
 import * as UserActionCreator from '../../../store/action/userAction';
 import * as UserActionTypes from '../../../store/actionType/userActionType';
+import * as ServerErrorType from '../../../static/data/serverErrorType/authType';
 import useUserRoles from '../../../utils/hooks/useUserRoles';
 
 const { adminGenerator: generatorMeta } = addAdminMeta;
@@ -18,7 +19,7 @@ const { Option } = Select;
 
 const AdminForm = (props) => {
     const { form, intl, history, idAdmin, idRole } = props;
-    const { getFieldDecorator } = form;
+    const { getFieldDecorator, setFieldsValue } = form;
     const validators = getValidators({ intl, form });
 
     const dispatch = useDispatch();
@@ -42,16 +43,19 @@ const AdminForm = (props) => {
         history.push('/dashboard/teamList');
     };
 
+    // reset fields before unmount
     useEffect(() => {
         return () => {
             dispatch(UserActionCreator.resetAddAdminStates());
         };
     }, []);
 
+    // populate user access upon user roles population or idRole changed
     useEffect(() => {
         setUserAccesses(populateUserAccesses());
-    }, [userRoles.length]);
+    }, [userRoles.length, idRole]);
 
+    // handle save status
     useEffect(() => {
         if (backendStatus.length === 0) {
             return;
@@ -59,18 +63,33 @@ const AdminForm = (props) => {
         if (backendStatus === UserActionTypes._USER_ADMIN_UPDATE_SUCCESS) {
             history.push('/dashboard/teamList');
         } else if (backendStatus === UserActionTypes._USER_ADMIN_UPDATE_FAILED) {
-            message.error(backendMsg);
+            if (
+                backendMsg === ServerErrorType._AUTH_ADMIN_EMAIL_DUPLICATED ||
+                backendMsg === ServerErrorType._AUTH_ADMIN_EMAIL_NOT_PRESENT
+            ) {
+                form.setFields({
+                    email: {
+                        value: form.getFieldValue('email'),
+                        errors: [new Error(intl.formatMessage({ id: 'user.addAdmin.error.email.duplica' }))],
+                    },
+                });
+            } else {
+                message.error(backendMsg);
+            }
         }
         dispatch(UserActionCreator.resetAddAdminBackendStatus());
     }, [backendStatus, backendMsg]);
 
+    // upon select different role
     const onSelectRole = (val) => {
         const selectedUserRole = userRoles.find((item) => item.idRole === val);
         if (selectedUserRole != null) {
             setUserAccesses(selectedUserRole.accesses);
+            setFieldsValue({ defaultPage: selectedUserRole.accesses[0].idUserAccess });
         }
     };
 
+    // submit
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
@@ -110,7 +129,7 @@ const AdminForm = (props) => {
                     >
                         {userRoles.map((role) => (
                             <Option value={role.idRole} key={`role-${role.idRole}`}>
-                                {intl.formatMessage({ id: `user.addAdmin.${role.label}` })}
+                                {role.reserved ? <FormattedMessage id={`user.addAdmin.${role.label}`} /> : role.label}
                             </Option>
                         ))}
                     </Select>

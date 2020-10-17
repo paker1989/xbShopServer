@@ -51,7 +51,7 @@ export function* updateAdminSaga(reqObj) {
             type: UserActionType._USER_ADMIN_UPDATE_FAILED,
             payload: {
                 backendStatus: UserActionType._USER_ADMIN_UPDATE_FAILED,
-                backendMsg: error.message,
+                backendMsg: error.response ? error.response.statusText : error.message,
             },
         });
     }
