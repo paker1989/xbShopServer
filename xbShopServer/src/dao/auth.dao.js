@@ -159,10 +159,20 @@ class AuthDAO {
      */
     static async saveAdmin(ctxBody) {
         let pk;
-        const { email, phoneNumber, idRole, defaultPage, isActive, password, idAdmin = -1 } = ctxBody;
-        const encryptedPassword = encryptHelper.bcryptHashSync(password);
+        const {
+            email,
+            phoneNumber,
+            idRole,
+            defaultPage,
+            isActive,
+            isDeleted = false,
+            password,
+            idAdmin = -1,
+        } = ctxBody;
 
-        if (Number(idAdmin) === -1) {
+        // create case
+        if (parseInt(idAdmin, 10) === -1) {
+            const encryptedPassword = encryptHelper.bcryptHashSync(password);
             pk = await sequelize.transaction(async (t) => {
                 const newAdmin = await UserModel.create(
                     {
@@ -170,7 +180,8 @@ class AuthDAO {
                         password: encryptedPassword,
                         phoneNumber,
                         email,
-                        // isActive,
+                        isActive,
+                        isDeleted,
                     },
                     {
                         transaction: t,
@@ -179,8 +190,8 @@ class AuthDAO {
 
                 const userPref = await UserPrefModel.create(
                     {
-                        userroleId: Number(idRole),
-                        userAccessId: Number(defaultPage),
+                        userroleId: parseInt(idRole, 10),
+                        userAccessId: parseInt(defaultPage, 10),
                         userId: newAdmin.idUser,
                     },
                     { transaction: t }
@@ -191,6 +202,19 @@ class AuthDAO {
 
                 return newAdmin.idUser;
             });
+        } else if (isDeleted) {
+            const [updatedRow] = await UserModel.update(
+                {
+                    isDeleted,
+                },
+                {
+                    where: { idUser: parseInt(idAdmin, 10) },
+                }
+            );
+
+            if (updatedRow === 1) {
+                pk = parseInt(idAdmin, 10);
+            }
         }
 
         if (pk) {
@@ -219,7 +243,7 @@ class AuthDAO {
     static async saveRole(ctxBody) {
         let pk;
         const { idRole = -1, roleName: label, accesses } = ctxBody;
-        if (Number(idRole) === -1) {
+        if (parseInt(idRole, 10) === -1) {
             pk = await sequelize.transaction(async (t) => {
                 const newRole = await UserRoleModel.create(
                     {
@@ -299,6 +323,7 @@ class AuthDAO {
                 idUser: {
                     [Op.not]: idAdmin,
                 },
+                isDeleted: false,
             },
         });
 

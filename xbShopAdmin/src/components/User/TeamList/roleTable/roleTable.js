@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Table, Popconfirm } from 'antd';
+import { Table, Popconfirm, message } from 'antd';
 import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as UserActionCreator from '../../../../store/action/userAction';
+import * as UserActionTypes from '../../../../store/actionType/userActionType';
+
 import useUserRoles from '../../../../utils/hooks/useUserRoles';
 
 const RoleTable = ({ intl, loading, history }) => {
     const dispatch = useDispatch();
+    const backendStatus = useSelector((state) => state.user.addRole.backendStatus);
+    const backendMsg = useSelector((state) => state.user.addRole.backendMsg);
+
     const handleDelete = (idRole) => {
         dispatch(UserActionCreator.attemptDeleteUserrole({ idRole }));
     };
@@ -24,6 +29,16 @@ const RoleTable = ({ intl, loading, history }) => {
         dispatch(UserActionCreator.editUserRole({ roleName, accesses: accesses.map((item) => item.idUserAccess) }));
         history.push(`/dashboard/addRole/${idRole}`);
     };
+
+    useEffect(() => {
+        if (backendStatus === UserActionTypes._USER_ADMIN_DELETE_USERROLE_FAILD) {
+            message.error(backendMsg);
+            dispatch(UserActionCreator.resetAddRoleBackendStatus());
+        } else if (backendStatus === UserActionTypes._USER_ADMIN_DELETE_USERROLE_SUCCEED) {
+            message.success(intl.formatMessage({ id: 'user.team.deleteRole.success' }));
+            dispatch(UserActionCreator.resetAddRoleBackendStatus());
+        }
+    }, [backendStatus, backendMsg]);
 
     const columns = [
         {

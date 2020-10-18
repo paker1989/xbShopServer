@@ -72,3 +72,12 @@ to test:
 todo:
 - native roles NOT allowed to edit even;
 - access populations
+
+## 2020/10/13
+to test:
+- check duplicate avoid deleted one (done)
+- update admin deleted (done)
+- typeof object (done)
+
+todo
+- filter only deleted one;

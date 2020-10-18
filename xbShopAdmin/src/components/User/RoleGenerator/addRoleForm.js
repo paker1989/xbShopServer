@@ -15,7 +15,7 @@ const { roleGenerator: generatorMeta } = addRoleMeta;
 const RoleForm = (props) => {
     const { form, intl, history, match, roleName, accesses } = props;
 
-    let idRole = match.params.idRole ? Number(match.params.idRole) : -1;
+    let idRole = match.params.idRole ? parseInt(match.params.idRole, 10) : -1;
 
     const { getFieldDecorator } = form;
     const validators = getValidators({ intl, form });

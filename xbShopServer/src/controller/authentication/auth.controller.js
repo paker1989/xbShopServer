@@ -76,12 +76,16 @@ const getAllUserRoles = async (ctx) => {
 const updateAdmin = async (ctx) => {
     try {
         const requestBody = ctx.request.body;
+        const { idAdmin = -1 } = requestBody;
 
-        const error = await AuthDAO.checkDuplica(requestBody);
+        // check duplica for create case
+        if (parseInt(idAdmin, 10) === -1) {
+            const error = await AuthDAO.checkDuplica(requestBody);
 
-        if (error.length > 0) {
-            Resolve.info(ctx, error, 403);
-            return;
+            if (error.length > 0) {
+                Resolve.info(ctx, error, 403);
+                return;
+            }
         }
 
         // console.log(requestBody);

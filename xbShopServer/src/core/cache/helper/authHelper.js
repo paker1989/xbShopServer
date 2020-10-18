@@ -88,7 +88,8 @@ const setCachedAdminList = async (allAdmins) => {
  * @param {*} updated
  */
 const updateAdmin = async (updated) => {
-    if (!updated) {
+    // console.log(typeof updated);
+    if (!updated || !updated.hasOwnProperty('idUser')) {
         return;
     }
 
@@ -97,7 +98,7 @@ const updateAdmin = async (updated) => {
         return;
     }
 
-    const index = cached.findIndex((item) => item.idUser === cached.idUser);
+    const index = cached.findIndex((item) => item.idUser === updated.idUser);
     if (index > -1) {
         cached.splice(index, 1, updated);
     } else {
@@ -107,7 +108,7 @@ const updateAdmin = async (updated) => {
 };
 
 const updateRole = async (updated) => {
-    if (!updated) {
+    if (!updated || !updated.hasOwnProperty('idRole')) {
         return;
     }
 

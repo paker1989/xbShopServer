@@ -7,10 +7,12 @@ import {
     getAllUserAccesses,
     attemptDeleteUserrole,
     updateRoleSaga,
+    getAllAdminSaga,
 } from './admin.saga';
 
 export function* userSaga() {
     yield takeLatest(UserActionType._USER_ADMIN_UPDATE, updateAdminSaga);
+    yield takeLatest(UserActionType._USER_ADMIN_FETCH_ALL, getAllAdminSaga);
     yield takeLatest(UserActionType._USER_ROLE_UPDATE, updateRoleSaga);
     yield takeLatest(UserActionType._USER_ADMIN_FETCH_ALL_USERROLES, getAllUserRoles);
     yield takeLatest(UserActionType._USER_ROLE_FETCH_ALL_USERACCESSES, getAllUserAccesses);

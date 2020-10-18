@@ -21,8 +21,8 @@ const useProductHL = (useStore, product) => {
         isOffShelf,
         categories: categoryList.filter((item) => Array.prototype.includes.call(categories, item.idCategory)),
         comment,
-        priceRange: getPriceRange(specs.map((spec) => Number(spec.price))),
-        stockRange: getStockRange(specs.map((spec) => Number(spec.stockNumber))),
+        priceRange: getPriceRange(specs.map((spec) => parseInt(spec.price, 10))),
+        stockRange: getStockRange(specs.map((spec) => parseInt(spec.stockNumber, 10))),
         specs,
     };
 };

@@ -28,6 +28,11 @@ User.init(
             type: DataTypes.STRING(64),
             allowNull: true,
         },
+        isActive: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true,
+        },
         isDeleted: {
             type: DataTypes.BOOLEAN,
             allowNull: false,

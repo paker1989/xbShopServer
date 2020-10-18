@@ -3,41 +3,41 @@ import { useSelector, useDispatch } from 'react-redux';
 import { message } from 'antd';
 import cookie from 'react-cookies';
 
-import { roleGenerator } from '../../static/data/componentMeta/user/addRoleMeta';
+import { adminGenerator } from '../../static/data/componentMeta/user/addAdminMeta';
 
 import * as UserActionCreator from '../../store/action/userAction';
 import * as UserActionTypes from '../../store/actionType/userActionType';
 /**
- * return all user roles
+ * return all admins
  */
-const useUserRoles = () => {
+const useUserAdmins = (includeDeleted) => {
     const dispatch = useDispatch();
-    const allUserRoles = useSelector((state) => state.user.admins.allUserRoles);
+    const allAdmins = useSelector((state) => state.user.admins.allAdmins);
     const backendStatus = useSelector((state) => state.user.admins.backendStatus);
     const backendMsg = useSelector((state) => state.user.admins.backendMsg);
 
-    const newUserRoleId = cookie.load(roleGenerator.newUpdateKey);
-    if (newUserRoleId) {
-        allUserRoles.forEach((item) => {
+    const newAdminId = cookie.load(adminGenerator.newUpdateKey);
+    if (newAdminId) {
+        allAdmins.forEach((item) => {
             /* eslint-disable */
-            item.new = item.idRole === parseInt(newUserRoleId, 10);
+            item.new = item.idRole === parseInt(newAdminId, 10);
             /* eslint-enable */
         });
     }
 
     useEffect(() => {
-        if (allUserRoles.length === 0) {
-            dispatch(UserActionCreator.fetchAllUserroles());
+        if (allAdmins.length === 0) {
+            dispatch(UserActionCreator.fetchAllAdmins());
         }
     }, []);
 
     useEffect(() => {
-        if (backendStatus === UserActionTypes._USER_ADMIN_FETCH_ALL_USERROLES_FAILED) {
+        if (backendStatus === UserActionTypes._USER_ADMIN_FETCH_ALL_FAILED) {
             message.error(backendMsg);
             dispatch(UserActionCreator.resetAdminsBackendStatus());
         }
     }, [backendStatus, backendMsg]);
-    return allUserRoles;
+    return includeDeleted ? allAdmins : allAdmins.filter((item) => !item.isDeleted);
 };
 
-export default useUserRoles;
+export default useUserAdmins;

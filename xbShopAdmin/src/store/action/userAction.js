@@ -74,3 +74,10 @@ export const editUserRole = (params) => ({
     type: UserActionType._USER_ROLE_EDIT,
     payload: params,
 });
+
+/**
+ * @param {*} params
+ */
+export const fetchAllAdmins = () => ({
+    type: UserActionType._USER_ADMIN_FETCH_ALL,
+});

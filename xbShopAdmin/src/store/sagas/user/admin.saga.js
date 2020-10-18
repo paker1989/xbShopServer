@@ -3,6 +3,7 @@ import cookie from 'react-cookies';
 import { put } from 'redux-saga/effects';
 import { getRequestUrl } from '../../../static/api';
 import { roleGenerator } from '../../../static/data/componentMeta/user/addRoleMeta';
+import { adminGenerator } from '../../../static/data/componentMeta/user/addAdminMeta';
 import * as UserActionType from '../../actionType/userActionType';
 
 // axios.interceptors.response.use(
@@ -31,6 +32,11 @@ export function* updateAdminSaga(reqObj) {
             { withCredentials: true }
         );
         if (res && res.data) {
+            cookie.save(adminGenerator.newUpdateKey, res.data.idUser, { maxAge: adminGenerator.newUpdateMaxAge });
+            yield put({
+                // fetch all admins for update
+                type: UserActionType._USER_ADMIN_FETCH_ALL,
+            });
             yield put({
                 type: UserActionType._USER_ADMIN_UPDATE_SUCCESS,
                 payload: {
@@ -108,32 +114,32 @@ export function* updateRoleSaga(reqObj) {
 /**
  * getAllAdmin saga,
  */
-export function* loadAllAdminSaga() {
+export function* getAllAdminSaga() {
     // debugger;
     try {
         const res = yield axios.post(getRequestUrl('auth', 'allAdmins'), {}, { withCredentials: true });
         if (res && res.data) {
             yield put({
-                type: UserActionType._USER_ADMIN_UPDATE_SUCCESS,
+                type: UserActionType._USER_ADMIN_FETCH_ALL_SUCCESS,
                 payload: {
-                    backendStatus: UserActionType._USER_ADMIN_UPDATE_SUCCESS,
+                    allAdmins: res.data,
                 },
             });
         } else {
             yield put({
-                type: UserActionType._USER_ADMIN_UPDATE_FAILED,
+                type: UserActionType._USER_ADMIN_FETCH_ALL_FAILED,
                 payload: {
-                    backendStatus: UserActionType._USER_ADMIN_UPDATE_FAILED,
+                    backendStatus: UserActionType._USER_ADMIN_FETCH_ALL_FAILED,
                     backendMsg: res.statusText,
                 },
             });
         }
     } catch (error) {
         yield put({
-            type: UserActionType._USER_ADMIN_UPDATE_FAILED,
+            type: UserActionType._USER_ADMIN_FETCH_ALL_FAILED,
             payload: {
-                backendStatus: UserActionType._USER_ADMIN_UPDATE_FAILED,
-                backendMsg: error.response.statusText,
+                backendStatus: UserActionType._USER_ADMIN_FETCH_ALL_FAILED,
+                backendMsg: error.response ? error.response.statusText : error.message,
             },
         });
     }
@@ -210,6 +216,9 @@ export function* attemptDeleteUserrole(reqObj) {
             });
             yield put({
                 type: UserActionType._USER_ADMIN_DELETE_USERROLE_SUCCEED,
+                payload: {
+                    backendStatus: UserActionType._USER_ADMIN_DELETE_USERROLE_SUCCEED,
+                },
             });
         }
     } catch (error) {

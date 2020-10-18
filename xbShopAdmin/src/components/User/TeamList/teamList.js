@@ -50,14 +50,14 @@ const TeamList = ({ intl }) => {
                             <Tabs activeKey={activeTab} onTabClick={onTabClick}>
                                 <TabPane tab={intl.formatMessage({ id: 'user.team.list.teams' })} key="team">
                                     <Row>
-                                        <Col {...layout.table}>
+                                        <Col {...layout.teamTable}>
                                             <TeamTable loading={loading} />
                                         </Col>
                                     </Row>
                                 </TabPane>
                                 <TabPane tab={intl.formatMessage({ id: 'user.team.list.permissions' })} key="role">
                                     <Row>
-                                        <Col {...layout.table}>
+                                        <Col {...layout.roleTable}>
                                             <RoleTable />
                                         </Col>
                                     </Row>

@@ -13,7 +13,7 @@ export function validateEmail(email) {
 }
 
 export function generatePwd(_length) {
-    let length = Number(_length);
+    let length = parseInt(_length, 10);
     // Limit length
     if (length < 6) {
         length = 6;

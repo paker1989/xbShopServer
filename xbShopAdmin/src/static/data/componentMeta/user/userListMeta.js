@@ -3,7 +3,11 @@ module.exports = {
         title: 'user.team.list.header.title',
         description: 'user.team.list.header.subtitle',
         layout: {
-            table: {
+            teamTable: {
+                md: { span: 24 },
+                lg: { span: 24 },
+            },
+            roleTable: {
                 md: { span: 24 },
                 lg: { span: 20 },
             },
