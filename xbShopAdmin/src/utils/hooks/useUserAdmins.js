@@ -7,10 +7,12 @@ import { adminGenerator } from '../../static/data/componentMeta/user/addAdminMet
 
 import * as UserActionCreator from '../../store/action/userAction';
 import * as UserActionTypes from '../../store/actionType/userActionType';
+
 /**
  * return all admins
+ * @param {deleted}  show deleted
  */
-const useUserAdmins = (includeDeleted) => {
+const useUserAdmins = (showDeleted) => {
     const dispatch = useDispatch();
     const allAdmins = useSelector((state) => state.user.admins.allAdmins);
     const backendStatus = useSelector((state) => state.user.admins.backendStatus);
@@ -37,7 +39,8 @@ const useUserAdmins = (includeDeleted) => {
             dispatch(UserActionCreator.resetAdminsBackendStatus());
         }
     }, [backendStatus, backendMsg]);
-    return includeDeleted ? allAdmins : allAdmins.filter((item) => !item.isDeleted);
+
+    return showDeleted ? allAdmins.filter((item) => item.isDeleted) : allAdmins.filter((item) => !item.isDeleted);
 };
 
 export default useUserAdmins;

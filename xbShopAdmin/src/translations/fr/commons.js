@@ -1,8 +1,11 @@
 export default {
     'common.delete': 'Supprimer',
+    'common.destroy': 'Ecraser',
     'common.next': 'Suivant',
     'common.operation': 'Operation',
+    'common.restore': 'Restaurer',
     'common.delete.confirm': 'Vous êtes sûr de le supprimer?',
+    'common.destroy.confirm': 'Supprimer complètement, cette opération ne peut pas être restaurée',
     'common.note': 'Commentaire',
     'common.yes': 'Oui',
     'common.no': 'Non',
@@ -35,4 +38,5 @@ export default {
     'common.phone': 'Numéro Tél.',
     'common.generate.pwd': 'Générer un mot de passe',
     'common.password.length.required': 'Le mot de passe doit comporter au moins six chiffres',
+    'common.deleted': 'Supprimé',
 };

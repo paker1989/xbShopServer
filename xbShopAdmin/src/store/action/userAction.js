@@ -41,6 +41,13 @@ export const submitAdminEdition = (params) => ({
     payload: params,
 });
 
+export const switchTeamSubTab = (tab) => ({
+    type: UserActionType._USER_ADMIN_SWITCH_SUB_TAB,
+    payload: {
+        teamSubTab: tab,
+    },
+});
+
 /**
  * @param {*} params
  */

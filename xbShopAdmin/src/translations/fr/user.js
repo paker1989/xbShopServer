@@ -12,7 +12,8 @@ export default {
     'user.team.addRole': 'Créer Rôle',
     'user.team.deleteAdmin.success': "supprimer l'administrateur réussi",
     'user.team.deleteRole.success': 'supprimer le rôle réussi',
-    'user.addAdmin.header.title': 'Ajoutez, modifiez un membre d"équipe',
+    'user.team.allAdmins': 'Tous les membres',
+    'user.addAdmin.header.title': "Ajoutez, modifiez un membre d'équipe",
     'user.addAdmin.header.subtitle':
         "Une fois l'ajout ou la modification terminé, cliquez sur Enregistrer ou sur Annuler pour terminer la modification en cours. Les produits seront mis à jour dans la liste",
     'user.addAdmin.error.noRole': 'Vous devez sélectionner le rôle.',

@@ -144,9 +144,9 @@ class AuthDAO {
                     ],
                 },
             ],
-            where: {
-                isDeleted: 0,
-            },
+            // where: {
+            //     isDeleted: 0,
+            // },
             order: ['idUser'],
         });
 

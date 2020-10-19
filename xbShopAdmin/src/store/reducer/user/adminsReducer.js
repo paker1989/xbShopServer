@@ -8,6 +8,7 @@ const initialState = {
     allUserAccesses: [],
     allAdmins: [],
     activeTab: 'team', // team or role
+    teamSubTab: 'all', // all or deleted
     backendStatus: '',
     backendMsg: '',
 };
@@ -26,6 +27,8 @@ export default (state = initialState, action) => {
         case userActionType._USER_ADMINS_RESET_BACKEND_STATUS:
             return { ...state, ...action.payload };
         case userActionType._USER_ADMIN_FETCH_ALL_SUCCESS:
+            return { ...state, ...action.payload };
+        case userActionType._USER_ADMIN_SWITCH_SUB_TAB:
             return { ...state, ...action.payload };
         default:
             return state;

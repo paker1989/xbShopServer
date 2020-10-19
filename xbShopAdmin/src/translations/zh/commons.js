@@ -1,8 +1,11 @@
 export default {
     'common.delete': '删除',
+    'common.destroy': '彻底删除',
     'common.next': '下一步',
     'common.operation': '操作',
+    'common.restore': '恢复',
     'common.delete.confirm': '确定删除?',
+    'common.destroy.confirm': '彻底删除, 此操作无法恢复',
     'common.note': '备注',
     'common.yes': '是',
     'common.no': '否',
@@ -35,4 +38,5 @@ export default {
     'common.phone': '手机号码',
     'common.generate.pwd': '自动生成密码',
     'common.password.length.required': '密码至少为六位',
+    'common.deleted': '已删除',
 };

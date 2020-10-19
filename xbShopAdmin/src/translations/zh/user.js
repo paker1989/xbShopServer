@@ -11,6 +11,7 @@ export default {
     'user.team.addRole': '添加角色',
     'user.team.deleteAdmin.success': '删除团队成员成功',
     'user.team.deleteRole.success': '删除角色成功',
+    'user.team.allAdmins': '所有成员',
     'user.addAdmin.header.title': '增加或编辑您团队中的成员',
     'user.addAdmin.header.subtitle': '完成添加或者修改后，点击保存或者取消完成当前修改。产品将在列表中更新',
     'user.addAdmin.error.noRole': '您必须选择一个角色.',
