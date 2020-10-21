@@ -27,12 +27,20 @@ const TeamTable = ({ intl, loading }) => {
             message.error(backendMsg);
             dispatch(UserActionCreator.resetAddAdminBackendStatus());
         } else if (backendStatus === UserActionTypes._USER_ADMIN_UPDATE_SUCCESS) {
-            message.success(intl.formatMessage({ id: 'user.team.deleteAdmin.success' }));
+            message.success(
+                intl.formatMessage({
+                    id: backendMsg === 'restore' ? 'user.team.restoreAdmin.success' : 'user.team.deleteAdmin.success',
+                })
+            );
             dispatch(UserActionCreator.resetAddAdminBackendStatus());
         }
     }, [backendStatus, backendMsg]);
 
     const handleChange = () => {};
+
+    const handleRestore = (idAdmin) => {
+        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, restore: true }));
+    };
 
     const handleDelete = (idAdmin) => {
         dispatch(UserActionCreator.submitAdminEdition({ idAdmin, isDeleted: true }));
@@ -104,7 +112,15 @@ const TeamTable = ({ intl, loading }) => {
             render: (text, record) => {
                 return record.isDeleted ? (
                     <div className="option-sep-container">
-                        <span className="linkable">{intl.formatMessage({ id: 'common.restore' })}</span>
+                        <Popconfirm
+                            title={intl.formatMessage({ id: 'common.restore.confirm' })}
+                            onConfirm={() => handleRestore(record.idUser)}
+                        >
+                            <span className="clickable linkable inline-block">
+                                {intl.formatMessage({ id: 'common.restore' })}
+                            </span>
+                        </Popconfirm>
+
                         <Popconfirm
                             title={intl.formatMessage({ id: 'common.destroy.confirm' })}
                             onConfirm={() => handleDelete(record.idUser)}
@@ -151,6 +167,7 @@ const TeamTable = ({ intl, loading }) => {
                 rowKey={(record) => record.idUser}
                 loading={loading}
                 scroll={{ x: 800 }}
+                rowClassName={(record) => (record.new ? 'new' : null)}
             />
         </div>
     );

@@ -95,7 +95,7 @@ const updateAdmin = async (ctx) => {
             authHelper.updateAdmin(updatedAdmin);
             Resolve.json(ctx, updatedAdmin);
         } else {
-            Resolve.info(ctx, 'failed due to unknown reason');
+            Resolve.info(ctx, 'failed due to unknown reason', 501);
         }
     } catch (err) {
         throw new HttpException(err.message);

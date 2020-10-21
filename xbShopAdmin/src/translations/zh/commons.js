@@ -6,6 +6,7 @@ export default {
     'common.restore': '恢复',
     'common.delete.confirm': '确定删除?',
     'common.destroy.confirm': '彻底删除, 此操作无法恢复',
+    'common.restore.confirm': '确定恢复?',
     'common.note': '备注',
     'common.yes': '是',
     'common.no': '否',

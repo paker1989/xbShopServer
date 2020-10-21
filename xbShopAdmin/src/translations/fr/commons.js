@@ -5,6 +5,7 @@ export default {
     'common.operation': 'Operation',
     'common.restore': 'Restaurer',
     'common.delete.confirm': 'Vous êtes sûr de le supprimer?',
+    'common.restore.confirm': 'Vous êtes sûr de le restaurer?',
     'common.destroy.confirm': 'Supprimer complètement, cette opération ne peut pas être restaurée',
     'common.note': 'Commentaire',
     'common.yes': 'Oui',

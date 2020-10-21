@@ -22,7 +22,7 @@ const useUserAdmins = (showDeleted) => {
     if (newAdminId) {
         allAdmins.forEach((item) => {
             /* eslint-disable */
-            item.new = item.idRole === parseInt(newAdminId, 10);
+            item.new = item.idUser === parseInt(newAdminId, 10);
             /* eslint-enable */
         });
     }

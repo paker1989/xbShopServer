@@ -10,6 +10,7 @@ export default {
     'user.team.addAdmin': '添加管理员',
     'user.team.addRole': '添加角色',
     'user.team.deleteAdmin.success': '删除团队成员成功',
+    'user.team.restoreAdmin.success': '恢复团队成员成功',
     'user.team.deleteRole.success': '删除角色成功',
     'user.team.allAdmins': '所有成员',
     'user.addAdmin.header.title': '增加或编辑您团队中的成员',

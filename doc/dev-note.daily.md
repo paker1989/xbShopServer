@@ -78,6 +78,9 @@ to test:
 - check duplicate avoid deleted one (done)
 - update admin deleted (done)
 - typeof object (done)
+- filter only deleted one (done);
 
 todo
-- filter only deleted one;
+- stop restore if same email detected
+- destory action
+- edit action

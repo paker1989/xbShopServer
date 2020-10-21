@@ -168,6 +168,7 @@ class AuthDAO {
             isDeleted = false,
             password,
             idAdmin = -1,
+            restore,
         } = ctxBody;
 
         // create case
@@ -202,10 +203,10 @@ class AuthDAO {
 
                 return newAdmin.idUser;
             });
-        } else if (isDeleted) {
+        } else if (isDeleted || restore) {
             const [updatedRow] = await UserModel.update(
                 {
-                    isDeleted,
+                    isDeleted: !restore,
                 },
                 {
                     where: { idUser: parseInt(idAdmin, 10) },
