@@ -76,7 +76,7 @@ const getAllUserRoles = async (ctx) => {
 const updateAdmin = async (ctx) => {
     try {
         const requestBody = ctx.request.body;
-        const { idAdmin = -1 } = requestBody;
+        const { idAdmin = -1, action } = requestBody;
 
         // check duplica for create case
         if (parseInt(idAdmin, 10) === -1) {
@@ -88,14 +88,22 @@ const updateAdmin = async (ctx) => {
             }
         }
 
-        // console.log(requestBody);
-        const updatedAdmin = await AuthDAO.saveAdmin(requestBody);
-        // console.log(updatedAdmin);
-        if (updatedAdmin) {
-            authHelper.updateAdmin(updatedAdmin);
-            Resolve.json(ctx, updatedAdmin);
+        if (action && action === 'destroy') {
+            const flag = await AuthDAO.destroyAdmin(parseInt(idAdmin, 10));
+            if (flag) {
+                authHelper.removeAdmin(parseInt(idAdmin, 10));
+                Resolve.json(ctx, idAdmin);
+            } else {
+                Resolve.info(ctx, 'failed to remove admin due to unknown reason', 501);
+            }
         } else {
-            Resolve.info(ctx, 'failed due to unknown reason', 501);
+            const updatedAdmin = await AuthDAO.saveAdmin(requestBody);
+            if (updatedAdmin) {
+                authHelper.updateAdmin(updatedAdmin);
+                Resolve.json(ctx, updatedAdmin);
+            } else {
+                Resolve.info(ctx, 'failed due to unknown reason', 501);
+            }
         }
     } catch (err) {
         throw new HttpException(err.message);

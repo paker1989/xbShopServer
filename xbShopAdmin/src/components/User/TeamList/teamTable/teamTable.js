@@ -29,7 +29,7 @@ const TeamTable = ({ intl, loading }) => {
         } else if (backendStatus === UserActionTypes._USER_ADMIN_UPDATE_SUCCESS) {
             message.success(
                 intl.formatMessage({
-                    id: backendMsg === 'restore' ? 'user.team.restoreAdmin.success' : 'user.team.deleteAdmin.success',
+                    id: `user.team.${backendMsg}Admin.success`, // restore or delete or destroy
                 })
             );
             dispatch(UserActionCreator.resetAddAdminBackendStatus());
@@ -39,11 +39,15 @@ const TeamTable = ({ intl, loading }) => {
     const handleChange = () => {};
 
     const handleRestore = (idAdmin) => {
-        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, restore: true }));
+        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'restore' }));
     };
 
     const handleDelete = (idAdmin) => {
-        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, isDeleted: true }));
+        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'delete' }));
+    };
+
+    const handleDestroy = (idAdmin) => {
+        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'destroy' }));
     };
 
     const switchTab = (tab) => {
@@ -120,10 +124,9 @@ const TeamTable = ({ intl, loading }) => {
                                 {intl.formatMessage({ id: 'common.restore' })}
                             </span>
                         </Popconfirm>
-
                         <Popconfirm
                             title={intl.formatMessage({ id: 'common.destroy.confirm' })}
-                            onConfirm={() => handleDelete(record.idUser)}
+                            onConfirm={() => handleDestroy(record.idUser)}
                         >
                             <span className="clickable danger inline-block">
                                 {intl.formatMessage({ id: 'common.destroy' })}

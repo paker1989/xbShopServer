@@ -168,7 +168,7 @@ class AuthDAO {
             isDeleted = false,
             password,
             idAdmin = -1,
-            restore,
+            action,
         } = ctxBody;
 
         // create case
@@ -203,10 +203,10 @@ class AuthDAO {
 
                 return newAdmin.idUser;
             });
-        } else if (isDeleted || restore) {
+        } else if (action) {
             const [updatedRow] = await UserModel.update(
                 {
-                    isDeleted: !restore,
+                    isDeleted: action === 'delete',
                 },
                 {
                     where: { idUser: parseInt(idAdmin, 10) },
@@ -222,6 +222,30 @@ class AuthDAO {
             return AuthDAO.findUserByPK(pk);
         }
         return pk; // undefined
+    }
+
+    /**
+     * destroy an admin
+     * @param {*} idAdmin
+     */
+    static async destroyAdmin(idAdmin) {
+        if (idAdmin) {
+            const toDestroy = await UserModel.findByPk(idAdmin, { include: [{ model: UserPrefModel, as: 'pref' }] });
+            if (toDestroy) {
+                await sequelize.transaction(async (t) => {
+                    // const userPrefId = toDestroy.getDataValue('')
+                    await toDestroy.destroy({
+                        transaction: t,
+                    });
+                    const userPref = toDestroy.pref;
+                    // console.log(userPref.destroy);
+                    await userPref.destroy({ transaction: t });
+                });
+
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

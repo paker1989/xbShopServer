@@ -23,7 +23,7 @@ import * as UserActionType from '../../actionType/userActionType';
  */
 export function* updateAdminSaga(reqObj) {
     // debugger;
-    const { restore = false } = reqObj.payload;
+    const { action = '' } = reqObj.payload;
     try {
         const res = yield axios.post(
             getRequestUrl('auth', 'updateAdmin'),
@@ -33,7 +33,9 @@ export function* updateAdminSaga(reqObj) {
             { withCredentials: true }
         );
         if (res && res.data) {
-            cookie.save(adminGenerator.newUpdateKey, res.data.idUser, { maxAge: adminGenerator.newUpdateMaxAge });
+            if (action !== 'destroy') {
+                cookie.save(adminGenerator.newUpdateKey, res.data.idUser, { maxAge: adminGenerator.newUpdateMaxAge });
+            }
             yield put({
                 // fetch all admins for update
                 type: UserActionType._USER_ADMIN_FETCH_ALL,
@@ -42,7 +44,7 @@ export function* updateAdminSaga(reqObj) {
                 type: UserActionType._USER_ADMIN_UPDATE_SUCCESS,
                 payload: {
                     backendStatus: UserActionType._USER_ADMIN_UPDATE_SUCCESS,
-                    backendMsg: restore ? 'restore' : '',
+                    backendMsg: action,
                 },
             });
         } else {

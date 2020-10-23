@@ -83,6 +83,18 @@ const setCachedAdminList = async (allAdmins) => {
     redisClient.set(_ADMIN_LIST_KEY, JSON.stringify(allAdmins), 'EX', config.expire.admins);
 };
 
+const removeAdmin = async (idAdmin) => {
+    const cached = await getCachedAdminList();
+    if (!cached) {
+        return;
+    }
+    const index = cached.findIndex((item) => item.idUser === idAdmin);
+    if (index > -1) {
+        cached.splice(index, 1);
+        setCachedAdminList(cached);
+    }
+};
+
 /**
  * update an admin, including creation case
  * @param {*} updated
@@ -136,5 +148,6 @@ module.exports = {
     getCachedAdminList,
     setCachedAdminList,
     updateAdmin,
+    removeAdmin,
     updateRole,
 };
