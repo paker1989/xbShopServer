@@ -81,6 +81,8 @@ to test:
 - filter only deleted one (done);
 
 todo
-- stop restore if same email detected
-- destory action
-- edit action
+- (done) stop restore if same email detected
+- (done) destory action
+
+in-progress:
+- edit action: next step ==> manage password for update

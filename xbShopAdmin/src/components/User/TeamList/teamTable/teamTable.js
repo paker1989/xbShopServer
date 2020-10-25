@@ -36,10 +36,12 @@ const TeamTable = ({ intl, loading }) => {
         }
     }, [backendStatus, backendMsg]);
 
-    const handleChange = () => {};
+    const handleChange = (idAdmin, isActive) => {
+        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, isActive }));
+    };
 
-    const handleRestore = (idAdmin) => {
-        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'restore' }));
+    const handleRestore = (idAdmin, email) => {
+        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, email, action: 'restore' }));
     };
 
     const handleDelete = (idAdmin) => {
@@ -98,13 +100,13 @@ const TeamTable = ({ intl, loading }) => {
             render: (text, record) => {
                 return (
                     <Switch
-                        disabled={record.isDeleted}
+                        disabled={record.isDeleted || record.self}
                         checkedChildren={intl.formatMessage({ id: 'common.yes' })}
                         unCheckedChildren={intl.formatMessage({ id: 'common.no' })}
                         checked={record.isActive}
-                        // onChange={(checked) => {
-                        //     handleChange(record.idProduct, checked ? 'activate' : 'deactivate');
-                        // }}
+                        onChange={(checked) => {
+                            handleChange(record.idUser, checked);
+                        }}
                     />
                 );
             },
@@ -118,34 +120,39 @@ const TeamTable = ({ intl, loading }) => {
                     <div className="option-sep-container">
                         <Popconfirm
                             title={intl.formatMessage({ id: 'common.restore.confirm' })}
-                            onConfirm={() => handleRestore(record.idUser)}
+                            onConfirm={() => handleRestore(record.idUser, record.email)}
                         >
                             <span className="clickable linkable inline-block">
                                 {intl.formatMessage({ id: 'common.restore' })}
                             </span>
                         </Popconfirm>
-                        <Popconfirm
-                            title={intl.formatMessage({ id: 'common.destroy.confirm' })}
-                            onConfirm={() => handleDestroy(record.idUser)}
-                        >
-                            <span className="clickable danger inline-block">
-                                {intl.formatMessage({ id: 'common.destroy' })}
-                            </span>
-                        </Popconfirm>
+                        {!record.self && (
+                            <Popconfirm
+                                title={intl.formatMessage({ id: 'common.destroy.confirm' })}
+                                onConfirm={() => handleDestroy(record.idUser)}
+                            >
+                                <span className="clickable danger inline-block">
+                                    {intl.formatMessage({ id: 'common.destroy' })}
+                                </span>
+                            </Popconfirm>
+                        )}
                     </div>
                 ) : (
                     <div className="option-sep-container">
                         <NavLink to={`/dashboard/addAdmin/${record.idUser}`}>
                             <FormattedMessage id="common.edit" />
                         </NavLink>
-                        <Popconfirm
-                            title={intl.formatMessage({ id: 'common.delete.confirm' })}
-                            onConfirm={() => handleDelete(record.idUser)}
-                        >
-                            <span className="clickable danger inline-block">
-                                {intl.formatMessage({ id: 'common.delete' })}
-                            </span>
-                        </Popconfirm>
+                        {!record.self && (
+                            <Popconfirm
+                                title={intl.formatMessage({ id: 'common.delete.confirm' })}
+                                onConfirm={() => handleDelete(record.idUser)}
+                            >
+                                <span className="clickable danger inline-block">
+                                    {intl.formatMessage({ id: 'common.delete' })}
+                                </span>
+                            </Popconfirm>
+                        )}
+                        {/* {record.self && <FormattedMessage id="common.self"/>} */}
                     </div>
                 );
             },

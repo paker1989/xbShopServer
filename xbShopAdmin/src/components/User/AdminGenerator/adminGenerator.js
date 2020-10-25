@@ -16,10 +16,6 @@ const AdminGenerator = ({ intl, history }) => {
     // const dispatch = useDispatch();
     const { description, title } = HLPageMeta.adminGenerator;
 
-    // useUnmount(() => {
-    //     dispatch(adminsActionCreator.resetAddProduct());
-    // });
-
     const returnToList = (e) => {
         e.preventDefault();
         history.push('/dashboard/teamList');

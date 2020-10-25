@@ -4,10 +4,12 @@ import { message } from 'antd';
 import cookie from 'react-cookies';
 
 import { adminGenerator } from '../../static/data/componentMeta/user/addAdminMeta';
+import authConfig from '../../static/data/componentMeta/auth/authMeta';
 
 import * as UserActionCreator from '../../store/action/userAction';
 import * as UserActionTypes from '../../store/actionType/userActionType';
 
+const { authedKey } = authConfig;
 /**
  * return all admins
  * @param {deleted}  show deleted
@@ -19,10 +21,17 @@ const useUserAdmins = (showDeleted) => {
     const backendMsg = useSelector((state) => state.user.admins.backendMsg);
 
     const newAdminId = cookie.load(adminGenerator.newUpdateKey);
-    if (newAdminId) {
+    const authed = cookie.load(authedKey);
+
+    if (newAdminId || authed) {
         allAdmins.forEach((item) => {
             /* eslint-disable */
-            item.new = item.idUser === parseInt(newAdminId, 10);
+            if (newAdminId) {
+                item.new = item.idUser === parseInt(newAdminId, 10);
+            }
+            if (authed) {
+                item.self = item.idUser === authed.idUser
+            }
             /* eslint-enable */
         });
     }
@@ -40,6 +49,7 @@ const useUserAdmins = (showDeleted) => {
         }
     }, [backendStatus, backendMsg]);
 
+    // debugger;
     return showDeleted ? allAdmins.filter((item) => item.isDeleted) : allAdmins.filter((item) => !item.isDeleted);
 };
 

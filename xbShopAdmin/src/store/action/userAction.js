@@ -4,6 +4,11 @@ export const resetAddAdminStates = () => ({
     type: UserActionType._USER_ADMIN_RESET_STATES,
 });
 
+export const setUpdateAdminStates = (params) => ({
+    type: UserActionType._USER_ADMIN_UPDATE_STATES,
+    payload: params,
+});
+
 export const resetAddRoleStates = () => ({
     type: UserActionType._USER_ROLE_RESET_STATES,
 });

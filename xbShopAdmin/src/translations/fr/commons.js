@@ -40,4 +40,5 @@ export default {
     'common.generate.pwd': 'Générer un mot de passe',
     'common.password.length.required': 'Le mot de passe doit comporter au moins six chiffres',
     'common.deleted': 'Supprimé',
+    'common.self': "(C'est vous)",
 };

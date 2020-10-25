@@ -79,7 +79,7 @@ const updateAdmin = async (ctx) => {
         const { idAdmin = -1, action } = requestBody;
 
         // check duplica for create case
-        if (parseInt(idAdmin, 10) === -1) {
+        if (parseInt(idAdmin, 10) === -1 || action === 'restore') {
             const error = await AuthDAO.checkDuplica(requestBody);
 
             if (error.length > 0) {
@@ -118,8 +118,6 @@ const updateRole = async (ctx) => {
     try {
         const requestBody = ctx.request.body;
         const updatedRole = await AuthDAO.saveRole(requestBody);
-        // console.log('auth.controller: updateRole');
-        // console.log(updatedRole);
         if (updatedRole) {
             authHelper.updateRole(updatedRole);
             Resolve.json(ctx, updatedRole);

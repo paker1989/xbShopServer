@@ -40,4 +40,5 @@ export default {
     'common.generate.pwd': '自动生成密码',
     'common.password.length.required': '密码至少为六位',
     'common.deleted': '已删除',
+    'common.self': '(这是您)',
 };

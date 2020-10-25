@@ -4,7 +4,7 @@
 import * as userActionType from '../../actionType/userActionType';
 
 const formInitialState = {
-    idAdmin: -1,
+    // idAdmin: -1,
     idRole: undefined,
     isActive: true,
     phoneNumber: '',
@@ -40,6 +40,8 @@ export default (state = initialState, action) => {
         case userActionType._USER_ADMIN_UPDATE_FAILED:
             return { ...state, ...action.payload };
         case userActionType._USER_ADMIN_RESET_BACKEND_STATUS:
+            return { ...state, ...action.payload };
+        case userActionType._USER_ADMIN_UPDATE_STATES:
             return { ...state, ...action.payload };
         default:
             return state;

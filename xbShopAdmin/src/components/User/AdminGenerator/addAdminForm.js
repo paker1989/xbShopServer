@@ -13,22 +13,24 @@ import * as UserActionCreator from '../../../store/action/userAction';
 import * as UserActionTypes from '../../../store/actionType/userActionType';
 import * as ServerErrorType from '../../../static/data/serverErrorType/authType';
 import useUserRoles from '../../../utils/hooks/useUserRoles';
+import useUserAdmins from '../../../utils/hooks/useUserAdmins';
 
 const { adminGenerator: generatorMeta } = addAdminMeta;
 const { Option } = Select;
 
 const AdminForm = (props) => {
-    const { form, intl, history, idAdmin, idRole } = props;
+    const { form, intl, history, match, idRole } = props;
+    // console.log(props);
     const { getFieldDecorator, setFieldsValue } = form;
     const validators = getValidators({ intl, form });
+    let idAdmin = match.params.idAdmin ? parseInt(match.params.idAdmin, 10) : -1;
+    const allAdmins = useUserAdmins(false);
 
     const dispatch = useDispatch();
     const backendStatus = useSelector((state) => state.user.addAdmin.backendStatus);
     const backendMsg = useSelector((state) => state.user.addAdmin.backendMsg);
 
     const userRoles = useUserRoles();
-
-    // const userRoles = [{ idRole: 1, label: 'superAdmin', accesses: [{ code: 'teamList', idUserAccess: 1 }] }];
 
     const populateUserAccesses = () => {
         const matchedRole = userRoles.find((role) => role.idRole === idRole);
@@ -37,18 +39,34 @@ const AdminForm = (props) => {
 
     const [userAccesses, setUserAccesses] = useState(populateUserAccesses());
 
-    const [editMode /* setEditMode */] = useState(idAdmin !== -1);
-
     const cancelEdition = () => {
         history.push('/dashboard/teamList');
     };
 
     // reset fields before unmount
     useEffect(() => {
+        if (idAdmin !== -1 && allAdmins.length > 0) {
+            const toUpdate = allAdmins.find((admin) => admin.idUser === idAdmin);
+            if (toUpdate) {
+                const { email, isActive, pref, phoneNumber } = toUpdate;
+                dispatch(
+                    UserActionCreator.setUpdateAdminStates({
+                        email,
+                        isActive,
+                        phoneNumber,
+                        defaultPage: pref.indexPage.idUserAccess,
+                        idRole: pref.role.idRole,
+                    })
+                );
+            } else {
+                idAdmin = -1;
+                dispatch(UserActionCreator.resetAddAdminStates());
+            }
+        }
         return () => {
             dispatch(UserActionCreator.resetAddAdminStates());
         };
-    }, []);
+    }, [allAdmins.length]);
 
     // populate user access upon user roles population or idRole changed
     useEffect(() => {
@@ -164,7 +182,7 @@ const AdminForm = (props) => {
                     />
                 )}
             </Form.Item>
-            <PasswordConfirmer isRepeat={editMode === false} showGenerate form={form} validators={validators} />
+            <PasswordConfirmer isRepeat={idAdmin === -1} showGenerate form={form} validators={validators} />
             <Row>
                 <Col {...generatorMeta.formLayout.labelCol}></Col>
                 <Col {...generatorMeta.formLayout.wrapperCol}>
@@ -181,7 +199,6 @@ const AdminForm = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    idAdmin: state.user.addAdmin.idAdmin,
     idRole: state.user.addAdmin.idRole,
     isActive: state.user.addAdmin.isActive,
     phoneNumber: state.user.addAdmin.phoneNumber,
@@ -196,7 +213,6 @@ const WrappedForm = connect(mapStateToProps)(
         name: generatorMeta.formName,
         mapPropsToFields(props) {
             return {
-                idAdmin: Form.createFormField({ value: props.idAdmin }),
                 idRole: Form.createFormField({ value: props.idRole }),
                 isActive: Form.createFormField({ value: props.isActive }),
                 phoneNumber: Form.createFormField({ value: props.phoneNumber }),
