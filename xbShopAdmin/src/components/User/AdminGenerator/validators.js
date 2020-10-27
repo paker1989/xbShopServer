@@ -6,7 +6,7 @@ export default ({ intl, form }) => {
         return intl.formatMessage({ id }, values);
     }
 
-    const { getFieldValue } = form;
+    const { getFieldValue, isFieldTouched } = form;
 
     return {
         idRole: {
@@ -75,6 +75,16 @@ export default ({ intl, form }) => {
                     },
                 },
             ],
+        },
+        getTouchedFields: (values) => {
+            return Object.keys(values)
+                .filter((key) => isFieldTouched(key))
+                .reduce((obj, key) => {
+                    /* eslint-disable */
+                    obj[key] = values[key];
+                    /* eslint-enable */
+                    return obj;
+                }, {});
         },
     };
 };

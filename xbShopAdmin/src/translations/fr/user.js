@@ -35,6 +35,7 @@ export default {
     'user.addAdmin.error.pwd.match': 'Les deux Mots de passes ne sont pas incohérents',
     'user.addAdmin.error.email.duplica': "L'email existe déja existé",
     'user.addAdmin.superAdmin': 'Super Admin',
+    'user.addAdmin.error.invalidAdminId': 'Le membre cible ne semble pas exister',
     'user.addRole.header.title': 'Ajoutez, modifiez un rôle',
     'user.addRole.header.subtitle':
         "Une fois l'ajout ou la modification terminé, cliquez sur Enregistrer ou sur Annuler pour terminer la modification en cours. La liste de roles seront mis à jour dans la liste",

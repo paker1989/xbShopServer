@@ -86,3 +86,8 @@ todo
 
 in-progress:
 - edit action: next step ==> manage password for update
+
+## 2020/10/27
+- bad parameter reset;
+- password for edit;
+- normal update;

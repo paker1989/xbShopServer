@@ -20,10 +20,10 @@ const { Option } = Select;
 
 const AdminForm = (props) => {
     const { form, intl, history, match, idRole } = props;
-    // console.log(props);
     const { getFieldDecorator, setFieldsValue } = form;
     const validators = getValidators({ intl, form });
-    let idAdmin = match.params.idAdmin ? parseInt(match.params.idAdmin, 10) : -1;
+
+    const idAdmin = parseInt(match.params.idAdmin || -1, 10);
     const allAdmins = useUserAdmins(false);
 
     const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const AdminForm = (props) => {
 
     // reset fields before unmount
     useEffect(() => {
-        if (idAdmin !== -1 && allAdmins.length > 0) {
+        if (idAdmin > 0 && allAdmins.length > 0) {
             const toUpdate = allAdmins.find((admin) => admin.idUser === idAdmin);
             if (toUpdate) {
                 const { email, isActive, pref, phoneNumber } = toUpdate;
@@ -59,8 +59,8 @@ const AdminForm = (props) => {
                     })
                 );
             } else {
-                idAdmin = -1;
-                dispatch(UserActionCreator.resetAddAdminStates());
+                message.warn(intl.formatMessage({ id: 'user.addAdmin.error.invalidAdminId' }));
+                history.push('/dashboard/addAdmin');
             }
         }
         return () => {
@@ -113,14 +113,23 @@ const AdminForm = (props) => {
         form.validateFields((errors, values) => {
             // console.log(values);
             if (!errors) {
-                /* eslint-disable */
-                delete values.passwordRepeat;
-                /* eslint-enable */
-                dispatch(UserActionCreator.submitAdminEdition({ idAdmin, ...values }));
+                if (idAdmin !== -1) {
+                    const touchedValues = validators.getTouchedFields();
+                    if (touchedValues.length === 0) {
+                        cancelEdition();
+                    } else {
+                        console.log(touchedValues);
+                        // dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'update', ...touchedValues }));
+                    }
+                } else {
+                    /* eslint-disable */
+                    delete values.passwordRepeat;
+                    /* eslint-enable */
+                    dispatch(UserActionCreator.submitAdminEdition({ idAdmin, ...values }));
+                }
             }
         });
     };
-
     return (
         <Form onSubmit={onSubmit} {...generatorMeta.formLayout}>
             <Form.Item label={intl.formatMessage({ id: 'user.addAdmin.email.mandatory' })}>
@@ -199,6 +208,7 @@ const AdminForm = (props) => {
 };
 
 const mapStateToProps = (state) => ({
+    // idAdmin: state.user.addAdmin.idAdmin,
     idRole: state.user.addAdmin.idRole,
     isActive: state.user.addAdmin.isActive,
     phoneNumber: state.user.addAdmin.phoneNumber,
@@ -213,6 +223,7 @@ const WrappedForm = connect(mapStateToProps)(
         name: generatorMeta.formName,
         mapPropsToFields(props) {
             return {
+                // idAdmin: Form.createFormField({ value: props.idAdmin }),
                 idRole: Form.createFormField({ value: props.idRole }),
                 isActive: Form.createFormField({ value: props.isActive }),
                 phoneNumber: Form.createFormField({ value: props.phoneNumber }),
