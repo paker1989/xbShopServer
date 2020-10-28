@@ -14,22 +14,25 @@ import * as UserActionTypes from '../../../store/actionType/userActionType';
 import * as ServerErrorType from '../../../static/data/serverErrorType/authType';
 import useUserRoles from '../../../utils/hooks/useUserRoles';
 import useUserAdmins from '../../../utils/hooks/useUserAdmins';
+import { generatePwd as genratePwdFn } from '../../../utils/data.helper';
 
 const { adminGenerator: generatorMeta } = addAdminMeta;
+
 const { Option } = Select;
 
 const AdminForm = (props) => {
     const { form, intl, history, match, idRole } = props;
     const { getFieldDecorator, setFieldsValue } = form;
-    const validators = getValidators({ intl, form });
-
-    const idAdmin = parseInt(match.params.idAdmin || -1, 10);
-    const allAdmins = useUserAdmins(false);
-
     const dispatch = useDispatch();
     const backendStatus = useSelector((state) => state.user.addAdmin.backendStatus);
     const backendMsg = useSelector((state) => state.user.addAdmin.backendMsg);
+    const validators = getValidators({ intl, form });
 
+    const idAdmin = parseInt(match.params.idAdmin || -1, 10);
+
+    const [passwordMode, setPasswordMode] = useState(idAdmin === -1 ? 'create' : 'standby');
+
+    const allAdmins = useUserAdmins(false);
     const userRoles = useUserRoles();
 
     const populateUserAccesses = () => {
@@ -41,6 +44,59 @@ const AdminForm = (props) => {
 
     const cancelEdition = () => {
         history.push('/dashboard/teamList');
+    };
+
+    // upon select different role
+    const onSelectRole = (val) => {
+        const selectedUserRole = userRoles.find((item) => item.idRole === val);
+        if (selectedUserRole != null) {
+            setUserAccesses(selectedUserRole.accesses);
+            setFieldsValue({ defaultPage: selectedUserRole.accesses[0].idUserAccess });
+        }
+    };
+
+    // submit
+    const onSubmit = (e) => {
+        e.preventDefault();
+        form.validateFields((errors, values) => {
+            if (!errors) {
+                if (idAdmin !== -1) {
+                    const touchedValues = validators.getTouchedFields();
+                    if (touchedValues.length === 0) {
+                        cancelEdition();
+                    } else {
+                        console.log(touchedValues);
+                        // dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'update', ...touchedValues }));
+                    }
+                } else {
+                    /* eslint-disable */
+                    delete values.passwordRepeat;
+                    /* eslint-enable */
+                    dispatch(UserActionCreator.submitAdminEdition({ idAdmin, ...values }));
+                }
+            }
+        });
+    };
+
+    const generatePwd = () => {
+        const { pwdLength } = addAdminMeta.adminGenerator;
+        const newPwd = genratePwdFn(pwdLength);
+        dispatch(
+            UserActionCreator.setUpdateAdminStates({
+                passwordRepeat: newPwd,
+                password: newPwd,
+            })
+        );
+    };
+
+    const resetPwd = () => {
+        setPasswordMode('edit');
+        dispatch(
+            UserActionCreator.setUpdateAdminStates({
+                passwordRepeat: '',
+                password: '',
+            })
+        );
     };
 
     // reset fields before unmount
@@ -56,6 +112,7 @@ const AdminForm = (props) => {
                         phoneNumber,
                         defaultPage: pref.indexPage.idUserAccess,
                         idRole: pref.role.idRole,
+                        password: 'xbshop_placeholder',
                     })
                 );
             } else {
@@ -98,38 +155,6 @@ const AdminForm = (props) => {
         dispatch(UserActionCreator.resetAddAdminBackendStatus());
     }, [backendStatus, backendMsg]);
 
-    // upon select different role
-    const onSelectRole = (val) => {
-        const selectedUserRole = userRoles.find((item) => item.idRole === val);
-        if (selectedUserRole != null) {
-            setUserAccesses(selectedUserRole.accesses);
-            setFieldsValue({ defaultPage: selectedUserRole.accesses[0].idUserAccess });
-        }
-    };
-
-    // submit
-    const onSubmit = (e) => {
-        e.preventDefault();
-        form.validateFields((errors, values) => {
-            // console.log(values);
-            if (!errors) {
-                if (idAdmin !== -1) {
-                    const touchedValues = validators.getTouchedFields();
-                    if (touchedValues.length === 0) {
-                        cancelEdition();
-                    } else {
-                        console.log(touchedValues);
-                        // dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'update', ...touchedValues }));
-                    }
-                } else {
-                    /* eslint-disable */
-                    delete values.passwordRepeat;
-                    /* eslint-enable */
-                    dispatch(UserActionCreator.submitAdminEdition({ idAdmin, ...values }));
-                }
-            }
-        });
-    };
     return (
         <Form onSubmit={onSubmit} {...generatorMeta.formLayout}>
             <Form.Item label={intl.formatMessage({ id: 'user.addAdmin.email.mandatory' })}>
@@ -191,7 +216,14 @@ const AdminForm = (props) => {
                     />
                 )}
             </Form.Item>
-            <PasswordConfirmer isRepeat={idAdmin === -1} showGenerate form={form} validators={validators} />
+            <PasswordConfirmer
+                showGenerate
+                mode={passwordMode}
+                form={form}
+                validators={validators}
+                generatePwd={generatePwd}
+                resetPwd={resetPwd}
+            />
             <Row>
                 <Col {...generatorMeta.formLayout.labelCol}></Col>
                 <Col {...generatorMeta.formLayout.wrapperCol}>

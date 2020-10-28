@@ -38,6 +38,7 @@ export default {
     'common.search': 'Consulter',
     'common.phone': 'Numéro Tél.',
     'common.generate.pwd': 'Générer un mot de passe',
+    'common.reset.pwd': 'réinitialiser le mot de passe',
     'common.password.length.required': 'Le mot de passe doit comporter au moins six chiffres',
     'common.deleted': 'Supprimé',
     'common.self': "(C'est vous)",

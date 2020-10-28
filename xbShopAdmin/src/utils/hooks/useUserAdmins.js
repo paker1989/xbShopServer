@@ -30,7 +30,7 @@ const useUserAdmins = (showDeleted) => {
                 item.new = item.idUser === parseInt(newAdminId, 10);
             }
             if (authed) {
-                item.self = item.idUser === authed.idUser
+                item.self = item.idUser === authed.idUser;
             }
             /* eslint-enable */
         });
