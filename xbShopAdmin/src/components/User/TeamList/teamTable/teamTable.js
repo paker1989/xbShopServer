@@ -37,7 +37,7 @@ const TeamTable = ({ intl, loading }) => {
     }, [backendStatus, backendMsg]);
 
     const handleChange = (idAdmin, isActive) => {
-        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, isActive }));
+        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, isActive, action: 'update' }));
     };
 
     const handleRestore = (idAdmin, email) => {

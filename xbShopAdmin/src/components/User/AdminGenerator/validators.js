@@ -76,9 +76,17 @@ export default ({ intl, form }) => {
                 },
             ],
         },
-        getTouchedFields: (values) => {
+        getTouchedFields: (values, passwordMode) => {
             return Object.keys(values)
-                .filter((key) => isFieldTouched(key))
+                .filter((key) => {
+                    if (passwordMode === 'edit' && key === 'password') {
+                        return true;
+                    }
+                    if (passwordMode === 'standBy' && key === 'password') {
+                        return false;
+                    }
+                    return isFieldTouched(key);
+                })
                 .reduce((obj, key) => {
                     /* eslint-disable */
                     obj[key] = values[key];

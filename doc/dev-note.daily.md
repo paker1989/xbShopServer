@@ -91,3 +91,8 @@ in-progress:
 - bad parameter reset;
 - password for edit;
 - normal update;
+
+## 2020/10/28
+to do:
+- 更新role时对admin对update的影响
+- 更新role的access的情况时check linked admin的影响

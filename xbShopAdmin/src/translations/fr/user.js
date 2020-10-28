@@ -14,6 +14,7 @@ export default {
     'user.team.restoreAdmin.success': "restaurer l'administrateur réussi",
     'user.team.destroyAdmin.success': "Ecraser l'administrateur réussi",
     'user.team.deleteRole.success': 'supprimer le rôle réussi',
+    'user.team.updateAdmin.success': 'Mise à jour réussi',
     'user.team.allAdmins': 'Tous les membres',
     'user.addAdmin.header.title': "Ajoutez, modifiez un membre d'équipe",
     'user.addAdmin.header.subtitle':

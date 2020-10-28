@@ -60,18 +60,19 @@ const AdminForm = (props) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
             if (!errors) {
+                /* eslint-disable */
+                delete values.passwordRepeat;
+                /* eslint-enable */
+
                 if (idAdmin !== -1) {
-                    const touchedValues = validators.getTouchedFields();
+                    const touchedValues = validators.getTouchedFields(values, passwordMode);
                     if (touchedValues.length === 0) {
                         cancelEdition();
                     } else {
-                        console.log(touchedValues);
-                        // dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'update', ...touchedValues }));
+                        // console.log(touchedValues);
+                        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'update', ...touchedValues }));
                     }
                 } else {
-                    /* eslint-disable */
-                    delete values.passwordRepeat;
-                    /* eslint-enable */
                     dispatch(UserActionCreator.submitAdminEdition({ idAdmin, ...values }));
                 }
             }
@@ -81,22 +82,31 @@ const AdminForm = (props) => {
     const generatePwd = () => {
         const { pwdLength } = addAdminMeta.adminGenerator;
         const newPwd = genratePwdFn(pwdLength);
-        dispatch(
-            UserActionCreator.setUpdateAdminStates({
-                passwordRepeat: newPwd,
-                password: newPwd,
-            })
-        );
+        // dispatch(
+        //     UserActionCreator.setUpdateAdminStates({
+        //         passwordRepeat: newPwd,
+        //         password: newPwd,
+        //     })
+        // );
+        form.setFieldsValue({
+            passwordRepeat: newPwd,
+            password: newPwd,
+        });
     };
 
     const resetPwd = () => {
         setPasswordMode('edit');
-        dispatch(
-            UserActionCreator.setUpdateAdminStates({
-                passwordRepeat: '',
-                password: '',
-            })
-        );
+        // dispatch(
+        //     UserActionCreator.setUpdateAdminStates({
+        //         ...form.getFieldsValue(),
+        //         passwordRepeat: '',
+        //         password: '',
+        //     })
+        // );
+        form.setFieldsValue({
+            passwordRepeat: '',
+            password: '',
+        });
     };
 
     // reset fields before unmount

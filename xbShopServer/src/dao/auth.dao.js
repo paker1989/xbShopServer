@@ -144,9 +144,6 @@ class AuthDAO {
                     ],
                 },
             ],
-            // where: {
-            //     isDeleted: 0,
-            // },
             order: ['idUser'],
         });
 
@@ -171,8 +168,10 @@ class AuthDAO {
             action,
         } = ctxBody;
 
+        const idAdminInt = parseInt(idAdmin, 10);
+
         // create case
-        if (parseInt(idAdmin, 10) === -1) {
+        if (idAdminInt === -1) {
             const encryptedPassword = encryptHelper.bcryptHashSync(password);
             pk = await sequelize.transaction(async (t) => {
                 const newAdmin = await UserModel.create(
@@ -204,17 +203,58 @@ class AuthDAO {
                 return newAdmin.idUser;
             });
         } else if (action) {
-            const [updatedRow] = await UserModel.update(
-                {
-                    isDeleted: action === 'delete',
-                },
-                {
-                    where: { idUser: parseInt(idAdmin, 10) },
-                }
-            );
+            if (action === 'delete' || action === 'restore') {
+                const [updatedRow] = await UserModel.update(
+                    {
+                        isDeleted: action === 'delete',
+                    },
+                    {
+                        where: { idUser: idAdminInt },
+                    }
+                );
 
-            if (updatedRow === 1) {
-                pk = parseInt(idAdmin, 10);
+                if (updatedRow === 1) {
+                    pk = idAdminInt;
+                }
+            }
+
+            if (action === 'update') {
+                const updateCondition = {};
+                const prefUpdateCondition = {};
+                if (email) {
+                    updateCondition.email = email;
+                }
+                if (typeof isActive !== 'undefined') {
+                    updateCondition.isActive = isActive;
+                }
+                if (phoneNumber) {
+                    updateCondition.phoneNumber = phoneNumber;
+                }
+                if (password) {
+                    updateCondition.password = encryptHelper.bcryptHashSync(password);
+                }
+                if (idRole) {
+                    prefUpdateCondition.userroleId = parseInt(idRole, 10);
+                }
+                if (defaultPage) {
+                    prefUpdateCondition.userAccessId = parseInt(defaultPage, 10);
+                }
+
+                pk = await sequelize.transaction(async (t) => {
+                    if (Object.keys(updateCondition).length > 0) {
+                        await UserModel.update(updateCondition, {
+                            where: { idUser: idAdminInt },
+                            transaction: t,
+                        });
+                    }
+                    if (idRole || defaultPage) {
+                        await UserPrefModel.update(prefUpdateCondition, {
+                            where: { userId: idAdminInt },
+                            transaction: t,
+                        });
+                    }
+                    return idAdminInt;
+                });
             }
         }
 
@@ -291,9 +331,6 @@ class AuthDAO {
                 updateCondition.label = label;
                 updateFlag = true;
             }
-            // if (accesses) {
-            //     updateCondition.accesses = accesses;
-            // }
 
             if (updateFlag) {
                 const [updatedRow] = await UserRoleModel.update(updateCondition, { where: { idRole } });
