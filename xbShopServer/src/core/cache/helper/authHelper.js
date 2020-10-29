@@ -116,7 +116,28 @@ const updateAdmin = async (updated) => {
     } else {
         cached.unshift(updated);
     }
-    setCachedAdminList(cached);
+    await setCachedAdminList(cached);
+};
+
+const updateAdminsByRole = async (updatedRole) => {
+    if (!updatedRole) {
+        return;
+    }
+
+    const cachedAdmins = await getCachedAdminList();
+    if (!cachedAdmins) {
+        return;
+    }
+    let flag = false;
+    cachedAdmins.forEach((admin) => {
+        if (admin.pref.role.idRole === updatedRole.idRole) {
+            admin.pref.role.label = updatedRole.label;
+            flag = true;
+        }
+    });
+    if (flag) {
+        await setCachedAdminList(cachedAdmins);
+    }
 };
 
 const updateRole = async (updated) => {
@@ -135,7 +156,9 @@ const updateRole = async (updated) => {
     } else {
         cached.unshift(updated);
     }
-    setCachedUserRoles(cached);
+    await setCachedUserRoles(cached);
+    // update linked admins
+    await updateAdminsByRole(updated);
 };
 
 module.exports = {

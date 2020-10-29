@@ -2,6 +2,7 @@ const AuthDAO = require('../../dao/auth.dao');
 const { Resolve } = require('../../core/resolve');
 const authHelper = require('../../core/cache/helper/authHelper');
 
+const authTypes = require('../../core/type/authType');
 /**
  * attempt to delete a user role
  * @param {*} ctx
@@ -22,7 +23,8 @@ const deleteUserrole = async (ctx) => {
         Resolve.json(
             ctx,
             linkedAdmins.map((admin) => admin.username),
-            'remove related admins before delete',
+            authTypes._AUTH_ROLE_LINKED_ADMINS,
+            // 'remove related admins before delete',
             401
         );
         return;

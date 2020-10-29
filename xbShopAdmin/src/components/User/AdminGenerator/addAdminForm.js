@@ -66,7 +66,7 @@ const AdminForm = (props) => {
 
                 if (idAdmin !== -1) {
                     const touchedValues = validators.getTouchedFields(values, passwordMode);
-                    if (touchedValues.length === 0) {
+                    if (Object.keys(touchedValues).length === 0) {
                         cancelEdition();
                     } else {
                         // console.log(touchedValues);
@@ -106,6 +106,13 @@ const AdminForm = (props) => {
         form.setFieldsValue({
             passwordRepeat: '',
             password: '',
+        });
+    };
+
+    const cancelResetPwd = () => {
+        setPasswordMode('standby');
+        form.setFieldsValue({
+            password: 'xbshop_placeholder',
         });
     };
 
@@ -233,6 +240,7 @@ const AdminForm = (props) => {
                 validators={validators}
                 generatePwd={generatePwd}
                 resetPwd={resetPwd}
+                cancelResetPwd={cancelResetPwd}
             />
             <Row>
                 <Col {...generatorMeta.formLayout.labelCol}></Col>

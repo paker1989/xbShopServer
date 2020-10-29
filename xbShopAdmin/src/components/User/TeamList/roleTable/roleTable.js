@@ -32,7 +32,7 @@ const RoleTable = ({ intl, loading, history }) => {
 
     useEffect(() => {
         if (backendStatus === UserActionTypes._USER_ADMIN_DELETE_USERROLE_FAILD) {
-            message.error(backendMsg);
+            message.error(intl.formatMessage({ id: backendMsg }) || backendMsg);
             dispatch(UserActionCreator.resetAddRoleBackendStatus());
         } else if (backendStatus === UserActionTypes._USER_ADMIN_DELETE_USERROLE_SUCCEED) {
             message.success(intl.formatMessage({ id: 'user.team.deleteRole.success' }));

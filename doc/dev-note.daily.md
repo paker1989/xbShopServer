@@ -94,5 +94,9 @@ in-progress:
 
 ## 2020/10/28
 to do:
-- 更新role时对admin对update的影响
-- 更新role的access的情况时check linked admin的影响
+- 更新role时对admin对update的影响 (done)
+- 更新role的access的情况时check linked admin的影响 (没关系)
+
+## 2020/10/29
+to do:
+- 处理reserved superadmin edition display

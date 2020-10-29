@@ -83,11 +83,14 @@ export function* updateRoleSaga(reqObj) {
             { withCredentials: true }
         );
         if (res && res.data) {
-            // cookie.setItem('newUserRoleId', res.data.idRole);
             cookie.save(roleGenerator.newUpdateKey, res.data.idRole, { maxAge: roleGenerator.newUpdateMaxAge });
             yield put({
                 // fetch all userroles for update
                 type: UserActionType._USER_ADMIN_FETCH_ALL_USERROLES,
+            });
+            yield put({
+                // fetch all admins in case of related
+                type: UserActionType._USER_ADMIN_FETCH_ALL,
             });
             yield put({
                 type: UserActionType._USER_ROLE_UPDATE_SUCCESS,

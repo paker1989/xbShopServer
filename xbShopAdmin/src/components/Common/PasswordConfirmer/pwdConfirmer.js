@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { Row, Input, Button, Form } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-
 /**
  * @param {*} showGenerate: 是否提供密码生成
  * @param {*} isRepeat: 是否重复确认密码
@@ -15,6 +14,7 @@ const Core = ({
     showGenerate = false,
     generatePwd,
     resetPwd,
+    cancelResetPwd,
 }) => {
     const { getFieldDecorator } = form;
 
@@ -52,6 +52,11 @@ const Core = ({
                     {mode === 'standby' && (
                         <Button style={{ marginLeft: 10 }} onClick={resetPwd}>
                             <FormattedMessage id="common.reset.pwd" />
+                        </Button>
+                    )}
+                    {mode === 'edit' && (
+                        <Button style={{ marginLeft: 10 }} onClick={cancelResetPwd} type="link">
+                            <FormattedMessage id="common.cancel.pwd" />
                         </Button>
                     )}
                 </Row>

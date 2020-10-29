@@ -119,7 +119,7 @@ const updateRole = async (ctx) => {
         const requestBody = ctx.request.body;
         const updatedRole = await AuthDAO.saveRole(requestBody);
         if (updatedRole) {
-            authHelper.updateRole(updatedRole);
+            await authHelper.updateRole(updatedRole);
             Resolve.json(ctx, updatedRole);
         } else {
             Resolve.info(ctx, 'update role failed due to unknown reason', 503);

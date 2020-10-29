@@ -48,4 +48,5 @@ export default {
     'user.addRole.access.tooltip': 'Veuillez sélectionner au moins une page accessible',
     'user.addRole.error.access': 'Vous devez sélectionner au moins un accès',
     'user.addRole.access': 'Accès autorisé(s)',
+    'user.addRole.link.admin': "Nettoyez d'abord les membres associés",
 };
