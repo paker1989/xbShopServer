@@ -13,7 +13,7 @@ import getValidators from './validators';
 const { roleGenerator: generatorMeta } = addRoleMeta;
 
 const RoleForm = (props) => {
-    const { form, intl, history, match, roleName, accesses } = props;
+    const { form, intl, history, match, reserved } = props;
 
     let idRole = match.params.idRole ? parseInt(match.params.idRole, 10) : -1;
 
@@ -44,11 +44,14 @@ const RoleForm = (props) => {
             if (!valideRole) {
                 message.warn(intl.formatMessage({ id: 'user.addRole.error.invalidRoleId' }));
                 idRole = -1;
-            } else if (!roleName || accesses.length === 0) {
+            } else {
                 // 可能是刷新了页面但是idRole != 0
                 dispatch(
                     UserActionCreator.editUserRole({
-                        roleName: valideRole.label,
+                        reserved: valideRole.reserved,
+                        roleName: valideRole.reserved
+                            ? intl.formatMessage({ id: `user.addAdmin.${valideRole.label}` })
+                            : valideRole.label,
                         accesses: valideRole.accesses.map((item) => item.idUserAccess),
                     })
                 );
@@ -106,7 +109,13 @@ const RoleForm = (props) => {
                 {getFieldDecorator(
                     'roleName',
                     validators.roleName
-                )(<Input style={{ width: 250 }} placeholder={intl.formatMessage({ id: 'user.addRole.name' })} />)}
+                )(
+                    <Input
+                        style={{ width: 250 }}
+                        disabled={reserved}
+                        placeholder={intl.formatMessage({ id: 'user.addRole.name' })}
+                    />
+                )}
             </Form.Item>
             <Form.Item
                 label={intl.formatMessage({ id: 'user.addRole.access' })}
@@ -153,6 +162,7 @@ const mapStateToProps = (state) => ({
     idRole: state.user.addRole.idRole,
     roleName: state.user.addRole.roleName,
     accesses: state.user.addRole.accesses,
+    reserved: state.user.addRole.reserved,
 });
 
 const WrappedForm = connect(mapStateToProps)(
@@ -163,6 +173,7 @@ const WrappedForm = connect(mapStateToProps)(
                 idRole: Form.createFormField({ value: props.idRole }),
                 roleName: Form.createFormField({ value: props.roleName }),
                 accesses: Form.createFormField({ value: props.accesses }),
+                reserved: Form.createFormField({ value: props.reserved }),
             };
         },
     })(injectIntl(withRouter(RoleForm)))

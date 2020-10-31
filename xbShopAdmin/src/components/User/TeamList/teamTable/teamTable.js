@@ -14,6 +14,8 @@ const { TabPane } = Tabs;
 
 const TeamTable = ({ intl, loading }) => {
     const [searchStr, setSearchStr] = useState('');
+    const [filteredAllAdmins, setFilteredAllAdmins] = useState([]);
+
     const dispatch = useDispatch();
 
     const backendStatus = useSelector((state) => state.user.addAdmin.backendStatus);
@@ -36,10 +38,6 @@ const TeamTable = ({ intl, loading }) => {
         }
     }, [backendStatus, backendMsg]);
 
-    const handleChange = (idAdmin, isActive) => {
-        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, isActive, action: 'update' }));
-    };
-
     const handleRestore = (idAdmin, email) => {
         dispatch(UserActionCreator.submitAdminEdition({ idAdmin, email, action: 'restore' }));
     };
@@ -57,7 +55,23 @@ const TeamTable = ({ intl, loading }) => {
     };
 
     const handleSearch = (e) => {
-        setSearchStr(e.target.value);
+        setSearchStr(e.target.value.trim());
+    };
+
+    const actionSearch = (e) => {
+        if (searchStr.length > 0) {
+            setFilteredAllAdmins(allAdmins.filter((admin) => admin.email.includes(searchStr)));
+        } else {
+            setFilteredAllAdmins(allAdmins.slice(0));
+        }
+    };
+
+    useEffect(() => {
+        actionSearch();
+    }, [allAdmins.length]);
+
+    const handleChange = (idAdmin, isActive) => {
+        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, isActive, action: 'update' }));
     };
 
     const columns = [
@@ -152,7 +166,6 @@ const TeamTable = ({ intl, loading }) => {
                                 </span>
                             </Popconfirm>
                         )}
-                        {/* {record.self && <FormattedMessage id="common.self"/>} */}
                     </div>
                 );
             },
@@ -160,12 +173,17 @@ const TeamTable = ({ intl, loading }) => {
     ];
 
     const searchPairs = [
-        { inputVal: searchStr, labelText: 'common.email', placeholder: 'common.email', onChange: handleSearch },
+        {
+            inputVal: searchStr,
+            labelText: 'common.email',
+            placeholder: 'common.email',
+            onChange: handleSearch,
+        },
     ];
 
     return (
         <div className="team-list-table">
-            <AttributSearcher searchPairs={searchPairs} />
+            <AttributSearcher searchPairs={searchPairs} onSubmit={actionSearch} />
             <Tabs activeKey={activeTab} onTabClick={(tab) => switchTab(tab)}>
                 <TabPane tab={intl.formatMessage({ id: 'user.team.allAdmins' })} key="all"></TabPane>
                 <TabPane tab={intl.formatMessage({ id: 'common.deleted' })} key="deleted"></TabPane>
@@ -173,7 +191,7 @@ const TeamTable = ({ intl, loading }) => {
             <Table
                 size="large"
                 columns={columns.filter((item) => !item.hidden)}
-                dataSource={allAdmins}
+                dataSource={filteredAllAdmins}
                 rowKey={(record) => record.idUser}
                 loading={loading}
                 scroll={{ x: 800 }}

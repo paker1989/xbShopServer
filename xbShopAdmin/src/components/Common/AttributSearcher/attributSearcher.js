@@ -2,6 +2,8 @@ import React from 'react';
 import { Input, Button, Typography } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
+import { useDebounceFn } from 'ahooks';
+
 import './attributSearcher.scss';
 
 const { Text } = Typography;
@@ -11,7 +13,10 @@ const AttributSearcher = ({
     searchPairs = [{ inputVal: '', labelText: 'common.search.item', placeholder: 'common.typing', onChange: () => {} }],
     btnText = 'common.search',
     onSubmit,
+    debounce = true,
+    debounceWait = 300,
 }) => {
+    const submitFn = debounce ? useDebounceFn(onSubmit, { wait: debounceWait }).run : onSubmit;
     return (
         <div className="attribut-searcher flex-row-container middle">
             <div className="flex-row-container middle">
@@ -30,7 +35,7 @@ const AttributSearcher = ({
                     </span>
                 ))}
             </div>
-            <Button type="primary" onClick={onSubmit}>
+            <Button type="primary" onClick={submitFn}>
                 {intl.formatMessage({ id: btnText })}
             </Button>
         </div>

@@ -7,6 +7,7 @@ const formInitialState = {
     // idRole: -1,
     roleName: '',
     accesses: [],
+    reserved: false,
 };
 
 const initialState = {
