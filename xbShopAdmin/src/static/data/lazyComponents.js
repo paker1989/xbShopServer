@@ -26,12 +26,12 @@ const lazies = {
                 link: 'addCategory/:idCat?',
                 source: lazy(() => import('../../components/Category/categoryGenerator/categoryGenerator')),
             },
-            {
-                key: 'userList',
-                access: true,
-                link: 'userList',
-                source: lazy(() => import('../../components/User/UserList/userList')),
-            },
+            // {
+            //     key: 'userList',
+            //     access: true,
+            //     link: 'userList',
+            //     source: lazy(() => import('../../components/User/UserList/userList')),
+            // },
             {
                 key: 'teamList',
                 access: true,
@@ -48,6 +48,17 @@ const lazies = {
                 link: 'addRole/:idRole?',
                 source: lazy(() => import('../../components/User/RoleGenerator/roleGenerator')),
             },
+            {
+                key: 'customerList',
+                access: true,
+                link: 'customerList',
+                source: lazy(() => import('../../components/User/CustomerList/customerList')),
+            },            
+            {
+                key: 'addCustomer',
+                link: 'addCustomer/:idCustomer?',
+                source: lazy(() => import('../../components/User/CustomerGenerator/customerGenerator')),
+            },            
         ],
     },
 };

@@ -1,0 +1,69 @@
+{
+  "id": 4201,
+  "thumbnail": "/12/10/10/4201tn.jpg",
+  "email": "xubinqz@gmail.com",
+  "pseudo": "demo_user",
+  "gender": "0",
+  "phone": "0559657708",
+  "registerDt": "2019-09-12T00:00:00.000Z",
+  "lastAccessDt": "2019-09-12T00:00:00.000Z",
+  "statistic": {
+    "smt_orders": "12",
+    "paid_orders": "5",
+    "total_paid": "1231.2",
+    "cnt_shopcart": "2"
+  },
+  "addr": [
+    {
+      "id": 42011,
+      "recipient": "reci_user1",
+      "phone": "05650011",
+      "detail": {
+        "addr": "164 avenue victor hugo",
+        "city": "Clamart",
+        "postCode": "92140",
+        "country": "france"
+      },
+      "instruction": "",
+      "default": true
+    },
+    {
+      "id": 42012,
+      "recipient": "reci_user2",
+      "phone": "05650012",
+      "detail": {
+        "addr": "162 avenue victor hugo",
+        "city": "Clamart",
+        "postCode": "92140",
+        "country": "france"
+      },
+      "default": false
+    }
+  ],
+  "orders": "to_be_defined1",
+  "trackings": [
+    "to_be_defined1"
+  ],
+  "shopCarts": [
+    {
+      "idProduct": 102101,
+      "thumbnail": "/12/10/10/4201tn.jpg",
+      "title": "代金券",
+      "addDt": "2019-09-12T00:00:00.000Z",
+      "ref": "XL",
+      "cnt": "2",
+      "deal_price": "12.32",
+      "currency": "euro"
+    },
+    {
+      "idProduct": 102102,
+      "thumbnail": "/12/10/10/4202tn.jpg",
+      "title": "空气罐头",
+      "addDt": "2019-09-13T00:00:00.000Z",
+      "ref": "XXL",
+      "cnt": "1",
+      "deal_price": "12.3",
+      "currency": "euro"
+    }
+  ]
+}

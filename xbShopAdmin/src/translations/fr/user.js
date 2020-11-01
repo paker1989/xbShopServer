@@ -49,4 +49,8 @@ export default {
     'user.addRole.error.access': 'Vous devez sélectionner au moins un accès',
     'user.addRole.access': 'Accès autorisé(s)',
     'user.addRole.link.admin': "Nettoyez d'abord les membres associés",
+    'user.customer.add': 'Ajouter Client',
+    'user.customer.list.header.title': 'Gérez vos clients et les détails de vos commandes',
+    'user.customer.list.header.subtitle':
+        'Cliquez sur "Editer" les clients dont vous souhaitez pour réaliser des opérations ciblées',
 };

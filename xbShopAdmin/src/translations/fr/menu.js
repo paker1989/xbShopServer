@@ -4,6 +4,6 @@ export default {
     'menu.category': 'Catégorie',
     'menu.userMgnt': 'Utilisateur',
     'menu.productList': 'Liste des Produits',
-    'menu.userList': 'Liste des utilisateurs',
+    'menu.customerList': 'Liste des Clients',
     'menu.teamList': 'Administration',
 };

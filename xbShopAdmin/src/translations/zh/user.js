@@ -46,4 +46,7 @@ export default {
     'user.addRole.error.access': '您需要选择至少一个可进入页面',
     'user.addRole.access': '允许进入页面',
     'user.addRole.link.admin': '删除之前请清理相关的团队成员',
+    'user.customer.add': '添加客户',
+    'user.customer.list.header.title': '管理您的客户以及订单等详情',
+    'user.customer.list.header.subtitle': "点击'编辑'目标客户来进行针对性的操作",
 };

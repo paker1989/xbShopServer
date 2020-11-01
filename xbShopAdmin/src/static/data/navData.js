@@ -50,14 +50,14 @@ module.exports = [
         },
         children: [
             {
-                title: 'menu.userList',
-                key: 'usrList',
+                title: 'menu.customerList',
+                key: 'customerList',
                 type: 'item',
                 icon: {
                     type: 'native',
                     name: 'user',
                 },
-                link: '/dashboard/userList',
+                link: '/dashboard/customerList',
             },
             {
                 title: 'menu.teamList',

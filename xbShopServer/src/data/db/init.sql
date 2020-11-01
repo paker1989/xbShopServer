@@ -1,6 +1,6 @@
 CREATE SCHEMA `xbshop` DEFAULT CHARACTER SET utf8;
 
-insert into `c_useraccess` (`idUserAccess`, `code`) values (1, 'teamList'), (2, 'productList'), (3, 'category'), (4, 'userList');
+insert into `c_useraccess` (`idUserAccess`, `code`) values (1, 'teamList'), (2, 'productList'), (3, 'category'), (4, 'customerList');
 
 INSERT INTO `a_userrole` (`idRole`, `label`, `reserved`) VALUES
 (1, 'superAdmin', 1);

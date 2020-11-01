@@ -100,3 +100,7 @@ to do:
 ## 2020/10/29
 to do:
 - 处理reserved superadmin edition display
+
+## 2020/11/2
+to test
+- pseudo min length

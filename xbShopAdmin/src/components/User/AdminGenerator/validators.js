@@ -1,4 +1,3 @@
-// import { productGenerator } from '../../../static/data/componentMeta/product/addProductMeta';
 import { getNoEmptyStr, validateEmail, validePassword } from '../../../utils/data.helper';
 
 export default ({ intl, form }) => {
