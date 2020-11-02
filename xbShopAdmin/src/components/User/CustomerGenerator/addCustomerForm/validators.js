@@ -12,7 +12,10 @@ export default ({ intl, form }) => {
         pseudo: {
             rules: [
                 { required: true, message: _translate('user.customer.error.empty.pseudo') },
-                { len: rules.pseudoMinLen, message: _translate('user.customer.error.minLen.pseudo') },
+                {
+                    len: rules.pseudoMinLen,
+                    message: _translate('user.customer.error.minLen.pseudo', { min: rules.pseudoMinLen }),
+                },
             ],
         },
         email: {
@@ -31,7 +34,9 @@ export default ({ intl, form }) => {
             ],
         },
         phoneNumber: {},
-        gender: {},
+        gender: {
+            rules: [{ required: true, message: _translate('user.customer.error.empty.gender') }],
+        },
         thumbnail: {},
     };
 };

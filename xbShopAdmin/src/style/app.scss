@@ -70,6 +70,18 @@ input[type='textarea'].fixed-vert {
     padding: 8px 20px;
 }
 
+.xb-form-input {
+    width: 250px;
+
+    &.large {
+        width: 270px;
+    }
+
+    &.xl {
+        width:  300px;
+    }
+}
+
 // separator wrapper class for options, icons, tags
 .option-sep-container {
     & > *:not(:last-child) {
@@ -86,4 +98,10 @@ input[type='textarea'].fixed-vert {
 .linkable {
     cursor: pointer;
     color: $active-color;
+}
+
+@media (max-width: 768px) {
+    .xb-form-input {
+        width: auto;
+    }
 }

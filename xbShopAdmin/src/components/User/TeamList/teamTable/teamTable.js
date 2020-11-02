@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Table, Switch, Popconfirm, message, Tabs } from 'antd';
@@ -14,7 +14,7 @@ const { TabPane } = Tabs;
 
 const TeamTable = ({ intl, loading }) => {
     const [searchStr, setSearchStr] = useState('');
-    const [filteredAllAdmins, setFilteredAllAdmins] = useState([]);
+    const [bindSearch, setBindSearch] = useState('');
 
     const dispatch = useDispatch();
 
@@ -23,20 +23,6 @@ const TeamTable = ({ intl, loading }) => {
     const activeTab = useSelector((state) => state.user.admins.teamSubTab);
 
     const allAdmins = useAdmins(activeTab === 'deleted');
-
-    useEffect(() => {
-        if (backendStatus === UserActionTypes._USER_ADMIN_UPDATE_FAILED) {
-            message.error(backendMsg);
-            dispatch(UserActionCreator.resetAddAdminBackendStatus());
-        } else if (backendStatus === UserActionTypes._USER_ADMIN_UPDATE_SUCCESS) {
-            message.success(
-                intl.formatMessage({
-                    id: `user.team.${backendMsg}Admin.success`, // restore or delete or destroy
-                })
-            );
-            dispatch(UserActionCreator.resetAddAdminBackendStatus());
-        }
-    }, [backendStatus, backendMsg]);
 
     const handleRestore = (idAdmin, email) => {
         dispatch(UserActionCreator.submitAdminEdition({ idAdmin, email, action: 'restore' }));
@@ -55,24 +41,34 @@ const TeamTable = ({ intl, loading }) => {
     };
 
     const handleSearch = (e) => {
-        setSearchStr(e.target.value.trim());
+        setBindSearch(e.target.value.trim());
     };
 
     const actionSearch = (e) => {
-        if (searchStr.length > 0) {
-            setFilteredAllAdmins(allAdmins.filter((admin) => admin.email.includes(searchStr)));
-        } else {
-            setFilteredAllAdmins(allAdmins.slice(0));
-        }
+        setSearchStr(bindSearch);
+    };
+
+    const handleChange = (idAdmin, isActive) => {
+        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, isActive, action: 'update' }));
     };
 
     useEffect(() => {
         actionSearch();
     }, [allAdmins.length]);
 
-    const handleChange = (idAdmin, isActive) => {
-        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, isActive, action: 'update' }));
-    };
+    useEffect(() => {
+        if (backendStatus === UserActionTypes._USER_ADMIN_UPDATE_FAILED) {
+            message.error(backendMsg);
+            dispatch(UserActionCreator.resetAddAdminBackendStatus());
+        } else if (backendStatus === UserActionTypes._USER_ADMIN_UPDATE_SUCCESS) {
+            message.success(
+                intl.formatMessage({
+                    id: `user.team.${backendMsg}Admin.success`, // restore or delete or destroy
+                })
+            );
+            dispatch(UserActionCreator.resetAddAdminBackendStatus());
+        }
+    }, [backendStatus, backendMsg]);
 
     const columns = [
         {
@@ -174,7 +170,7 @@ const TeamTable = ({ intl, loading }) => {
 
     const searchPairs = [
         {
-            inputVal: searchStr,
+            inputVal: bindSearch,
             labelText: 'common.email',
             placeholder: 'common.email',
             onChange: handleSearch,
@@ -191,7 +187,11 @@ const TeamTable = ({ intl, loading }) => {
             <Table
                 size="large"
                 columns={columns.filter((item) => !item.hidden)}
-                dataSource={filteredAllAdmins}
+                dataSource={
+                    searchStr && searchStr.length > 0
+                        ? allAdmins.filter((admin) => admin.email.includes(searchStr))
+                        : allAdmins
+                }
                 rowKey={(record) => record.idUser}
                 loading={loading}
                 scroll={{ x: 800 }}

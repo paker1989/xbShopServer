@@ -1,0 +1,35 @@
+@import '../../../../style/app.scss';
+
+.add-customer-form-body {
+    display: flex;
+    flex-wrap: wrap;
+    // justify-content: center;
+    // align-items: center;
+
+    .add-customer-form-items {
+        &.view-left {
+            // flex-basis: 270px;
+            flex: 0 0 270px;
+        }
+
+        &.view-right {
+            flex: 0 1 200px;
+            padding-left: 100px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .add-customer-form-body {
+      justify-content: center;
+      flex-direction: column-reverse;
+
+      .add-customer-form-items.view-right {
+        flex: 0;
+      }
+        .add-customer-form-items.view-right {
+            padding: 30px;
+            flex: 0;
+        }
+    }
+}

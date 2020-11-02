@@ -16,25 +16,23 @@ const { authedKey } = authConfig;
  */
 const useUserAdmins = (showDeleted) => {
     const dispatch = useDispatch();
-    const allAdmins = useSelector((state) => state.user.admins.allAdmins);
+    let allAdmins = useSelector((state) => state.user.admins.allAdmins);
     const backendStatus = useSelector((state) => state.user.admins.backendStatus);
     const backendMsg = useSelector((state) => state.user.admins.backendMsg);
 
     const newAdminId = cookie.load(adminGenerator.newUpdateKey);
     const authed = cookie.load(authedKey);
 
-    if (newAdminId || authed) {
-        allAdmins.forEach((item) => {
-            /* eslint-disable */
-            if (newAdminId) {
-                item.new = item.idUser === parseInt(newAdminId, 10);
-            }
-            if (authed) {
-                item.self = item.idUser === authed.idUser;
-            }
-            /* eslint-enable */
-        });
-    }
+    allAdmins.forEach((item) => {
+        /* eslint-disable */
+        if (newAdminId) {
+            item.new = item.idUser === parseInt(newAdminId, 10);
+        }
+        if (authed) {
+            item.self = item.idUser === authed.idUser;
+        }
+        /* eslint-enable */
+    });
 
     useEffect(() => {
         if (allAdmins.length === 0) {
@@ -50,7 +48,13 @@ const useUserAdmins = (showDeleted) => {
     }, [backendStatus, backendMsg]);
 
     // debugger;
-    return showDeleted ? allAdmins.filter((item) => item.isDeleted) : allAdmins.filter((item) => !item.isDeleted);
+    if (showDeleted) {
+        allAdmins = allAdmins.filter((item) => item.isDeleted);
+    } else {
+        allAdmins = allAdmins.filter((item) => !item.isDeleted);
+    }
+
+    return allAdmins;
 };
 
 export default useUserAdmins;

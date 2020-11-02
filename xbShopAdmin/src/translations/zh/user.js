@@ -49,4 +49,7 @@ export default {
     'user.customer.add': '添加客户',
     'user.customer.list.header.title': '管理您的客户以及订单等详情',
     'user.customer.list.header.subtitle': "点击'编辑'目标客户来进行针对性的操作",
+    'user.customer.error.minLen.pseudo': '昵称必须至少包含{min}个字符',
+    'user.customer.error.empty.pseudo': '昵称不能为空',
+    'user.customer.error.empty.gender': '您尚未选择性别',
 };

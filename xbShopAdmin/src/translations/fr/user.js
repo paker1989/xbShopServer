@@ -53,4 +53,7 @@ export default {
     'user.customer.list.header.title': 'Gérez vos clients et les détails de vos commandes',
     'user.customer.list.header.subtitle':
         'Cliquez sur "Editer" les clients dont vous souhaitez pour réaliser des opérations ciblées',
+    'user.customer.error.minLen.pseudo': 'Le surnom doit contenir au moins {min} caractères',
+    'user.customer.error.empty.pseudo': 'Le surnom ne peut pas être vide',
+    'user.customer.error.empty.gender': 'Le gendre n"est pas sélectionné',
 };

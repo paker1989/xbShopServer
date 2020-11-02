@@ -104,3 +104,4 @@ to do:
 ## 2020/11/2
 to test
 - pseudo min length
+- review addCustomer responsiveness design

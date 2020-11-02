@@ -43,4 +43,9 @@ export default {
     'common.password.length.required': 'Le mot de passe doit comporter au moins six chiffres',
     'common.deleted': 'Supprimé',
     'common.self': "(C'est vous)",
+    'common.pseudo': 'Surnom',
+    'common.gender': 'Genre',
+    'common.male': 'Homme',
+    'common.female': 'Femme',
+    'common.upload.thumbnail': 'Changez photo de profile',
 };

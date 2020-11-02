@@ -43,4 +43,9 @@ export default {
     'common.password.length.required': '密码至少为六位',
     'common.deleted': '已删除',
     'common.self': '(这是您)',
+    'common.pseudo': '昵称',
+    'common.gender': '性别',
+    'common.male': '男',
+    'common.female': '女',
+    'common.upload.thumbnail': '更换头像',
 };
