@@ -1,0 +1,9 @@
+.thumbnail-upload-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .upload-preview {
+      padding: 20px 20px 20px 0; 
+    }
+}

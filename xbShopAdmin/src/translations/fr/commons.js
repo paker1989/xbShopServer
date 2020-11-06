@@ -47,5 +47,6 @@ export default {
     'common.gender': 'Genre',
     'common.male': 'Homme',
     'common.female': 'Femme',
-    'common.upload.thumbnail': 'Changez photo de profile',
+    'common.upload.btn.thumbnail': 'Changez avatar',
+    'common.upload.title': 'Votre avatar',
 };

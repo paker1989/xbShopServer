@@ -75,7 +75,8 @@ const Core = (props) => {
                 </Form.Item>
             </div>
             <div className="add-customer-form-items view-right">
-                <ThumbnailUpload />
+                
+                <ThumbnailUpload size={144} gender="f" />
             </div>
         </Form>
     );

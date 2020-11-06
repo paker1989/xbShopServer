@@ -105,3 +105,6 @@ to do:
 to test
 - pseudo min length
 - review addCustomer responsiveness design
+to do:
+- add customer 添加submit功能，保存图片等
+- *common component*: `sideNavTab`
