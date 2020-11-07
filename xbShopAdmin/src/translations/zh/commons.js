@@ -49,4 +49,5 @@ export default {
     'common.female': '女',
     'common.upload.btn.thumbnail': '更换头像',
     'common.upload.title': '您的头像',
+    'common.update.info': '更新信息',
 };

@@ -13,7 +13,7 @@ export default ({ intl, form }) => {
             rules: [
                 { required: true, message: _translate('user.customer.error.empty.pseudo') },
                 {
-                    len: rules.pseudoMinLen,
+                    min: rules.pseudoMinLen,
                     message: _translate('user.customer.error.minLen.pseudo', { min: rules.pseudoMinLen }),
                 },
             ],
@@ -33,7 +33,7 @@ export default ({ intl, form }) => {
                 },
             ],
         },
-        phoneNumber: {},
+        phone: {},
         gender: {
             rules: [{ required: true, message: _translate('user.customer.error.empty.gender') }],
         },

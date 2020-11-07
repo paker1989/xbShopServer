@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Radio } from 'antd';
+import { Form, Input, Radio, Row, Col, Button } from 'antd';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { useUnmount } from 'ahooks';
 import { NavLink, withRouter } from 'react-router-dom';
 
 import { customerGenerator as addCustomerMeta } from '../../../../static/data/componentMeta/user/addCustomerMeta';
-import * as CustomerActionType from '../../../../store/actionType/userActionType';
-import * as CustomerActionCreator from '../../../../store/action/userAction';
+import * as CustomerActionType from '../../../../store/actionType/customerActionType';
+import * as CustomerActionCreator from '../../../../store/action/customerAction';
 import getValidators from './validators';
 
 import ThumbnailUpload from '../../../Common/ThumbnailUpload/thumbnailUpload';
@@ -20,6 +20,8 @@ const Core = (props) => {
     const dispatch = useDispatch();
     const { form, intl, history, match } = props;
 
+    const idCustomer = parseInt(match.params.idCustomer || -1, 10);
+
     const { getFieldDecorator } = form;
     const validators = getValidators({ intl, form });
 
@@ -27,7 +29,7 @@ const Core = (props) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
             if (!errors) {
-                // dispatch(CategoryActionCreator.updateCategory({ ...values }));
+                dispatch(CustomerActionCreator.saveCustomer({ idCustomer, ...values }));
             }
         });
     };
@@ -48,8 +50,8 @@ const Core = (props) => {
                 </Form.Item>
                 <Form.Item label={intl.formatMessage({ id: 'common.phone' })}>
                     {getFieldDecorator(
-                        'phoneNumber',
-                        validators.phoneNumber
+                        'phone',
+                        validators.phone
                     )(<Input className="xb-form-input" placeholder={intl.formatMessage({ id: 'common.phone' })} />)}
                 </Form.Item>
                 <Form.Item label={intl.formatMessage({ id: 'common.pseudo' })}>
@@ -73,9 +75,29 @@ const Core = (props) => {
                         </Radio.Group>
                     )}
                 </Form.Item>
+
+                <Row>
+                    <Col {...formLayout.labelCol}></Col>
+                    <Col {...formLayout.wrapperCol}>
+                        {idCustomer === -1 && (
+                            <Button htmlType="button" style={{ marginRight: 10 }}>
+                                <FormattedMessage id="common.cancel" />
+                            </Button>
+                        )}
+                        {idCustomer === -1 && (
+                            <Button type="primary" htmlType="submit">
+                                <FormattedMessage id="common.confirm.back" />
+                            </Button>
+                        )}
+                        {idCustomer !== -1 && (
+                            <Button type="primary" htmlType="submit">
+                                <FormattedMessage id="common.confirm.back" />
+                            </Button>
+                        )}
+                    </Col>
+                </Row>
             </div>
             <div className="add-customer-form-items view-right">
-                
                 <ThumbnailUpload size={144} gender="f" />
             </div>
         </Form>

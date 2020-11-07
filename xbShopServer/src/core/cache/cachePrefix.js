@@ -23,8 +23,14 @@ const auth = {
     },
 };
 
+const customer = {
+    prefix: 'customer',
+    keys: {},
+};
+
 module.exports = {
     category,
     product,
     auth,
+    customer,
 };

@@ -49,4 +49,5 @@ export default {
     'common.female': 'Femme',
     'common.upload.btn.thumbnail': 'Changez avatar',
     'common.upload.title': 'Votre avatar',
+    'common.update.info': 'Maj. info.',
 };

@@ -1,5 +1,5 @@
 {
-  "id": 4201,
+  "idCustomer": 4201,
   "thumbnail": "/12/10/10/4201tn.jpg",
   "email": "xubinqz@gmail.com",
   "pseudo": "demo_user",
@@ -15,28 +15,31 @@
   },
   "addr": [
     {
-      "id": 42011,
+      "idAddress": 42011,
       "recipient": "reci_user1",
       "phone": "05650011",
       "detail": {
-        "addr": "164 avenue victor hugo",
+        "addr1": "164 avenue victor hugo",
+        "addr2": "",
         "city": "Clamart",
         "postCode": "92140",
-        "country": "france"
+        "country": "fr"
       },
       "instruction": "",
       "default": true
     },
     {
-      "id": 42012,
+      "idAddress": 42012,
       "recipient": "reci_user2",
       "phone": "05650012",
       "detail": {
-        "addr": "162 avenue victor hugo",
+        "addr1": "162 avenue victor hugo",
+        "addr2": "",
         "city": "Clamart",
         "postCode": "92140",
-        "country": "france"
+        "country": "fr"
       },
+      "instruction": "",
       "default": false
     }
   ],

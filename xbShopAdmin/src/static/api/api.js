@@ -19,4 +19,7 @@ module.exports = {
         allAdmins: 'allAdmins',
         deleteUserrole: 'deleteUserrole',
     },
+    customer: {
+        saveCustomer: 'saveCustomer',
+    }
 };
