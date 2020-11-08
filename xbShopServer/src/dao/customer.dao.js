@@ -1,11 +1,56 @@
+const { fn, col, where, Op } = require('sequelize');
+
 const CustomerModel = require('../model/customer/customer');
-const { customer: cache } = require('../core/cache/cachePrefix');
 const { sequelize } = require('../core/db');
 const encryptHelper = require('../core/encryptionHelper');
-
-const { prefix, keys } = cache;
+const ErrorTypes = require('../core/type/customerType');
 
 class CustomerDAO {
+    /**
+     * check if there is duplicate customer with same email or
+     * @param {*} idCustomer
+     * @param {*} email
+     * @param {*} pseudo
+     */
+    static async checkDuplicaCustomer(idCustomer, email, pseudo) {
+        let error = '';
+        const id = parseInt(idCustomer, 10);
+        if (id !== -1) {
+            // return { [ErrorTypes._BAD_ID_FOR_CREATE]: true };
+            return ErrorTypes._BAD_ID_FOR_CREATE;
+        }
+        if (typeof email === 'undefined') {
+            // return { [ErrorTypes._EMAIL_UNDEFINED]: true };
+            return ErrorTypes._EMAIL_UNDEFINED;
+        }
+        if (typeof pseudo === 'undefined') {
+            // return { [ErrorTypes._PSEUDO_UNDEFINED]: true };
+            return ErrorTypes._PSEUDO_UNDEFINED;
+        }
+        const duplicas = await CustomerModel.findAll({
+            where: {
+                [Op.or]: [
+                    { $col: where(fn('lower', col('email')), fn('lower', email)) },
+                    { $col: where(fn('lower', col('pseudo')), fn('lower', pseudo)) },
+                ],
+                idCustomer: {
+                    [Op.not]: id,
+                },
+                isDeleted: false,
+            },
+        });
+        duplicas.forEach((found) => {
+            if (found.getDataValue('email').toLowerCase() === email) {
+                // errors[ErrorTypes._EMAIL_DUPLICA] = true;
+                error = ErrorTypes._EMAIL_DUPLICA;
+            } else {
+                // errors[ErrorTypes._PSEUDO_DUPLICA] = true;
+                error = ErrorTypes._PSEUDO_DUPLICA;
+            }
+        });
+        return error;
+    }
+
     /**
      * @param {*} idCustomer
      * @param {*} options control the includes

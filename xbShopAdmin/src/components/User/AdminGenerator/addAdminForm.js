@@ -14,7 +14,6 @@ import * as UserActionTypes from '../../../store/actionType/userActionType';
 import * as ServerErrorType from '../../../static/data/serverErrorType/authType';
 import useUserRoles from '../../../utils/hooks/useUserRoles';
 import useUserAdmins from '../../../utils/hooks/useUserAdmins';
-import { generatePwd as genratePwdFn } from '../../../utils/data.helper';
 
 const { adminGenerator: generatorMeta } = addAdminMeta;
 
@@ -29,8 +28,6 @@ const AdminForm = (props) => {
     const validators = getValidators({ intl, form });
 
     const idAdmin = parseInt(match.params.idAdmin || -1, 10);
-
-    const [passwordMode, setPasswordMode] = useState(idAdmin === -1 ? 'create' : 'standby');
 
     const allAdmins = useUserAdmins(false);
     const userRoles = useUserRoles();
@@ -76,43 +73,6 @@ const AdminForm = (props) => {
                     dispatch(UserActionCreator.submitAdminEdition({ idAdmin, ...values }));
                 }
             }
-        });
-    };
-
-    const generatePwd = () => {
-        const { pwdLength } = addAdminMeta.adminGenerator;
-        const newPwd = genratePwdFn(pwdLength);
-        // dispatch(
-        //     UserActionCreator.setUpdateAdminStates({
-        //         passwordRepeat: newPwd,
-        //         password: newPwd,
-        //     })
-        // );
-        form.setFieldsValue({
-            passwordRepeat: newPwd,
-            password: newPwd,
-        });
-    };
-
-    const resetPwd = () => {
-        setPasswordMode('edit');
-        // dispatch(
-        //     UserActionCreator.setUpdateAdminStates({
-        //         ...form.getFieldsValue(),
-        //         passwordRepeat: '',
-        //         password: '',
-        //     })
-        // );
-        form.setFieldsValue({
-            passwordRepeat: '',
-            password: '',
-        });
-    };
-
-    const cancelResetPwd = () => {
-        setPasswordMode('standby');
-        form.setFieldsValue({
-            password: 'xbshop_placeholder',
         });
     };
 
@@ -233,15 +193,7 @@ const AdminForm = (props) => {
                     />
                 )}
             </Form.Item>
-            <PasswordConfirmer
-                showGenerate
-                mode={passwordMode}
-                form={form}
-                validators={validators}
-                generatePwd={generatePwd}
-                resetPwd={resetPwd}
-                cancelResetPwd={cancelResetPwd}
-            />
+            <PasswordConfirmer showGenerate initMode={idAdmin === -1 ? 'create' : 'standby'} form={form} />
             <Row>
                 <Col {...generatorMeta.formLayout.labelCol}></Col>
                 <Col {...generatorMeta.formLayout.wrapperCol}>

@@ -4,3 +4,8 @@ export const saveCustomer = (options) => ({
     type: CustomerActionType._SAVE_CUSTOMER,
     payload: options,
 });
+
+export const resetCustomerSaveBackendStatus = () => ({
+    type: CustomerActionType._CUSTOMER_SAVE_RESET_BACKEND_STATUS,
+    payload: { backendStatus: '', backendMsg: '' },
+});

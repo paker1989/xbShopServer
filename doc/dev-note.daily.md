@@ -103,8 +103,17 @@ to do:
 
 ## 2020/11/2
 to test
-- pseudo min length
-- review addCustomer responsiveness design
+- pseudo min length (done)
+- review addCustomer responsiveness design (done)
 to do:
 - add customer 添加submit功能，保存图片等
-- *common component*: `sideNavTab`
+- *common component*: `sideNavTab`'
+- isActive
+- password
+
+## 2020/11/7
+todo:
+- test again save
+- manage thumbnail: default value according to gender, upload (user folder);
+- sideNavbar: init on mont | switch tab
+- address;

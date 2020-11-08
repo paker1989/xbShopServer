@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Radio, Row, Col, Button } from 'antd';
+import { Form, Input, Radio, Row, Col, Button, message, Switch } from 'antd';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { useUnmount } from 'ahooks';
 import { NavLink, withRouter } from 'react-router-dom';
+import PasswordConfirmer from '../../../Common/PasswordConfirmer/pwdConfirmer';
 
 import { customerGenerator as addCustomerMeta } from '../../../../static/data/componentMeta/user/addCustomerMeta';
 import * as CustomerActionType from '../../../../store/actionType/customerActionType';
 import * as CustomerActionCreator from '../../../../store/action/customerAction';
+import * as ServerErrorType from '../../../../static/data/serverErrorType/customerType';
 import getValidators from './validators';
 
 import ThumbnailUpload from '../../../Common/ThumbnailUpload/thumbnailUpload';
@@ -20,9 +22,12 @@ const Core = (props) => {
     const dispatch = useDispatch();
     const { form, intl, history, match } = props;
 
-    const idCustomer = parseInt(match.params.idCustomer || -1, 10);
+    const backendStatus = useSelector((state) => state.user.addCustomer.backendStatus);
+    const backendMsg = useSelector((state) => state.user.addCustomer.backendMsg);
 
+    const idCustomer = parseInt(match.params.idCustomer || -1, 10);
     const { getFieldDecorator } = form;
+
     const validators = getValidators({ intl, form });
 
     const onSubmit = (e) => {
@@ -33,6 +38,42 @@ const Core = (props) => {
             }
         });
     };
+
+    const cancelEdition = () => {
+        history.push('/dashboard/customerList');
+    };
+
+    // handle save status
+    useEffect(() => {
+        if (backendStatus.length === 0) {
+            return;
+        }
+        if (backendStatus === CustomerActionType._CUSTOMER_SAVE_SUCCESS) {
+            history.push('/dashboard/customerList');
+        } else if (backendStatus === CustomerActionType._CUSTOMER_SAVE_FAILED) {
+            switch (backendMsg) {
+                case ServerErrorType._EMAIL_DUPLICA:
+                    form.setFields({
+                        email: {
+                            value: form.getFieldValue('email'),
+                            errors: [new Error(intl.formatMessage({ id: `customer.save.error.${backendMsg}` }))],
+                        },
+                    });
+                    break;
+                case ServerErrorType._PSEUDO_DUPLICA:
+                    form.setFields({
+                        pseudo: {
+                            value: form.getFieldValue('pseudo'),
+                            errors: [new Error(intl.formatMessage({ id: `customer.save.error.${backendMsg}` }))],
+                        },
+                    });
+                    break;
+                default:
+                    message.error(intl.formatMessage({ id: `customer.save.error.${backendMsg}` }));
+            }
+        }
+        dispatch(CustomerActionCreator.resetCustomerSaveBackendStatus());
+    }, [backendStatus, backendMsg]);
 
     return (
         <Form onSubmit={onSubmit} className="add-customer-form-body">
@@ -75,12 +116,23 @@ const Core = (props) => {
                         </Radio.Group>
                     )}
                 </Form.Item>
-
+                <Form.Item label={intl.formatMessage({ id: 'user.addAdmin.isActive' })}>
+                    {getFieldDecorator(
+                        'isActive',
+                        validators.isActive
+                    )(
+                        <Switch
+                            checkedChildren={intl.formatMessage({ id: 'common.yes' })}
+                            unCheckedChildren={intl.formatMessage({ id: 'common.no' })}
+                        />
+                    )}
+                </Form.Item>
+                <PasswordConfirmer showGenerate initMode={idCustomer === -1 ? 'create' : 'standby'} form={form} />
                 <Row>
                     <Col {...formLayout.labelCol}></Col>
                     <Col {...formLayout.wrapperCol}>
                         {idCustomer === -1 && (
-                            <Button htmlType="button" style={{ marginRight: 10 }}>
+                            <Button htmlType="button" style={{ marginRight: 10 }} onClick={cancelEdition}>
                                 <FormattedMessage id="common.cancel" />
                             </Button>
                         )}
@@ -105,7 +157,14 @@ const Core = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    // categoryName: state.categoryReducer.editionFields.label,
+    phone: state.user.addCustomer.phone,
+    pseudo: state.user.addCustomer.pseudo,
+    email: state.user.addCustomer.email,
+    gender: state.user.addCustomer.gender,
+    thumbnail: state.user.addCustomer.thumbnail,
+    isActive: state.user.addCustomer.isActive,
+    password: state.user.addCustomer.password,
+    passwordRepeat: state.user.addCustomer.passwordRepeat,
 });
 
 const WrappedForm = connect(mapStateToProps)(
@@ -114,6 +173,14 @@ const WrappedForm = connect(mapStateToProps)(
         mapPropsToFields(props) {
             return {
                 // categoryName: Form.createFormField({ value: props.categoryName }),
+                phone: Form.createFormField({ value: props.phone }),
+                isActive: Form.createFormField({ value: props.isActive }),
+                pseudo: Form.createFormField({ value: props.pseudo }),
+                email: Form.createFormField({ value: props.email }),
+                gender: Form.createFormField({ value: props.gender }),
+                thumbnail: Form.createFormField({ value: props.thumbnail }),
+                password: Form.createFormField({ value: props.password }),
+                passwordRepeat: Form.createFormField({ value: props.passwordRepeat }),
             };
         },
     })(withRouter(injectIntl(Core)))

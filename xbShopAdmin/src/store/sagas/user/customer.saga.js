@@ -15,14 +15,8 @@ export function* saveCustomerSaga(reqObj) {
             },
             { withCredentials: true }
         );
+        debugger;
         if (res && res.data) {
-            // if (action !== 'destroy') {
-            //     cookie.save(adminGenerator.newUpdateKey, res.data.idUser, { maxAge: adminGenerator.newUpdateMaxAge });
-            // }
-            // yield put({
-            //     // fetch all admins for update
-            //     type: CustomerActionType._USER_ADMIN_FETCH_ALL,
-            // });
             yield put({
                 type: CustomerActionType._CUSTOMER_SAVE_SUCCESS,
                 payload: {

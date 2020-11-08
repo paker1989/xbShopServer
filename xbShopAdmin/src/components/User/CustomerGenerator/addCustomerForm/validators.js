@@ -18,6 +18,10 @@ export default ({ intl, form }) => {
                 },
             ],
         },
+        isActive: {
+            valuePropName: 'checked',
+            initialValue: true,
+        },
         email: {
             rules: [
                 { required: true, message: _translate('user.addAdmin.error.noEmail') },
