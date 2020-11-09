@@ -20,7 +20,7 @@ const { formLayout } = addCustomerMeta;
 
 const Core = (props) => {
     const dispatch = useDispatch();
-    const { form, intl, history, match } = props;
+    const { form, intl, history, match, gender } = props;
 
     const backendStatus = useSelector((state) => state.user.addCustomer.backendStatus);
     const backendMsg = useSelector((state) => state.user.addCustomer.backendMsg);
@@ -150,7 +150,12 @@ const Core = (props) => {
                 </Row>
             </div>
             <div className="add-customer-form-items view-right">
-                <ThumbnailUpload size={144} gender="f" />
+                <Form.Item>
+                    {getFieldDecorator(
+                        'thumbnail',
+                        validators.thumbnail
+                    )(<ThumbnailUpload size={144} gender={form.getFieldValue('gender')} />)}
+                </Form.Item>
             </div>
         </Form>
     );

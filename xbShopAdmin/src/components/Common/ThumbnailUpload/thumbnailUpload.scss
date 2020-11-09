@@ -4,6 +4,10 @@
     justify-content: flex-start;
 
     .upload-preview {
-      padding: 20px 20px 20px 0; 
+        padding: 20px 20px 20px 0;
+        // border: 1px solid #eee;
+        .ant-avatar-circle {
+            border: 1px solid #eee;
+        }
     }
 }

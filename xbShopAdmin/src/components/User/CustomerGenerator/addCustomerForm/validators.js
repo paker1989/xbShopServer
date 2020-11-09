@@ -8,6 +8,7 @@ export default ({ intl, form }) => {
         return intl.formatMessage({ id }, values);
     }
 
+    const { setFieldsValue } = form;
     return {
         pseudo: {
             rules: [
@@ -41,6 +42,8 @@ export default ({ intl, form }) => {
         gender: {
             rules: [{ required: true, message: _translate('user.customer.error.empty.gender') }],
         },
-        thumbnail: {},
+        thumbnail: {
+            valuePropName: 'thumbnails',
+        },
     };
 };

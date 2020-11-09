@@ -117,3 +117,8 @@ todo:
 - manage thumbnail: default value according to gender, upload (user folder);
 - sideNavbar: init on mont | switch tab
 - address;
+
+## 2020/11/8
+- save thumbnail
+- sideNavbar: init on mont | switch tab
+- address;

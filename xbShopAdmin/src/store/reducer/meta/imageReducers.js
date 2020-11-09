@@ -22,6 +22,11 @@ const initialState = {
             maxHeight: 0,
             qualityRatio: 0.9,
         },
+        thumbnail: {
+            maxWidth: 144,
+            maxHeight: 144,
+            qualityRatio: 0.9,
+        },
     },
 };
 

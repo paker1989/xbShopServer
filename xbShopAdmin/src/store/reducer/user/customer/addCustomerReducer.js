@@ -8,7 +8,7 @@ const formInitialState = {
     pseudo: '',
     email: '',
     gender: 'm', // m or f
-    thumbnail: '',
+    thumbnail: [],
     isActive: true,
     password: '',
     passwordRepeat: '',

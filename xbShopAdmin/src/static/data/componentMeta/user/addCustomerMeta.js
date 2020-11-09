@@ -16,5 +16,6 @@ module.exports = {
         rules: {
             pseudoMinLen: 3,
         },
+        maxOriginFileSize: 2 * 1024 * 1024, // 2M内不压缩
     },
 };
