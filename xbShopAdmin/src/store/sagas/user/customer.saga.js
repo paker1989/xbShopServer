@@ -5,17 +5,27 @@ import { getRequestUrl } from '../../../static/api';
 import * as CustomerActionType from '../../actionType/customerActionType';
 
 export function* saveCustomerSaga(reqObj) {
-    // debugger;
-    const { action = '' } = reqObj.payload;
+    debugger;
+    const { action = '', thumbnail, ...otherProps } = reqObj.payload;
+    const formData = new FormData();
+    formData.append('thumbnail', thumbnail[0].compressed, thumbnail[0].name);
+    Object.keys(otherProps).forEach((key) => {
+        formData.append(key, otherProps[key]);
+    });
     try {
-        const res = yield axios.post(
-            getRequestUrl('customer', 'saveCustomer'),
-            {
-                ...reqObj.payload,
+        // const res = yield axios.post(
+        //     getRequestUrl('customer', 'saveCustomer'),
+        //     {
+        //         ...reqObj.payload,
+        //     },
+        //     { withCredentials: true }
+        // );
+        const res = yield axios.post(getRequestUrl('customer', 'saveCustomer'), formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
             },
-            { withCredentials: true }
-        );
-        debugger;
+        });
+
         if (res && res.data) {
             yield put({
                 type: CustomerActionType._CUSTOMER_SAVE_SUCCESS,

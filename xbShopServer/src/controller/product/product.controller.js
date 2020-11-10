@@ -2,7 +2,7 @@ const ProductDAO = require('../../dao/product.dao');
 const { Resolve } = require('../../core/resolve');
 const { HttpException } = require('../../core/httpException');
 
-const { normalizeGalleryPath } = require('../../core/dateHelper');
+const { normalizeImgPath } = require('../../core/dateHelper');
 const { basePath, port } = require('../../config/config');
 const {
     cleanProductCache,
@@ -24,7 +24,7 @@ const saveProduct = async (ctx) => {
             : [ctx.request.files.galleries];
 
         requestBody.galleryPaths = galleries.map((file) => ({
-            url: normalizeGalleryPath(`${basePath}:${port}`, file.name),
+            url: normalizeImgPath(`${basePath}:${port}`, 'galleries', file.name),
         }));
 
         const saved = await ProductDAO.save(requestBody);

@@ -53,7 +53,7 @@ module.exports = {
             onFileBegin: (name, file) => {
                 const { year, month, day } = getFormattedDate(new Date());
                 const parsed = path.parse(file.name);
-                const dir = path.resolve(__dirname, '../../static/upload/img', `${year}/${month}/${day}`);
+                const dir = path.resolve(__dirname, `../../static/upload/${name}/`, `${year}/${month}/${day}`);
                 if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir, { recursive: true });
                 }

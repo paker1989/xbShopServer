@@ -6,12 +6,12 @@ const getFormattedDate = (date) => {
     return { year, month, day };
 };
 
-const normalizeGalleryPath = (basePath, galleryName) => {
+const normalizeImgPath = (basePath, prefix, galleryName) => {
     const { year, month, day } = getFormattedDate(new Date());
-    return `${basePath}/upload/img/${year}/${month}/${day}/${galleryName}`;
+    return `${basePath}/upload/${prefix}/${year}/${month}/${day}/${galleryName}`;
 };
 
 module.exports = {
     getFormattedDate,
-    normalizeGalleryPath,
+    normalizeImgPath,
 };

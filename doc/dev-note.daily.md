@@ -122,3 +122,8 @@ todo:
 - save thumbnail
 - sideNavbar: init on mont | switch tab
 - address;
+
+- to do:
+  -> manage: 
+     1. default thumbnail; 
+     2. update case so thumbnail is not to be managed
