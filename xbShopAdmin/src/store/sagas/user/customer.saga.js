@@ -5,26 +5,29 @@ import { getRequestUrl } from '../../../static/api';
 import * as CustomerActionType from '../../actionType/customerActionType';
 
 export function* saveCustomerSaga(reqObj) {
-    debugger;
     const { action = '', thumbnail, ...otherProps } = reqObj.payload;
-    const formData = new FormData();
-    formData.append('thumbnail', thumbnail[0].compressed, thumbnail[0].name);
-    Object.keys(otherProps).forEach((key) => {
-        formData.append(key, otherProps[key]);
-    });
+    let res;
     try {
-        // const res = yield axios.post(
-        //     getRequestUrl('customer', 'saveCustomer'),
-        //     {
-        //         ...reqObj.payload,
-        //     },
-        //     { withCredentials: true }
-        // );
-        const res = yield axios.post(getRequestUrl('customer', 'saveCustomer'), formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+        if (thumbnail && thumbnail[0] instanceof File) {
+            const formData = new FormData();
+            formData.append('thumbnail', thumbnail[0].compressed, thumbnail[0].name);
+            Object.keys(otherProps).forEach((key) => {
+                formData.append(key, otherProps[key]);
+            });
+            res = yield axios.post(getRequestUrl('customer', 'saveCustomer'), formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+        } else {
+            res = yield axios.post(
+                getRequestUrl('customer', 'saveCustomer'),
+                {
+                    ...reqObj.payload,
+                },
+                { withCredentials: true }
+            );
+        }
 
         if (res && res.data) {
             yield put({

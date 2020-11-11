@@ -8,7 +8,7 @@ export default ({ intl, form }) => {
         return intl.formatMessage({ id }, values);
     }
 
-    const { setFieldsValue } = form;
+    // const { setFieldsValue } = form;
     return {
         pseudo: {
             rules: [

@@ -1,0 +1,21 @@
+@import '../../../style/app.scss';
+
+.customer-generator {
+    position: relative;
+
+    .sidebar-container {
+        // margin-right: 30px;
+        border-right: 1px solid $main-color;
+
+        .ant-menu-inline {
+            border: none;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+  .customer-generator .sidebar-container {
+    border-right: none;
+    border-bottom:  1px solid $main-color;
+  }
+}

@@ -119,11 +119,21 @@ todo:
 - address;
 
 ## 2020/11/8
-- save thumbnail
+- save thumbnail (done)
 - sideNavbar: init on mont | switch tab
 - address;
 
 - to do:
-  -> manage: 
+  -> manage: (done)
      1. default thumbnail; 
+       form: define thumbnail value: file or string, 然后在saga判断
      2. update case so thumbnail is not to be managed
+
+## 2020/11/11
+- todo:
+  onselect menu item;
+  address ui;
+  lazy loading on toggle menu item;
+  update customer logic
+  cache design
+  

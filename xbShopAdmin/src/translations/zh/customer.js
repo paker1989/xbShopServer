@@ -4,4 +4,7 @@ export default {
     'customer.save.error.pseudo.undefined': '昵称没有定义',
     'customer.save.error.email.duplica': '邮箱已经存在',
     'customer.save.error.pseudo.duplica': '昵称已经存在',
+    'customer.menu.address': '地址',
+    'customer.menu.basic': '通用设置',
+    'customer.menu.orders': '订单',
 };

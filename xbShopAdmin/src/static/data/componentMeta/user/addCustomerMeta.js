@@ -18,4 +18,7 @@ module.exports = {
         },
         maxOriginFileSize: 2 * 1024 * 1024, // 2M内不压缩
     },
+    global: {
+        defaultMenus: ['basic', 'address', 'orders'],
+    },
 };

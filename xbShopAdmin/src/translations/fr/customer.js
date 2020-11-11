@@ -4,4 +4,7 @@ export default {
     'customer.save.error.pseudo.undefined': "Le surnom n'est pas défini",
     'customer.save.error.email.duplica': "L'e-mail existe déjà",
     'customer.save.error.pseudo.duplica': 'Le surnom existse déjà',
+    'customer.menu.address': 'Adresse',
+    'customer.menu.basic': 'Réglages généraux',
+    'customer.menu.orders': 'Commandes',
 };

@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Radio, Row, Col, Button, message, Switch } from 'antd';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { useUnmount } from 'ahooks';
+// import { useUnmount } from 'ahooks';
 import { NavLink, withRouter } from 'react-router-dom';
 import PasswordConfirmer from '../../../Common/PasswordConfirmer/pwdConfirmer';
+import ThumbnailUpload from '../../../Common/ThumbnailUpload/thumbnailUpload';
 
 import { customerGenerator as addCustomerMeta } from '../../../../static/data/componentMeta/user/addCustomerMeta';
 import * as CustomerActionType from '../../../../store/actionType/customerActionType';
 import * as CustomerActionCreator from '../../../../store/action/customerAction';
 import * as ServerErrorType from '../../../../static/data/serverErrorType/customerType';
 import getValidators from './validators';
-
-import ThumbnailUpload from '../../../Common/ThumbnailUpload/thumbnailUpload';
 
 import './addCustomerForm.scss';
 
@@ -33,9 +32,18 @@ const Core = (props) => {
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
+            /* eslint-disable */
             if (!errors) {
+                const { thumbnail, gender: genderVal } = values;
+                if (idCustomer === -1) {
+                    // create mode
+                    if (thumbnail.length === 0) {
+                        values.thumbnail = `${window.location.origin}/static/image/avatar_${genderVal}.png`;
+                    }
+                }
                 dispatch(CustomerActionCreator.saveCustomer({ idCustomer, ...values }));
             }
+            /* eslint-enable */
         });
     };
 
