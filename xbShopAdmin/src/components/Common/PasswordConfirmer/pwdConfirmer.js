@@ -71,7 +71,8 @@ const Core = ({
                     )(
                         <Input.Password
                             disabled={passwordMode === 'standby'}
-                            style={{ width: 250, marginRight: 10 }}
+                            // style={{ marginRight: 10 }}
+                            className="xb-form-input"
                             type="password"
                             placeholder={intl.formatMessage({ id: 'common.password' })}
                         />
@@ -100,7 +101,8 @@ const Core = ({
                         validators.passwordRepeat
                     )(
                         <Input.Password
-                            style={{ width: 250, marginRight: 10 }}
+                            // style={{ marginRight: 10 }}
+                            className="xb-form-input"
                             type="password"
                             placeholder={intl.formatMessage({ id: 'common.password.repeat' })}
                         />

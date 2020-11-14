@@ -37,7 +37,7 @@ const saveCustomer = async (ctx) => {
         if (typeof saved === 'object') {
             // todo: handle cache
         }
-        Resolve.info(ctx, 'save succeed');
+        Resolve.json(ctx, { customerId: saved.idCustomer }, 'save succeed');
     } catch (err) {
         throw new HttpException(err.message);
     }

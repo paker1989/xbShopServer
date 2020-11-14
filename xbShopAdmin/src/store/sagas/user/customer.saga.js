@@ -34,7 +34,7 @@ export function* saveCustomerSaga(reqObj) {
                 type: CustomerActionType._CUSTOMER_SAVE_SUCCESS,
                 payload: {
                     backendStatus: CustomerActionType._CUSTOMER_SAVE_SUCCESS,
-                    backendMsg: action,
+                    backendMsg: res.data.customerId,
                 },
             });
         } else {

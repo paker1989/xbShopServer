@@ -131,9 +131,11 @@ todo:
 
 ## 2020/11/11
 - todo:
-  onselect menu item;
+  onselect menu item; --> done
   address ui;
   lazy loading on toggle menu item;
   update customer logic
   cache design
+
+  - ajouter une address，push history转化成`edit mode`以后，*customer validation* & *customer population*
   

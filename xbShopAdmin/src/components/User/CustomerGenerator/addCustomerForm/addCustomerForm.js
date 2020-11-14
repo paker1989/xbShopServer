@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Radio, Row, Col, Button, message, Switch } from 'antd';
+import { Form, Input, Radio, Row, Col, Button, message, Switch, Modal } from 'antd';
 import { injectIntl, FormattedMessage } from 'react-intl';
-// import { useUnmount } from 'ahooks';
-import { NavLink, withRouter } from 'react-router-dom';
+import { useUnmount } from 'ahooks';
+import { withRouter } from 'react-router-dom';
+
 import PasswordConfirmer from '../../../Common/PasswordConfirmer/pwdConfirmer';
 import ThumbnailUpload from '../../../Common/ThumbnailUpload/thumbnailUpload';
 
@@ -16,11 +17,13 @@ import getValidators from './validators';
 import './addCustomerForm.scss';
 
 const { formLayout } = addCustomerMeta;
+const { confirm } = Modal;
 
 const Core = (props) => {
     const dispatch = useDispatch();
-    const { form, intl, history, match, gender } = props;
+    const { form, intl, history, match } = props;
 
+    // console.log(history);
     const backendStatus = useSelector((state) => state.user.addCustomer.backendStatus);
     const backendMsg = useSelector((state) => state.user.addCustomer.backendMsg);
 
@@ -48,8 +51,16 @@ const Core = (props) => {
     };
 
     const cancelEdition = () => {
-        history.push('/dashboard/customerList');
+        // history.push('/dashboard/customerList');
+        history.push({
+            pathname: `/dashboard/addCustomer/2`, // backendMsg = idCustomer
+        });
+        dispatch({ type: CustomerActionType._SET_SELECT_MENU, payload: 'address' });
     };
+
+    useUnmount(() => {
+        CustomerActionCreator.resetCustomerSaveBackendStatus();
+    });
 
     // handle save status
     useEffect(() => {
@@ -57,7 +68,22 @@ const Core = (props) => {
             return;
         }
         if (backendStatus === CustomerActionType._CUSTOMER_SAVE_SUCCESS) {
-            history.push('/dashboard/customerList');
+            if (idCustomer === -1) {
+                confirm({
+                    title: intl.formatMessage({ id: 'customer.confirm.addaddress.title' }),
+                    cancelText: intl.formatMessage({ id: 'customer.confirm.addaddress.cancel' }),
+                    okText: intl.formatMessage({ id: 'customer.confirm.addaddress.confirm' }),
+                    onOk() {
+                        history.push({
+                            pathname: `/dashboard/addCustomer/${backendMsg}`, // backendMsg = idCustomer
+                        });
+                        dispatch({ type: CustomerActionType._SET_SELECT_MENU, payload: 'address' });
+                    },
+                    onCancel() {
+                        history.push('/dashboard/customerList');
+                    },
+                });
+            }
         } else if (backendStatus === CustomerActionType._CUSTOMER_SAVE_FAILED) {
             switch (backendMsg) {
                 case ServerErrorType._EMAIL_DUPLICA:

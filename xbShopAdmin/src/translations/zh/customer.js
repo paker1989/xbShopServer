@@ -7,4 +7,7 @@ export default {
     'customer.menu.address': '地址',
     'customer.menu.basic': '通用设置',
     'customer.menu.orders': '订单',
+    'customer.confirm.addaddress.title': '为新客户添加一个默认地址?',
+    'customer.confirm.addaddress.cancel': '不了',
+    'customer.confirm.addaddress.confirm': '添加地址',
 };

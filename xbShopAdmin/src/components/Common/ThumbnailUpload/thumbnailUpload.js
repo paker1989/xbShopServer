@@ -50,12 +50,12 @@ const ThumbnailUpload = (
     };
 
     return (
-        <div className="thumbnail-upload-container">
+        <div className="thumbnail-upload-container" ref={ref}>
             <div className="upload-title">{_title}</div>
             <div className="upload-preview">
                 <Avatar shape={shape} size={size} src={avatarLink} />
             </div>
-            <Upload name="logo" fileList={[]} {...uploadProps} ref={ref}>
+            <Upload name="logo" fileList={[]} {...uploadProps}>
                 <Button>
                     <Icon type="upload" />
                     {_btnText}
