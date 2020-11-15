@@ -43,6 +43,26 @@ const saveCustomer = async (ctx) => {
     }
 };
 
+const getGeoConstants = async (ctx) => {
+    const { countryCode } = ctx.request.body;
+    if (!countryCode) {
+        throw new Error('no country code is present');
+    }
+    try {
+        const cached = await cacheHelper.getCachedGeo(countryCode);
+        if (cached) {
+            Resolve.json(ctx, cached);
+        } else {
+            const geoData = await CustomerDAO.getGeoConstants(countryCode);
+            cacheHelper.setCachedGeo(geoData, countryCode);
+            Resolve.json(ctx, geoData);
+        }
+    } catch (err) {
+        throw new HttpException(err.message);
+    }
+};
+
 module.exports = {
     saveCustomer,
+    getGeoConstants,
 };

@@ -25,7 +25,9 @@ const auth = {
 
 const customer = {
     prefix: 'customer',
-    keys: {},
+    keys: {
+        geoConstant: 'const_geo',
+    },
 };
 
 module.exports = {

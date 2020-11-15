@@ -1,11 +1,10 @@
 const { auth } = require('../cachePrefix');
 const { redisClient } = require('../redis');
 const { async } = require('../redisHelper');
-const { HttpException } = require('../../httpException');
+// const { HttpException } = require('../../httpException');
 
-const { lRangeAsync, rpushAsync, getAsync } = async;
+const { getAsync } = async;
 const { prefix, keys } = auth;
-const { meta, detail, ids } = keys;
 
 const config = {
     expire: {

@@ -1,6 +1,10 @@
 const { fn, col, where, Op } = require('sequelize');
 
 const CustomerModel = require('../model/customer/customer');
+const RegionModel = require('../model/customer/region');
+const DepartmentModel = require('../model/customer/department');
+const CityModel = require('../model/customer/city');
+
 const { sequelize } = require('../core/db');
 const encryptHelper = require('../core/encryptionHelper');
 const ErrorTypes = require('../core/type/customerType');
@@ -162,6 +166,27 @@ class CustomerDAO {
             return CustomerDAO.findCustomerByPk(pk);
         }
         return pk; // undefined
+    }
+
+    static async getGeoConstants(countryCode) {
+        const allRegions = await RegionModel.findAll({
+            where: {
+                country: countryCode,
+            },
+            include: [
+                {
+                    model: DepartmentModel,
+                    as: 'departments',
+                    include: [
+                        {
+                            model: CityModel,
+                            as: 'cities',
+                        },
+                    ],
+                },
+            ],
+        });
+        return allRegions;
     }
 }
 

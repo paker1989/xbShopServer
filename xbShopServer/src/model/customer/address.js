@@ -3,6 +3,21 @@ const { sequelize } = require('../../core/db');
 
 class Address extends Model {}
 
+// {
+//     "idAddress": 42011,
+//     "recipient": "reci_user1",
+//     "phone": "05650011",
+//     "detail": {
+//       "addr1": "164 avenue victor hugo",
+//       "addr2": "",
+//       "city": "Clamart",
+//       "postCode": "92140",
+//       "country": "fr"
+//     },
+//     "instruction": "",
+//     "default": true
+//   },
+
 Address.init(
     {
         idAddress: {
