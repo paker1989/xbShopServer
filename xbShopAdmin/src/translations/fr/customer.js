@@ -7,7 +7,11 @@ export default {
     'customer.menu.address': 'Adresse',
     'customer.menu.basic': 'Réglages généraux',
     'customer.menu.orders': 'Commandes',
+    'customer.title.address': 'Vos adresses',
+    'customer.title.basic': 'Réglages généraux',
+    'customer.title.orders': 'Vos Commandes',
     'customer.confirm.addaddress.title': 'Ajouter une adresse par défaut pour le nouveau client?',
     'customer.confirm.addaddress.cancel': 'Nan',
     'customer.confirm.addaddress.confirm': "Ajoutez l'adresse",
+    'customer.addaddress': 'Ajoutez une adresse',
 };

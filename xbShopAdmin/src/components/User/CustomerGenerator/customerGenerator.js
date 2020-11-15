@@ -52,7 +52,7 @@ const CustomerGenerator = ({ match }) => {
                         >
                             <div className="prefer-left">
                                 <Title level={4}>
-                                    <FormattedMessage id={`customer.menu.${selectedMenu}`} />
+                                    <FormattedMessage id={`customer.title.${selectedMenu}`} />
                                 </Title>
                             </div>
                             {selectedMenu === 'basic' && <AddCustomerForm />}

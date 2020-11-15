@@ -38,6 +38,10 @@
     .no-shrink {
         flex-shrink: 0;
     }
+
+    &.column {
+        flex-direction: column;
+    }
 }
 
 input[type='textarea'].fixed-vert {
