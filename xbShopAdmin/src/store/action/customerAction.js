@@ -9,3 +9,9 @@ export const resetCustomerSaveBackendStatus = () => ({
     type: CustomerActionType._CUSTOMER_SAVE_RESET_BACKEND_STATUS,
     payload: { backendStatus: '', backendMsg: '' },
 });
+
+export const resetAddressSaveBackendStatus = () => ({
+    type: CustomerActionType._ADDRESS_SAVE_RESET_BACKEND_STATUS,
+    payload: { backendStatus: '', backendMsg: '' },
+});
+
