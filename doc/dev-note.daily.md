@@ -138,4 +138,8 @@ todo:
   cache design
 
   - ajouter une address，push history转化成`edit mode`以后，*customer validation* & *customer population*
-  
+
+## 2020/11/19
+ - todo:
+   migrate render logic of customer to route mode => easier to maintain;
+   breadcrumb of add address;

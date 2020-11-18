@@ -1,4 +1,7 @@
 module.exports = {
+    global: {
+        defaultMenus: ['basic', 'address', 'orders'],
+    },
     customerGenerator: {
         formName: 'addCustomer', // form name
         formLayout: {
@@ -18,7 +21,17 @@ module.exports = {
         },
         maxOriginFileSize: 2 * 1024 * 1024, // 2M内不压缩
     },
-    global: {
-        defaultMenus: ['basic', 'address', 'orders'],
+    addAddressGenerator: {
+        formName: 'addAddress', // form name
+        formLayout: {
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 24 },
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 24 },
+            },
+        },
     },
 };

@@ -25,9 +25,9 @@ export default ({ intl, form }) => {
         recipient: {
             rules: [{ required: true, message: _translate('customer.addAddress.error.noRecipient') }],
         },
-        // phone: {
-        //     rules: [{ required: true, message: _translate('customer.addAddress.error.noPhone') }],
-        // },
+        phone: {
+            // rules: [{ required: true, message: _translate('customer.addAddress.error.noPhone') }],
+        },
         addr1: {
             rules: [{ required: true, message: _translate('customer.addAddress.error.noAddr1') }],
         },

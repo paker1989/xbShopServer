@@ -15,3 +15,15 @@ export const resetAddressSaveBackendStatus = () => ({
     payload: { backendStatus: '', backendMsg: '' },
 });
 
+export const resetAddressState = () => ({
+    type: CustomerActionType._ADDRESS_RESET_STATE,
+});
+
+/**
+ * params example: { editMode: true, idAddress : 3 }
+ * @param {*} params
+ */
+export const setAddressEditMode = (params) => ({
+    type: CustomerActionType._ADDRESS_SET_EDIT_MODE,
+    payload: params,
+});

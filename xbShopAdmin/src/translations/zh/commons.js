@@ -50,4 +50,5 @@ export default {
     'common.upload.btn.thumbnail': '更换头像',
     'common.upload.title': '您的头像',
     'common.update.info': '更新信息',
+    'common.tooltip.addr.phone': '可能用于方便快递配送',
 };

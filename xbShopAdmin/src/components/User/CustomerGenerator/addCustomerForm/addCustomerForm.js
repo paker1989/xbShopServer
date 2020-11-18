@@ -56,6 +56,7 @@ const Core = (props) => {
             pathname: `/dashboard/addCustomer/2`, // backendMsg = idCustomer
         });
         dispatch({ type: CustomerActionType._SET_SELECT_MENU, payload: 'address' });
+        dispatch(CustomerActionCreator.setAddressEditMode({ editMode: true }));
     };
 
     useUnmount(() => {
@@ -78,6 +79,7 @@ const Core = (props) => {
                             pathname: `/dashboard/addCustomer/${backendMsg}`, // backendMsg = idCustomer
                         });
                         dispatch({ type: CustomerActionType._SET_SELECT_MENU, payload: 'address' });
+                        dispatch(CustomerActionCreator.setAddressEditMode({ editMode: true }));
                     },
                     onCancel() {
                         history.push('/dashboard/customerList');

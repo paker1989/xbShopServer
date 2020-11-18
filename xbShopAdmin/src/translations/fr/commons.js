@@ -50,4 +50,5 @@ export default {
     'common.upload.btn.thumbnail': 'Changez avatar',
     'common.upload.title': 'Votre avatar',
     'common.update.info': 'Maj. info.',
+    'common.tooltip.addr.phone': 'Peut être utilisé pour faciliter la livraison',
 };
