@@ -1,37 +1,31 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import { connect, useDispatch, useSelector } from 'react-redux';
-// import { Form, Input, Radio, Row, Col, Button, message, Switch } from 'antd';
-// import { injectIntl, FormattedMessage } from 'react-intl';
-
-// import { withRouter } from 'react-router-dom';
-// import PasswordConfirmer from '../../../Common/PasswordConfirmer/pwdConfirmer';
-// import ThumbnailUpload from '../../../Common/ThumbnailUpload/thumbnailUpload';
+import React, { Suspense } from 'react';
+import { useDispatch } from 'react-redux';
+import { withRouter, Switch, Redirect, Route } from 'react-router-dom';
 import { useUnmount } from 'ahooks';
-// import { customerGenerator as addCustomerMeta } from '../../../../static/data/componentMeta/user/addCustomerMeta';
-import * as CustomerActionType from '../../../../store/actionType/customerActionType';
-import * as CustomerActionCreator from '../../../../store/action/customerAction';
-// import * as ServerErrorType from '../../../../static/data/serverErrorType/customerType';
-// import getValidators from './validators';
 
+import ContainerSkeleton from '../../../Common/ContainerSkeleton/containerSkeleton';
 import AddressCard from './addressCard';
 import AddAddressForm from './addAddressForm';
 
-// import './addCustomerForm.scss';
+import * as CustomerActionCreator from '../../../../store/action/customerAction';
 
-const ManageAddress = () => {
+const ManageAddress = ({ match }) => {
     const dispatch = useDispatch();
-    const editMode = useSelector((state) => state.user.addAddress.editMode);
+    const { url: routerUrl } = match;
 
     useUnmount(() => {
         dispatch(CustomerActionCreator.resetAddressState());
     });
 
-    if (editMode) {
-        return <AddAddressForm />;
-    }
-
-    return <AddressCard.ADD />;
+    return (
+        <Suspense fallback={<ContainerSkeleton />}>
+            <Switch>
+                <Route key="addressHome" path={`${routerUrl}`} exact component={AddressCard.ADD} />
+                <Route key="addAddress" path={`${routerUrl}/add`} component={AddAddressForm} />
+                <Redirect path="*" to={routerUrl} />
+            </Switch>
+        </Suspense>
+    );
 };
 
-export default ManageAddress;
+export default withRouter(ManageAddress);

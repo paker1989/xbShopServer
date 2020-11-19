@@ -5,7 +5,7 @@ import { getRequestUrl } from '../../../static/api';
 import * as CustomerActionType from '../../actionType/customerActionType';
 
 export function* saveCustomerSaga(reqObj) {
-    const { action = '', thumbnail, ...otherProps } = reqObj.payload;
+    const { /* action = '', */ thumbnail, ...otherProps } = reqObj.payload;
     let res;
     try {
         if (thumbnail && thumbnail[0] instanceof File) {

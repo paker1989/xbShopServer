@@ -90,7 +90,7 @@ const GalleryUpload = (props, ref) => {
                 {galleries.length < maxGalleries ? (
                     <p className="gallery-upload-body">
                         <Icon type="plus" />
-                        <span> 
+                        <span>
                             <FormattedMessage id="product.gallery.clickadd" />
                         </span>
                     </p>

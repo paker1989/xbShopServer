@@ -1,31 +1,21 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Card, Row, Col, Typography } from 'antd';
-import { FormattedMessage } from 'react-intl';
+import React, { Suspense } from 'react';
+import { useDispatch } from 'react-redux';
+import { Card, Row, Col } from 'antd';
 import { useUnmount } from 'ahooks';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Switch, Redirect, Route } from 'react-router-dom';
 
+import ContainerSkeleton from '../../Common/ContainerSkeleton/containerSkeleton';
 import AddCustomerForm from './addCustomerForm/addCustomerForm';
 import ManageAddress from './manageAddress/manageAddress';
 import SideBar from './customerSideBar';
 
-import useCustomerMenuItems from './hooks/useMenuItems';
 import * as CustomerCmnActionType from '../../../store/actionType/customerActionType';
 
 import './customerGenerator.scss';
 
-const { Title } = Typography;
-
 const CustomerGenerator = ({ match }) => {
-    const idCustomer = parseInt(match.params.idCustomer || -1, 10);
+    const { url: routerUrl } = match;
     const dispatch = useDispatch();
-
-    const selectedMenu = useSelector((state) => state.user.customerCmn.selectMenu);
-    const [menuItems, disabledItems] = useCustomerMenuItems(idCustomer);
-
-    const onSelectItem = ({ selectedKeys }) => {
-        dispatch({ type: CustomerCmnActionType._SET_SELECT_MENU, payload: selectedKeys[0] });
-    };
 
     useUnmount(() => {
         dispatch({ type: CustomerCmnActionType._CUSTOMER__GLOBAL_RESET });
@@ -37,12 +27,7 @@ const CustomerGenerator = ({ match }) => {
                 <Card bordered={false}>
                     <Row type="flex">
                         <Col xs={24} sm={8} md={6} lg={4} className="sidebar-container">
-                            <SideBar
-                                onSelect={onSelectItem}
-                                menuItems={menuItems}
-                                selectedKeys={[selectedMenu]}
-                                disabledKeys={disabledItems}
-                            />
+                            <SideBar />
                         </Col>
                         <Col
                             xs={24}
@@ -50,13 +35,13 @@ const CustomerGenerator = ({ match }) => {
                             md={{ span: 17, offset: 1 }}
                             lg={{ span: 19, offset: 1 }}
                         >
-                            <div className="prefer-left">
-                                <Title level={4}>
-                                    <FormattedMessage id={`customer.title.${selectedMenu}`} />
-                                </Title>
-                            </div>
-                            {selectedMenu === 'basic' && <AddCustomerForm />}
-                            {selectedMenu === 'address' && <ManageAddress />}
+                            <Suspense fallback={<ContainerSkeleton />}>
+                                <Switch>
+                                    <Route key="basic" path={`${routerUrl}`} exact component={AddCustomerForm} />
+                                    <Route key="address" path={`${routerUrl}/address`} component={ManageAddress} />
+                                    <Redirect path="*" to={routerUrl} />
+                                </Switch>
+                            </Suspense>
                         </Col>
                     </Row>
                 </Card>

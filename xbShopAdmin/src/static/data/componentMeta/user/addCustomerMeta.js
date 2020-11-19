@@ -1,6 +1,11 @@
 module.exports = {
     global: {
-        defaultMenus: ['basic', 'address', 'orders'],
+        // defaultMenus: ['basic', 'address', 'orders'],
+        routes: {
+            basic: '',
+            address: 'address',
+            orders: 'orders',
+        },
     },
     customerGenerator: {
         formName: 'addCustomer', // form name

@@ -6,9 +6,9 @@ import CustomIcon from '../../../Common/CustomIcon/customIcon';
 
 import './address.scss';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
-const AddressCard = (props) => {
+const AddressCard = () => {
     return <div>default address</div>;
 };
 

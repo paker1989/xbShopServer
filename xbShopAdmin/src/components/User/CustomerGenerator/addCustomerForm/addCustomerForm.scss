@@ -25,12 +25,12 @@
 
 @media (max-width: 1024px) {
     .add-customer-form-body {
-      justify-content: center;
-      flex-direction: column-reverse;
+        justify-content: center;
+        flex-direction: column-reverse;
 
-      .add-customer-form-items.view-right {
-        flex: 0;
-      }
+        .add-customer-form-items.view-right {
+            flex: 0;
+        }
         .add-customer-form-items.view-right {
             padding: 30px;
             flex: 0;

@@ -3,7 +3,7 @@ import { getNoEmptyStr, validateEmail } from '../../../../utils/data.helper';
 
 const { rules } = customerGenerator;
 
-export default ({ intl, form }) => {
+export default ({ intl }) => {
     function _translate(id, values = {}) {
         return intl.formatMessage({ id }, values);
     }

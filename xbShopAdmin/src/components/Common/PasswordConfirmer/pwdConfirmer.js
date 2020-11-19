@@ -14,21 +14,15 @@ const Core = ({
     form,
     pwdLength = 6,
     validators = selfValidator(intl, form),
-    initMode = 'input', // create, edit, standby, input
+    passwordMode = 'input', // create, edit, standby, input
+    setPasswordMode,
     showGenerate = false,
 }) => {
     const { getFieldDecorator } = form;
 
-    const [passwordMode, setPasswordMode] = useState(initMode);
     const showRepeat = passwordMode === 'edit' || passwordMode === 'create';
 
-    // const prevModeRef = useRef();
-    // useEffect(() => {
-    //     prevModeRef.current = passwordMode;
-    // });
-
     const generatePwd = () => {
-        // const { pwdLength } = addAdminMeta.adminGenerator;
         const newPwd = generatePwdFn(pwdLength);
         form.setFieldsValue({
             passwordRepeat: newPwd,
@@ -38,13 +32,6 @@ const Core = ({
 
     const resetPwd = () => {
         setPasswordMode('edit');
-        // dispatch(
-        //     UserActionCreator.setUpdateAdminStates({
-        //         ...form.getFieldsValue(),
-        //         passwordRepeat: '',
-        //         password: '',
-        //     })
-        // );
         form.setFieldsValue({
             passwordRepeat: '',
             password: '',
@@ -71,7 +58,6 @@ const Core = ({
                     )(
                         <Input.Password
                             disabled={passwordMode === 'standby'}
-                            // style={{ marginRight: 10 }}
                             className="xb-form-input"
                             type="password"
                             placeholder={intl.formatMessage({ id: 'common.password' })}
@@ -101,7 +87,6 @@ const Core = ({
                         validators.passwordRepeat
                     )(
                         <Input.Password
-                            // style={{ marginRight: 10 }}
                             className="xb-form-input"
                             type="password"
                             placeholder={intl.formatMessage({ id: 'common.password.repeat' })}

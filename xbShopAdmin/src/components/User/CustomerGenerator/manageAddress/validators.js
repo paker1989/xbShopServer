@@ -1,11 +1,11 @@
 // import { getNoEmptyStr, validateEmail, validePassword } from '../../../utils/data.helper';
 
-export default ({ intl, form }) => {
+export default ({ intl }) => {
     function _translate(id, values = {}) {
         return intl.formatMessage({ id }, values);
     }
 
-    const { isFieldTouched } = form;
+    // const { isFieldTouched } = form;
     // {
     //     "idAddress": 42011,
     //     "recipient": "reci_user1",

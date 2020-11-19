@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Table, Switch, Popconfirm, message, Tabs } from 'antd';
@@ -44,7 +44,7 @@ const TeamTable = ({ intl, loading }) => {
         setBindSearch(e.target.value.trim());
     };
 
-    const actionSearch = (e) => {
+    const actionSearch = () => {
         setSearchStr(bindSearch);
     };
 

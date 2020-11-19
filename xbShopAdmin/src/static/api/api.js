@@ -21,5 +21,5 @@ module.exports = {
     },
     customer: {
         saveCustomer: 'saveCustomer',
-    }
+    },
 };

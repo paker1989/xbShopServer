@@ -23,11 +23,12 @@ const AdminForm = (props) => {
     const { form, intl, history, match, idRole } = props;
     const { getFieldDecorator, setFieldsValue } = form;
     const dispatch = useDispatch();
+
+    const idAdmin = parseInt(match.params.idAdmin || -1, 10);
     const backendStatus = useSelector((state) => state.user.addAdmin.backendStatus);
     const backendMsg = useSelector((state) => state.user.addAdmin.backendMsg);
     const validators = getValidators({ intl, form });
-
-    const idAdmin = parseInt(match.params.idAdmin || -1, 10);
+    const [passwordMode, setPasswordMode] = useState(idAdmin === -1 ? 'create' : 'standby');
 
     const allAdmins = useUserAdmins(false);
     const userRoles = useUserRoles();
@@ -193,7 +194,7 @@ const AdminForm = (props) => {
                     />
                 )}
             </Form.Item>
-            <PasswordConfirmer showGenerate initMode={idAdmin === -1 ? 'create' : 'standby'} form={form} />
+            <PasswordConfirmer showGenerate passwordMode={passwordMode} setPasswordMode={setPasswordMode} form={form} />
             <Row>
                 <Col {...generatorMeta.formLayout.labelCol}></Col>
                 <Col {...generatorMeta.formLayout.wrapperCol}>

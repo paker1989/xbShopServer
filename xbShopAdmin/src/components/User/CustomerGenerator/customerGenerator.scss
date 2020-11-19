@@ -13,13 +13,13 @@
     }
 
     .prefer-left {
-      margin-top: 10px;
+        margin-top: 10px;
     }
 }
 
 @media (max-width: 576px) {
-  .customer-generator .sidebar-container {
-    border-right: none;
-    border-bottom:  1px solid $main-color;
-  }
+    .customer-generator .sidebar-container {
+        border-right: none;
+        border-bottom: 1px solid $main-color;
+    }
 }
