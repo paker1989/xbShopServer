@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Radio, Row, Col, Button, message, Switch, Modal, Typography } from 'antd';
 import { injectIntl, FormattedMessage } from 'react-intl';
@@ -24,13 +24,13 @@ const { Title } = Typography;
 const Core = (props) => {
     const dispatch = useDispatch();
     const { form, intl, history, match } = props;
-
     const { url: routerUrl } = match;
     // console.log(history);
+    const idCustomer = getUrlParameter('customerId') || -1;
+
     const backendStatus = useSelector((state) => state.user.addCustomer.backendStatus);
     const backendMsg = useSelector((state) => state.user.addCustomer.backendMsg);
-
-    const idCustomer = getUrlParameter('customerId') || -1;
+    const [passwordMode, setPasswordMode] = useState(idCustomer === -1 ? 'create' : 'standby');
 
     const { getFieldDecorator } = form;
 
@@ -176,7 +176,12 @@ const Core = (props) => {
                             />
                         )}
                     </Form.Item>
-                    <PasswordConfirmer showGenerate initMode={idCustomer === -1 ? 'create' : 'standby'} form={form} />
+                    <PasswordConfirmer
+                        showGenerate
+                        passwordMode={passwordMode}
+                        form={form}
+                        setPasswordMode={setPasswordMode}
+                    />
                     <Row>
                         <Col {...formLayout.labelCol}></Col>
                         <Col {...formLayout.wrapperCol}>

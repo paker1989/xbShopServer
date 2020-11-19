@@ -6,7 +6,7 @@ const CustomIcon = ({ name, ...nativeProps }) => {
     // const svg = require(`../../../static/image/icon/${name}.svg`);
     /* eslint-enable */
     // console.log(svg);
-    const component = () => <img alt={name} src={`../../../static/image/icon/${name}.svg`} />;
+    const component = () => <img alt={name} src={`/static/image/icon/${name}.svg`} />;
     return <Icon component={component} {...nativeProps} />;
 };
 
