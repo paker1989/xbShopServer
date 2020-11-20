@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
-import { Typography, Breadcrumb, Row } from 'antd';
+import { Typography, Breadcrumb } from 'antd';
 import { useDispatch } from 'react-redux';
-import { withRouter, Switch, Redirect, Route } from 'react-router-dom';
+import { withRouter, Switch, Redirect, Route, NavLink } from 'react-router-dom';
 import { useUnmount } from 'ahooks';
 import { FormattedMessage } from 'react-intl';
 
@@ -9,13 +9,18 @@ import ContainerSkeleton from '../../../Common/ContainerSkeleton/containerSkelet
 import AddressCard from './addressCard';
 import AddAddressForm from './addAddressForm';
 
+import { addAddressGenerator as addressMeta } from '../../../../static/data/componentMeta/user/addCustomerMeta';
 import * as CustomerActionCreator from '../../../../store/action/customerAction';
+import useBreadcrumb from './hooks/useBreadcrumb';
 
 const { Title } = Typography;
+const { routes } = addressMeta;
 
 const ManageAddress = ({ match }) => {
     const dispatch = useDispatch();
     const { url: routerUrl } = match;
+
+    const breadcrumbs = useBreadcrumb();
 
     useUnmount(() => {
         dispatch(CustomerActionCreator.resetAddressState());
@@ -30,16 +35,23 @@ const ManageAddress = ({ match }) => {
             </div>
             <div className="xb-breadcrumb-container">
                 <Breadcrumb separator=">">
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item href="">Application Center</Breadcrumb.Item>
-                    <Breadcrumb.Item href="">Application List</Breadcrumb.Item>
-                    <Breadcrumb.Item>An Application</Breadcrumb.Item>
+                    {breadcrumbs.map((bc) => (
+                        <Breadcrumb.Item key={bc.label}>
+                            {bc.path ? (
+                                <NavLink to={bc.path}>
+                                    <FormattedMessage id={`customer.address.bc.${bc.label}`} />
+                                </NavLink>
+                            ) : (
+                                <FormattedMessage id={`customer.address.bc.${bc.label}`} />
+                            )}
+                        </Breadcrumb.Item>
+                    ))}
                 </Breadcrumb>
             </div>
             <Suspense fallback={<ContainerSkeleton />}>
                 <Switch>
-                    <Route key="addressHome" path={`${routerUrl}`} exact component={AddressCard.ADD} />
-                    <Route key="addAddress" path={`${routerUrl}/add`} component={AddAddressForm} />
+                    <Route key="addressHome" path={`${routerUrl}${routes.basic}`} exact component={AddressCard.ADD} />
+                    <Route key="addAddress" path={`${routerUrl}${routes.add}`} component={AddAddressForm} />
                     <Redirect path="*" to={routerUrl} />
                 </Switch>
             </Suspense>

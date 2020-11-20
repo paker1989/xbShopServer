@@ -27,4 +27,7 @@ export default {
     'customer.addAddress.error.noCity': 'Veuillez sélectionner une ville.',
     'customer.addAddress.error.noPostcode': 'Veuillez saisir un code postal.',
     'customer.addAddress.error.noCountry': 'Veuillez sélectionner un pays (ou région).',
+    'customer.address.bc.basic': 'Vos address',
+    'customer.address.bc.editAddress': 'Editer address',
+    'customer.address.bc.addAddress': 'Nouvelle address',
 };

@@ -28,4 +28,7 @@ export default {
     'customer.addAddress.error.noCity': '请选择一个城市.',
     'customer.addAddress.error.noPostcode': '请输入邮政编码',
     'customer.addAddress.error.noCountry': '请选择一个国家(或地区)',
+    'customer.address.bc.basic': '您的地址',
+    'customer.address.bc.editAddress': '编辑地址',
+    'customer.address.bc.addAddress': '新地址',
 };

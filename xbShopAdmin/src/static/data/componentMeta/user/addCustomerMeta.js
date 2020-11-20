@@ -38,5 +38,9 @@ module.exports = {
                 sm: { span: 24 },
             },
         },
+        routes: {
+            basic: '',
+            add: '/add',
+        }
     },
 };
