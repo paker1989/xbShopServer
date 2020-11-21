@@ -12,7 +12,9 @@ import {
     getAllAdminSaga,
 } from './admin.saga';
 
-import { saveCustomerSaga } from './customer.saga';
+import { saveCustomerSaga, getGeoAutocompletesSaga } from './customer.saga';
+
+import { getConstantsSaga } from './global.saga';
 
 export function* userSaga() {
     // admin
@@ -25,4 +27,10 @@ export function* userSaga() {
 
     // customer
     yield takeLatest(CustomerActionType._SAVE_CUSTOMER, saveCustomerSaga);
+
+    // address
+    yield takeLatest(CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE, getGeoAutocompletesSaga);
+
+    // global common
+    yield takeLatest(CustomerActionType._GLOBAL_FETCH_CONSTANT, getConstantsSaga);
 }

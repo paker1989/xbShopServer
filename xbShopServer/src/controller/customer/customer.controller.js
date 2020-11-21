@@ -6,7 +6,7 @@ const { HttpException } = require('../../core/httpException');
 const { normalizeImgPath } = require('../../core/dateHelper');
 const { basePath, port } = require('../../config/config');
 
-const ErrorTypes = require('../../core/type/customerType');
+// const ErrorTypes = require('../../core/type/customerType');
 
 /**
  * attempt to delete a user role
@@ -43,8 +43,14 @@ const saveCustomer = async (ctx) => {
     }
 };
 
-const getGeoConstants = async (ctx) => {
-    const { countryCode } = ctx.request.body;
+const fetchConstants = async (ctx) => {
+    const { type, countryCode } = ctx.request.body;
+    // to refine in the future
+    if (type === 'country') {
+        Resolve.json(ctx, [{ countryId: 1, countryCode: 'fr' }]);
+        return;
+    }
+
     if (!countryCode) {
         throw new Error('no country code is present');
     }
@@ -64,5 +70,5 @@ const getGeoConstants = async (ctx) => {
 
 module.exports = {
     saveCustomer,
-    getGeoConstants,
+    fetchConstants,
 };

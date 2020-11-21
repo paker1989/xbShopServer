@@ -56,3 +56,45 @@ export function* saveCustomerSaga(reqObj) {
         });
     }
 }
+
+/**
+ * example: searchStr, type
+ * @param {*} reqObj
+ */
+export function* getGeoAutocompletesSaga(reqObj) {
+    const { type } = reqObj.payload;
+    try {
+        const res = yield axios.post(
+            getRequestUrl('customer', 'getGeoAutocompletes'),
+            {
+                ...reqObj.payload,
+            },
+            { withCredentials: true }
+        );
+        if (res && res.data) {
+            yield put({
+                type: CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_SUCCESS,
+                payload: {
+                    type,
+                    data: res.data,
+                },
+            });
+        } else {
+            yield put({
+                type: CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_FAILED,
+                payload: {
+                    backendStatus: CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_FAILED,
+                    backendMsg: res.statusText,
+                },
+            });
+        }
+    } catch (error) {
+        yield put({
+            type: CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_FAILED,
+            payload: {
+                backendStatus: CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_FAILED,
+                backendMsg: error.response ? error.response.statusText : error.message,
+            },
+        });
+    }
+}

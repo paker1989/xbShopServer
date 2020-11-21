@@ -28,19 +28,14 @@ module.exports = {
     },
     addAddressGenerator: {
         formName: 'addAddress', // form name
-        formLayout: {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 24 },
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 24 },
-            },
+        formRowLayout: {
+            xs: { span: 24 },
+            sm: { span: 20, offset: 2 },
+            md: { span: 18, offset: 2 },
         },
         routes: {
             basic: '',
             add: '/add',
-        }
+        },
     },
 };

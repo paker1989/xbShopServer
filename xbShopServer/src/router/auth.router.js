@@ -39,4 +39,6 @@ router.post('/updateAdmin', authMiddleware, updateAdmin);
 router.post('/allAdmins', authMiddleware, allAdmins);
 router.post('/deleteUserrole', authMiddleware, deleteUserrole);
 
+router.authMiddleware = authMiddleware;
+
 module.exports = router;

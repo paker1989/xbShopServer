@@ -74,16 +74,23 @@ input[type='textarea'].fixed-vert {
     padding: 8px 20px;
 }
 
-.xb-form-input {
-    width: 250px;
-    margin-right: 10px;
+form {
+    .xb-form-input {
+        width: 250px;
+        margin-right: 10px;
+        max-width: 100%;
 
-    &.large {
-        width: 270px;
-    }
+        &.large {
+            width: 300px;
+        }
 
-    &.xl {
-        width: 300px;
+        &.xl {
+            width: 360px;
+        }
+
+        &.xxl {
+            width: 420px;
+        }
     }
 }
 

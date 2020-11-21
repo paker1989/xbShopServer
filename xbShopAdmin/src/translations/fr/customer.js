@@ -30,4 +30,6 @@ export default {
     'customer.address.bc.basic': 'Vos address',
     'customer.address.bc.editAddress': 'Editer address',
     'customer.address.bc.addAddress': 'Nouvelle address',
+    'customer.addAddress.title.add': 'Ajouter une nouvelle adresse',
+    'customer.addAddress.title.edit': 'Editer votre adresse',
 };

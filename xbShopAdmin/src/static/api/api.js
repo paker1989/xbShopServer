@@ -21,5 +21,7 @@ module.exports = {
     },
     customer: {
         saveCustomer: 'saveCustomer',
+        fetchConstants: 'fetchConstants',
+        getGeoAutocompletes: 'getGeoAutos',
     },
 };

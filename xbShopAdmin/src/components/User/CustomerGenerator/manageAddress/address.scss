@@ -2,6 +2,9 @@
 
 $address-card-size: 260px;
 
+/**
+addressCard
+*/
 .address-card-container {
     position: relative;
     width: $address-card-size;
@@ -22,5 +25,13 @@ $address-card-size: 260px;
             color: $sub-text-color;
             margin-top: 10px;
         }
+    }
+}
+
+/**
+*/
+.add-address-form {
+    .ant-form-item {
+        margin-bottom: 5px;
     }
 }

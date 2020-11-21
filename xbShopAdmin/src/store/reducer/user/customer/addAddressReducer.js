@@ -4,21 +4,39 @@
 import * as customerActionType from '../../../actionType/customerActionType';
 
 const formInitialState = {
-    // addressId: -1,
+    addr1: '',
+    addr2: '',
+    postCode: '',
+    cityId: '-1',
+    region: '',
+    countryCode: 'fr',
+    instruction: '',
 };
 
 const initialState = {
     ...formInitialState,
+    regionAvailables: ['demo region'],
+    cityAvailables: [],
     backendStatus: '',
     backendMsg: '',
 };
 
 export default (state = initialState, action) => {
+    const { type, data } = action.payload || {};
     switch (action.type) {
         case customerActionType._ADDRESS_SAVE_RESET_BACKEND_STATUS:
             return { ...state, ...action.payload };
         case customerActionType._ADDRESS_RESET_STATE:
             return { ...initialState };
+        case customerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_SUCCESS:
+            switch (type) {
+                case 'region':
+                    return { ...state, regionAvailables: data };
+                case 'city':
+                    return { ...state, cityAvailables: data };
+                default:
+                    return { ...state };
+            }
         default:
             return state;
     }

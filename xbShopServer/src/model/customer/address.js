@@ -28,17 +28,35 @@ Address.init(
             allowNull: false,
             defaultValue: '',
         },
-        city: {
+        cityId: {
+            type: DataTypes.INTEGER(8),
+            allowNull: false,
+            defaultValue: -1,
+        },
+        // departmentId: {
+        //     type: DataTypes.INTEGER(8),
+        //     allowNull: false,
+        //     defaultValue: -1,
+        // },
+        // regionId: {
+        //     type: DataTypes.INTEGER(8),
+        //     allowNull: false,
+        //     defaultValue: -1,
+        // },
+        region: {
             type: DataTypes.STRING(64),
             allowNull: false,
+            defaultValue: '',
         },
         postCode: {
             type: DataTypes.INTEGER(11),
             allowNull: false,
         },
-        country: {
+        countryCode: {
+            // code
             type: DataTypes.STRING(16),
             allowNull: false,
+            // defaultValue: 'fr',
         },
         detail: {
             type: DataTypes.VIRTUAL,

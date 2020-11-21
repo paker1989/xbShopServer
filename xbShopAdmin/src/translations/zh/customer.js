@@ -31,4 +31,6 @@ export default {
     'customer.address.bc.basic': '您的地址',
     'customer.address.bc.editAddress': '编辑地址',
     'customer.address.bc.addAddress': '新地址',
+    'customer.addAddress.title.add': '添加一个新地址',
+    'customer.addAddress.title.edit': '编辑当前地址',
 };

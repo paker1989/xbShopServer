@@ -38,6 +38,7 @@ export default ({ intl }) => {
         postCode: {
             rules: [{ required: true, message: _translate('customer.addAddress.error.noPostcode') }],
         },
+        department: {},
         region: {},
         country: {
             rules: [{ required: true, message: _translate('customer.addAddress.error.noCountry') }],

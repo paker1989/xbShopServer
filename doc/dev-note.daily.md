@@ -143,4 +143,12 @@ todo:
  - todo:
    migrate render logic of customer to route mode => easier to maintain;
    breadcrumb of add address;
-    - 
+
+## 2020/11/21
+todo:  => dataSource: { text, value }
+  - complete `http://localhost:3000/api/v1/customer/getGeoAutos` fn: { type: 'region', searchStr : '> 2'}:
+   search region, contains *searchStr* in title;
+  - loading status while *fetching*;
+  - the same for `city`;
+  - `onSelectCountry`;
+  - set postal code on select `city`;

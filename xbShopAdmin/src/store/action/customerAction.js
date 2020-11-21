@@ -18,3 +18,18 @@ export const resetAddressSaveBackendStatus = () => ({
 export const resetAddressState = () => ({
     type: CustomerActionType._ADDRESS_RESET_STATE,
 });
+
+export const fetchCountries = () => ({
+    type: CustomerActionType._GLOBAL_FETCH_CONSTANT,
+    payload: { type: 'country' },
+});
+
+export const fetchGeoAutoComplete = ({ type, searchStr }) => ({
+    type: CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE,
+    payload: { type, searchStr },
+});
+
+export const putGeoAutoComplete = ({ type, data }) => ({
+    type: CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_SUCCESS,
+    payload: { type, data },
+});
