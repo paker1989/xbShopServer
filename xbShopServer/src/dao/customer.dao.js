@@ -168,25 +168,24 @@ class CustomerDAO {
         return pk; // undefined
     }
 
-    static async getGeoConstants(countryCode) {
-        const allRegions = await RegionModel.findAll({
-            where: {
-                country: countryCode,
-            },
-            include: [
-                {
-                    model: DepartmentModel,
-                    as: 'departments',
-                    include: [
-                        {
-                            model: CityModel,
-                            as: 'cities',
+    static async getDepartmByCountry(countryCode) {
+        const allDepartments = (
+            await DepartmentModel.findAll({
+                include: [
+                    {
+                        model: RegionModel,
+                        as: 'region',
+                        where: {
+                            country: countryCode,
                         },
-                    ],
-                },
-            ],
-        });
-        return allRegions;
+                    },
+                ],
+            })
+        ).map((item) => ({
+            text: item.displayName,
+            value: item.name,
+        }));
+        return allDepartments;
     }
 }
 

@@ -23,6 +23,15 @@ Department.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
+        displayName: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                // const keys = ['code', 'name', 'region'];
+                return `${this.getDataValue('code')} - ${this.getDataValue('name')}, ${
+                    this.getDataValue('region').name
+                }`;
+            },
+        },
     },
     {
         sequelize,

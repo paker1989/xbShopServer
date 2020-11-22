@@ -44,24 +44,48 @@ const saveCustomer = async (ctx) => {
 };
 
 const fetchConstants = async (ctx) => {
-    const { type, countryCode } = ctx.request.body;
     // to refine in the future
-    if (type === 'country') {
-        Resolve.json(ctx, [{ countryId: 1, countryCode: 'fr' }]);
+    Resolve.json(ctx, [{ countryId: 1, countryCode: 'fr' }]);
+};
+
+/* eslint-disable no-case-declarations */
+const getGeoAutos = async (ctx) => {
+    const { type, countryCode, searchStr } = ctx.request.body;
+
+    if (!countryCode) {
+        Resolve.json(ctx, []);
         return;
     }
 
-    if (!countryCode) {
-        throw new Error('no country code is present');
-    }
     try {
-        const cached = await cacheHelper.getCachedGeo(countryCode);
-        if (cached) {
-            Resolve.json(ctx, cached);
-        } else {
-            const geoData = await CustomerDAO.getGeoConstants(countryCode);
-            cacheHelper.setCachedGeo(geoData, countryCode);
-            Resolve.json(ctx, geoData);
+        switch (type) {
+            case 'region':
+                const cached = await cacheHelper.getCachedDepartments(countryCode);
+                if (cached) {
+                    console.log('hit cache');
+                    const data = cached.filter(
+                        (department) => department.text.toLowerCase().includes(searchStr.toLowerCase())
+                        // department.slug.includes(searchStr) ||
+                        // department.code.includes(searchStr) ||
+                        // department.name.includes(searchStr) ||
+                        // department.region.slug.includes(searchStr) ||
+                        // department.region.name.includes(searchStr)
+                    );
+                    Resolve.json(ctx, { cnt: data.length, data });
+                } else {
+                    const departmData = await CustomerDAO.getDepartmByCountry(countryCode);
+                    cacheHelper.setCachedDepartments(departmData, countryCode);
+                    const filteredData = departmData.filter((department) =>
+                        department.text.toLowerCase().includes(searchStr.toLowerCase())
+                    );
+
+                    Resolve.json(ctx, { cnt: filteredData.length, data: filteredData });
+                }
+                return;
+            case 'city':
+                return;
+            default:
+                return;
         }
     } catch (err) {
         throw new HttpException(err.message);
@@ -71,4 +95,5 @@ const fetchConstants = async (ctx) => {
 module.exports = {
     saveCustomer,
     fetchConstants,
+    getGeoAutos,
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Select, AutoComplete, Row, Col, Typography } from 'antd';
 import { injectIntl, FormattedMessage } from 'react-intl';
@@ -11,6 +11,7 @@ import { addAddressGenerator as addAddressMeta } from '../../../../static/data/c
 import * as CustomerActionType from '../../../../store/actionType/customerActionType';
 import * as CustomerActionCreator from '../../../../store/action/customerAction';
 import { getUrlParameter } from '../../../../utils/url.helper';
+import useAvailableRegions from './hooks/useAvailableRegions';
 import getValidators from './validators';
 
 import './address.scss';
@@ -20,11 +21,14 @@ const { formRowLayout } = addAddressMeta;
 
 const Core = (props) => {
     const dispatch = useDispatch();
-    const { form, intl } = props;
+    const { form, intl, countryCode } = props;
 
+    const [regionSearchStr, setRegionSearchStr] = useState('');
     const addressId = getUrlParameter('addressId');
+
     const countryList = useCountryList();
-    const regionAvailables = useSelector((state) => state.user.addAddress.regionAvailables);
+    const regionAvailables = useAvailableRegions(countryCode, regionSearchStr);
+
     const backendStatus = useSelector((state) => state.user.addAddress.backendStatus);
     const backendMsg = useSelector((state) => state.user.addAddress.backendMsg);
 
@@ -47,11 +51,7 @@ const Core = (props) => {
 
     const { run: onSearchRegion } = useDebounceFn(
         (searchStr) => {
-            if (searchStr.trim().length <= 2) {
-                dispatch(CustomerActionCreator.putGeoAutoComplete({ type: 'region', data: [] }));
-            } else {
-                dispatch(CustomerActionCreator.fetchGeoAutoComplete({ type: 'region', searchStr }));
-            }
+            setRegionSearchStr(searchStr);
         },
         { wait: 500 }
     );
@@ -71,7 +71,6 @@ const Core = (props) => {
             switch (backendMsg) {
                 default:
                     break;
-                // message.error(intl.formatMessage({ id: `customer.save.error.${backendMsg}` }));
             }
         }
         dispatch(CustomerActionCreator.resetAddressSaveBackendStatus());

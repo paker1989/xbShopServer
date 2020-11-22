@@ -37,6 +37,8 @@ export default (state = initialState, action) => {
                 default:
                     return { ...state };
             }
+        case customerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_FAILED:
+            return { ...state, ...action.payload };
         default:
             return state;
     }

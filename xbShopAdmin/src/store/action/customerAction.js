@@ -24,9 +24,9 @@ export const fetchCountries = () => ({
     payload: { type: 'country' },
 });
 
-export const fetchGeoAutoComplete = ({ type, searchStr }) => ({
+export const fetchGeoAutoComplete = ({ type, countryCode, searchStr }) => ({
     type: CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE,
-    payload: { type, searchStr },
+    payload: { type, countryCode, searchStr },
 });
 
 export const putGeoAutoComplete = ({ type, data }) => ({

@@ -26,7 +26,8 @@ const auth = {
 const customer = {
     prefix: 'customer',
     keys: {
-        geoConstant: 'const_geo',
+        region: 'region',
+        departm: 'departm',
     },
 };
 

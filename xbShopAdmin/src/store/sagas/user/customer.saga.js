@@ -65,7 +65,7 @@ export function* getGeoAutocompletesSaga(reqObj) {
     const { type } = reqObj.payload;
     try {
         const res = yield axios.post(
-            getRequestUrl('customer', 'getGeoAutocompletes'),
+            getRequestUrl('customer', 'getGeoAutos'),
             {
                 ...reqObj.payload,
             },
@@ -76,7 +76,7 @@ export function* getGeoAutocompletesSaga(reqObj) {
                 type: CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_SUCCESS,
                 payload: {
                     type,
-                    data: res.data,
+                    data: res.data.data,
                 },
             });
         } else {
