@@ -183,7 +183,7 @@ class CustomerDAO {
             })
         ).map((item) => ({
             text: item.displayName,
-            value: item.name,
+            value: item.id,
         }));
         return allDepartments;
     }

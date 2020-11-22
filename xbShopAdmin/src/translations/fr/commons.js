@@ -51,4 +51,7 @@ export default {
     'common.upload.title': 'Votre avatar',
     'common.update.info': 'Maj. info.',
     'common.tooltip.addr.phone': 'Peut être utilisé pour faciliter la livraison',
+    'common.instruction': 'Instruction',
+    'common.tooltip.instruction':
+        "fournissez des informations utiles telles qu'une brève description de votre batiment.",
 };

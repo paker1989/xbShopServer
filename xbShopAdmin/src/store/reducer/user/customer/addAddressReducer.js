@@ -7,7 +7,7 @@ const formInitialState = {
     addr1: '',
     addr2: '',
     postCode: '',
-    cityId: '-1',
+    cityId: '',
     region: '',
     countryCode: 'fr',
     instruction: '',

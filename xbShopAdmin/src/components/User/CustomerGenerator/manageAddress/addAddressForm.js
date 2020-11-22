@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createRef, useRef } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Select, AutoComplete, Row, Col, Typography } from 'antd';
+import { Form, Input, Select, AutoComplete, Row, Col, Typography, Button } from 'antd';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { useUnmount, useDebounceFn } from 'ahooks';
 import { withRouter } from 'react-router-dom';
@@ -25,6 +25,7 @@ const Core = (props) => {
 
     const [regionSearchStr, setRegionSearchStr] = useState('');
     const [citySearchStr, setCitySearchStr] = useState('');
+
     const addressId = getUrlParameter('addressId');
 
     const countryList = useCountryList();
@@ -41,6 +42,7 @@ const Core = (props) => {
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
+            console.log(values);
             /* eslint-disable */
             if (!errors) {
                 // TODO
@@ -60,11 +62,18 @@ const Core = (props) => {
 
     const { run: onSearchCity } = useDebounceFn(
         (searchStr) => {
-            console.log('set city search');
+            // console.log('set city search');
             setCitySearchStr(searchStr);
         },
         { wait: 500 }
     );
+
+    const onSelectCity = (city) => {
+        const cityObj = cityAvailables.find((item) => item.id === city.id);
+        if (cityObj) {
+            form.setFieldsValue({ postCode: cityObj.postCode });
+        }
+    };
 
     useUnmount(() => {
         CustomerActionCreator.resetAddressSaveBackendStatus();
@@ -176,6 +185,7 @@ const Core = (props) => {
                                 dataSource={cityAvailables}
                                 className="xb-form-input xxl"
                                 onSearch={onSearchCity}
+                                onSelect={onSelectCity}
                             >
                                 <Input
                                     className="xb-form-input xxl"
@@ -209,6 +219,46 @@ const Core = (props) => {
                             />
                         )}
                     </Form.Item>
+                    <Form.Item
+                        label={intl.formatMessage({ id: 'common.instruction' })}
+                        // extra={<FormattedMessage id="common.tooltip.instruction" />}
+                    >
+                        {getFieldDecorator(
+                            'instruction',
+                            validators.instruction
+                        )(
+                            <Typography>
+                                {/* <Paragraph> */}
+                                {/* {intl.formatMessage({ id: 'common.tooltip.instruction' })} */}
+                                {/* <Text>
+                                    <FormattedMessage id="common.tooltip.instruction" />
+                                </Text> */}
+                                {/* </Paragraph> */}
+                                {/* <Input
+                                    className="xb-form-input xxl"
+                                    placeholder={intl.formatMessage({ id: 'common.tooltip.instruction' })}
+                                /> */}
+                                <Input.TextArea
+                                    placeholder={intl.formatMessage({ id: 'common.tooltip.instruction' })}
+                                    className="fixed-vert xb-form-input xxl"
+                                    rows={5}
+                                />
+                            </Typography>
+                        )}
+                    </Form.Item>
+                    {/* <Button type="primary" htmlType="submit">
+                        <FormattedMessage id="common.confirm.back" />
+                    </Button> */}
+                    <Row>
+                        <Col>
+                            <Button htmlType="button" style={{ marginRight: 10 }}>
+                                <FormattedMessage id="common.cancel" />
+                            </Button>
+                            <Button type="primary" htmlType="submit">
+                                <FormattedMessage id="common.confirm.back" />
+                            </Button>
+                        </Col>
+                    </Row>
                 </Form>
             </Col>
         </Row>

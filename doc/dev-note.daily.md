@@ -152,5 +152,11 @@ todo:  => dataSource: { text, value }
   (done)- the same for `city`;
   (done)- `onSelectCountry`;
 
-  - `onselect` or `onchange`: set input value + set form value + set postal code value
+  - (done) `onselect` or `onchange`: set input value + set form value + set postal code value
   - exception page --> redirect to login page;
+
+  - (done) 加 instruction
+  - save basic method: department 和city可能是`id` 也可能是*customer-filled* `text`;
+    - cancel option
+    - save: consider `default` field & consider city - department save;
+  - address card design

@@ -51,4 +51,6 @@ export default {
     'common.upload.title': '您的头像',
     'common.update.info': '更新信息',
     'common.tooltip.addr.phone': '可能用于方便快递配送',
+    'common.instruction': '附加信息',
+    'common.tooltip.instruction': '提供一些诸如地址所在地的描述之类的有用信息',
 };
