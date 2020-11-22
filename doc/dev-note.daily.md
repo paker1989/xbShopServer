@@ -146,11 +146,11 @@ todo:
 
 ## 2020/11/21
 todo:  => dataSource: { text, value }
-  - complete `http://localhost:3000/api/v1/customer/getGeoAutos` fn: { type: 'region', searchStr : '> 2'}:
+  (done)- complete `http://localhost:3000/api/v1/customer/getGeoAutos` fn: { type: 'region', searchStr : '> 2'}:
    search region, contains *searchStr* in title;
-  - loading status while *fetching*;
-  - the same for `city`;
-  - `onSelectCountry`;
-  - set postal code on select `city`;
+  (k.o.)- loading status while *fetching*;
+  (done)- the same for `city`;
+  (done)- `onSelectCountry`;
 
-- exception page --> redirect to login page;
+  - `onselect` or `onchange`: set input value + set form value + set postal code value
+  - exception page --> redirect to login page;

@@ -7,6 +7,16 @@ const { prefix, keys } = customer;
 
 const getRegionKey = (countryCode) => `${prefix}:${keys.region}:${countryCode}`;
 const getDepartmKey = (countryCode) => `${prefix}:${keys.departm}:${countryCode}`;
+const getCityKey = (countryCode) => `${prefix}:${keys.city}:${countryCode}`;
+
+const getCachedCities = async (countryCode) => {
+    const data = await getAsync.call(redisClient, getCityKey(countryCode));
+    if (data) {
+        return JSON.parse(data);
+    }
+    return null;
+};
+
 
 const getCachedRegions = async (countryCode) => {
     const data = await getAsync.call(redisClient, getRegionKey(countryCode));
@@ -44,10 +54,22 @@ const setCachedDepartments = (departmData, countryCode) => {
     redisClient.set(getDepartmKey(countryCode), JSON.stringify(departmData));
 };
 
+const setCachedCities = (cities, countryCode) => {
+    if (!cities) {
+        throw new Error('geo data is not present');
+    }
+    if (!countryCode) {
+        throw new Error('country code is not present');
+    }
+    redisClient.set(getCityKey(countryCode), JSON.stringify(cities));
+};
+
 module.exports = {
     getRegionKey,
     getCachedRegions,
     setCachedRegions,
     getCachedDepartments,
     setCachedDepartments,
+    getCachedCities,
+    setCachedCities,
 };

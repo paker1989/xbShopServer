@@ -8,9 +8,11 @@ import * as CustomerActionType from '../../../../../store/actionType/customerAct
 /**
  * return all regions $ departments for auto completes
  */
-const useAvailableRegions = (countryCode, searchStr) => {
+const useAvailableAutos = (countryCode, searchStr, type) => {
     const dispatch = useDispatch();
-    const regionAvailables = useSelector((state) => state.user.addAddress.regionAvailables);
+    const autoAvailables = useSelector((state) =>
+        type === 'region' ? state.user.addAddress.regionAvailables : state.user.addAddress.cityAvailables
+    );
 
     const backendStatus = useSelector((state) => state.user.addAddress.backendStatus);
     const backendMsg = useSelector((state) => state.user.addAddress.backendMsg);
@@ -18,11 +20,11 @@ const useAvailableRegions = (countryCode, searchStr) => {
     useEffect(() => {
         if (countryCode.length > 0) {
             if (searchStr.trim().length < 2) {
-                if (regionAvailables.length > 0) {
-                    dispatch(CustomerActionCreator.putGeoAutoComplete({ type: 'region', data: [] }));
+                if (autoAvailables.length > 0) {
+                    dispatch(CustomerActionCreator.putGeoAutoComplete({ type, data: [] }));
                 }
             } else {
-                dispatch(CustomerActionCreator.fetchGeoAutoComplete({ type: 'region', countryCode, searchStr }));
+                dispatch(CustomerActionCreator.fetchGeoAutoComplete({ type, countryCode, searchStr }));
             }
         }
     }, [countryCode, searchStr]);
@@ -34,7 +36,7 @@ const useAvailableRegions = (countryCode, searchStr) => {
         }
     }, [backendStatus, backendMsg]);
 
-    return regionAvailables;
+    return autoAvailables;
 };
 
-export default useAvailableRegions;
+export default useAvailableAutos;

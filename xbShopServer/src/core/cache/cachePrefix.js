@@ -28,6 +28,7 @@ const customer = {
     keys: {
         region: 'region',
         departm: 'departm',
+        city: 'city',
     },
 };
 

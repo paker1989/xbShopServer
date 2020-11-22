@@ -187,6 +187,31 @@ class CustomerDAO {
         }));
         return allDepartments;
     }
+
+    static async getCitiesByCountry(countryCode) {
+        const allCities = (
+            await CityModel.findAll({
+                include: [
+                    {
+                        model: DepartmentModel,
+                        include: [
+                            {
+                                model: RegionModel,
+                                where: {
+                                    country: countryCode,
+                                },
+                            },
+                        ],
+                    },
+                ],
+            })
+        ).map((item) => ({
+            text: item.displayName,
+            value: item.id,
+            postCode: item.zipCode,
+        }));
+        return allCities;
+    }
 }
 
 module.exports = CustomerDAO;

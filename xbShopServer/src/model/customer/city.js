@@ -28,6 +28,12 @@ City.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
+        displayName: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                return `${this.getDataValue('zipCode')} - ${this.getDataValue('name')}`;
+            },
+        },
     },
     {
         sequelize,

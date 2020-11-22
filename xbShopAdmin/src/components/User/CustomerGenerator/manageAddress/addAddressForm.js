@@ -11,7 +11,7 @@ import { addAddressGenerator as addAddressMeta } from '../../../../static/data/c
 import * as CustomerActionType from '../../../../store/actionType/customerActionType';
 import * as CustomerActionCreator from '../../../../store/action/customerAction';
 import { getUrlParameter } from '../../../../utils/url.helper';
-import useAvailableRegions from './hooks/useAvailableRegions';
+import useAvailableAutos from './hooks/useAvailableAutos';
 import getValidators from './validators';
 
 import './address.scss';
@@ -24,10 +24,12 @@ const Core = (props) => {
     const { form, intl, countryCode } = props;
 
     const [regionSearchStr, setRegionSearchStr] = useState('');
+    const [citySearchStr, setCitySearchStr] = useState('');
     const addressId = getUrlParameter('addressId');
 
     const countryList = useCountryList();
-    const regionAvailables = useAvailableRegions(countryCode, regionSearchStr);
+    const regionAvailables = useAvailableAutos(countryCode, regionSearchStr, 'region');
+    const cityAvailables = useAvailableAutos(countryCode, citySearchStr, 'city');
 
     const backendStatus = useSelector((state) => state.user.addAddress.backendStatus);
     const backendMsg = useSelector((state) => state.user.addAddress.backendMsg);
@@ -52,6 +54,14 @@ const Core = (props) => {
     const { run: onSearchRegion } = useDebounceFn(
         (searchStr) => {
             setRegionSearchStr(searchStr);
+        },
+        { wait: 500 }
+    );
+
+    const { run: onSearchCity } = useDebounceFn(
+        (searchStr) => {
+            console.log('set city search');
+            setCitySearchStr(searchStr);
         },
         { wait: 500 }
     );
@@ -162,7 +172,11 @@ const Core = (props) => {
                             'cityId',
                             validators.city
                         )(
-                            <AutoComplete>
+                            <AutoComplete
+                                dataSource={cityAvailables}
+                                className="xb-form-input xxl"
+                                onSearch={onSearchCity}
+                            >
                                 <Input
                                     className="xb-form-input xxl"
                                     placeholder={intl.formatMessage({ id: 'customer.addAddress.city' })}

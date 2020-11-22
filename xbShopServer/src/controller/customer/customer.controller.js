@@ -83,6 +83,27 @@ const getGeoAutos = async (ctx) => {
                 }
                 return;
             case 'city':
+                const cachedCities = await cacheHelper.getCachedCities(countryCode);
+                if (cachedCities) {
+                    console.log('hit cache');
+                    const data = cachedCities.filter(
+                        (city) => city.text.toLowerCase().includes(searchStr.toLowerCase())
+                        // department.slug.includes(searchStr) ||
+                        // department.code.includes(searchStr) ||
+                        // department.name.includes(searchStr) ||
+                        // department.region.slug.includes(searchStr) ||
+                        // department.region.name.includes(searchStr)
+                    );
+                    Resolve.json(ctx, { cnt: data.length, data });
+                } else {
+                    const cityData = await CustomerDAO.getCitiesByCountry(countryCode);
+                    cacheHelper.setCachedCities(cityData, countryCode);
+                    const filteredData = cityData.filter((city) =>
+                        city.text.toLowerCase().includes(searchStr.toLowerCase())
+                    );
+
+                    Resolve.json(ctx, { cnt: filteredData.length, data: filteredData });
+                }
                 return;
             default:
                 return;
