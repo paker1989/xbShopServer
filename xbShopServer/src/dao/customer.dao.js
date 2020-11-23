@@ -183,6 +183,7 @@ class CustomerDAO {
             })
         ).map((item) => ({
             text: item.displayName,
+            name: item.pureName,
             value: item.id,
         }));
         return allDepartments;
@@ -194,6 +195,7 @@ class CustomerDAO {
                 include: [
                     {
                         model: DepartmentModel,
+                        as: 'department',
                         include: [
                             {
                                 model: RegionModel,
@@ -208,7 +210,9 @@ class CustomerDAO {
         ).map((item) => ({
             text: item.displayName,
             value: item.id,
+            name: item.name,
             postCode: item.zipCode,
+            department: item.department.pureName,
         }));
         return allCities;
     }

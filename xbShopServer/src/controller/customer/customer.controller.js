@@ -75,9 +75,9 @@ const getGeoAutos = async (ctx) => {
                 } else {
                     const departmData = await CustomerDAO.getDepartmByCountry(countryCode);
                     cacheHelper.setCachedDepartments(departmData, countryCode);
-                    const filteredData = departmData.filter((department) =>
-                        department.text.toLowerCase().includes(searchStr.toLowerCase())
-                    );
+                    const filteredData = departmData
+                        .filter((department) => department.text.toLowerCase().includes(searchStr.toLowerCase()))
+                        .slice(0, 100);
 
                     Resolve.json(ctx, { cnt: filteredData.length, data: filteredData });
                 }
@@ -98,9 +98,9 @@ const getGeoAutos = async (ctx) => {
                 } else {
                     const cityData = await CustomerDAO.getCitiesByCountry(countryCode);
                     cacheHelper.setCachedCities(cityData, countryCode);
-                    const filteredData = cityData.filter((city) =>
-                        city.text.toLowerCase().includes(searchStr.toLowerCase())
-                    );
+                    const filteredData = cityData
+                        .filter((city) => city.text.toLowerCase().includes(searchStr.toLowerCase()))
+                        .slice(0, 100);
 
                     Resolve.json(ctx, { cnt: filteredData.length, data: filteredData });
                 }

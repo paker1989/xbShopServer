@@ -6,20 +6,6 @@ export default ({ intl }) => {
     }
 
     // const { isFieldTouched } = form;
-    // {
-    //     "idAddress": 42011,
-    //     "recipient": "reci_user1",
-    //     "phone": "05650011",
-    //     "detail": {
-    //       "addr1": "164 avenue victor hugo",
-    //       "addr2": "",
-    //       "city": "Clamart",
-    //       "postCode": "92140",
-    //       "country": "fr"
-    //     },
-    //     "instruction": "",
-    //     "default": true
-    //   },
 
     return {
         recipient: {
@@ -36,7 +22,10 @@ export default ({ intl }) => {
             rules: [{ required: true, message: _translate('customer.addAddress.error.noCity') }],
         },
         postCode: {
-            rules: [{ required: true, message: _translate('customer.addAddress.error.noPostcode') }],
+            rules: [
+                { required: true, message: _translate('customer.addAddress.error.noPostcode') },
+                // { type: 'number', message: _translate('customer.addAddress.error.postCodeType') },
+            ],
         },
         department: {},
         region: {},

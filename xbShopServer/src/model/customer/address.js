@@ -74,7 +74,7 @@ Address.init(
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        default: {
+        isDefault: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },

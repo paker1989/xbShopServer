@@ -26,10 +26,15 @@ Department.init(
         displayName: {
             type: DataTypes.VIRTUAL,
             get() {
-                // const keys = ['code', 'name', 'region'];
                 return `${this.getDataValue('code')} - ${this.getDataValue('name')}, ${
                     this.getDataValue('region').name
                 }`;
+            },
+        },
+        pureName: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                return `${this.getDataValue('name')}, ${this.getDataValue('region').name}`;
             },
         },
     },

@@ -56,8 +56,6 @@ const Core = (props) => {
         });
     };
 
-    const onSelectCountry = () => {};
-
     const { run: onSearchRegion } = useDebounceFn(
         (searchStr) => {
             setRegionSearchStr(searchStr);
@@ -67,16 +65,25 @@ const Core = (props) => {
 
     const { run: onSearchCity } = useDebounceFn(
         (searchStr) => {
-            // console.log('set city search');
             setCitySearchStr(searchStr);
         },
         { wait: 500 }
     );
 
-    const onSelectCity = (city) => {
-        const cityObj = cityAvailables.find((item) => item.id === city.id);
+    const onSelectRegion = (regionId) => {
+        const regionObj = regionAvailables.find((item) => item.value === parseInt(regionId, 10));
+        if (regionObj) {
+            form.setFieldsValue({ region: regionObj.name });
+        }
+    };
+    const onSelectCity = (cityId) => {
+        const cityObj = cityAvailables.find((item) => item.value === parseInt(cityId, 10));
         if (cityObj) {
-            form.setFieldsValue({ postCode: cityObj.postCode });
+            form.setFieldsValue({
+                city: cityObj.name,
+                postCode: cityObj.postCode,
+                region: cityObj.department,
+            });
         }
     };
 
@@ -153,7 +160,6 @@ const Core = (props) => {
                         )(
                             <Select
                                 className="xb-form-input xxl"
-                                onChange={onSelectCountry}
                                 placeholder={intl.formatMessage({ id: 'customer.addAddress.country' })}
                             >
                                 {countryList.map((country) => (
@@ -173,6 +179,7 @@ const Core = (props) => {
                                 dataSource={regionAvailables}
                                 className="xb-form-input xxl"
                                 onSearch={onSearchRegion}
+                                onSelect={onSelectRegion}
                             >
                                 <Input
                                     className="xb-form-input xxl"

@@ -158,9 +158,9 @@ todo:  => dataSource: { text, value }
   - (done) 加 instruction
   - save basic method: department 和city可能是`id` 也可能是*customer-filled* `text`;
     - (done) cancel option
-    - save: consider `default` field & consider city - department save;
-    - define default;
-    - decorate params ??? -> validation: post code cannot be string;
-    - auto-set region while set city;
+    - (done) save: consider `default` field & consider city - department save;
+    - (no need) define default;
+    - (done) decorate params ??? -> validation: 
+    - (done) auto-set region while set city;
     - valition & control: if addressId is not present then customerId *always* but present and send to backend;
   - address card design
