@@ -33,3 +33,12 @@ export const putGeoAutoComplete = ({ type, data }) => ({
     type: CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_SUCCESS,
     payload: { type, data },
 });
+
+/**
+ * params example:
+ * @param {*} params
+ */
+export const saveAddress = (params) => ({
+    type: CustomerActionType._ADDRESS_SAVE,
+    payload: params,
+});

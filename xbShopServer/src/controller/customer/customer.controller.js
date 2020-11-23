@@ -113,8 +113,29 @@ const getGeoAutos = async (ctx) => {
     }
 };
 
+/**
+ * save address
+ * @param {*} ctx
+ */
+const saveAddress = async (ctx) => {
+    try {
+        const requestBody = ctx.request.body;
+        // const { idAddress = -1, action = 'save' } = requestBody;
+        const saved = await CustomerDAO.saveAddress(requestBody);
+        if (saved) {
+            cacheHelper.saveAddress(saved);
+            Resolve.json(ctx, saved);
+        } else {
+            Resolve.info(ctx, 'failed due to unknown reason', 501);
+        }
+    } catch (err) {
+        throw new HttpException(err.message);
+    }
+};
+
 module.exports = {
     saveCustomer,
     fetchConstants,
     getGeoAutos,
+    saveAddress,
 };

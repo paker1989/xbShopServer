@@ -28,8 +28,8 @@ Address.init(
             allowNull: false,
             defaultValue: '',
         },
-        cityId: {
-            type: DataTypes.INTEGER(8),
+        city: {
+            type: DataTypes.STRING(128),
             allowNull: false,
             defaultValue: -1,
         },
@@ -44,7 +44,7 @@ Address.init(
         //     defaultValue: -1,
         // },
         region: {
-            type: DataTypes.STRING(64),
+            type: DataTypes.STRING(128),
             allowNull: false,
             defaultValue: '',
         },

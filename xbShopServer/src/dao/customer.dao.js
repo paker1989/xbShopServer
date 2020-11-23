@@ -212,6 +212,146 @@ class CustomerDAO {
         }));
         return allCities;
     }
+
+    /**
+     * save or update a customer
+     * @param {*} ctxBody
+     */
+    static async saveAddress(ctxBody) {
+        // addr1: "164 Avenue Victor Hugo"
+        // addr2: ""
+        // city: "35305"
+        // countryCode: "fr"
+        // idAddress: "12"
+        // instruction: "ssd"
+        // phone: "sd"
+        // postCode: "92140"
+        // recipient: "xu bin"
+        // region: "93"
+        // action: "save",
+
+        // addr1: "164 Avenue Victor Hugo"
+        // addr2: ""
+        // city: "clamart"
+        // countryCode: "fr"
+        // idAddress: "12"
+        // instruction: ""
+        // phone: ""
+        // postCode: "92140"
+        // recipient: "xu bin"
+        // region: "hauts de seine"
+        // action: "save",
+
+        // addr1: "164 Avenue Victor Hugo"
+        // addr2: "Rez de Chaussée à Gauche"
+        // city: "Clamart"
+        // countryCode: "fr"
+        // idAddress: -1
+        // instruction: "164 Avenue Victor Hugo"
+        // phone: "0659657708"
+        // postCode: "92140"
+        // recipient: "xu bin"
+        // region: "Hauts de Seine"
+        // action: "save",
+        let pk;
+        const {
+            addr1,
+            addr2,
+            city,
+            instruction,
+            phone,
+            postCode,
+            region,
+            recipient,
+            isDefault,
+            idAddress,
+            customerId,
+            isDeleted = false,
+            action,
+        } = ctxBody;
+
+        const idAddressInt = parseInt(idAddress, 10);
+
+        // create case
+        if (idAddressInt === -1) {
+            pk = await sequelize.transaction(async (t) => {
+                const newCustomer = await CustomerModel.create(
+                    {
+                        pseudo,
+                        email,
+                        gender,
+                        password: encryptedPassword,
+                        phone,
+                        thumbnail,
+                        isActive,
+                        isDeleted,
+                    },
+                    {
+                        transaction: t,
+                    }
+                );
+
+                if (address && address.length > 0) {
+                    // set address
+                }
+
+                return newCustomer.idCustomer;
+            });
+        } else if (action) {
+            if (action === 'delete' || action === 'restore') {
+                const [updatedRow] = await CustomerModel.update(
+                    {
+                        isDeleted: action === 'delete',
+                    },
+                    {
+                        where: { idCustomer: idAddressInt },
+                    }
+                );
+
+                if (updatedRow === 1) {
+                    pk = idAddressInt;
+                }
+            }
+
+            if (action === 'update') {
+                const updateCondition = {};
+                const prefUpdateCondition = {};
+                if (email) {
+                    updateCondition.email = email;
+                }
+                if (typeof isActive !== 'undefined') {
+                    updateCondition.isActive = isActive;
+                }
+                if (phone) {
+                    updateCondition.phone = phone;
+                }
+                if (password) {
+                    updateCondition.password = encryptHelper.bcryptHashSync(password);
+                }
+                if (pseudo) {
+                    prefUpdateCondition.pseudo = parseInt(pseudo, 10);
+                }
+                if (thumbnail) {
+                    prefUpdateCondition.userAccessId = parseInt(thumbnail, 10);
+                }
+
+                pk = await sequelize.transaction(async (t) => {
+                    if (Object.keys(updateCondition).length > 0) {
+                        await CustomerModel.update(updateCondition, {
+                            where: { idCustomer: idAddressInt },
+                            transaction: t,
+                        });
+                    }
+                    return idAddressInt;
+                });
+            }
+        }
+
+        if (pk) {
+            return CustomerDAO.findCustomerByPk(pk);
+        }
+        return pk; // undefined
+    }
 }
 
 module.exports = CustomerDAO;

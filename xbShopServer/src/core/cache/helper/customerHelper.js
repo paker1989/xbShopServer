@@ -17,7 +17,6 @@ const getCachedCities = async (countryCode) => {
     return null;
 };
 
-
 const getCachedRegions = async (countryCode) => {
     const data = await getAsync.call(redisClient, getRegionKey(countryCode));
     if (data) {

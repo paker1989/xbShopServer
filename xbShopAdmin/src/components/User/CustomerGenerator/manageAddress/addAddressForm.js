@@ -21,12 +21,12 @@ const { formRowLayout } = addAddressMeta;
 
 const Core = (props) => {
     const dispatch = useDispatch();
-    const { form, intl, countryCode } = props;
+    const { form, intl, countryCode, history } = props;
 
     const [regionSearchStr, setRegionSearchStr] = useState('');
     const [citySearchStr, setCitySearchStr] = useState('');
 
-    const addressId = getUrlParameter('addressId');
+    const addressId = getUrlParameter('addressId') || -1;
 
     const countryList = useCountryList();
     const regionAvailables = useAvailableAutos(countryCode, regionSearchStr, 'region');
@@ -39,6 +39,10 @@ const Core = (props) => {
 
     const validators = getValidators({ intl, form });
 
+    const cancelEdition = () => {
+        history.goBack();
+    };
+
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
@@ -46,6 +50,7 @@ const Core = (props) => {
             /* eslint-disable */
             if (!errors) {
                 // TODO
+                dispatch(CustomerActionCreator.saveAddress({ ...values, idAddress: addressId, action: 'save' }));
             }
             /* eslint-enable */
         });
@@ -178,7 +183,7 @@ const Core = (props) => {
                     </Form.Item>
                     <Form.Item label={intl.formatMessage({ id: 'customer.addAddress.city' })}>
                         {getFieldDecorator(
-                            'cityId',
+                            'city',
                             validators.city
                         )(
                             <AutoComplete
@@ -251,7 +256,7 @@ const Core = (props) => {
                     </Button> */}
                     <Row>
                         <Col>
-                            <Button htmlType="button" style={{ marginRight: 10 }}>
+                            <Button htmlType="button" style={{ marginRight: 10 }} onClick={cancelEdition}>
                                 <FormattedMessage id="common.cancel" />
                             </Button>
                             <Button type="primary" htmlType="submit">
@@ -269,7 +274,7 @@ const mapStateToProps = (state) => ({
     addr1: state.user.addAddress.addr1,
     addr2: state.user.addAddress.addr2,
     postCode: state.user.addAddress.postCode,
-    cityId: state.user.addAddress.cityId,
+    city: state.user.addAddress.city,
     departmentId: state.user.addAddress.departmentId,
     regionId: state.user.addAddress.regionId,
     countryCode: state.user.addAddress.countryCode,
@@ -286,7 +291,7 @@ const WrappedForm = connect(mapStateToProps)(
                 addr1: Form.createFormField({ value: props.addr1 }),
                 addr2: Form.createFormField({ value: props.addr2 }),
                 postCode: Form.createFormField({ value: props.postCode }),
-                cityId: Form.createFormField({ value: props.cityId }),
+                city: Form.createFormField({ value: props.city }),
                 departmentId: Form.createFormField({ value: props.departmentId }),
                 regionId: Form.createFormField({ value: props.regionId }),
                 countryCode: Form.createFormField({ value: props.countryCode }),

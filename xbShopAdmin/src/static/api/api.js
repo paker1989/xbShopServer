@@ -23,5 +23,6 @@ module.exports = {
         saveCustomer: 'saveCustomer',
         fetchConstants: 'fetchConstants',
         getGeoAutos: 'getGeoAutos',
+        saveAddress: 'saveAddress',
     },
 };
