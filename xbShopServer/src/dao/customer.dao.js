@@ -1,6 +1,7 @@
 const { fn, col, where, Op } = require('sequelize');
 
 const CustomerModel = require('../model/customer/customer');
+const AddressModel = require('../model/customer/address');
 const RegionModel = require('../model/customer/region');
 const DepartmentModel = require('../model/customer/department');
 const CityModel = require('../model/customer/city');
@@ -60,8 +61,15 @@ class CustomerDAO {
      * @param {*} options control the includes
      */
     static async findCustomerByPk(idCustomer, options = []) {
-        const customer = await CustomerModel.findByPk(idCustomer, {});
-        return customer.toJSON();
+        const customer = await CustomerModel.findByPk(idCustomer, {
+            include: [
+                {
+                    model: AddressModel,
+                    as: 'addresses',
+                },
+            ],
+        });
+        return customer ? customer.toJSON() : null;
     }
 
     /**
@@ -265,95 +273,94 @@ class CustomerDAO {
             instruction,
             phone,
             postCode,
+            countryCode,
             region,
             recipient,
             isDefault,
-            idAddress,
-            customerId,
+            addressId = -1,
+            customerId = -1,
             isDeleted = false,
             action,
         } = ctxBody;
 
-        const idAddressInt = parseInt(idAddress, 10);
+        const idAddressInt = parseInt(addressId, 10);
+        const idCustomerInt = parseInt(customerId, 10);
 
         // create case
         if (idAddressInt === -1) {
-            pk = await sequelize.transaction(async (t) => {
-                const newCustomer = await CustomerModel.create(
-                    {
-                        pseudo,
-                        email,
-                        gender,
-                        password: encryptedPassword,
-                        phone,
-                        thumbnail,
-                        isActive,
-                        isDeleted,
-                    },
-                    {
-                        transaction: t,
-                    }
-                );
-
-                if (address && address.length > 0) {
-                    // set address
-                }
-
-                return newCustomer.idCustomer;
-            });
-        } else if (action) {
-            if (action === 'delete' || action === 'restore') {
-                const [updatedRow] = await CustomerModel.update(
-                    {
-                        isDeleted: action === 'delete',
-                    },
-                    {
-                        where: { idCustomer: idAddressInt },
-                    }
-                );
-
-                if (updatedRow === 1) {
-                    pk = idAddressInt;
-                }
-            }
-
-            if (action === 'update') {
-                const updateCondition = {};
-                const prefUpdateCondition = {};
-                if (email) {
-                    updateCondition.email = email;
-                }
-                if (typeof isActive !== 'undefined') {
-                    updateCondition.isActive = isActive;
-                }
-                if (phone) {
-                    updateCondition.phone = phone;
-                }
-                if (password) {
-                    updateCondition.password = encryptHelper.bcryptHashSync(password);
-                }
-                if (pseudo) {
-                    prefUpdateCondition.pseudo = parseInt(pseudo, 10);
-                }
-                if (thumbnail) {
-                    prefUpdateCondition.userAccessId = parseInt(thumbnail, 10);
-                }
-
-                pk = await sequelize.transaction(async (t) => {
-                    if (Object.keys(updateCondition).length > 0) {
-                        await CustomerModel.update(updateCondition, {
-                            where: { idCustomer: idAddressInt },
-                            transaction: t,
-                        });
-                    }
-                    return idAddressInt;
+            const customer = await CustomerDAO.findCustomerByPk(idCustomerInt);
+            if (customer) {
+                const _isDefault = isDefault || (customer.addresses && customer.addresses.length === 0);
+                const newAddress = await AddressModel.create({
+                    addr1,
+                    addr2,
+                    city,
+                    instruction,
+                    phone,
+                    postCode,
+                    region,
+                    recipient,
+                    countryCode,
+                    isDefault: _isDefault,
+                    customerId: idCustomerInt,
                 });
+                return newAddress;
             }
+            return undefined;
         }
+        // else if (action) {
+        //     if (action === 'delete' || action === 'restore') {
+        //         const [updatedRow] = await CustomerModel.update(
+        //             {
+        //                 isDeleted: action === 'delete',
+        //             },
+        //             {
+        //                 where: { idCustomer: idAddressInt },
+        //             }
+        //         );
 
-        if (pk) {
-            return CustomerDAO.findCustomerByPk(pk);
-        }
+        //         if (updatedRow === 1) {
+        //             pk = idAddressInt;
+        //         }
+        //     }
+
+        //     if (action === 'update') {
+        //         const updateCondition = {};
+        //         const prefUpdateCondition = {};
+        //         if (email) {
+        //             updateCondition.email = email;
+        //         }
+        //         if (typeof isActive !== 'undefined') {
+        //             updateCondition.isActive = isActive;
+        //         }
+        //         if (phone) {
+        //             updateCondition.phone = phone;
+        //         }
+        //         if (password) {
+        //             updateCondition.password = encryptHelper.bcryptHashSync(password);
+        //         }
+        //         if (pseudo) {
+        //             prefUpdateCondition.pseudo = parseInt(pseudo, 10);
+        //         }
+        //         if (thumbnail) {
+        //             prefUpdateCondition.userAccessId = parseInt(thumbnail, 10);
+        //         }
+
+        //         pk = await sequelize.transaction(async (t) => {
+        //             if (Object.keys(updateCondition).length > 0) {
+        //                 await CustomerModel.update(updateCondition, {
+        //                     where: { idCustomer: idAddressInt },
+        //                     transaction: t,
+        //                 });
+        //             }
+        //             return idAddressInt;
+        //         });
+        //     }
+        // }
+
+        // if (pk) {
+        //     return CustomerDAO.findCustomerByPk(pk);
+        // }
         return pk; // undefined
     }
 }

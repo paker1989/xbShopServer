@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createRef, useRef } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Select, AutoComplete, Row, Col, Typography, Button } from 'antd';
+import { Form, Input, Select, AutoComplete, Row, Col, Typography, Button, message } from 'antd';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { useUnmount, useDebounceFn } from 'ahooks';
 import { withRouter } from 'react-router-dom';
@@ -27,6 +27,12 @@ const Core = (props) => {
     const [citySearchStr, setCitySearchStr] = useState('');
 
     const addressId = getUrlParameter('addressId') || -1;
+    const customerId = getUrlParameter('customerId') || -1;
+
+    if (customerId === -1 && addressId === -1) {
+        message.error(intl.formatMessage({ id: 'common.error.param.addAddress' }));
+        history.push('/dashboard/customerList');
+    }
 
     const countryList = useCountryList();
     const regionAvailables = useAvailableAutos(countryCode, regionSearchStr, 'region');
@@ -50,7 +56,7 @@ const Core = (props) => {
             /* eslint-disable */
             if (!errors) {
                 // TODO
-                dispatch(CustomerActionCreator.saveAddress({ ...values, idAddress: addressId, action: 'save' }));
+                dispatch(CustomerActionCreator.saveAddress({ ...values, addressId, customerId, action: 'save' }));
             }
             /* eslint-enable */
         });
