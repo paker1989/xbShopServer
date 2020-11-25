@@ -304,7 +304,7 @@ class CustomerDAO {
                     isDefault: _isDefault,
                     customerId: idCustomerInt,
                 });
-                return newAddress;
+                return newAddress.toJSON();
             }
             return undefined;
         }
@@ -362,6 +362,18 @@ class CustomerDAO {
         //     return CustomerDAO.findCustomerByPk(pk);
         // }
         return pk; // undefined
+    }
+
+    static async getAddress(customerId) {
+        const addresses = (
+            await AddressModel.findAll({
+                where: {
+                    isDeleted: false,
+                    customerId,
+                },
+            })
+        ).map((item) => item.toJSON());
+        return addresses;
     }
 }
 

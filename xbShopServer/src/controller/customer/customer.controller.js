@@ -123,11 +123,40 @@ const saveAddress = async (ctx) => {
         // const { idAddress = -1, action = 'save' } = requestBody;
         const saved = await CustomerDAO.saveAddress(requestBody);
         if (saved) {
-            cacheHelper.saveAddress(saved);
+            cacheHelper.setCachedAddress(saved, saved.customerId);
             Resolve.json(ctx, saved);
         } else {
             Resolve.info(ctx, 'failed due to unknown reason', 501);
         }
+    } catch (err) {
+        throw new HttpException(err.message);
+    }
+};
+
+/**
+ * return all addresses or a target address of a customer
+ * @param {*} ctx
+ */
+const getAddress = async (ctx) => {
+    try {
+        const { customerId, addressId } = ctx.request.body;
+
+        if (!customerId) {
+            Resolve.info(ctx, 'customer id is not present', 400);
+            return;
+        }
+
+        let cachedAddresses = await cacheHelper.getCachedAddress(customerId);
+        if (!cachedAddresses) {
+            cachedAddresses = await CustomerDAO.getAddress(customerId);
+            cacheHelper.setCachedAddress(cachedAddresses, customerId);
+        }
+        if (!addressId) {
+            Resolve.json(ctx, cachedAddresses);
+            return;
+        }
+        const address = cachedAddresses.find((item) => item.idAddress === parseInt(addressId, 10));
+        Resolve.json(ctx, address);
     } catch (err) {
         throw new HttpException(err.message);
     }
@@ -138,4 +167,5 @@ module.exports = {
     fetchConstants,
     getGeoAutos,
     saveAddress,
+    getAddress,
 };

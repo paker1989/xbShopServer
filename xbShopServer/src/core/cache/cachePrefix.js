@@ -29,6 +29,7 @@ const customer = {
         region: 'region',
         departm: 'departm',
         city: 'city',
+        address: 'addrs',
     },
 };
 

@@ -7,6 +7,7 @@ const {
     fetchConstants,
     getGeoAutos,
     saveAddress,
+    getAddress,
 } = require('../controller/customer/customer.controller');
 
 const router = new Router();
@@ -21,5 +22,8 @@ router.post('/fetchConstants', authMiddleware, fetchConstants);
 router.post('/getGeoAutos', /* authMiddleware, */ getGeoAutos);
 
 router.post('/saveAddress', /* authMiddleware */ saveAddress);
+
+// curl -d "customerId=8&addressId=3" -X POST http://localhost:3000/api/v1/customer/getAddress
+router.post('/getAddress', /* authMiddleware */ getAddress);
 
 module.exports = router;
