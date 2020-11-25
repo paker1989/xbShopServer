@@ -1,30 +1,37 @@
-import React, { Suspense } from 'react';
-import { Typography, Breadcrumb } from 'antd';
+import React, { Suspense, useEffect } from 'react';
+import { Typography, Breadcrumb, message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { withRouter, Switch, Redirect, Route, NavLink } from 'react-router-dom';
-import { useUnmount } from 'ahooks';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import ContainerSkeleton from '../../../Common/ContainerSkeleton/containerSkeleton';
-import AddressCard from './addressCard';
+import AddressList from './addressList';
 import AddAddressForm from './addAddressForm';
 
 import { addAddressGenerator as addressMeta } from '../../../../static/data/componentMeta/user/addCustomerMeta';
 import * as CustomerActionCreator from '../../../../store/action/customerAction';
 import useBreadcrumb from './hooks/useBreadcrumb';
+import { getUrlParameter } from '../../../../utils/url.helper';
 
 const { Title } = Typography;
 const { routes } = addressMeta;
 
-const ManageAddress = ({ match }) => {
+const ManageAddress = ({ match, history, intl }) => {
     const dispatch = useDispatch();
     const { url: routerUrl } = match;
+    const customerId = getUrlParameter('customerId') || -1;
 
     const breadcrumbs = useBreadcrumb();
 
-    useUnmount(() => {
-        dispatch(CustomerActionCreator.resetAddressState());
-    });
+    useEffect(() => {
+        if (customerId === -1) {
+            message.error(intl.formatMessage({ id: 'common.error.param.addAddress' }));
+            history.push('/dashboard/customerList');
+        }
+        return () => {
+            dispatch(CustomerActionCreator.resetAddressState());
+        };
+    }, []);
 
     return (
         <div className="manage-address-container">
@@ -50,7 +57,12 @@ const ManageAddress = ({ match }) => {
             </div>
             <Suspense fallback={<ContainerSkeleton />}>
                 <Switch>
-                    <Route key="addressHome" path={`${routerUrl}${routes.basic}`} exact component={AddressCard.ADD} />
+                    <Route
+                        key="addressHome"
+                        path={`${routerUrl}${routes.basic}`}
+                        exact
+                        render={() => <AddressList customerId={customerId} />}
+                    />
                     <Route key="addAddress" path={`${routerUrl}${routes.add}`} component={AddAddressForm} />
                     <Redirect path="*" to={routerUrl} />
                 </Switch>
@@ -59,4 +71,4 @@ const ManageAddress = ({ match }) => {
     );
 };
 
-export default withRouter(ManageAddress);
+export default injectIntl(withRouter(ManageAddress));

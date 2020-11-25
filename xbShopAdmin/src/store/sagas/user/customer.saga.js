@@ -102,7 +102,48 @@ export function* getGeoAutocompletesSaga(reqObj) {
 }
 
 /**
- * updateAdmin saga,
+ * example: searchStr, type
+ * @param {*} reqObj
+ */
+export function* getAddressesSaga(reqObj) {
+    debugger;
+    try {
+        const res = yield axios.post(
+            getRequestUrl('customer', 'getAddresses'),
+            {
+                ...reqObj.payload,
+            },
+            { withCredentials: true }
+        );
+        if (res && res.data) {
+            yield put({
+                type: CustomerActionType._ADDRESS_LIST_FETCH_SUCCESS,
+                payload: {
+                    data: res.data,
+                },
+            });
+        } else {
+            yield put({
+                type: CustomerActionType._ADDRESS_LIST_FETCH_FAILED,
+                payload: {
+                    backendStatus: CustomerActionType._ADDRESS_LIST_FETCH_FAILED,
+                    backendMsg: res.statusText,
+                },
+            });
+        }
+    } catch (error) {
+        yield put({
+            type: CustomerActionType._ADDRESS_LIST_FETCH_FAILED,
+            payload: {
+                backendStatus: CustomerActionType._ADDRESS_LIST_FETCH_FAILED,
+                backendMsg: error.response ? error.response.statusText : error.message,
+            },
+        });
+    }
+}
+
+/**
+ * save addresses saga,
  * @param {*} reqObj
  */
 export function* saveAddressSaga(reqObj) {

@@ -164,4 +164,8 @@ todo:  => dataSource: { text, value }
     - (done) auto-set region while set city;
     - (done) valition & control: if addressId is not present then customerId *always* but present and send to backend;
   - address card design
+
+  - (done) customerid is not valid:
+    --> not integer;
+    --> isNaN
   

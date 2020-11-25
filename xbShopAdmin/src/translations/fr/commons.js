@@ -55,4 +55,5 @@ export default {
     'common.tooltip.instruction':
         "fournissez des informations utiles telles qu'une brève description de votre batiment.",
     'common.error.param.addAddress': `La page n'est pas accessible. Il semble que l'URL soit composée manuellement`,
+    'common.tooltip.phone': 'Numéro Téléphone: {phone}',
 };

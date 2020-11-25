@@ -58,18 +58,18 @@ Address.init(
             allowNull: false,
             // defaultValue: 'fr',
         },
-        detail: {
-            type: DataTypes.VIRTUAL,
-            get() {
-                const keys = ['addr1', 'addr2', 'city', 'postCode', 'country'];
-                return {
-                    ...keys.map((key) => ({ [key]: this.getDataValue(key) })),
-                };
-            },
-            set(value) {
-                // TODO
-            },
-        },
+        // detail: {
+        //     type: DataTypes.VIRTUAL,
+        //     get() {
+        //         const keys = ['addr1', 'addr2', 'city', 'postCode', 'country'];
+        //         return {
+        //             ...keys.map((key) => ({ [key]: this.getDataValue(key) })),
+        //         };
+        //     },
+        //     set(value) {
+        //         // TODO
+        //     },
+        // },
         instruction: {
             type: DataTypes.STRING(255),
             allowNull: false,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from 'antd';
+import { Typography, Card, Descriptions } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import CustomIcon from '../../../Common/CustomIcon/customIcon';
@@ -8,8 +8,25 @@ import './address.scss';
 
 const { Title } = Typography;
 
-const AddressCard = () => {
-    return <div>default address</div>;
+const AddressCard = ({ address }) => {
+    const { recipient, addr1, addr2, city, countryCode, postCode, phone } = address;
+    return (
+        <Card size="small" title="Par default">
+            <Descriptions title={recipient} column={1}>
+                <Descriptions.Item>{addr1}</Descriptions.Item>
+                {addr2 && <Descriptions.Item>{addr1}</Descriptions.Item>}
+                <Descriptions.Item>{`${city}, ${postCode}`}</Descriptions.Item>
+                <Descriptions.Item>
+                    <FormattedMessage id={`country.${countryCode}`} />
+                </Descriptions.Item>
+                {phone && (
+                    <Descriptions.Item>
+                        <FormattedMessage id="common.tooltip.phone" values={{ phone }} />
+                    </Descriptions.Item>
+                )}
+            </Descriptions>
+        </Card>
+    );
 };
 
 AddressCard.ADD = () => {

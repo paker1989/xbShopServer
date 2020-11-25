@@ -42,3 +42,12 @@ export const saveAddress = (params) => ({
     type: CustomerActionType._ADDRESS_SAVE,
     payload: params,
 });
+
+/**
+ * params example:
+ * @param {*} params
+ */
+export const fetchAddresses = (params) => ({
+    type: CustomerActionType._ADDRESS_LIST_FETCH,
+    payload: params,
+});

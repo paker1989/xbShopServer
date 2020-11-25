@@ -133,3 +133,12 @@ export function getCurrentPage(oldCurrentPage, startPage, nbProducts) {
     }
     return currentPage;
 }
+
+/**
+ * return if it is integer and not in escapes
+ * @param {*} value
+ */
+export function isInt(value, escapes = []) {
+    const tryInt = Number.parseInt(value, 10);
+    return !Number.isNaN(tryInt) && !escapes.includes(tryInt);
+}
