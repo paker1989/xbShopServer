@@ -169,3 +169,9 @@ todo:  => dataSource: { text, value }
     --> not integer;
     --> isNaN
   
+## 26/11/2020
+- new cache key;
+- edit address 
+  1 data compute
+  2 url composition
+- delete address, set as default 

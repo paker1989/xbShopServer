@@ -55,4 +55,8 @@ export default {
     'common.tooltip.instruction': '提供一些诸如地址所在地的描述之类的有用信息',
     'common.error.param.addAddress': '您无法访问该页面, 网址似乎被手动改动过',
     'common.tooltip.phone': '电话: {phone}',
+    'common.tooltip.edit': '编辑',
+    'common.tooltip.delete': '删除',
+    'common.tooltip.setDefault': '设为默认',
+    'common.byDefault': '默认',
 };

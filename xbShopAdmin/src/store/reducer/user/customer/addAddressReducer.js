@@ -15,7 +15,7 @@ const formInitialState = {
 
 const initialState = {
     ...formInitialState,
-    regionAvailables: ['demo region'],
+    regionAvailables: [],
     cityAvailables: [],
     backendStatus: '',
     backendMsg: '',
@@ -41,6 +41,9 @@ export default (state = initialState, action) => {
                     return { ...state };
             }
         case customerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_FAILED:
+            return { ...state, ...action.payload };
+        case customerActionType._ADDRESS_SAVE_FAILED:
+        case customerActionType._ADDRESS_SAVE_SUCCESS:
             return { ...state, ...action.payload };
         default:
             return state;

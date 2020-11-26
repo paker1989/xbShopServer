@@ -4,14 +4,24 @@ import AddressCard from './addressCard';
 import useAddresses from './hooks/useAddresses';
 
 import './address.scss';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const AddressList = ({ customerId }) => {
     const addressList = useAddresses(customerId);
-     
-    console.log(addressList);
+    const reactHistory = useHistory();
+    const location = useLocation();
+    // console.log(addressList);
+    const addAddress = () => {
+        debugger;
+        reactHistory.push({
+            pathname: `${location.pathname}/add`,
+            search: `?customerId=${customerId}`,
+        });
+    };
+
     return (
         <div className="address-list">
-            <AddressCard.ADD key="add-card" />
+            <AddressCard.ADD key="add-card" onAdd={addAddress} />
             {addressList.map((item) => {
                 return <AddressCard address={item} key={item.idAddress} />;
             })}
@@ -19,5 +29,5 @@ const AddressList = ({ customerId }) => {
     );
 };
 
-// export default injectIntl(withRouter(AddressList));
 export default AddressList;
+// export default AddressList;

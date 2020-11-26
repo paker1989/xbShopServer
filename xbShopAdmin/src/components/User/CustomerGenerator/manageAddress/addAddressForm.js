@@ -103,12 +103,9 @@ const Core = (props) => {
             return;
         }
         if (backendStatus === CustomerActionType._ADDRESS_SAVE_FAILED) {
-            // todo
+            message.error(backendMsg);
         } else if (backendStatus === CustomerActionType._ADDRESS_SAVE_SUCCESS) {
-            switch (backendMsg) {
-                default:
-                    break;
-            }
+            history.goBack();
         }
         dispatch(CustomerActionCreator.resetAddressSaveBackendStatus());
     }, [backendStatus, backendMsg]);

@@ -106,7 +106,6 @@ export function* getGeoAutocompletesSaga(reqObj) {
  * @param {*} reqObj
  */
 export function* getAddressesSaga(reqObj) {
-    debugger;
     try {
         const res = yield axios.post(
             getRequestUrl('customer', 'getAddresses'),
@@ -163,16 +162,13 @@ export function* saveAddressSaga(reqObj) {
             if (action !== 'destroy') {
                 cookie.save(addressMeta.newUpdateKey, res.data.idAddress, { maxAge: addressMeta.newUpdateMaxAge });
             }
-            // yield put({
-            //     type: CustomerActionType._USER_ADMIN_FETCH_ALL,
-            // });
-            // yield put({
-            //     type: CustomerActionType._USER_ADMIN_UPDATE_SUCCESS,
-            //     payload: {
-            //         backendStatus: CustomerActionType._USER_ADMIN_UPDATE_SUCCESS,
-            //         backendMsg: action,
-            //     },
-            // });
+            yield put({
+                type: CustomerActionType._ADDRESS_SAVE_SUCCESS,
+                payload: {
+                    backendStatus: CustomerActionType._ADDRESS_SAVE_SUCCESS,
+                    addresses: [], // force to re-fetch
+                },
+            });
         } else {
             yield put({
                 type: CustomerActionType._ADDRESS_SAVE_FAILED,

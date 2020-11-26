@@ -24,6 +24,6 @@ module.exports = {
         fetchConstants: 'fetchConstants',
         getGeoAutos: 'getGeoAutos',
         saveAddress: 'saveAddress',
-        getAddresses: 'getAddress'
+        getAddresses: 'getAddress',
     },
 };
