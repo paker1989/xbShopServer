@@ -170,7 +170,7 @@ todo:  => dataSource: { text, value }
     --> isNaN
   
 ## 26/11/2020
-- new cache key; (done)
+- (done) new cache key; 
 - edit address 
   1 data compute
   2 url composition
@@ -181,3 +181,6 @@ todo:  => dataSource: { text, value }
 - (done) default card -> orange header
 - (done) 限制最多6个地址
 - (done) 切换时区的时候没有compute addresses
+
+- 直接打网址对address compute的support
+- update address 

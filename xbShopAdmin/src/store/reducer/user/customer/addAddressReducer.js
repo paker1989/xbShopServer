@@ -26,8 +26,6 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case customerActionType._ADDRESS_SAVE_RESET_BACKEND_STATUS:
             return { ...state, ...action.payload };
-        // case customerActionType._ADDRESS_LIST_FETCH_SUCCESS:
-        //     return { ...state, addresses: action.payload.data };
         case customerActionType._ADDRESS_RESET_STATE:
             return { ...initialState };
         case customerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE_SUCCESS:
@@ -43,6 +41,8 @@ export default (state = initialState, action) => {
             return { ...state, ...action.payload };
         case customerActionType._ADDRESS_SAVE_FAILED:
         case customerActionType._ADDRESS_SAVE_SUCCESS:
+            return { ...state, ...action.payload };
+        case customerActionType._ADDRESS_COMPUTE_EDITION:
             return { ...state, ...action.payload };
         default:
             return state;

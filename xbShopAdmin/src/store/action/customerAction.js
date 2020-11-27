@@ -34,6 +34,24 @@ export const putGeoAutoComplete = ({ type, data }) => ({
     payload: { type, data },
 });
 
+export const computeEditAddress = (address) => {
+    const { addr1, addr2, postCode, city, region, countryCode, phone, recipient, instruction } = address;
+    debugger;
+    return {
+        type: CustomerActionType._ADDRESS_COMPUTE_EDITION,
+        payload: {
+            addr1,
+            addr2,
+            phone,
+            recipient,
+            postCode,
+            city,
+            region,
+            countryCode,
+            instruction,
+        },
+    };
+};
 /**
  * params example:
  * @param {*} params

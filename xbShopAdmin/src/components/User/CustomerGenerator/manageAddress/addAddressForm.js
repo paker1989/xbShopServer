@@ -94,7 +94,7 @@ const Core = (props) => {
     };
 
     useUnmount(() => {
-        CustomerActionCreator.resetAddressSaveBackendStatus();
+        dispatch(CustomerActionCreator.resetAddressState());
     });
 
     // handle save status
@@ -242,28 +242,13 @@ const Core = (props) => {
                             'instruction',
                             validators.instruction
                         )(
-                            <Typography>
-                                {/* <Paragraph> */}
-                                {/* {intl.formatMessage({ id: 'common.tooltip.instruction' })} */}
-                                {/* <Text>
-                                    <FormattedMessage id="common.tooltip.instruction" />
-                                </Text> */}
-                                {/* </Paragraph> */}
-                                {/* <Input
-                                    className="xb-form-input xxl"
-                                    placeholder={intl.formatMessage({ id: 'common.tooltip.instruction' })}
-                                /> */}
-                                <Input.TextArea
-                                    placeholder={intl.formatMessage({ id: 'common.tooltip.instruction' })}
-                                    className="fixed-vert xb-form-input xxl"
-                                    rows={5}
-                                />
-                            </Typography>
+                            <Input.TextArea
+                                placeholder={intl.formatMessage({ id: 'common.tooltip.instruction' })}
+                                className="fixed-vert xb-form-input xxl"
+                                rows={5}
+                            />
                         )}
                     </Form.Item>
-                    {/* <Button type="primary" htmlType="submit">
-                        <FormattedMessage id="common.confirm.back" />
-                    </Button> */}
                     <Row>
                         <Col>
                             <Button htmlType="button" style={{ marginRight: 10 }} onClick={cancelEdition}>
@@ -285,8 +270,8 @@ const mapStateToProps = (state) => ({
     addr2: state.user.addAddress.addr2,
     postCode: state.user.addAddress.postCode,
     city: state.user.addAddress.city,
-    departmentId: state.user.addAddress.departmentId,
-    regionId: state.user.addAddress.regionId,
+    // departmentId: state.user.addAddress.departmentId,
+    region: state.user.addAddress.region,
     countryCode: state.user.addAddress.countryCode,
     instruction: state.user.addAddress.instruction,
     phone: state.user.addAddress.phone,
@@ -302,8 +287,8 @@ const WrappedForm = connect(mapStateToProps)(
                 addr2: Form.createFormField({ value: props.addr2 }),
                 postCode: Form.createFormField({ value: props.postCode }),
                 city: Form.createFormField({ value: props.city }),
-                departmentId: Form.createFormField({ value: props.departmentId }),
-                regionId: Form.createFormField({ value: props.regionId }),
+                // departmentId: Form.createFormField({ value: props.departmentId }),
+                region: Form.createFormField({ value: props.region }),
                 countryCode: Form.createFormField({ value: props.countryCode }),
                 instruction: Form.createFormField({ value: props.instruction }),
                 phone: Form.createFormField({ value: props.phone }),

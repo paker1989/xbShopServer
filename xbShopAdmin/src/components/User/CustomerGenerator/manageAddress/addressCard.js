@@ -11,7 +11,7 @@ import './address.scss';
 
 const { Title } = Typography;
 
-const AddressCard = ({ address, intl }) => {
+const AddressCard = ({ address, intl, onEdit }) => {
     const dispatch = useDispatch();
     const { recipient, addr1, addr2, city, countryCode, postCode, phone, isDefault, idAddress, customerId } = address;
     const actions = [{ label: 'edit', icon: 'edit' }];
@@ -41,7 +41,9 @@ const AddressCard = ({ address, intl }) => {
                         );
                     },
                 });
-
+                break;
+            case 'edit':
+                onEdit(idAddress);
                 break;
             default:
                 break;

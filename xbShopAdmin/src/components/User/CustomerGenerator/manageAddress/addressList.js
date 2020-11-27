@@ -32,6 +32,17 @@ const AddressList = ({ customerId, intl }) => {
         });
     };
 
+    const handleEdit = (idAddress) => {
+        const address = addressList.find((item) => item.idAddress === idAddress);
+        if (address) {
+            dispatch(CustomerActionCreator.computeEditAddress(address));
+            reactHistory.push({
+                pathname: `${location.pathname}/add`,
+                search: `?customerId=${customerId}&addressId=${idAddress}`,
+            });
+        }
+    };
+
     // handle save status
     useEffect(() => {
         if (backendStatus === '') {
@@ -47,7 +58,7 @@ const AddressList = ({ customerId, intl }) => {
         <div className="address-list">
             <AddressCard.ADD key="add-card" onAdd={addAddress} />
             {addressList.map((item) => {
-                return <AddressCard address={item} key={item.idAddress} />;
+                return <AddressCard address={item} key={item.idAddress} onEdit={handleEdit} />;
             })}
         </div>
     );
