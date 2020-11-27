@@ -230,48 +230,13 @@ class CustomerDAO {
      * @param {*} ctxBody
      */
     static async saveAddress(ctxBody) {
-        // addr1: "164 Avenue Victor Hugo"
-        // addr2: ""
-        // city: "35305"
-        // countryCode: "fr"
-        // idAddress: "12"
-        // instruction: "ssd"
-        // phone: "sd"
-        // postCode: "92140"
-        // recipient: "xu bin"
-        // region: "93"
-        // action: "save",
-
-        // addr1: "164 Avenue Victor Hugo"
-        // addr2: ""
-        // city: "clamart"
-        // countryCode: "fr"
-        // idAddress: "12"
-        // instruction: ""
-        // phone: ""
-        // postCode: "92140"
-        // recipient: "xu bin"
-        // region: "hauts de seine"
-        // action: "save",
-
-        // addr1: "164 Avenue Victor Hugo"
-        // addr2: "Rez de Chaussée à Gauche"
-        // city: "Clamart"
-        // countryCode: "fr"
-        // idAddress: -1
-        // instruction: "164 Avenue Victor Hugo"
-        // phone: "0659657708"
-        // postCode: "92140"
-        // recipient: "xu bin"
-        // region: "Hauts de Seine"
-        // action: "save",
         let pk;
         const {
             addr1,
             addr2,
             city,
-            instruction,
-            phone,
+            instruction = '',
+            phone = '',
             postCode,
             countryCode,
             region,
@@ -307,6 +272,50 @@ class CustomerDAO {
                 return newAddress.toJSON();
             }
             return undefined;
+        }
+
+        if (action === 'setDefault') {
+            await sequelize.transaction(async (t) => {
+                const [nbUpdated] = await AddressModel.update(
+                    {
+                        isDefault: true,
+                    },
+                    {
+                        where: { idAddress: idAddressInt },
+                        transaction: t,
+                    }
+                );
+                if (nbUpdated === 1) {
+                    await AddressModel.update(
+                        {
+                            isDefault: false,
+                        },
+                        {
+                            where: {
+                                idAddress: {
+                                    [Op.not]: idAddressInt,
+                                },
+                                customerId: idCustomerInt,
+                            },
+                            transaction: t,
+                        }
+                    );
+                }
+            });
+            return { idAddress: idAddressInt, customerId };
+        }
+
+        if (action === 'delete') {
+            // delete case
+            const [nbDeleted] = await AddressModel.update(
+                {
+                    isDeleted: 1,
+                },
+                {
+                    where: { idAddress: idAddressInt },
+                }
+            );
+            return { nbDeleted, idAddress: idAddressInt, customerId };
         }
         // else if (action) {
         //     if (action === 'delete' || action === 'restore') {

@@ -33,4 +33,6 @@ export default {
     'customer.address.bc.addAddress': '新地址',
     'customer.addAddress.title.add': '添加一个新地址',
     'customer.addAddress.title.edit': '编辑当前地址',
+    'customer.addAddress.max.nb': '您最多可以添加{nb}个地址',
+    'customer.address.confirm.setDefault': '将当前地址设为默认地址?',
 };

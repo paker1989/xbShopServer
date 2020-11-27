@@ -120,10 +120,16 @@ const getGeoAutos = async (ctx) => {
 const saveAddress = async (ctx) => {
     try {
         const requestBody = ctx.request.body;
-        // const { idAddress = -1, action = 'save' } = requestBody;
+        const { action = 'save' } = requestBody;
+
         const saved = await CustomerDAO.saveAddress(requestBody);
         if (saved) {
-            cacheHelper.setCachedAddress(saved, saved.customerId);
+            if (action === 'setDefault') {
+                cacheHelper.removeCachedAddress(saved.customerId);
+            } else {
+                cacheHelper.setCachedAddress(saved, saved.customerId, action);
+            }
+
             Resolve.json(ctx, saved);
         } else {
             Resolve.info(ctx, 'failed due to unknown reason', 501);

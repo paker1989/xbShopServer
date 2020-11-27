@@ -148,7 +148,7 @@ export function* getAddressesSaga(reqObj) {
 export function* saveAddressSaga(reqObj) {
     // debugger;
 
-    const { action = 'save' } = reqObj.payload;
+    const { action = 'save', customerId } = reqObj.payload;
     console.log(reqObj.payload);
     try {
         const res = yield axios.post(
@@ -159,14 +159,20 @@ export function* saveAddressSaga(reqObj) {
             { withCredentials: true }
         );
         if (res && res.data) {
-            if (action !== 'destroy') {
+            if (action !== 'delete') {
                 cookie.save(addressMeta.newUpdateKey, res.data.idAddress, { maxAge: addressMeta.newUpdateMaxAge });
             }
+            yield put({
+                type: CustomerActionType._ADDRESS_LIST_FETCH,
+                payload: {
+                    customerId, // force to re-fetch
+                },
+            });
+
             yield put({
                 type: CustomerActionType._ADDRESS_SAVE_SUCCESS,
                 payload: {
                     backendStatus: CustomerActionType._ADDRESS_SAVE_SUCCESS,
-                    addresses: [], // force to re-fetch
                 },
             });
         } else {

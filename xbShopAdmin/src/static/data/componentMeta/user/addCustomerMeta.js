@@ -39,5 +39,6 @@ module.exports = {
         },
         newUpdateMaxAge: 8 * 1, // new or updated signal duration
         newUpdateKey: 'newAddressId',
+        maxNbAddress: 6,
     },
 };

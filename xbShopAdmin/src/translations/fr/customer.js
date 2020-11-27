@@ -32,4 +32,6 @@ export default {
     'customer.address.bc.addAddress': 'Nouvelle address',
     'customer.addAddress.title.add': 'Ajouter une nouvelle adresse',
     'customer.addAddress.title.edit': 'Editer votre adresse',
+    'customer.addAddress.max.nb': "Vous pouvez ajouter jusqu'à {nb} adresses",
+    'customer.address.confirm.setDefault': "Définir l'adresse actuelle comme adresse par défaut?",
 };

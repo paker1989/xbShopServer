@@ -14,10 +14,10 @@ import { addAddressGenerator as addressMeta } from '../../../../../static/data/c
  */
 const useAddresses = (customerId) => {
     const dispatch = useDispatch();
-    const addresses = useSelector((state) => state.user.addAddress.addresses);
+    const addresses = useSelector((state) => state.user.customerCmn.addresses);
 
-    const backendStatus = useSelector((state) => state.user.addAddress.backendStatus);
-    const backendMsg = useSelector((state) => state.user.addAddress.backendMsg);
+    const backendStatus = useSelector((state) => state.user.customerCmn.backendStatus);
+    const backendMsg = useSelector((state) => state.user.customerCmn.backendMsg);
 
     const newAddressId = cookie.load(addressMeta.newUpdateKey);
 
@@ -39,7 +39,7 @@ const useAddresses = (customerId) => {
     useEffect(() => {
         if (backendStatus === CustomerActionType._ADDRESS_LIST_FETCH_FAILED) {
             message.error(backendMsg);
-            dispatch(CustomerActionCreator.resetAddressSaveBackendStatus());
+            dispatch({ type: CustomerActionType._CUSTOMER__GLOBAL_RESET });
         }
     }, [backendStatus, backendMsg]);
 

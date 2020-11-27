@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createRef, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Form, Input, Select, AutoComplete, Row, Col, Typography, Button, message } from 'antd';
 import { injectIntl, FormattedMessage } from 'react-intl';

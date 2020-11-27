@@ -7,6 +7,8 @@
     // align-items: center;
 
     .add-customer-form-items {
+        max-width: 100%;
+
         &.view-left {
             // flex-basis: 270px;
             flex: 0 0 300px;
@@ -28,7 +30,7 @@
         justify-content: center;
         flex-direction: column-reverse;
 
-        .add-customer-form-items.view-right {
+        .add-customer-form-items.view-left {
             flex: 0;
         }
         .add-customer-form-items.view-right {

@@ -7,12 +7,17 @@ const initialState = {
     countryList: [],
     backendStatus: '',
     backendMsg: '',
+    addresses: [],
 };
 
 export default (state = initialState, action) => {
     // debugger;
     const { type, data, backendMsg, backendStatus } = action.payload || {};
     switch (action.type) {
+        case customerActionType._ADDRESS_LIST_FETCH_SUCCESS:
+            return { ...state, addresses: action.payload.data };
+        case customerActionType._ADDRESS_LIST_FETCH_FAILED:
+            return { ...state, ...action.payload };
         case customerActionType._CUSTOMER__GLOBAL_RESET:
             return { ...state, backendStatus: '', backendMsg: '' };
         case customerActionType._GLOBAL_FETCH_CONSTANT_SUCCEED:

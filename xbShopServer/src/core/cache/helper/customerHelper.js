@@ -83,20 +83,40 @@ const getCachedAddress = async (customerId) => {
     return null;
 };
 
-const setCachedAddress = async (address, customerId) => {
+const setCachedAddress = async (address, customerId, action = 'save') => {
     if (!address) {
         throw new Error('address is not present');
     }
     if (!customerId) {
         throw new Error('customerId is not present');
     }
+    let cachedAddresses = await getCachedAddress(customerId);
+
+    // delete case
+    if (action === 'delete') {
+        if (!cachedAddresses) {
+            return;
+        }
+        if (!address.nbDeleted) {
+            return;
+        }
+
+        const index = cachedAddresses.findIndex((item) => item.idAddress === address.idAddress);
+        if (index !== -1) {
+            cachedAddresses.splice(index, 1);
+            redisClient.set(getAddressKey(customerId), JSON.stringify(cachedAddresses), 'EX', config.expire.address);
+        }
+        return;
+    }
+
+    // update whole list case
     if (address.unshift) {
         // array
         redisClient.set(getAddressKey(customerId), JSON.stringify(address), 'EX', config.expire.address);
         return;
     }
 
-    let cachedAddresses = await getCachedAddress(customerId);
+    // update single case
     if (!cachedAddresses) {
         cachedAddresses = [];
     }
@@ -109,6 +129,10 @@ const setCachedAddress = async (address, customerId) => {
     redisClient.set(getAddressKey(customerId), JSON.stringify(cachedAddresses), 'EX', config.expire.address);
 };
 
+const removeCachedAddress = (customerId) => {
+    redisClient.del(getAddressKey(customerId));
+};
+
 module.exports = {
     getRegionKey,
     getCachedRegions,
@@ -119,4 +143,5 @@ module.exports = {
     setCachedCities,
     getCachedAddress,
     setCachedAddress,
+    removeCachedAddress,
 };

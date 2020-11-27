@@ -1,6 +1,8 @@
 @import '../../../../style/app.scss';
 
 $address-card-size: 260px;
+$address-card-xs-width: 200px;
+$address-card-xs-height: 260px;
 $address-card-gutter: 20px;
 
 .address-list {
@@ -36,6 +38,12 @@ addressCard
         }
     }
 
+    &.is-default {
+        .ant-card-head-title {
+            color: #FF5722;
+        }
+    }
+
     .ant-descriptions-item {
         padding-bottom: 2px;
     }
@@ -63,5 +71,16 @@ addressCard
 .add-address-form {
     .ant-form-item {
         margin-bottom: 5px;
+    }
+}
+
+@media (min-width: 375px) and (max-width: 767px) {
+    .address-card-container {
+        width: $address-card-xs-width;
+        height: $address-card-xs-height;
+
+        .ant-card {
+            height: $address-card-xs-height;
+        }
     }
 }

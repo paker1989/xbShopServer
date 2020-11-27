@@ -13,9 +13,9 @@ import * as CustomerActionType from '../../../../store/actionType/customerAction
 import * as CustomerActionCreator from '../../../../store/action/customerAction';
 import * as ServerErrorType from '../../../../static/data/serverErrorType/customerType';
 import getValidators from './validators';
+import { getUrlParameter } from '../../../../utils/url.helper';
 
 import './addCustomerForm.scss';
-import { getUrlParameter } from '../../../../utils/url.helper';
 
 const { formLayout } = addCustomerMeta;
 const { confirm } = Modal;

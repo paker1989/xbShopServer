@@ -174,6 +174,10 @@ todo:  => dataSource: { text, value }
 - edit address 
   1 data compute
   2 url composition
-- delete address, set as default 
-- default card -> orange header
-- 限制最多6个地址
+
+- (done) delete address, 
+- (done) set as default 
+- (done) click on breadcrumb lost search
+- (done) default card -> orange header
+- (done) 限制最多6个地址
+- (done) 切换时区的时候没有compute addresses
