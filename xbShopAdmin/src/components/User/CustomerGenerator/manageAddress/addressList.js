@@ -1,10 +1,10 @@
 import React from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import AddressCard from './addressCard';
 import useAddresses from './hooks/useAddresses';
 
 import './address.scss';
-import { useHistory, useLocation } from 'react-router-dom';
 
 const AddressList = ({ customerId }) => {
     const addressList = useAddresses(customerId);
@@ -12,7 +12,6 @@ const AddressList = ({ customerId }) => {
     const location = useLocation();
     // console.log(addressList);
     const addAddress = () => {
-        debugger;
         reactHistory.push({
             pathname: `${location.pathname}/add`,
             search: `?customerId=${customerId}`,

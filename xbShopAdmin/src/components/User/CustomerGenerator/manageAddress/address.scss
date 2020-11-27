@@ -19,7 +19,6 @@ addressCard
     position: relative;
     width: $address-card-size;
     height: $address-card-size;
-    
 
     .ant-card {
         height: $address-card-size;
@@ -28,6 +27,12 @@ addressCard
             position: absolute;
             width: 100%;
             bottom: 0;
+        }
+    }
+
+    &.is-new {
+        .ant-card {
+            background-color: $new-edit-color;
         }
     }
 

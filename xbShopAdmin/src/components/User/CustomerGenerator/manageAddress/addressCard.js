@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import { Typography, Card, Descriptions, Icon, Tooltip } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
@@ -18,8 +19,12 @@ const AddressCard = ({ address, intl }) => {
         actions.push({ label: 'setDefault', icon: 'pushpin' });
     }
 
+    const addressCls = cx('address-card-container', {
+        'is-new': address.new,
+    });
+
     return (
-        <div className="address-card-container">
+        <div className={addressCls}>
             <Card
                 hoverable
                 size="small"

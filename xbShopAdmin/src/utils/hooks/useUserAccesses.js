@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { message } from 'antd';
+// import cookie from 'react-cookies';
 
 import * as UserActionCreator from '../../store/action/userAction';
 import * as UserActionTypes from '../../store/actionType/userActionType';
