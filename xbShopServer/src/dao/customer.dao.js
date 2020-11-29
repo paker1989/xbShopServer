@@ -317,6 +317,17 @@ class CustomerDAO {
             );
             return { nbDeleted, idAddress: idAddressInt, customerId };
         }
+
+        const { customerId: _customerId, addressId: _addressId, action: _action, ...fieldProps } = ctxBody;
+        console.log(fieldProps);
+        const [updatedRow] = await AddressModel.update({ ...fieldProps }, { where: { idAddress: _addressId } });
+        // console.log(updatedRow);
+        // console.log(addresses);
+        if (updatedRow > 0) {
+            const updated = await CustomerDAO.getAddress(_customerId, _addressId);
+            return updated;
+        }
+
         // else if (action) {
         //     if (action === 'delete' || action === 'restore') {
         //         const [updatedRow] = await CustomerModel.update(
@@ -373,7 +384,11 @@ class CustomerDAO {
         return pk; // undefined
     }
 
-    static async getAddress(customerId) {
+    static async getAddress(customerId, addressId) {
+        if (addressId) {
+            const address = await AddressModel.findByPk(addressId);
+            return address ? address.toJSON() : null;
+        }
         const addresses = (
             await AddressModel.findAll({
                 where: {

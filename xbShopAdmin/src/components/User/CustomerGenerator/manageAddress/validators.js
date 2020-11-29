@@ -4,6 +4,26 @@ export default ({ intl }) => {
     function _translate(id, values = {}) {
         return intl.formatMessage({ id }, values);
     }
+    // const { getFieldValue } = form;
+
+    // const fieldKeys = [
+    //     'recipient',
+    //     'phone',
+    //     'addr1',
+    //     'addr2',
+    //     'city',
+    //     'postCode',
+    //     'region',
+    //     'countryCode',
+    //     'instruction',
+    // ];
+
+    // const backup = {};
+    // fieldKeys.forEach((field) => {
+    //     backup[field] = getFieldValue(field) || '';
+    // });
+
+    // console.log(backup);
 
     // const { isFieldTouched } = form;
 
@@ -29,22 +49,12 @@ export default ({ intl }) => {
         },
         department: {},
         region: {},
-        country: {
+        countryCode: {
             rules: [{ required: true, message: _translate('customer.addAddress.error.noCountry') }],
         },
         instruction: {},
         default: {
             valuePropName: 'checked',
         },
-        // getTouchedFields: (values) => {
-        //     return Object.keys(values)
-        //         .filter((key) => isFieldTouched(key))
-        //         .reduce((obj, key) => {
-        //             /* eslint-disable */
-        //             obj[key] = values[key];
-        //             /* eslint-enable */
-        //             return obj;
-        //         }, {});
-        // },
     };
 };

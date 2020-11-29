@@ -142,6 +142,46 @@ export function* getAddressesSaga(reqObj) {
 }
 
 /**
+ * example: searchStr, type
+ * @param {*} reqObj
+ */
+export function* getAddressDetailSaga(reqObj) {
+    try {
+        const res = yield axios.post(
+            getRequestUrl('customer', 'getAddresses'),
+            {
+                ...reqObj.payload,
+            },
+            { withCredentials: true }
+        );
+        if (res && res.data) {
+            yield put({
+                type: CustomerActionType._ADDRESS_FETCH_DETAIL_SUCCESS,
+                payload: {
+                    data: res.data,
+                },
+            });
+        } else {
+            yield put({
+                type: CustomerActionType._ADDRESS_FETCH_DETAIL_FAILED,
+                payload: {
+                    backendStatus: CustomerActionType._ADDRESS_FETCH_DETAIL_FAILED,
+                    backendMsg: res.statusText,
+                },
+            });
+        }
+    } catch (error) {
+        yield put({
+            type: CustomerActionType._ADDRESS_FETCH_DETAIL_FAILED,
+            payload: {
+                backendStatus: CustomerActionType._ADDRESS_FETCH_DETAIL_FAILED,
+                backendMsg: error.response ? error.response.statusText : error.message,
+            },
+        });
+    }
+}
+
+/**
  * save addresses saga,
  * @param {*} reqObj
  */

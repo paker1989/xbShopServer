@@ -168,6 +168,10 @@ const getAddress = async (ctx) => {
     }
 };
 
+// const getCustomer = async (ctx) => {
+
+// }
+
 module.exports = {
     saveCustomer,
     fetchConstants,

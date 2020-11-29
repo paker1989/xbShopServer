@@ -142,3 +142,14 @@ export function isInt(value, escapes = []) {
     const tryInt = Number.parseInt(value, 10);
     return !Number.isNaN(tryInt) && !escapes.includes(tryInt);
 }
+
+export function getModifiedValues(values, backup) {
+    const modifed = {};
+    // debugger;
+    Object.keys(values).forEach((key) => {
+        if ((!backup[key] && values[key]) || values[key] !== backup[key]) {
+            modifed[key] = values[key];
+        }
+    });
+    return modifed;
+}

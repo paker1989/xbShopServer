@@ -182,5 +182,10 @@ todo:  => dataSource: { text, value }
 - (done) 限制最多6个地址
 - (done) 切换时区的时候没有compute addresses
 
-- 直接打网址对address compute的support
-- update address 
+- (done) 直接打网址对address compute的support
+- (done) update address server fn
+- (done) addaddress form 不能直接history.goBack(), 要手动拼接address list的url
+
+## 29/11/2020
+- customer info compute;
+- save customer edition;

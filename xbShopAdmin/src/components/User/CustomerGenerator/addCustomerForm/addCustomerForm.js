@@ -13,7 +13,7 @@ import * as CustomerActionType from '../../../../store/actionType/customerAction
 import * as CustomerActionCreator from '../../../../store/action/customerAction';
 import * as ServerErrorType from '../../../../static/data/serverErrorType/customerType';
 import getValidators from './validators';
-import { getUrlParameter } from '../../../../utils/url.helper';
+import { getIntegerFromUrlParameter } from '../../../../utils/url.helper';
 
 import './addCustomerForm.scss';
 
@@ -26,7 +26,7 @@ const Core = (props) => {
     const { form, intl, history, match } = props;
     const { url: routerUrl } = match;
     // console.log(history);
-    const idCustomer = getUrlParameter('customerId') || -1;
+    const idCustomer = getIntegerFromUrlParameter('customerId') || -1;
 
     const backendStatus = useSelector((state) => state.user.addCustomer.backendStatus);
     const backendMsg = useSelector((state) => state.user.addCustomer.backendMsg);
@@ -47,8 +47,16 @@ const Core = (props) => {
                     if (thumbnail.length === 0) {
                         values.thumbnail = `${window.location.origin}/static/image/avatar_${genderVal}.png`;
                     }
+                    dispatch(CustomerActionCreator.saveCustomer({ idCustomer, ...values }));
+                } else {
+                    // update case
+                    const modifieds = validators.getModifiedValues(values, props);
+                    if (Object.keys(modifieds).length > 0) {
+                        dispatch(CustomerActionCreator.saveCustomer({ idCustomer, ...modifieds }));
+                    } else {
+                        history.push('/dashboard/customerList');
+                    }
                 }
-                dispatch(CustomerActionCreator.saveCustomer({ idCustomer, ...values }));
             }
             /* eslint-enable */
         });

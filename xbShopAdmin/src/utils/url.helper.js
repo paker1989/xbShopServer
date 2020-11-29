@@ -16,3 +16,12 @@ export function getUrlParameter(name) {
     const results = regex.exec(window.location.search);
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
+
+export function getIntegerFromUrlParameter(name) {
+    const res = Number.parseInt(getUrlParameter(name), 10);
+    const isNaN = Number.isNaN(res);
+    if (isNaN || res === -1) {
+        return -1;
+    } 
+    return res;
+}

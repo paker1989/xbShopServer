@@ -87,7 +87,7 @@ const AddressCard = ({ address, intl, onEdit }) => {
             >
                 <Descriptions title={recipient} column={1}>
                     <Descriptions.Item>{addr1}</Descriptions.Item>
-                    {addr2 && <Descriptions.Item>{addr1}</Descriptions.Item>}
+                    {addr2 && <Descriptions.Item>{addr2}</Descriptions.Item>}
                     <Descriptions.Item>{`${city}, ${postCode}`}</Descriptions.Item>
                     <Descriptions.Item>
                         <FormattedMessage id={`country.${countryCode}`} />

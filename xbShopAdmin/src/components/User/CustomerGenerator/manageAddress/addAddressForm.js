@@ -10,7 +10,8 @@ import useCountryList from './hooks/useCountryList';
 import { addAddressGenerator as addAddressMeta } from '../../../../static/data/componentMeta/user/addCustomerMeta';
 import * as CustomerActionType from '../../../../store/actionType/customerActionType';
 import * as CustomerActionCreator from '../../../../store/action/customerAction';
-import { getUrlParameter } from '../../../../utils/url.helper';
+import { getIntegerFromUrlParameter } from '../../../../utils/url.helper';
+import { getModifiedValues } from '../../../../utils/data.helper';
 import useAvailableAutos from './hooks/useAvailableAutos';
 import getValidators from './validators';
 
@@ -26,13 +27,9 @@ const Core = (props) => {
     const [regionSearchStr, setRegionSearchStr] = useState('');
     const [citySearchStr, setCitySearchStr] = useState('');
 
-    const addressId = getUrlParameter('addressId') || -1;
-    const customerId = getUrlParameter('customerId') || -1;
-
-    if (customerId === -1 && addressId === -1) {
-        message.error(intl.formatMessage({ id: 'common.error.param.addAddress' }));
-        history.push('/dashboard/customerList');
-    }
+    const addressId = getIntegerFromUrlParameter('addressId');
+    const customerId = getIntegerFromUrlParameter('customerId');
+    const cachedAddresses = useSelector((state) => state.user.customerCmn.addresses);
 
     const countryList = useCountryList();
     const regionAvailables = useAvailableAutos(countryCode, regionSearchStr, 'region');
@@ -43,20 +40,31 @@ const Core = (props) => {
 
     const { getFieldDecorator } = form;
 
-    const validators = getValidators({ intl, form });
+    const validators = getValidators({ intl });
 
     const cancelEdition = () => {
-        history.goBack();
+        history.push('/dashboard/customerList');
     };
 
     const onSubmit = (e) => {
         e.preventDefault();
         form.validateFields((errors, values) => {
-            console.log(values);
+            // console.log(values);
             /* eslint-disable */
             if (!errors) {
-                // TODO
-                dispatch(CustomerActionCreator.saveAddress({ ...values, addressId, customerId, action: 'save' }));
+                if (addressId !== -1) {
+                    // update case
+                    const modifieds = getModifiedValues(values, props);
+                    if (Object.keys(modifieds).length > 0) {
+                        dispatch(
+                            CustomerActionCreator.saveAddress({ ...modifieds, addressId, customerId, action: 'save' })
+                        );
+                    } else {
+                        history.push('/dashboard/customerList');
+                    }
+                } else {
+                    dispatch(CustomerActionCreator.saveAddress({ ...values, addressId, customerId, action: 'save' }));
+                }
             }
             /* eslint-enable */
         });
@@ -97,6 +105,24 @@ const Core = (props) => {
         dispatch(CustomerActionCreator.resetAddressState());
     });
 
+    useEffect(() => {
+        if (customerId === -1 /* && addressId === -1 */) {
+            message.error(intl.formatMessage({ id: 'common.error.param.addAddress' }));
+            history.push('/dashboard/customerList');
+        }
+        if (addressId !== -1 && !props.recipient) {
+            // recipient is mandatory, it is not present means it is accessed directly
+            if (cachedAddresses.length > 0) {
+                const tryGet = cachedAddresses.find((item) => item.idAddress === addressId);
+                if (tryGet) {
+                    dispatch(CustomerActionCreator.computeEditAddress(tryGet));
+                    return;
+                }
+            }
+            dispatch(CustomerActionCreator.fetchAddressDetail({ addressId, customerId }));
+        }
+    }, []);
+
     // handle save status
     useEffect(() => {
         if (backendStatus.length === 0) {
@@ -105,7 +131,13 @@ const Core = (props) => {
         if (backendStatus === CustomerActionType._ADDRESS_SAVE_FAILED) {
             message.error(backendMsg);
         } else if (backendStatus === CustomerActionType._ADDRESS_SAVE_SUCCESS) {
-            history.goBack();
+            // history.goBack();
+            history.push(`/dashboard/addCustomer/address?customerId=${customerId}`);
+        }
+
+        if (backendStatus === CustomerActionType._ADDRESS_FETCH_DETAIL_FAILED) {
+            message.error(backendMsg);
+            history.push('/dashboard/customerList');
         }
         dispatch(CustomerActionCreator.resetAddressSaveBackendStatus());
     }, [backendStatus, backendMsg]);
@@ -159,7 +191,7 @@ const Core = (props) => {
                     <Form.Item label={intl.formatMessage({ id: 'customer.addAddress.country' })}>
                         {getFieldDecorator(
                             'countryCode',
-                            validators.country
+                            validators.countryCode
                         )(
                             <Select
                                 className="xb-form-input xxl"
