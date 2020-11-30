@@ -14,8 +14,9 @@ const config = {
 const getRegionKey = (countryCode) => `${prefix}:${keys.region}:${countryCode}`;
 const getDepartmKey = (countryCode) => `${prefix}:${keys.departm}:${countryCode}`;
 const getCityKey = (countryCode) => `${prefix}:${keys.city}:${countryCode}`;
-
 const getAddressKey = (customerId) => `${prefix}:${keys.address}:${customerId}`;
+const getCustomerIdsKey = ({ filter = 'NA', sort = 'NA' }) => `${prefix}:${keys.cids}:filter:${filter}:sort:${sort}`;
+const getCustomerMetaKey = (customerId) => `${prefix}:${keys.meta}:${customerId}`;
 
 const getCachedCities = async (countryCode) => {
     const data = await getAsync.call(redisClient, getCityKey(countryCode));
@@ -133,6 +134,23 @@ const removeCachedAddress = (customerId) => {
     redisClient.del(getAddressKey(customerId));
 };
 
+const setCustomerIds = ({ filter, sort }, ids) => {
+    if (!ids) {
+        throw new Error('customer ids is null');
+    }
+    const cacheKey = getCustomerIdsKey({ filter, sort });
+    redisClient.set(cacheKey, ids);
+};
+
+const removeCustomerIds = ({ filter, sort }) => {
+    const cacheKey = getCustomerIdsKey({ filter, sort });
+    redisClient.del(cacheKey);
+};
+
+const getCustomerMeta = (id) => {
+    
+}
+
 module.exports = {
     getRegionKey,
     getCachedRegions,
@@ -144,4 +162,8 @@ module.exports = {
     getCachedAddress,
     setCachedAddress,
     removeCachedAddress,
+    getCustomerIdsKey,
+    getCustomerMetaKey,
+    setCustomerIds,
+    removeCustomerIds,
 };

@@ -30,6 +30,8 @@ const customer = {
         departm: 'departm',
         city: 'city',
         address: 'addrs',
+        cids: 'cids',
+        meta: 'meta',
     },
 };
 

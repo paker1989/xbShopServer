@@ -5,7 +5,6 @@ import { Table, Row, Col, Switch, Popconfirm } from 'antd';
 import { NavLink } from 'react-router-dom';
 
 import productListMeta from '../../../static/data/componentMeta/product/productListMeta';
-// import * as ProductActionType from '../../../store/actionType/productActionType';
 import * as ProductActionCreator from '../../../store/action/productActions';
 
 import './productList.scss';
