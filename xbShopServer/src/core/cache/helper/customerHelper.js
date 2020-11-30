@@ -2,12 +2,13 @@ const { customer } = require('../cachePrefix');
 const { redisClient } = require('../redis');
 const { async } = require('../redisHelper');
 
-const { getAsync } = async;
+const { getAsync, rpushAsync, lRangeAsync } = async;
 const { prefix, keys } = customer;
 
 const config = {
     expire: {
         address: 60 * 60 * 4, // 4 小时
+        meta: 60 * 60 * 4, // 4 小时
     },
 };
 
@@ -15,7 +16,8 @@ const getRegionKey = (countryCode) => `${prefix}:${keys.region}:${countryCode}`;
 const getDepartmKey = (countryCode) => `${prefix}:${keys.departm}:${countryCode}`;
 const getCityKey = (countryCode) => `${prefix}:${keys.city}:${countryCode}`;
 const getAddressKey = (customerId) => `${prefix}:${keys.address}:${customerId}`;
-const getCustomerIdsKey = ({ filter = 'NA', sort = 'NA' }) => `${prefix}:${keys.cids}:filter:${filter}:sort:${sort}`;
+const getCustomerIdsKey = ({ filter = 'NA', sort = 'NA', sortOrder = 'NA' }) =>
+    `${prefix}:${keys.cids}:filter:${filter}:sort:${sort}^${sortOrder}`;
 const getCustomerMetaKey = (customerId) => `${prefix}:${keys.meta}:${customerId}`;
 
 const getCachedCities = async (countryCode) => {
@@ -134,22 +136,43 @@ const removeCachedAddress = (customerId) => {
     redisClient.del(getAddressKey(customerId));
 };
 
-const setCustomerIds = ({ filter, sort }, ids) => {
+const getCustomerIds = async ({ filter, sort, sortOrder }) => {
+    const ids = await lRangeAsync.call(redisClient, getCustomerIdsKey({ filter, sort, sortOrder }), 0, -1);
+    return ids;
+};
+
+const setCustomerIds = ({ filter, sort, sortOrder, ids }) => {
     if (!ids) {
         throw new Error('customer ids is null');
     }
-    const cacheKey = getCustomerIdsKey({ filter, sort });
-    redisClient.set(cacheKey, ids);
+    const cacheKey = getCustomerIdsKey({ filter, sort, sortOrder });
+    // redisClient.set(cacheKey, ids);
+    redisClient.del(cacheKey, (err) => {
+        if (!err && ids.length > 0) {
+            rpushAsync.call(redisClient, cacheKey, ids);
+        }
+    });
 };
 
-const removeCustomerIds = ({ filter, sort }) => {
-    const cacheKey = getCustomerIdsKey({ filter, sort });
+const removeCustomerIds = ({ filter, sort, sortOrder }) => {
+    const cacheKey = getCustomerIdsKey({ filter, sort, sortOrder });
     redisClient.del(cacheKey);
 };
 
-const getCustomerMeta = (id) => {
-    
-}
+const getCustomerMeta = async (id) => {
+    const data = await getAsync.call(redisClient, getCustomerMetaKey(id));
+    if (data) {
+        return JSON.parse(data);
+    }
+    return null;
+};
+
+const setCustomerMeta = (meta) => {
+    if (!meta || !meta.idCustomer) {
+        throw new Error('customer meta is not present');
+    }
+    redisClient.set(getCustomerMetaKey(meta.idCustomer), JSON.stringify(meta), 'EX', config.expire.meta);
+};
 
 module.exports = {
     getRegionKey,
@@ -165,5 +188,8 @@ module.exports = {
     getCustomerIdsKey,
     getCustomerMetaKey,
     setCustomerIds,
+    getCustomerIds,
     removeCustomerIds,
+    getCustomerMeta,
+    setCustomerMeta,
 };

@@ -168,9 +168,41 @@ const getAddress = async (ctx) => {
     }
 };
 
-// const getCustomer = async (ctx) => {
+const getCustomerMeta = async (id) => {
+    const cached = await cacheHelper.getCustomerMeta(id);
+    if (cached) {
+        return cached;
+    }
+    const customer = await CustomerDAO.getCustomerMetas({ ids: id });
+    if (customer) {
+        cacheHelper.setCustomerMeta(customer);
+    }
+    return customer;
+};
 
-// }
+const getCustomerList = async (ctx) => {
+    let _startPage = 1;
+    let ids;
+    const data = [];
+    const { filter = 'NA', sort = 'NA', sortOrder = 'NA', pSize = '20', start = 1, limit = 50 } = ctx.request.body;
+
+    ids = await cacheHelper.getCustomerIds({ filter, sort, sortOrder }); // get cached sorted ids
+    if (!ids || ids.length === 0) {
+        ids = await CustomerDAO.getCustomerIds({ filter, sort, sortOrder }); // fetch from db if not found in cached
+        cacheHelper.setCustomerIds({ filter, sort, sortOrder, ids }); // set in cache
+    }
+
+    if (ids.length < pSize * start) {
+        _startPage = 1;
+    } else {
+        _startPage = start;
+    }
+    const slices = ids.slice(pSize * (_startPage - 1), pSize * (_startPage - 1) + limit); // pagination
+    slices.forEach((id) => {
+        data.push(getCustomerMeta(id));
+    });
+    Resolve.json(ctx, { data: await Promise.all(data), totalCnt: ids.length, startPage: _startPage });
+};
 
 module.exports = {
     saveCustomer,
@@ -178,4 +210,5 @@ module.exports = {
     getGeoAutos,
     saveAddress,
     getAddress,
+    getCustomerList,
 };

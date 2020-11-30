@@ -17,10 +17,11 @@
      - (done) removeCustomerIds --> above 3： *limit* = infinite;
      
      - (done) getCustomerMetaKey
-     - setCustomerMeta
-     - getCustomerMeta --> above 3: *limit* = 4 hours;
+     - (done) setCustomerMeta
+     - (done) getCustomerMeta --> above 3: *limit* = 4 hours;
   `customerDAO`:
-     - getCustomerIds(filter, sort);
+     - (done) getCustomerIds(filter, sort);
+     - getCustomerList({ filter = 'NA', sort = 'NA', psize, start});
      - getCustomerMeta({ ids }):
 
 2. *client*:

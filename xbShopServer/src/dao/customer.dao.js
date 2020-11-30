@@ -399,6 +399,56 @@ class CustomerDAO {
         ).map((item) => item.toJSON());
         return addresses;
     }
+
+    static async getCustomerIds(ctxBody) {
+        const { filter = 'NA', sort = 'NA', sortOrder = 'NA' } = ctxBody;
+        let orderStatement;
+        // let filterCondition = {};
+        if (sort === 'NA' || sortOrder === 'NA') {
+            orderStatement = [];
+        } else {
+            orderStatement = [sort, sortOrder.toLowerCase() === 'desc' ? 'asc' : 'desc'];
+        }
+
+        if (filter) {
+            switch (filter) {
+                default:
+                    break;
+            }
+        }
+
+        const sortedIds = (
+            await CustomerModel.findAll({
+                attributes: ['idCustomer'],
+                where: {
+                    isDeleted: false,
+                    // ...filterCondition,
+                },
+                order: orderStatement.length === 0 ? [] : [orderStatement],
+            })
+        ).map((u) => u.get('idCustomer'));
+
+        return sortedIds;
+    }
+
+    static async getCustomerMetas({ ids }) {
+        if (ids.unshift) {
+            const metas = await CustomerModel.findAll({
+                where: {
+                    idCustomer: { [Op.in]: ids },
+                    isDeleted: false,
+                },
+            });
+            return metas;
+        }
+
+        const meta = await CustomerModel.findByPk(ids, {
+            where: {
+                isDeleted: false,
+            },
+        });
+        return meta;
+    }
 }
 
 module.exports = CustomerDAO;
