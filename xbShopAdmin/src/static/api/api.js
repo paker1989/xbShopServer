@@ -21,6 +21,7 @@ module.exports = {
     },
     customer: {
         saveCustomer: 'saveCustomer',
+        getCustomer: 'getCustomer',
         fetchConstants: 'fetchConstants',
         getGeoAutos: 'getGeoAutos',
         saveAddress: 'saveAddress',

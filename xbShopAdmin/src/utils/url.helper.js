@@ -22,6 +22,6 @@ export function getIntegerFromUrlParameter(name) {
     const isNaN = Number.isNaN(res);
     if (isNaN || res === -1) {
         return -1;
-    } 
+    }
     return res;
 }

@@ -74,6 +74,13 @@ const Core = (props) => {
         CustomerActionCreator.resetCustomerSaveBackendStatus();
     });
 
+    useEffect(() => {
+        if (idCustomer !== -1 && props.email.length === 0) {
+            // recipient is mandatory, it is not present means it is accessed directly
+            dispatch(CustomerActionCreator.getCustomer({ idCustomer }));
+        }
+    }, []);
+
     // handle save status
     useEffect(() => {
         if (backendStatus.length === 0) {

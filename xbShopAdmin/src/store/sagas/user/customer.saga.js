@@ -145,6 +145,60 @@ export function* getAddressesSaga(reqObj) {
  * example: searchStr, type
  * @param {*} reqObj
  */
+export function* getCustomerSaga(reqObj) {
+    const { idCustomer = -1 } = reqObj.payload;
+    try {
+        const res = yield axios.post(
+            getRequestUrl('customer', 'getCustomer'),
+            {
+                ...reqObj.payload,
+            },
+            { withCredentials: true }
+        );
+        if (res && res.data) {
+            yield put({
+                type:
+                    idCustomer !== -1
+                        ? CustomerActionType._CUSTOMER_FETCH_SUCCESS
+                        : CustomerActionType._CUSTOMER_FETCH_LIST_SUCCESS,
+                payload: res.data,
+            });
+        } else {
+            yield put({
+                type:
+                    idCustomer !== -1
+                        ? CustomerActionType._CUSTOMER_FETCH_FAILED
+                        : CustomerActionType._CUSTOMER_FETCH_LIST_FAILED,
+                payload: {
+                    backendStatus:
+                        idCustomer !== -1
+                            ? CustomerActionType._CUSTOMER_FETCH_FAILED
+                            : CustomerActionType._CUSTOMER_FETCH_LIST_FAILED,
+                    backendMsg: res.statusText,
+                },
+            });
+        }
+    } catch (error) {
+        yield put({
+            type:
+                idCustomer !== -1
+                    ? CustomerActionType._CUSTOMER_FETCH_FAILED
+                    : CustomerActionType._CUSTOMER_FETCH_LIST_FAILED,
+            payload: {
+                backendStatus:
+                    idCustomer !== -1
+                        ? CustomerActionType._CUSTOMER_FETCH_FAILED
+                        : CustomerActionType._CUSTOMER_FETCH_LIST_FAILED,
+                backendMsg: error.response ? error.response.statusText : error.message,
+            },
+        });
+    }
+}
+
+/**
+ * example: searchStr, type
+ * @param {*} reqObj
+ */
 export function* getAddressDetailSaga(reqObj) {
     try {
         const res = yield axios.post(
