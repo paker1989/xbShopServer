@@ -18,6 +18,7 @@ import {
     saveAddressSaga,
     getAddressesSaga,
     getAddressDetailSaga,
+    getCustomerSaga,
 } from './customer.saga';
 
 import { getConstantsSaga } from './global.saga';
@@ -33,6 +34,7 @@ export function* userSaga() {
 
     // customer
     yield takeLatest(CustomerActionType._SAVE_CUSTOMER, saveCustomerSaga);
+    yield takeLatest(CustomerActionType._CUSTOMER_FETCH, getCustomerSaga);
 
     // address
     yield takeLatest(CustomerActionType._ADDRESS_FETCH_GEO_AUTOCOMPLETE, getGeoAutocompletesSaga);

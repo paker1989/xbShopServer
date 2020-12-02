@@ -4,7 +4,7 @@ const { authMiddleware } = require('./auth.router');
 // const { Resolve } = require('../core/resolve');
 const {
     saveCustomer,
-    getCustomerList,
+    getCustomer,
     fetchConstants,
     getGeoAutos,
     saveAddress,
@@ -16,8 +16,9 @@ const router = new Router();
 // const authMiddleware = AuthRouter.authMiddleware;
 router.post('/saveCustomer', saveCustomer);
 
-// curl -X POST http://localhost:3000/api/v1/customer/getCustomerList
-router.post('/getCustomerList', /* authMiddleware, */ getCustomerList);
+// curl -X POST http://localhost:3000/api/v1/customer/getCustomer
+// curl -d "idCustomer=10" -X POST http://localhost:3000/api/v1/customer/getCustomer | json_pp
+router.post('/getCustomer', /* authMiddleware, */ getCustomer);
 
 // curl -d "countryCode=fr" -X POST http://localhost:3000/api/v1/customer/getGeoConstants
 router.post('/fetchConstants', authMiddleware, fetchConstants);

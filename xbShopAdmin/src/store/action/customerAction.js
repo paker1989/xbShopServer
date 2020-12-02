@@ -6,13 +6,17 @@ export const saveCustomer = (options) => ({
 });
 
 export const getCustomer = (params) => ({
-    type: CustomerActionType._FETCH_CUSTOMER,
+    type: CustomerActionType._CUSTOMER_FETCH,
     payload: params,
 });
 
 export const resetCustomerSaveBackendStatus = () => ({
     type: CustomerActionType._CUSTOMER_SAVE_RESET_BACKEND_STATUS,
     payload: { backendStatus: '', backendMsg: '' },
+});
+
+export const resetAddCustomerState = () => ({
+    type: CustomerActionType._CUSTOMER_RESET_STATE,
 });
 
 export const resetAddressSaveBackendStatus = () => ({

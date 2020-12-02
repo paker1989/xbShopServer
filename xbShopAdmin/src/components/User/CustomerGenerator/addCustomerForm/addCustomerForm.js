@@ -64,14 +64,10 @@ const Core = (props) => {
 
     const cancelEdition = () => {
         history.push('/dashboard/customerList');
-        // history.push({
-        //     pathname: `${routerUrl}/address/add`,
-        //     search: '?customerId=12',
-        // });
     };
 
     useUnmount(() => {
-        CustomerActionCreator.resetCustomerSaveBackendStatus();
+        dispatch(CustomerActionCreator.resetAddCustomerState());
     });
 
     useEffect(() => {
@@ -85,6 +81,10 @@ const Core = (props) => {
     useEffect(() => {
         if (backendStatus.length === 0) {
             return;
+        }
+        if (backendStatus === CustomerActionType._CUSTOMER_FETCH_FAILED) {
+            message.error(backendMsg);
+            history.push('/dashboard/customerList');
         }
         if (backendStatus === CustomerActionType._CUSTOMER_SAVE_SUCCESS) {
             if (idCustomer === -1) {

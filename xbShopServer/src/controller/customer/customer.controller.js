@@ -180,11 +180,29 @@ const getCustomerMeta = async (id) => {
     return customer;
 };
 
-const getCustomerList = async (ctx) => {
+const getCustomer = async (ctx) => {
     let _startPage = 1;
     let ids;
     const data = [];
-    const { filter = 'NA', sort = 'NA', sortOrder = 'NA', pSize = '20', start = 1, limit = 50 } = ctx.request.body;
+    const {
+        filter = 'NA',
+        sort = 'NA',
+        sortOrder = 'NA',
+        pSize = '20',
+        start = 1,
+        limit = 50,
+        idCustomer = -1,
+    } = ctx.request.body;
+
+    if (idCustomer !== -1) {
+        const customer = await getCustomerMeta(idCustomer);
+        if (customer) {
+            Resolve.json(ctx, customer);
+            return;
+        }
+        Resolve.info(ctx, 'customer is not found', 404);
+        return;
+    }
 
     ids = await cacheHelper.getCustomerIds({ filter, sort, sortOrder }); // get cached sorted ids
     if (!ids || ids.length === 0) {
@@ -210,5 +228,5 @@ module.exports = {
     getGeoAutos,
     saveAddress,
     getAddress,
-    getCustomerList,
+    getCustomer,
 };
