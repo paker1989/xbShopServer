@@ -14,6 +14,7 @@ import * as CustomerActionCreator from '../../../../store/action/customerAction'
 import * as ServerErrorType from '../../../../static/data/serverErrorType/customerType';
 import getValidators from './validators';
 import { getIntegerFromUrlParameter } from '../../../../utils/url.helper';
+import { getModifiedValues } from '../../../../utils/data.helper';
 
 import './addCustomerForm.scss';
 
@@ -50,9 +51,10 @@ const Core = (props) => {
                     dispatch(CustomerActionCreator.saveCustomer({ idCustomer, ...values }));
                 } else {
                     // update case
-                    const modifieds = validators.getModifiedValues(values, props);
+                    const modifieds = getModifiedValues(values, props);
+                    console.log(modifieds);
                     if (Object.keys(modifieds).length > 0) {
-                        dispatch(CustomerActionCreator.saveCustomer({ idCustomer, ...modifieds }));
+                        dispatch(CustomerActionCreator.saveCustomer({ idCustomer, ...modifieds, action: 'update' }));
                     } else {
                         history.push('/dashboard/customerList');
                     }

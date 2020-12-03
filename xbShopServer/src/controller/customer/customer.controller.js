@@ -25,7 +25,7 @@ const saveCustomer = async (ctx) => {
             requestBody.thumbnail = normalizeImgPath(`${basePath}:${port}`, 'thumbnail', thumbnailFile.name);
         }
 
-        if (action === 'create') {
+        if (action === 'create' || action === 'update') {
             const error = await CustomerDAO.checkDuplicaCustomer(idCustomer, email, pseudo);
             if (error.length > 0) {
                 Resolve.info(ctx, error, 403);
@@ -36,6 +36,7 @@ const saveCustomer = async (ctx) => {
 
         if (typeof saved === 'object') {
             // todo: handle cache
+            cacheHelper.setCustomerMeta(saved);
         }
         Resolve.json(ctx, { customerId: saved.idCustomer }, 'save succeed');
     } catch (err) {

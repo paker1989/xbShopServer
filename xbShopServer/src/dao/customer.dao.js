@@ -20,24 +20,38 @@ class CustomerDAO {
     static async checkDuplicaCustomer(idCustomer, email, pseudo) {
         let error = '';
         const id = parseInt(idCustomer, 10);
-        if (id !== -1) {
-            // return { [ErrorTypes._BAD_ID_FOR_CREATE]: true };
-            return ErrorTypes._BAD_ID_FOR_CREATE;
+        // if (id !== -1) {
+        //     // return { [ErrorTypes._BAD_ID_FOR_CREATE]: true };
+        //     return ErrorTypes._BAD_ID_FOR_CREATE;
+        // }
+        // if (typeof email === 'undefined') {
+        //     // return { [ErrorTypes._EMAIL_UNDEFINED]: true };
+        //     return ErrorTypes._EMAIL_UNDEFINED;
+        // }
+        // if (typeof pseudo === 'undefined') {
+        //     // return { [ErrorTypes._PSEUDO_UNDEFINED]: true };
+        //     return ErrorTypes._PSEUDO_UNDEFINED;
+        // }
+        if (!email && !pseudo) {
+            return error;
         }
-        if (typeof email === 'undefined') {
-            // return { [ErrorTypes._EMAIL_UNDEFINED]: true };
-            return ErrorTypes._EMAIL_UNDEFINED;
-        }
-        if (typeof pseudo === 'undefined') {
-            // return { [ErrorTypes._PSEUDO_UNDEFINED]: true };
-            return ErrorTypes._PSEUDO_UNDEFINED;
-        }
-        const duplicas = await CustomerModel.findAll({
-            where: {
+        let whereCondition;
+        if (typeof email !== 'undefined' && typeof pseudo !== 'undefined') {
+            whereCondition = {
                 [Op.or]: [
                     { $col: where(fn('lower', col('email')), fn('lower', email)) },
                     { $col: where(fn('lower', col('pseudo')), fn('lower', pseudo)) },
                 ],
+            };
+        } else if (typeof email !== 'undefined') {
+            whereCondition = { $col: where(fn('lower', col('email')), fn('lower', email)) };
+        } else {
+            whereCondition = { $col: where(fn('lower', col('pseudo')), fn('lower', pseudo)) };
+        }
+
+        const duplicas = await CustomerModel.findAll({
+            where: {
+                ...whereCondition,
                 idCustomer: {
                     [Op.not]: id,
                 },
@@ -82,12 +96,12 @@ class CustomerDAO {
             pseudo,
             email,
             phone,
-            thumbnail = '',
+            thumbnail,
             gender,
             idCustomer,
-            isActive = true,
+            isActive,
             isDeleted = false,
-            password = '',
+            password,
             action,
             address,
         } = ctxBody;
@@ -116,6 +130,7 @@ class CustomerDAO {
 
                 if (address && address.length > 0) {
                     // set address
+                    await CustomerDAO.saveAddress(address); // to test
                 }
 
                 return newCustomer.idCustomer;
@@ -137,36 +152,12 @@ class CustomerDAO {
             }
 
             if (action === 'update') {
-                const updateCondition = {};
-                const prefUpdateCondition = {};
-                if (email) {
-                    updateCondition.email = email;
-                }
-                if (typeof isActive !== 'undefined') {
-                    updateCondition.isActive = isActive;
-                }
-                if (phone) {
-                    updateCondition.phone = phone;
-                }
-                if (password) {
-                    updateCondition.password = encryptHelper.bcryptHashSync(password);
-                }
-                if (pseudo) {
-                    prefUpdateCondition.pseudo = parseInt(pseudo, 10);
-                }
-                if (thumbnail) {
-                    prefUpdateCondition.userAccessId = parseInt(thumbnail, 10);
-                }
+                const { idCustomer: _idCustomer, action: _action, ...updateProps } = ctxBody;
 
-                pk = await sequelize.transaction(async (t) => {
-                    if (Object.keys(updateCondition).length > 0) {
-                        await CustomerModel.update(updateCondition, {
-                            where: { idCustomer: idCustomerInt },
-                            transaction: t,
-                        });
-                    }
-                    return idCustomerInt;
+                await CustomerModel.update(updateProps, {
+                    where: { idCustomer: idCustomerInt },
                 });
+                pk = idCustomerInt;
             }
         }
 

@@ -30,7 +30,16 @@ export default (state = initialState, action) => {
             /* eslint-disable */
             const { gender, thumbnail, pseudo, phone, isActive, email } = action.payload;
             /* eslint-enable */
-            return { ...state, gender, thumbnail: [{ url: thumbnail }], pseudo, phone, isActive, email };
+            return {
+                ...state,
+                gender,
+                thumbnail: [{ url: thumbnail }],
+                pseudo,
+                phone,
+                isActive,
+                email,
+                password: 'xbshop_placeholder',
+            };
         case customerActionType._CUSTOMER_SAVE_RESET_BACKEND_STATUS:
             return { ...state, ...action.payload };
         case customerActionType._CUSTOMER_RESET_STATE:
