@@ -8,6 +8,8 @@ module.exports = {
         },
     },
     customerGenerator: {
+        title: 'customer.addCustomer.header.title',
+        description: 'customer.addCustomer.header.subtitle',
         formName: 'addCustomer', // form name
         formLayout: {
             labelCol: {
@@ -19,8 +21,6 @@ module.exports = {
                 sm: { span: 24 },
             },
         },
-        newUpdateMaxAge: 8 * 1, // new or updated signal duration
-        newUpdateKey: 'newAdminId',
         rules: {
             pseudoMinLen: 3,
         },

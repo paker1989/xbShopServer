@@ -1,14 +1,17 @@
-import React from 'react';
-import { Button } from 'antd';
+import React, { memo } from 'react';
+import { Button, Card, Row, Col } from 'antd';
 import { injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 
 import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
+import CustomerTable from './customerTable';
+
 import customerListMeta from '../../../static/data/componentMeta/user/customerListMeta';
 
-// import * as UserActionCreator from '../../../store/action/userAction';
+import './customers.scss';
 
-const UserList = ({ intl }) => {
+// const MemoedTable = memo(CustomerTable, []);
+const CustomerList = ({ intl }) => {
     const { title, description } = customerListMeta.list;
     return (
         <div className="customer-list">
@@ -21,8 +24,18 @@ const UserList = ({ intl }) => {
                     </Button>
                 }
             />
+            <div className="section-container">
+                <Card bordered={false}>
+                    <Row>
+                        <Col>
+                            {/* <MemoedTable /> */}
+                            <CustomerTable />
+                        </Col>
+                    </Row>
+                </Card>
+            </div>
         </div>
     );
 };
 
-export default injectIntl(UserList);
+export default injectIntl(CustomerList);

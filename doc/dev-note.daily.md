@@ -187,6 +187,7 @@ todo:  => dataSource: { text, value }
 - (done) addaddress form 不能直接history.goBack(), 要手动拼接address list的url
 
 ## 29/11/2020
-- customer info compute;
-- save customer edition;
+- customer info compute; (只做了直接load的处理，没有对从list过来对处理)
+- (done) save customer edition;
+- 
 

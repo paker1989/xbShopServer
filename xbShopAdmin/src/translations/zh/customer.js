@@ -23,7 +23,6 @@ export default {
     'customer.addAddress.country': '国家/地区',
     'customer.addAddress.region': '省份/大区',
     'customer.addAddress.error.noRecipient': '请输入一个收件人名称.',
-    // 'customer.addAddress.error.noPhone': '',
     'customer.addAddress.error.noAddr1': '请输入地址.',
     'customer.addAddress.error.noCity': '请选择一个城市.',
     'customer.addAddress.error.noPostcode': '请输入邮政编码',
@@ -35,4 +34,8 @@ export default {
     'customer.addAddress.title.edit': '编辑当前地址',
     'customer.addAddress.max.nb': '您最多可以添加{nb}个地址',
     'customer.address.confirm.setDefault': '将当前地址设为默认地址?',
+    'customer.success.update': '更新成功',
+    'customer.info.noModif': '没有检测到修改项',
+    'customer.addCustomer.header.title': '录入一名新客户信息或编辑当前客户信息',
+    'customer.addCustomer.header.subtitle': '完成添加或者修改后，点击保存或者取消完成当前修改。用户将在列表中更新',
 };

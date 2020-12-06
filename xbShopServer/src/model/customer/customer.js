@@ -41,6 +41,16 @@ Customer.init(
             allowNull: false,
             defaultValue: Sequelize.NOW,
         },
+        registerDtStr: {
+            type: DataTypes.VIRTUAL,
+            get() {
+                const registerDt = this.getDataValue('registerDt');
+                if (registerDt) {
+                    return new Date(registerDt).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                }
+                return '';
+            },
+        },
         lastAccessDt: {
             type: DataTypes.DATE,
             allowNull: true,

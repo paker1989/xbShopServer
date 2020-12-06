@@ -56,7 +56,7 @@ const Core = (props) => {
                     if (Object.keys(modifieds).length > 0) {
                         dispatch(CustomerActionCreator.saveCustomer({ idCustomer, ...modifieds, action: 'update' }));
                     } else {
-                        history.push('/dashboard/customerList');
+                        message.info(intl.formatMessage({ id: 'customer.info.noModif' }));
                     }
                 }
             }
@@ -81,6 +81,7 @@ const Core = (props) => {
 
     // handle save status
     useEffect(() => {
+        // debugger;
         if (backendStatus.length === 0) {
             return;
         }
@@ -104,6 +105,9 @@ const Core = (props) => {
                         history.push('/dashboard/customerList');
                     },
                 });
+            } else {
+                message.success(intl.formatMessage({ id: 'customer.success.update' }));
+                dispatch(CustomerActionCreator.getCustomer({ idCustomer }));
             }
         } else if (backendStatus === CustomerActionType._CUSTOMER_SAVE_FAILED) {
             switch (backendMsg) {
@@ -174,10 +178,10 @@ const Core = (props) => {
                         )(
                             <Radio.Group>
                                 <Radio.Button value="m">
-                                    <FormattedMessage id="common.male" />
+                                    <FormattedMessage id="common.gender.m" />
                                 </Radio.Button>
                                 <Radio.Button value="f">
-                                    <FormattedMessage id="common.female" />
+                                    <FormattedMessage id="common.gender.f" />
                                 </Radio.Button>
                             </Radio.Group>
                         )}
@@ -209,12 +213,17 @@ const Core = (props) => {
                             )}
                             {idCustomer === -1 && (
                                 <Button type="primary" htmlType="submit">
-                                    <FormattedMessage id="common.confirm.back" />
+                                    <FormattedMessage id="common.save" />
+                                </Button>
+                            )}
+                            {idCustomer !== -1 && (
+                                <Button htmlType="button" style={{ marginRight: 10 }} onClick={cancelEdition}>
+                                    <FormattedMessage id="common.return.list" />
                                 </Button>
                             )}
                             {idCustomer !== -1 && (
                                 <Button type="primary" htmlType="submit">
-                                    <FormattedMessage id="common.confirm.back" />
+                                    <FormattedMessage id="common.update" />
                                 </Button>
                             )}
                         </Col>

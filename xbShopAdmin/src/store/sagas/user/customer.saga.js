@@ -1,10 +1,11 @@
 import axios from 'axios';
 import cookie from 'react-cookies';
-
 import { put } from 'redux-saga/effects';
 import { getRequestUrl } from '../../../static/api';
-import * as CustomerActionType from '../../actionType/customerActionType';
 import { addAddressGenerator as addressMeta } from '../../../static/data/componentMeta/user/addCustomerMeta';
+import { newUpdateKey, newUpdateMaxAge } from '../../../static/data/componentMeta/user/customerListMeta';
+import * as CustomerActionType from '../../actionType/customerActionType';
+
 
 export function* saveCustomerSaga(reqObj) {
     const { /* action = '', */ thumbnail, ...otherProps } = reqObj.payload;
@@ -31,7 +32,9 @@ export function* saveCustomerSaga(reqObj) {
             );
         }
 
+        // debugger;
         if (res && res.data) {
+            cookie.save(newUpdateKey, res.data.customerId, { maxAge: newUpdateMaxAge });
             yield put({
                 type: CustomerActionType._CUSTOMER_SAVE_SUCCESS,
                 payload: {
@@ -39,6 +42,10 @@ export function* saveCustomerSaga(reqObj) {
                     backendMsg: res.data.customerId,
                 },
             });
+            // yield put({
+            //     type: CustomerActionType._CUSTOMER_FETCH,
+            //     payload: {},
+            // });
         } else {
             yield put({
                 type: CustomerActionType._CUSTOMER_SAVE_FAILED,

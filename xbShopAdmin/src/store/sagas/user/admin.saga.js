@@ -2,8 +2,8 @@ import axios from 'axios';
 import cookie from 'react-cookies';
 import { put } from 'redux-saga/effects';
 import { getRequestUrl } from '../../../static/api';
-import { roleGenerator } from '../../../static/data/componentMeta/user/addRoleMeta';
 import { adminGenerator } from '../../../static/data/componentMeta/user/addAdminMeta';
+import { roleGenerator } from '../../../static/data/componentMeta/user/addRoleMeta';
 import * as UserActionType from '../../actionType/userActionType';
 
 // axios.interceptors.response.use(

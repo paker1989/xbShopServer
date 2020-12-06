@@ -4,6 +4,7 @@ import categoryReducer from './category/categoryReducer';
 import meta from './meta';
 import auth from './auth/authReducer';
 import user from './user';
+// import server from './serverReducer';
 
 const combinedReducers = combineReducers({ product, categoryReducer, meta, auth, user });
 

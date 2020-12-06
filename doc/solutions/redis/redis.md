@@ -231,3 +231,9 @@ LRU（近期最少使用）模式，当在启动 Redis 的配置中加入 maxmem
 - volatile-random: 随机删除某一个设置了 expire 的键值对。
 
 这些配置都是在 redis.conf 文件中配置的，也可以通过代码在创建 redis client 时设置。例如，我们设置 Redis 的最大内存池为 100MB，并且使用 LRU 模式中的 volatile-lru 子模式。
+
+# bulk delete by pattern (not working)
+redis-cli --scan --pattern {{pattern}} | xargs redis-cli del
+<!-- e.g. 
+redis-cli --scan --pattern customer:meta:* | xargs redis-cli del  
+-->

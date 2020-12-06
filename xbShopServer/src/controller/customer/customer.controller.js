@@ -5,9 +5,6 @@ const { HttpException } = require('../../core/httpException');
 
 const { normalizeImgPath } = require('../../core/dateHelper');
 const { basePath, port } = require('../../config/config');
-
-// const ErrorTypes = require('../../core/type/customerType');
-
 /**
  * attempt to delete a user role
  * @param {*} ctx

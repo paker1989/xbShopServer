@@ -1,19 +1,24 @@
 import React, { Suspense } from 'react';
 import { useDispatch } from 'react-redux';
-import { Card, Row, Col } from 'antd';
+import { Card, Row, Col, Button } from 'antd';
 import { useUnmount } from 'ahooks';
+import { injectIntl } from 'react-intl';
 import { withRouter, Switch, Redirect, Route } from 'react-router-dom';
 
 import ContainerSkeleton from '../../Common/ContainerSkeleton/containerSkeleton';
 import AddCustomerForm from './addCustomerForm/addCustomerForm';
 import ManageAddress from './manageAddress/manageAddress';
 import SideBar from './customerSideBar';
+import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
 
 import * as CustomerCmnActionType from '../../../store/actionType/customerActionType';
+import HLPageMeta from '../../../static/data/componentMeta/user/addCustomerMeta';
 
 import './customerGenerator.scss';
 
-const CustomerGenerator = ({ match }) => {
+const { description, title } = HLPageMeta.customerGenerator;
+
+const CustomerGenerator = ({ match, history, intl }) => {
     const { url: routerUrl } = match;
     const dispatch = useDispatch();
 
@@ -21,8 +26,22 @@ const CustomerGenerator = ({ match }) => {
         dispatch({ type: CustomerCmnActionType._CUSTOMER__GLOBAL_RESET });
     });
 
+    const returnToList = (e) => {
+        e.preventDefault();
+        history.push('/dashboard/customerList');
+    };
+
     return (
         <div className="customer-generator">
+            <HLPageHeader
+                title={intl.formatMessage({ id: title })}
+                description={intl.formatMessage({ id: description })}
+                extra={
+                    <Button type="primary" onClick={returnToList}>
+                        {intl.formatMessage({ id: 'common.return.list' })}
+                    </Button>
+                }
+            />
             <div className="addCustomer-form-wrapper section-container">
                 <Card bordered={false}>
                     <Row type="flex">
@@ -50,4 +69,4 @@ const CustomerGenerator = ({ match }) => {
     );
 };
 
-export default withRouter(CustomerGenerator);
+export default withRouter(injectIntl(CustomerGenerator));
