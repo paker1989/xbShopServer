@@ -6,7 +6,6 @@ import { addAddressGenerator as addressMeta } from '../../../static/data/compone
 import { newUpdateKey, newUpdateMaxAge } from '../../../static/data/componentMeta/user/customerListMeta';
 import * as CustomerActionType from '../../actionType/customerActionType';
 
-
 export function* saveCustomerSaga(reqObj) {
     const { /* action = '', */ thumbnail, ...otherProps } = reqObj.payload;
     let res;
@@ -42,10 +41,6 @@ export function* saveCustomerSaga(reqObj) {
                     backendMsg: res.data.customerId,
                 },
             });
-            // yield put({
-            //     type: CustomerActionType._CUSTOMER_FETCH,
-            //     payload: {},
-            // });
         } else {
             yield put({
                 type: CustomerActionType._CUSTOMER_SAVE_FAILED,

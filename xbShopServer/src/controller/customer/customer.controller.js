@@ -34,6 +34,7 @@ const saveCustomer = async (ctx) => {
         if (typeof saved === 'object') {
             // todo: handle cache
             cacheHelper.setCustomerMeta(saved);
+            await cacheHelper.cleanCustomerIdCache(action);
         }
         Resolve.json(ctx, { customerId: saved.idCustomer }, 'save succeed');
     } catch (err) {

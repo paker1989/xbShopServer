@@ -2,6 +2,8 @@ const { customer } = require('../cachePrefix');
 const { redisClient } = require('../redis');
 const { async } = require('../redisHelper');
 
+const { HttpException } = require('../../httpException');
+
 const { getAsync, rpushAsync, lRangeAsync } = async;
 const { prefix, keys } = customer;
 
@@ -174,6 +176,43 @@ const setCustomerMeta = (meta) => {
     redisClient.set(getCustomerMetaKey(meta.idCustomer), JSON.stringify(meta), 'EX', config.expire.meta);
 };
 
+const cleanCustomerIdCache = (action) => {
+    return new Promise((resolve) => {
+        if (!action) {
+            resolve(true);
+        }
+
+        let keyPattern = '';
+
+        switch (action) {
+            case 'create':
+            case 'update':
+                keyPattern = `*${prefix}*${keys.cids}*`;
+                break;
+            default:
+                keyPattern = `*${prefix}*${keys.cids}*`;
+                break;
+        }
+
+        redisClient
+            .multi()
+            .keys(keyPattern)
+            .exec((err, replies) => {
+                if (err) {
+                    throw new HttpException('clean customer id cache on delete failed');
+                }
+                const relatedCachedKeys = replies[0];
+                if (relatedCachedKeys.length > 0) {
+                    redisClient.del(...relatedCachedKeys, () => {
+                        resolve(true);
+                    });
+                } else {
+                    resolve(true);
+                }
+            });
+    });
+};
+
 module.exports = {
     getRegionKey,
     getCachedRegions,
@@ -192,4 +231,5 @@ module.exports = {
     removeCustomerIds,
     getCustomerMeta,
     setCustomerMeta,
+    cleanCustomerIdCache,
 };
