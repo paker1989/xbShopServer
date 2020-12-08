@@ -9,6 +9,7 @@ const CityModel = require('../model/customer/city');
 const { sequelize } = require('../core/db');
 const encryptHelper = require('../core/encryptionHelper');
 const ErrorTypes = require('../core/type/customerType');
+const { getFilters } = require('../core/dateHelper');
 
 class CustomerDAO {
     /**
@@ -394,26 +395,28 @@ class CustomerDAO {
     static async getCustomerIds(ctxBody) {
         const { filter = 'NA', sort = 'NA', sortOrder = 'NA' } = ctxBody;
         let orderStatement;
-        // let filterCondition = {};
         if (sort === 'NA' || sortOrder === 'NA') {
             orderStatement = [];
         } else {
             orderStatement = [sort, sortOrder.toLowerCase() === 'desc' ? 'asc' : 'desc'];
         }
 
-        if (filter) {
-            switch (filter) {
-                default:
-                    break;
+        const filterObj = getFilters(filter);
+        // console.log(filterObj);
+        const filterCondition = {};
+        Object.keys(filterObj).forEach((key) => {
+            if (key === 'isActive') {
+                filterObj[key] = filterObj[key].map((val) => (val === 'true' ? 1 : 0));
             }
-        }
+            filterCondition[key] = { [Op.in]: filterObj[key] };
+        });
 
         const sortedIds = (
             await CustomerModel.findAll({
                 attributes: ['idCustomer'],
                 where: {
                     isDeleted: false,
-                    // ...filterCondition,
+                    ...filterCondition,
                 },
                 order: orderStatement.length === 0 ? [] : [orderStatement],
             })

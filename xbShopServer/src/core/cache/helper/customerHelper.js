@@ -18,8 +18,10 @@ const getRegionKey = (countryCode) => `${prefix}:${keys.region}:${countryCode}`;
 const getDepartmKey = (countryCode) => `${prefix}:${keys.departm}:${countryCode}`;
 const getCityKey = (countryCode) => `${prefix}:${keys.city}:${countryCode}`;
 const getAddressKey = (customerId) => `${prefix}:${keys.address}:${customerId}`;
-const getCustomerIdsKey = ({ filter = 'NA', sort = 'NA', sortOrder = 'NA' }) =>
-    `${prefix}:${keys.cids}:filter:${filter}:sort:${sort}^${sortOrder}`;
+const getCustomerIdsKey = ({ filter = 'NA', sort = 'NA', sortOrder = 'NA' }) => {
+    console.log(filter);
+    return `${prefix}:${keys.cids}:filter:${filter}:sort:${sort}^${sortOrder}`;
+};
 const getCustomerMetaKey = (customerId) => `${prefix}:${keys.meta}:${customerId}`;
 
 const getCachedCities = async (countryCode) => {

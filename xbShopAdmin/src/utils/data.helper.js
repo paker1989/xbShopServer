@@ -153,3 +153,24 @@ export function getModifiedValues(values, backup) {
     });
     return modifed;
 }
+
+/**
+ * example: gender^m&isActive^true-false
+ * @param {*} filterTypes
+ * @param {*} filters
+ */
+export function getFilterStrings(filterTypes, filters) {
+    const _filter = [];
+    filterTypes.forEach((type) => {
+        if (filters[type] && filters[type].length > 0) {
+            // if (type === 'isActive') {
+            //     filters[type] = filters[type].map((val) => (val ? 1 : 0));
+            // }
+            _filter.push(`${type}^${filters[type].join('-')}`);
+        }
+    });
+    if (_filter.length > 0) {
+        return _filter.join('&');
+    }
+    return 'NA';
+}

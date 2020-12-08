@@ -193,9 +193,11 @@ todo:  => dataSource: { text, value }
 ## 07/12/2020
 - sort id and inscrit
   - add a filter tag notif;
-  - complete filter algo (concat string by order);
+  - (done) complete filter algo (concat string by order);
   - search antd component => backend logic (email & pseudo);
 - pagination function
 - delete fn
 - total cnt info.
+- address 如果信息太多就超出了。
+- address 貌似切换customer的时候没有更新。
 

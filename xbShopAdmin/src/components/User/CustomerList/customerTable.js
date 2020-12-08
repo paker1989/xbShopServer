@@ -4,14 +4,12 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { Table, Popconfirm } from 'antd';
 import { NavLink } from 'react-router-dom';
 
+import { getFilterStrings } from '../../../utils/data.helper';
 import AttributSearcher from '../../Common/AttributSearcher/attributSearcher';
 import useCustomers from '../../../utils/hooks/useUserCustomers';
-import { pageSize } from '../../../static/data/componentMeta/user/customerListMeta';
+import { pageSize, filterTypes } from '../../../static/data/componentMeta/user/customerListMeta';
 
 import * as CustomerActionCreator from '../../../store/action/customerAction';
-// import * as CustomerActionType from '../../../store/actionType/customerActionType';
-
-// const { TabPane } = Tabs;
 
 const CustomerTable = ({ intl }) => {
     const dispatch = useDispatch();
@@ -61,7 +59,9 @@ const CustomerTable = ({ intl }) => {
                 break;
         }
 
-        let filter = 'NA'; // TODO
+        const filter = getFilterStrings(filterTypes, filters);
+
+        console.log(filter);
 
         dispatch(CustomerActionCreator.changeListParams({ sortedCretia, sortedOrder, currentPage, filter }));
         /* eslint-enable */
@@ -115,7 +115,7 @@ const CustomerTable = ({ intl }) => {
                 { text: intl.formatMessage({ id: 'common.gender.f' }), value: 'f' },
             ],
             // sorter: true,
-            width: 80,
+            width: 90,
             render: (text) => {
                 return <FormattedMessage id={`common.gender.${text}`} />;
             },
