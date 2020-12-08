@@ -186,8 +186,10 @@ const cleanCustomerIdCache = (action) => {
 
         switch (action) {
             case 'create':
-            case 'update':
+            case 'delete':
                 keyPattern = `*${prefix}*${keys.cids}*`;
+                break;
+            case 'update':
                 break;
             default:
                 keyPattern = `*${prefix}*${keys.cids}*`;

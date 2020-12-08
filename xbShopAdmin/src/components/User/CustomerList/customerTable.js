@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Table, Popconfirm } from 'antd';
 import { NavLink } from 'react-router-dom';
 
 import AttributSearcher from '../../Common/AttributSearcher/attributSearcher';
 import useCustomers from '../../../utils/hooks/useUserCustomers';
+import { pageSize } from '../../../static/data/componentMeta/user/customerListMeta';
 
 import * as UserActionCreator from '../../../store/action/userAction';
 
@@ -14,6 +15,8 @@ import * as UserActionCreator from '../../../store/action/userAction';
 const CustomerTable = ({ intl }) => {
     const [searchStr, setSearchStr] = useState('');
     const [bindSearch, setBindSearch] = useState('');
+    const currentPage = useSelector((state) => state.user.customers.currentPage);
+    const totalCnt = useSelector((state) => state.user.customers.totalCnt);
 
     const dispatch = useDispatch();
     const [loading, customers] = useCustomers();
@@ -31,6 +34,12 @@ const CustomerTable = ({ intl }) => {
         setSearchStr(bindSearch);
     };
 
+    const handleTableChange = (pagination, filters, sorter) => {
+        console.log(pagination);
+        console.log(filters);
+        console.log(sorter);
+    };
+
     useEffect(() => {
         actionSearch();
     }, [customers.length]);
@@ -40,7 +49,8 @@ const CustomerTable = ({ intl }) => {
             title: intl.formatMessage({ id: 'common.id' }),
             dataIndex: 'idCustomer',
             key: 'idCustomer',
-            width: 60,
+            width: 70,
+            sorter: true,
         },
         {
             title: intl.formatMessage({ id: 'common.thumbnail' }),
@@ -92,6 +102,7 @@ const CustomerTable = ({ intl }) => {
             dataIndex: 'registerDtStr',
             key: 'registerDtStr',
             width: 230,
+            sorter: true,
         },
         // {
         //     title: intl.formatMessage({ id: 'common.recentAccess' }),
@@ -141,6 +152,12 @@ const CustomerTable = ({ intl }) => {
                         ? customers.filter((customer) => customer.email.includes(searchStr))
                         : customers
                 }
+                onChange={handleTableChange}
+                pagination={{
+                    total: totalCnt,
+                    pageSize,
+                    current: currentPage,
+                }}
                 rowKey={(record) => record.idCustomer}
                 loading={loading}
                 scroll={{ x: 800 }}

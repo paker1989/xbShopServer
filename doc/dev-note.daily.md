@@ -189,5 +189,11 @@ todo:  => dataSource: { text, value }
 ## 29/11/2020
 - customer info compute; (只做了直接load的处理，没有对从list过来对处理)
 - (done) save customer edition;
-- 
+
+## 07/12/2020
+- sort id and inscrit
+- search by email or pseudo
+- pagination function
+- delete fn
+- total cnt info.
 

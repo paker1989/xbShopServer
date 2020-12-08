@@ -18,9 +18,15 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case CustomerActionType._CUSTOMER_FETCH_LIST_SUCCESS:
+            // debugger;
+            /* eslint-disable */
+            const { data, totalCnt, startPage } = action.payload;
+            /* eslint-disable */
             return {
                 ...state,
-                fetchedCustomers: [...action.payload.data],
+                fetchedCustomers: [...data],
+                totalCnt,
+                startPage,
                 backendStatus: CustomerActionType._CUSTOMER_FETCH_LIST_SUCCESS,
             };
         case CustomerActionType._CUSTOMER_FETCH_LIST_FAILED:

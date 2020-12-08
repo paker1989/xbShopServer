@@ -16,6 +16,9 @@ const useUserCustomers = () => {
     const allCustomers = useSelector((state) => state.user.customers.fetchedCustomers);
     const currentPage = useSelector((state) => state.user.customers.currentPage);
     const startPage = useSelector((state) => state.user.customers.startPage);
+    const sort = useSelector((state) => state.user.customers.sortedCretia);
+    const sortOrder = useSelector((state) => state.user.customers.sortedOrder);
+    const filter = useSelector((state) => state.user.customers.filter);
 
     const backendStatus = useSelector((state) => state.user.customers.backendStatus);
     const backendMsg = useSelector((state) => state.user.customers.backendMsg);
@@ -35,11 +38,19 @@ const useUserCustomers = () => {
         /* eslint-enable */
     });
 
+    // useEffect(() => {
+    //     // console.log('mount user customer');
+    //     dispatch(CustomerActionCreator.getCustomer({}));
+    //     setLoading(true);
+    // }, []);
+
+    // const getCustomerIdsKey = ({ filter = 'NA', sort = 'NA', sortOrder = 'NA' }) =>
+    // `${prefix}:${keys.cids}:filter:${filter}:sort:${sort}^${sortOrder}`;
     useEffect(() => {
-        // console.log('mount user customer');
-        dispatch(CustomerActionCreator.getCustomer({}));
+        console.log('need to fetch customers');
+        dispatch(CustomerActionCreator.getCustomer({ filter, sort, sortOrder, start: startPage }));
         setLoading(true);
-    }, []);
+    }, [`filter:${filter}:sort:${sort}^${sortOrder}`, startPage]);
 
     useEffect(() => {
         if (backendStatus === CustomerActionTypes._CUSTOMER_FETCH_LIST_FAILED) {

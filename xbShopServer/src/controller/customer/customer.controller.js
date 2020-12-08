@@ -34,8 +34,8 @@ const saveCustomer = async (ctx) => {
         if (typeof saved === 'object') {
             // todo: handle cache
             cacheHelper.setCustomerMeta(saved);
-            await cacheHelper.cleanCustomerIdCache(action);
         }
+        await cacheHelper.cleanCustomerIdCache(action);
         Resolve.json(ctx, { customerId: saved.idCustomer }, 'save succeed');
     } catch (err) {
         throw new HttpException(err.message);
@@ -187,7 +187,7 @@ const getCustomer = async (ctx) => {
         filter = 'NA',
         sort = 'NA',
         sortOrder = 'NA',
-        pSize = '20',
+        pSize = 20,
         start = 1,
         limit = 50,
         idCustomer = -1,

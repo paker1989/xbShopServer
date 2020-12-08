@@ -27,6 +27,10 @@
 2. *client*:
    - getCustomersSaga: 
 
+## cache更新策略
+- action = 'create' || 'delete': del all ids: customer:ids*
+- action = 'update': del concerned filters & sorts
+<!-- - action = 'delete': del all ids: customer:ids* -->
 
 
 ## address
