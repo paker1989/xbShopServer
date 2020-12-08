@@ -5,6 +5,11 @@ export const saveCustomer = (options) => ({
     payload: options,
 });
 
+export const changeListParams = (params) => ({
+    type: CustomerActionType._CUSTOMER_CHANGE_LIST_PARAM,
+    payload: params,
+});
+
 export const getCustomer = (params) => ({
     type: CustomerActionType._CUSTOMER_FETCH,
     payload: params,

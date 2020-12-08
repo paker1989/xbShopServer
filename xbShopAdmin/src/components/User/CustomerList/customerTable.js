@@ -8,22 +8,24 @@ import AttributSearcher from '../../Common/AttributSearcher/attributSearcher';
 import useCustomers from '../../../utils/hooks/useUserCustomers';
 import { pageSize } from '../../../static/data/componentMeta/user/customerListMeta';
 
-import * as UserActionCreator from '../../../store/action/userAction';
+import * as CustomerActionCreator from '../../../store/action/customerAction';
+// import * as CustomerActionType from '../../../store/actionType/customerActionType';
 
 // const { TabPane } = Tabs;
 
 const CustomerTable = ({ intl }) => {
+    const dispatch = useDispatch();
+
     const [searchStr, setSearchStr] = useState('');
     const [bindSearch, setBindSearch] = useState('');
     const currentPage = useSelector((state) => state.user.customers.currentPage);
     const totalCnt = useSelector((state) => state.user.customers.totalCnt);
 
-    const dispatch = useDispatch();
     const [loading, customers] = useCustomers();
 
     // console.log(customers);
-    const handleDelete = (idAdmin) => {
-        dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'delete' }));
+    const handleDelete = (idCustomer) => {
+        // dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'delete' }));
     };
 
     const handleSearch = (e) => {
@@ -35,9 +37,34 @@ const CustomerTable = ({ intl }) => {
     };
 
     const handleTableChange = (pagination, filters, sorter) => {
-        console.log(pagination);
+        /* eslint-disable */
+        // console.log(pagination);
         console.log(filters);
-        console.log(sorter);
+        // console.log(sorter);
+        const { current: currentPage } = pagination;
+        let { order: sortedOrder = 'NA', columnKey: sortedCretia = 'NA' } = sorter;
+
+        if (sortedOrder === 'NA') {
+            sortedCretia = 'NA';
+        }
+        switch (sortedOrder) {
+            case 'NA':
+                sortedCretia = 'NA';
+                break;
+            case 'ascend':
+                sortedOrder = 'asc';
+                break;
+            case 'descend':
+                sortedOrder = 'desc';
+                break;
+            default:
+                break;
+        }
+
+        let filter = 'NA'; // TODO
+
+        dispatch(CustomerActionCreator.changeListParams({ sortedCretia, sortedOrder, currentPage, filter }));
+        /* eslint-enable */
     };
 
     useEffect(() => {
@@ -83,6 +110,11 @@ const CustomerTable = ({ intl }) => {
             title: intl.formatMessage({ id: 'common.gender' }),
             dataIndex: 'gender',
             key: 'gender',
+            filters: [
+                { text: intl.formatMessage({ id: 'common.gender.m' }), value: 'm' },
+                { text: intl.formatMessage({ id: 'common.gender.f' }), value: 'f' },
+            ],
+            // sorter: true,
             width: 80,
             render: (text) => {
                 return <FormattedMessage id={`common.gender.${text}`} />;
@@ -92,6 +124,10 @@ const CustomerTable = ({ intl }) => {
             title: intl.formatMessage({ id: 'common.status' }),
             dataIndex: 'isActive',
             key: 'isActive',
+            filters: [
+                { text: 'Active', value: true },
+                { text: 'Inactive', value: false },
+            ],
             render: (text, record) => {
                 return record.isActive ? 'Active' : 'Inactived';
             },
@@ -100,7 +136,7 @@ const CustomerTable = ({ intl }) => {
         {
             title: intl.formatMessage({ id: 'common.registDt' }),
             dataIndex: 'registerDtStr',
-            key: 'registerDtStr',
+            key: 'registerDt',
             width: 230,
             sorter: true,
         },

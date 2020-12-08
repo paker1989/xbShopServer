@@ -48,6 +48,7 @@ const useUserCustomers = () => {
     // `${prefix}:${keys.cids}:filter:${filter}:sort:${sort}^${sortOrder}`;
     useEffect(() => {
         console.log('need to fetch customers');
+        console.log(`filter:${filter}:sort:${sort}^${sortOrder}`);
         dispatch(CustomerActionCreator.getCustomer({ filter, sort, sortOrder, start: startPage }));
         setLoading(true);
     }, [`filter:${filter}:sort:${sort}^${sortOrder}`, startPage]);

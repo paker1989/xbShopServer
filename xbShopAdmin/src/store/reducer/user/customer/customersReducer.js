@@ -8,7 +8,7 @@ const initialState = {
     sortedOrder: 'NA',
     startPage: 1,
     currentPage: 1,
-    filter: 'all',
+    filter: 'NA',
     selectedCustomers: [],
     fetchedCustomers: [],
     totalCnt: 0,
@@ -33,6 +33,8 @@ export default (state = initialState, action) => {
             return { ...state, ...action.payload };
         case CustomerActionType._CUSTOMER_LIST_RESET_STATE:
             return { ...state, backendMsg: '', backendStatus: '' };
+        case CustomerActionType._CUSTOMER_CHANGE_LIST_PARAM:
+            return { ...state, ...action.payload };
         // case CustomerActionType._FETCH_PRODUCT_SUCCESS:
         //     return { ...state, ...action.payload, backendStatus: CustomerActionType._FETCH_PRODUCT_SUCCESS };
         // case CustomerActionType._BULK_UPDATE_SUCCESS:

@@ -192,7 +192,9 @@ todo:  => dataSource: { text, value }
 
 ## 07/12/2020
 - sort id and inscrit
-- search by email or pseudo
+  - add a filter tag notif;
+  - complete filter algo (concat string by order);
+  - search antd component => backend logic (email & pseudo);
 - pagination function
 - delete fn
 - total cnt info.

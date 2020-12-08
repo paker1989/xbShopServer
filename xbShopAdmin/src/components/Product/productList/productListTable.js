@@ -66,7 +66,7 @@ const ProductListTable = ({ intl, fetchedProducts = [], loading, handleChange })
             title: intl.formatMessage({ id: 'product.spec.stock' }),
             dataIndex: 'totalStock',
             key: 'totalStock',
-            sorter: true,  
+            sorter: true,
         },
         // {
         //     title: intl.formatMessage({ id: 'product.list.solded' }),
