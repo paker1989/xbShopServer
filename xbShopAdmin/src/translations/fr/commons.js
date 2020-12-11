@@ -66,4 +66,5 @@ export default {
     'common.status': 'Statut',
     'common.registDt': 'Inscrit à',
     'common.recentAccess': 'Derniere connexion',
+    'common.email.or.pseudo': 'Email/Surnom',
 };

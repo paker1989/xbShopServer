@@ -19,6 +19,7 @@ const useUserCustomers = () => {
     const sort = useSelector((state) => state.user.customers.sortedCretia);
     const sortOrder = useSelector((state) => state.user.customers.sortedOrder);
     const filter = useSelector((state) => state.user.customers.filter);
+    const searchStr = useSelector((state) => state.user.customers.searchStr);
 
     const backendStatus = useSelector((state) => state.user.customers.backendStatus);
     const backendMsg = useSelector((state) => state.user.customers.backendMsg);
@@ -48,10 +49,10 @@ const useUserCustomers = () => {
     // `${prefix}:${keys.cids}:filter:${filter}:sort:${sort}^${sortOrder}`;
     useEffect(() => {
         console.log('need to fetch customers');
-        console.log(`filter:${filter}:sort:${sort}^${sortOrder}`);
-        dispatch(CustomerActionCreator.getCustomer({ filter, sort, sortOrder, start: startPage }));
+        // console.log(`filter:${filter}:sort:${sort}^${sortOrder}`);
+        dispatch(CustomerActionCreator.getCustomer({ filter, sort, sortOrder, start: startPage, searchStr }));
         setLoading(true);
-    }, [`filter:${filter}:sort:${sort}^${sortOrder}`, startPage]);
+    }, [`filter:${filter}:sort:${sort}^${sortOrder}`, searchStr, startPage]);
 
     useEffect(() => {
         if (backendStatus === CustomerActionTypes._CUSTOMER_FETCH_LIST_FAILED) {

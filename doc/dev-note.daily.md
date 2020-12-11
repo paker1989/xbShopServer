@@ -194,7 +194,7 @@ todo:  => dataSource: { text, value }
 - sort id and inscrit
   - add a filter tag notif;
   - (done) complete filter algo (concat string by order);
-  - search antd component => backend logic (email & pseudo);
+  - (done) search antd component => backend logic (email & pseudo);
 - pagination function
 - delete fn
 - total cnt info.

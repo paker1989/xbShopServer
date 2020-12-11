@@ -11,6 +11,7 @@ const config = {
     expire: {
         address: 60 * 60 * 4, // 4 小时
         meta: 60 * 60 * 4, // 4 小时
+        searchMeta: 60 * 2, // 保持两分钟
     },
 };
 
@@ -18,8 +19,11 @@ const getRegionKey = (countryCode) => `${prefix}:${keys.region}:${countryCode}`;
 const getDepartmKey = (countryCode) => `${prefix}:${keys.departm}:${countryCode}`;
 const getCityKey = (countryCode) => `${prefix}:${keys.city}:${countryCode}`;
 const getAddressKey = (customerId) => `${prefix}:${keys.address}:${customerId}`;
-const getCustomerIdsKey = ({ filter = 'NA', sort = 'NA', sortOrder = 'NA' }) => {
-    console.log(filter);
+const getCustomerIdsKey = ({ filter = 'NA', sort = 'NA', sortOrder = 'NA', searchStr = '' }) => {
+    // console.log(filter);
+    if (searchStr.trim().length > 0) {
+        return `${prefix}:${keys.cids}:filter:${filter}:sort:${sort}^${sortOrder}:search:${searchStr.trim()}`;
+    }
     return `${prefix}:${keys.cids}:filter:${filter}:sort:${sort}^${sortOrder}`;
 };
 const getCustomerMetaKey = (customerId) => `${prefix}:${keys.meta}:${customerId}`;
@@ -140,20 +144,24 @@ const removeCachedAddress = (customerId) => {
     redisClient.del(getAddressKey(customerId));
 };
 
-const getCustomerIds = async ({ filter, sort, sortOrder }) => {
-    const ids = await lRangeAsync.call(redisClient, getCustomerIdsKey({ filter, sort, sortOrder }), 0, -1);
+const getCustomerIds = async ({ filter, sort, sortOrder, searchStr }) => {
+    const ids = await lRangeAsync.call(redisClient, getCustomerIdsKey({ filter, sort, sortOrder, searchStr }), 0, -1);
     return ids;
 };
 
-const setCustomerIds = ({ filter, sort, sortOrder, ids }) => {
+const setCustomerIds = ({ filter, sort, sortOrder, searchStr = '', ids }) => {
     if (!ids) {
         throw new Error('customer ids is null');
     }
-    const cacheKey = getCustomerIdsKey({ filter, sort, sortOrder });
-    // redisClient.set(cacheKey, ids);
+    const cacheKey = getCustomerIdsKey({ filter, sort, sortOrder, searchStr });
     redisClient.del(cacheKey, (err) => {
         if (!err && ids.length > 0) {
             rpushAsync.call(redisClient, cacheKey, ids);
+
+            // for search result, set expire times
+            if (searchStr.trim().length > 0) {
+                redisClient.expire(cacheKey, config.expire.searchMeta);
+            }
         }
     });
 };

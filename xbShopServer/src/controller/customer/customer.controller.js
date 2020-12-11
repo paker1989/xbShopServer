@@ -191,6 +191,7 @@ const getCustomer = async (ctx) => {
         start = 1,
         limit = 50,
         idCustomer = -1,
+        searchStr = '',
     } = ctx.request.body;
 
     if (idCustomer !== -1) {
@@ -203,10 +204,10 @@ const getCustomer = async (ctx) => {
         return;
     }
 
-    ids = await cacheHelper.getCustomerIds({ filter, sort, sortOrder }); // get cached sorted ids
+    ids = await cacheHelper.getCustomerIds({ filter, sort, sortOrder, searchStr }); // get cached sorted ids
     if (!ids || ids.length === 0) {
-        ids = await CustomerDAO.getCustomerIds({ filter, sort, sortOrder }); // fetch from db if not found in cached
-        cacheHelper.setCustomerIds({ filter, sort, sortOrder, ids }); // set in cache
+        ids = await CustomerDAO.getCustomerIds({ filter, sort, sortOrder, searchStr }); // fetch from db if not found in cached
+        cacheHelper.setCustomerIds({ filter, sort, sortOrder, ids, searchStr }); // set in cache
     }
 
     if (ids.length < pSize * start) {
@@ -218,6 +219,13 @@ const getCustomer = async (ctx) => {
     slices.forEach((id) => {
         data.push(getCustomerMeta(id));
     });
+    // let _data = await Promise.all(data);
+    // if (searchStr.trim().length > 0) {
+    //     const _searchStr = searchStr.trim();
+    //     _data = _data.filter(
+    //         (customer) => customer && (customer.email.includes(_searchStr) || customer.pseudo.includes(_searchStr))
+    //     );
+    // }
     Resolve.json(ctx, { data: await Promise.all(data), totalCnt: ids.length, startPage: _startPage });
 };
 

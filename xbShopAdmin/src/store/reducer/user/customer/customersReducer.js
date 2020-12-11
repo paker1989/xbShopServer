@@ -7,6 +7,7 @@ const initialState = {
     sortedCretia: 'NA',
     sortedOrder: 'NA',
     startPage: 1,
+    searchStr: '',
     currentPage: 1,
     filter: 'NA',
     selectedCustomers: [],

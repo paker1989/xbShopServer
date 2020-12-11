@@ -393,7 +393,7 @@ class CustomerDAO {
     }
 
     static async getCustomerIds(ctxBody) {
-        const { filter = 'NA', sort = 'NA', sortOrder = 'NA' } = ctxBody;
+        const { filter = 'NA', sort = 'NA', sortOrder = 'NA', searchStr = '' } = ctxBody;
         let orderStatement;
         if (sort === 'NA' || sortOrder === 'NA') {
             orderStatement = [];
@@ -402,14 +402,25 @@ class CustomerDAO {
         }
 
         const filterObj = getFilters(filter);
-        // console.log(filterObj);
         const filterCondition = {};
+
         Object.keys(filterObj).forEach((key) => {
             if (key === 'isActive') {
                 filterObj[key] = filterObj[key].map((val) => (val === 'true' ? 1 : 0));
             }
             filterCondition[key] = { [Op.in]: filterObj[key] };
         });
+
+        if (searchStr.trim().length > 0) {
+            filterCondition[Op.or] = {
+                email: {
+                    [Op.like]: `%${searchStr.trim()}%`,
+                },
+                pseudo: {
+                    [Op.like]: `%${searchStr.trim()}%`,
+                },
+            };
+        }
 
         const sortedIds = (
             await CustomerModel.findAll({

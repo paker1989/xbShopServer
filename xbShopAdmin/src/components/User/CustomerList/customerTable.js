@@ -14,7 +14,7 @@ import * as CustomerActionCreator from '../../../store/action/customerAction';
 const CustomerTable = ({ intl }) => {
     const dispatch = useDispatch();
 
-    const [searchStr, setSearchStr] = useState('');
+    // const [searchStr, setSearchStr] = useState('');
     const [bindSearch, setBindSearch] = useState('');
     const currentPage = useSelector((state) => state.user.customers.currentPage);
     const totalCnt = useSelector((state) => state.user.customers.totalCnt);
@@ -31,7 +31,8 @@ const CustomerTable = ({ intl }) => {
     };
 
     const actionSearch = () => {
-        setSearchStr(bindSearch);
+        // setSearchStr(bindSearch);
+        dispatch(CustomerActionCreator.changeListParams({ searchStr: bindSearch }));
     };
 
     const handleTableChange = (pagination, filters, sorter) => {
@@ -171,8 +172,8 @@ const CustomerTable = ({ intl }) => {
     const searchPairs = [
         {
             inputVal: bindSearch,
-            labelText: 'common.email',
-            placeholder: 'common.email',
+            labelText: 'common.email.or.pseudo',
+            placeholder: 'common.email.or.pseudo',
             onChange: handleSearch,
         },
     ];
@@ -183,11 +184,12 @@ const CustomerTable = ({ intl }) => {
             <Table
                 size="large"
                 columns={columns.filter((item) => !item.hidden)}
-                dataSource={
-                    searchStr && searchStr.length > 0
-                        ? customers.filter((customer) => customer.email.includes(searchStr))
-                        : customers
-                }
+                // dataSource={
+                //     searchStr && searchStr.length > 0
+                //         ? customers.filter((customer) => customer.email.includes(searchStr))
+                //         : customers
+                // }
+                dataSource={customers}
                 onChange={handleTableChange}
                 pagination={{
                     total: totalCnt,

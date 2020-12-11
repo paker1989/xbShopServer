@@ -65,4 +65,5 @@ export default {
     'common.status': '状态',
     'common.registDt': '注册时间',
     'common.recentAccess': '最后登录',
+    'common.email.or.pseudo': '邮箱/昵称',
 };
