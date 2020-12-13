@@ -42,6 +42,10 @@
     &.column {
         flex-direction: column;
     }
+
+    &.wrap {
+        flex-wrap: wrap;
+    }
 }
 
 input[type='textarea'].fixed-vert {

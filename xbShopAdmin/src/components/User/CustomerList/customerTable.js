@@ -10,14 +10,19 @@ import useCustomers from '../../../utils/hooks/useUserCustomers';
 import { pageSize, filterTypes } from '../../../static/data/componentMeta/user/customerListMeta';
 
 import * as CustomerActionCreator from '../../../store/action/customerAction';
+import TableFilter from '../../Common/TableFilter/tableFilter';
 
 const CustomerTable = ({ intl }) => {
     const dispatch = useDispatch();
 
-    // const [searchStr, setSearchStr] = useState('');
+    const [tableFilterProps, setTableFilterProps] = useState([]);
     const [bindSearch, setBindSearch] = useState('');
     const currentPage = useSelector((state) => state.user.customers.currentPage);
     const totalCnt = useSelector((state) => state.user.customers.totalCnt);
+
+    const filterInfo = useSelector((state) => state.user.customers.filter);
+    const filterStr = getFilterStrings(filterTypes, filterInfo);
+    // console.log('filterStr = ' + filterStr);
 
     const [loading, customers] = useCustomers();
 
@@ -31,15 +36,21 @@ const CustomerTable = ({ intl }) => {
     };
 
     const actionSearch = () => {
-        // setSearchStr(bindSearch);
         dispatch(CustomerActionCreator.changeListParams({ searchStr: bindSearch }));
+    };
+
+    const handleCancelFilter = ({ type, value }) => {
+        if (typeof filterInfo[type] !== 'undefined') {
+            const index = filterInfo[type].findIndex((item) => item === value);
+            if (index >= 0) {
+                filterInfo[type].splice(index, 1);
+                dispatch(CustomerActionCreator.changeListParams({ filter: { ...filterInfo } }));
+            }
+        }
     };
 
     const handleTableChange = (pagination, filters, sorter) => {
         /* eslint-disable */
-        // console.log(pagination);
-        console.log(filters);
-        // console.log(sorter);
         const { current: currentPage } = pagination;
         let { order: sortedOrder = 'NA', columnKey: sortedCretia = 'NA' } = sorter;
 
@@ -60,17 +71,35 @@ const CustomerTable = ({ intl }) => {
                 break;
         }
 
-        const filter = getFilterStrings(filterTypes, filters);
-
-        console.log(filter);
-
-        dispatch(CustomerActionCreator.changeListParams({ sortedCretia, sortedOrder, currentPage, filter }));
+        dispatch(CustomerActionCreator.changeListParams({ sortedCretia, sortedOrder, currentPage, filter: filters }));
         /* eslint-enable */
     };
 
     useEffect(() => {
         actionSearch();
     }, [customers.length]);
+
+    useEffect(() => {
+        // console.log('reset filterprops');
+        const _filterProps = [];
+        Object.keys(filterInfo).forEach((filterType) => {
+            filterInfo[filterType].forEach((item) => {
+                _filterProps.push({
+                    type: filterType,
+                    label:
+                        /* eslint-disable */
+                        filterType === 'gender'
+                            ? intl.formatMessage({ id: `common.gender.${item}` })
+                            : item
+                            ? 'Active'
+                            : 'Inactive',
+                    /* eslint-enable */
+                    value: item,
+                });
+            });
+        });
+        setTableFilterProps([..._filterProps]);
+    }, [filterStr]);
 
     const columns = [
         {
@@ -101,12 +130,6 @@ const CustomerTable = ({ intl }) => {
             key: 'email',
             width: 200,
         },
-        // {
-        //     title: intl.formatMessage({ id: 'common.phone' }),
-        //     dataIndex: 'phone',
-        //     key: 'phone',
-        //     width: 160,
-        // },
         {
             title: intl.formatMessage({ id: 'common.gender' }),
             dataIndex: 'gender',
@@ -115,7 +138,7 @@ const CustomerTable = ({ intl }) => {
                 { text: intl.formatMessage({ id: 'common.gender.m' }), value: 'm' },
                 { text: intl.formatMessage({ id: 'common.gender.f' }), value: 'f' },
             ],
-            // sorter: true,
+            filteredValue: filterInfo.gender || [],
             width: 90,
             render: (text) => {
                 return <FormattedMessage id={`common.gender.${text}`} />;
@@ -129,6 +152,7 @@ const CustomerTable = ({ intl }) => {
                 { text: 'Active', value: true },
                 { text: 'Inactive', value: false },
             ],
+            filteredValue: filterInfo.isActive || [],
             render: (text, record) => {
                 return record.isActive ? 'Active' : 'Inactived';
             },
@@ -181,6 +205,7 @@ const CustomerTable = ({ intl }) => {
     return (
         <div className="customer-list-table">
             <AttributSearcher searchPairs={searchPairs} onSubmit={actionSearch} />
+            <TableFilter filters={tableFilterProps} onChange={handleCancelFilter} />
             <Table
                 size="large"
                 columns={columns.filter((item) => !item.hidden)}

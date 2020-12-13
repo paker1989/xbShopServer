@@ -10,9 +10,10 @@ import customerListMeta from '../../../static/data/componentMeta/user/customerLi
 
 import './customers.scss';
 
-// const MemoedTable = memo(CustomerTable, []);
 const CustomerList = ({ intl }) => {
     const { title, description } = customerListMeta.list;
+
+    // console.log('rerender customer list');
     return (
         <div className="customer-list">
             <HLPageHeader

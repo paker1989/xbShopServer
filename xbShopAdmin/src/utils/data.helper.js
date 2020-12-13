@@ -163,9 +163,7 @@ export function getFilterStrings(filterTypes, filters) {
     const _filter = [];
     filterTypes.forEach((type) => {
         if (filters[type] && filters[type].length > 0) {
-            // if (type === 'isActive') {
-            //     filters[type] = filters[type].map((val) => (val ? 1 : 0));
-            // }
+            // const val = filters[type].value || filters[type];
             _filter.push(`${type}^${filters[type].join('-')}`);
         }
     });

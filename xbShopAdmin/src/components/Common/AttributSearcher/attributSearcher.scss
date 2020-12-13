@@ -7,7 +7,7 @@ $attribut-pairs-label-margin: 8px;
 
 .attribut-pairs {
     position: relative;
-    padding: 0 $attribut-pairs-padding;
+    padding: 0 $attribut-pairs-padding 0 0;
 
     .label {
         margin-right: $attribut-pairs-label-margin;

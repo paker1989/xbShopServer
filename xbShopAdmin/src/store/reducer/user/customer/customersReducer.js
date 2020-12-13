@@ -9,7 +9,7 @@ const initialState = {
     startPage: 1,
     searchStr: '',
     currentPage: 1,
-    filter: 'NA',
+    filter: [],
     selectedCustomers: [],
     fetchedCustomers: [],
     totalCnt: 0,
