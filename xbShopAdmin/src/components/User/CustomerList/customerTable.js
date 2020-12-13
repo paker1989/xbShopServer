@@ -8,9 +8,12 @@ import { getFilterStrings } from '../../../utils/data.helper';
 import AttributSearcher from '../../Common/AttributSearcher/attributSearcher';
 import useCustomers from '../../../utils/hooks/useUserCustomers';
 import { pageSize, filterTypes } from '../../../static/data/componentMeta/user/customerListMeta';
+import { pagniation } from '../../../static/data/componentMeta/global.meta';
 
 import * as CustomerActionCreator from '../../../store/action/customerAction';
 import TableFilter from '../../Common/TableFilter/tableFilter';
+
+const { showQuickJumper } = pagniation;
 
 const CustomerTable = ({ intl }) => {
     const dispatch = useDispatch();
@@ -50,6 +53,7 @@ const CustomerTable = ({ intl }) => {
     };
 
     const handleTableChange = (pagination, filters, sorter) => {
+        // debugger;
         /* eslint-disable */
         const { current: currentPage } = pagination;
         let { order: sortedOrder = 'NA', columnKey: sortedCretia = 'NA' } = sorter;
@@ -220,6 +224,9 @@ const CustomerTable = ({ intl }) => {
                     total: totalCnt,
                     pageSize,
                     current: currentPage,
+                    showQuickJumper: totalCnt / pageSize > showQuickJumper,
+                    showTotal: (total, range) =>
+                        intl.formatMessage({ id: 'customer.showTotal' }, { r1: range[0], r2: range[1], total }),
                 }}
                 rowKey={(record) => record.idCustomer}
                 loading={loading}

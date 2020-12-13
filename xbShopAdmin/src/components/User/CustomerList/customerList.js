@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Button, Card, Row, Col } from 'antd';
 import { injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
@@ -29,7 +29,6 @@ const CustomerList = ({ intl }) => {
                 <Card bordered={false}>
                     <Row>
                         <Col>
-                            {/* <MemoedTable /> */}
                             <CustomerTable />
                         </Col>
                     </Row>

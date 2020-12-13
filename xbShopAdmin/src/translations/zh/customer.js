@@ -36,6 +36,7 @@ export default {
     'customer.address.confirm.setDefault': '将当前地址设为默认地址?',
     'customer.success.update': '更新成功',
     'customer.info.noModif': '没有检测到修改项',
+    'customer.showTotal': '{r1}-{r2}, 共{total}位客户',
     'customer.addCustomer.header.title': '录入一名新客户信息或编辑当前客户信息',
     'customer.addCustomer.header.subtitle': '完成添加或者修改后，点击保存或者取消完成当前修改。用户将在列表中更新',
 };

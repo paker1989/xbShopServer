@@ -36,6 +36,7 @@ export default {
     'customer.address.confirm.setDefault': "Définir l'adresse actuelle comme adresse par défaut?",
     'customer.success.update': 'Mise à jour avec succès',
     'customer.info.noModif': 'Aucune modification détectée',
+    'customer.showTotal': '{r1}-{r2} de {total} {total, plural, one {client} other {clients}}',
     'customer.addCustomer.header.title': 'Ajoutez, modifiez un client',
     'customer.addCustomer.header.subtitle':
         "Une fois l'ajout ou la modification terminé, cliquez sur Enregistrer ou sur Annuler pour terminer la modification en cours. La donnée du client seront mis à jour dans la liste",

@@ -3,7 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { message } from 'antd';
 import cookie from 'react-cookies';
 
-import { newUpdateKey, pageSize, filterTypes } from '../../static/data/componentMeta/user/customerListMeta';
+import {
+    newUpdateKey,
+    pageSize,
+    pageFetched,
+    filterTypes,
+} from '../../static/data/componentMeta/user/customerListMeta';
 
 import * as CustomerActionCreator from '../../store/action/customerAction';
 
@@ -27,12 +32,11 @@ const useUserCustomers = () => {
 
     const filterStr = getFilterStrings(filterTypes, filter);
 
-    const displayedUsers = allCustomers.slice(
-        (currentPage - startPage) * pageSize,
-        (currentPage - startPage) * pageSize + pageSize
-    );
-
     const newCustomerId = cookie.load(newUpdateKey);
+
+    const [displayedUsers, setDisplayedUsers] = useState([
+        // allCustomers.slice((currentPage - startPage) * pageSize, (currentPage - startPage) * pageSize + pageSize),
+    ]);
 
     allCustomers.forEach((item) => {
         /* eslint-disable */
@@ -43,12 +47,49 @@ const useUserCustomers = () => {
     });
 
     useEffect(() => {
-        console.log('need to fetch customers');
+        // console.log('need to fetch customers');
         dispatch(
-            CustomerActionCreator.getCustomer({ filter: filterStr, sort, sortOrder, start: startPage, searchStr })
+            CustomerActionCreator.getCustomer({
+                filter: filterStr,
+                sort,
+                sortOrder,
+                start: startPage,
+                searchStr,
+                pSize: pageSize,
+                limit: pageFetched * pageSize,
+            })
         );
         setLoading(true);
-    }, [`filter:${filterStr}:sort:${sort}^${sortOrder}`, searchStr, startPage]);
+    }, [`filter:${filterStr}:sort:${sort}^${sortOrder}`, searchStr]);
+
+    useEffect(() => {
+        // debugger;
+        if (startPage === currentPage) {
+            return;
+        }
+        const startIndex = (currentPage - startPage) * pageSize;
+        if (startIndex > allCustomers.length - 1 || startIndex < 0) {
+            dispatch(
+                CustomerActionCreator.getCustomer({
+                    filter: filterStr,
+                    sort,
+                    sortOrder,
+                    start: currentPage,
+                    searchStr,
+                    pSize: pageSize,
+                    limit: pageFetched * pageSize,
+                })
+            );
+            setLoading(true);
+        } else {
+            setDisplayedUsers(
+                allCustomers.slice(
+                    (currentPage - startPage) * pageSize,
+                    (currentPage - startPage) * pageSize + pageSize
+                )
+            );
+        }
+    }, [startPage, currentPage]);
 
     useEffect(() => {
         if (backendStatus === CustomerActionTypes._CUSTOMER_FETCH_LIST_FAILED) {
@@ -57,6 +98,12 @@ const useUserCustomers = () => {
             dispatch({ type: CustomerActionTypes._CUSTOMER_LIST_RESET_STATE });
         } else if (backendStatus === CustomerActionTypes._CUSTOMER_FETCH_LIST_SUCCESS) {
             setLoading(false);
+            setDisplayedUsers(
+                allCustomers.slice(
+                    (currentPage - startPage) * pageSize,
+                    (currentPage - startPage) * pageSize + pageSize
+                )
+            );
             dispatch({ type: CustomerActionTypes._CUSTOMER_LIST_RESET_STATE });
         }
     }, [backendStatus, backendMsg]);
