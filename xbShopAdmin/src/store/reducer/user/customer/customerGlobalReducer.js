@@ -11,15 +11,16 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-    // debugger;
     const { type, data, backendMsg, backendStatus } = action.payload || {};
     switch (action.type) {
         case customerActionType._ADDRESS_LIST_FETCH_SUCCESS:
             return { ...state, addresses: action.payload.data };
         case customerActionType._ADDRESS_LIST_FETCH_FAILED:
             return { ...state, ...action.payload };
-        case customerActionType._CUSTOMER__GLOBAL_RESET:
+        case customerActionType._CUSTOMER__GLOBAL_RESET_BACKENDSTATUS:
             return { ...state, backendStatus: '', backendMsg: '' };
+        case customerActionType._CUSTOMER__GLOBAL_RESET:
+            return { ...state, backendStatus: '', backendMsg: '', addresses: [] };
         case customerActionType._GLOBAL_FETCH_CONSTANT_SUCCEED:
             switch (type) {
                 case 'country':
@@ -29,6 +30,8 @@ export default (state = initialState, action) => {
             }
         case customerActionType._GLOBAL_FETCH_CONSTANT_FAILED:
             return { ...state, ...action.payload };
+        case customerActionType._ADDRESS_RESET_LIST_ADDRESS:
+            return { ...state, addresses: [] };
         default:
             return state;
     }

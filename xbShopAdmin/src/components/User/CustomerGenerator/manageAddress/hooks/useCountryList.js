@@ -24,7 +24,7 @@ const useCountryList = () => {
     useEffect(() => {
         if (backendStatus === CustomerActionType._GLOBAL_FETCH_CONSTANT_FAILED) {
             message.error(backendMsg);
-            dispatch({ type: CustomerActionType._CUSTOMER__GLOBAL_RESET });
+            dispatch({ type: CustomerActionType._CUSTOMER__GLOBAL_RESET_BACKENDSTATUS });
         }
     }, [backendStatus, backendMsg]);
 

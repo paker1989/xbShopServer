@@ -15,7 +15,7 @@ import * as CustomerActionCreator from '../../store/action/customerAction';
 import * as CustomerActionTypes from '../../store/actionType/customerActionType';
 import { getFilterStrings } from '../data.helper';
 
-const useUserCustomers = () => {
+const useUserCustomers = (intl) => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
 
@@ -29,14 +29,13 @@ const useUserCustomers = () => {
 
     const backendStatus = useSelector((state) => state.user.customers.backendStatus);
     const backendMsg = useSelector((state) => state.user.customers.backendMsg);
+    const formBackendStatus = useSelector((state) => state.user.addCustomer.backendStatus);
 
     const filterStr = getFilterStrings(filterTypes, filter);
 
     const newCustomerId = cookie.load(newUpdateKey);
 
-    const [displayedUsers, setDisplayedUsers] = useState([
-        // allCustomers.slice((currentPage - startPage) * pageSize, (currentPage - startPage) * pageSize + pageSize),
-    ]);
+    const [displayedUsers, setDisplayedUsers] = useState([]);
 
     allCustomers.forEach((item) => {
         /* eslint-disable */
@@ -92,10 +91,12 @@ const useUserCustomers = () => {
     }, [startPage, currentPage]);
 
     useEffect(() => {
+        if (backendStatus.length === 0) {
+            return;
+        }
         if (backendStatus === CustomerActionTypes._CUSTOMER_FETCH_LIST_FAILED) {
             setLoading(false);
             message.error(backendMsg);
-            dispatch({ type: CustomerActionTypes._CUSTOMER_LIST_RESET_STATE });
         } else if (backendStatus === CustomerActionTypes._CUSTOMER_FETCH_LIST_SUCCESS) {
             setLoading(false);
             setDisplayedUsers(
@@ -104,9 +105,28 @@ const useUserCustomers = () => {
                     (currentPage - startPage) * pageSize + pageSize
                 )
             );
-            dispatch({ type: CustomerActionTypes._CUSTOMER_LIST_RESET_STATE });
         }
+        dispatch({ type: CustomerActionTypes._CUSTOMER_LIST_RESET_STATE });
     }, [backendStatus, backendMsg]);
+
+    useEffect(() => {
+        if (formBackendStatus === CustomerActionTypes._CUSTOMER_SAVE_SUCCESS) {
+            setLoading(true);
+            dispatch(
+                CustomerActionCreator.getCustomer({
+                    filter: filterStr,
+                    sort,
+                    sortOrder,
+                    start: currentPage,
+                    searchStr,
+                    pSize: pageSize,
+                    limit: pageFetched * pageSize,
+                })
+            );
+            message.success(intl.formatMessage({ id: 'common.delete.success' }));
+            dispatch(CustomerActionCreator.resetCustomerSaveBackendStatus());
+        }
+    }, [formBackendStatus]);
 
     return [loading, displayedUsers];
 };

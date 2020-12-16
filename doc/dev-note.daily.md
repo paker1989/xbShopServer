@@ -196,8 +196,9 @@ todo:  => dataSource: { text, value }
   - (done) complete filter algo (concat string by order);
   - (done) search antd component => backend logic (email & pseudo);
 - (done) pagination function, (done) total cnt info.
-- delete fn
-- address 如果信息太多就超出了。
-- address 貌似切换customer的时候没有更新。
+- (done) delete fn
+- (done) address 如果信息太多就超出了。
+- annuler edition of address -> return to address list instead of customer list
+- (done) address 貌似切换customer的时候没有更新。
 - set expire time for filter&sort (1 hour?? 4 hours??)
 

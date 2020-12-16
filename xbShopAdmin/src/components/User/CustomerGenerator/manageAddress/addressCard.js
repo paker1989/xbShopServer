@@ -8,8 +8,9 @@ import * as AddressActionCreator from '../../../../store/action/customerAction';
 import CustomIcon from '../../../Common/CustomIcon/customIcon';
 
 import './address.scss';
+import TextEllipsis from '../../../Common/TextEllipsis/textEllipsis';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const AddressCard = ({ address, intl, onEdit }) => {
     const dispatch = useDispatch();
@@ -86,9 +87,20 @@ const AddressCard = ({ address, intl, onEdit }) => {
                 })}
             >
                 <Descriptions title={recipient} column={1}>
-                    <Descriptions.Item>{addr1}</Descriptions.Item>
-                    {addr2 && <Descriptions.Item>{addr2}</Descriptions.Item>}
-                    <Descriptions.Item>{`${city}, ${postCode}`}</Descriptions.Item>
+                    <Descriptions.Item>
+                        {/* <Text ellipsis>{addr1}</Text> */}
+                        {/* {addr1} */}
+                        <TextEllipsis text={addr1} />
+                    </Descriptions.Item>
+                    {addr2 && (
+                        <Descriptions.Item>
+                            <TextEllipsis limit={30} text={addr2} />
+                        </Descriptions.Item>
+                    )}
+                    <Descriptions.Item>
+                        {/* {`${city}, ${postCode}`} */}
+                        <TextEllipsis text={`${city}, ${postCode}`} />
+                    </Descriptions.Item>
                     <Descriptions.Item>
                         <FormattedMessage id={`country.${countryCode}`} />
                     </Descriptions.Item>

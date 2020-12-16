@@ -22,16 +22,17 @@ const CustomerTable = ({ intl }) => {
     const [bindSearch, setBindSearch] = useState('');
     const currentPage = useSelector((state) => state.user.customers.currentPage);
     const totalCnt = useSelector((state) => state.user.customers.totalCnt);
+    const searchStr = useSelector((state) => state.user.customers.searchStr);
 
     const filterInfo = useSelector((state) => state.user.customers.filter);
     const filterStr = getFilterStrings(filterTypes, filterInfo);
     // console.log('filterStr = ' + filterStr);
 
-    const [loading, customers] = useCustomers();
+    const [loading, customers] = useCustomers(intl);
 
     // console.log(customers);
     const handleDelete = (idCustomer) => {
-        // dispatch(UserActionCreator.submitAdminEdition({ idAdmin, action: 'delete' }));
+        dispatch(CustomerActionCreator.saveCustomer({ idCustomer, action: 'delete' }));
     };
 
     const handleSearch = (e) => {
@@ -39,7 +40,9 @@ const CustomerTable = ({ intl }) => {
     };
 
     const actionSearch = () => {
-        dispatch(CustomerActionCreator.changeListParams({ searchStr: bindSearch }));
+        if (bindSearch !== searchStr) {
+            dispatch(CustomerActionCreator.changeListParams({ searchStr: bindSearch }));
+        }
     };
 
     const handleCancelFilter = ({ type, value }) => {
@@ -213,11 +216,6 @@ const CustomerTable = ({ intl }) => {
             <Table
                 size="large"
                 columns={columns.filter((item) => !item.hidden)}
-                // dataSource={
-                //     searchStr && searchStr.length > 0
-                //         ? customers.filter((customer) => customer.email.includes(searchStr))
-                //         : customers
-                // }
                 dataSource={customers}
                 onChange={handleTableChange}
                 pagination={{

@@ -14,6 +14,8 @@ const initialState = {
     fetchedCustomers: [],
     totalCnt: 0,
     bulkAction: 'select',
+    backendMsg: '',
+    backendStatus: '',
 };
 
 export default (state = initialState, action) => {
@@ -36,34 +38,6 @@ export default (state = initialState, action) => {
             return { ...state, backendMsg: '', backendStatus: '' };
         case CustomerActionType._CUSTOMER_CHANGE_LIST_PARAM:
             return { ...state, ...action.payload };
-        // case CustomerActionType._FETCH_PRODUCT_SUCCESS:
-        //     return { ...state, ...action.payload, backendStatus: CustomerActionType._FETCH_PRODUCT_SUCCESS };
-        // case CustomerActionType._BULK_UPDATE_SUCCESS:
-        //     return {
-        //         ...state,
-        //         ...action.payload,
-        //         backendStatus: CustomerActionType._BULK_UPDATE_SUCCESS,
-        //         selectedCustomers: [],
-        //     };
-        // case CustomerActionType._FETCH_PRODUCT_FAIL:
-        //     return {
-        //         ...state,
-        //         backendStatus: CustomerActionType._FETCH_PRODUCT_FAIL,
-        //         backendMsg: action.payload.errorMsg,
-        //     };
-        // case CustomerActionType._BULK_UPDATE_FAIL:
-        //     return {
-        //         ...state,
-        //         backendStatus: CustomerActionType._BULK_UPDATE_FAIL,
-        //         backendMsg: action.payload.errorMsg,
-        //         selectedCustomers: [],
-        //     };
-        // case CustomerActionType._RESET_LIST_BACKEND_STATUS:
-        //     return { ...state, backendMsg: '', backendStatus: '' };
-        // case CustomerActionType._LIST_SELECT_KEYS:
-        //     return { ...state, ...action.payload };
-        // case CustomerActionType._PAGINATION_UPDATE:
-        //     return { ...state, ...action.payload };
         default:
             return state;
     }

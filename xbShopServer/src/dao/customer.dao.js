@@ -137,10 +137,10 @@ class CustomerDAO {
                 return newCustomer.idCustomer;
             });
         } else if (action) {
-            if (action === 'delete' || action === 'restore') {
+            if (action === 'delete') {
                 const [updatedRow] = await CustomerModel.update(
                     {
-                        isDeleted: action === 'delete',
+                        isDeleted: true,
                     },
                     {
                         where: { idCustomer: idCustomerInt },

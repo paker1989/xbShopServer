@@ -39,7 +39,7 @@ const useAddresses = (customerId) => {
     useEffect(() => {
         if (backendStatus === CustomerActionType._ADDRESS_LIST_FETCH_FAILED) {
             message.error(backendMsg);
-            dispatch({ type: CustomerActionType._CUSTOMER__GLOBAL_RESET });
+            dispatch({ type: CustomerActionType._CUSTOMER__GLOBAL_RESET_BACKENDSTATUS });
         }
     }, [backendStatus, backendMsg]);
 

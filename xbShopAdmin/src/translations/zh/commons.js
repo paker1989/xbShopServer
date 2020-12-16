@@ -66,4 +66,5 @@ export default {
     'common.registDt': '注册时间',
     'common.recentAccess': '最后登录',
     'common.email.or.pseudo': '邮箱/昵称',
+    'common.delete.success': '删除成功',
 };

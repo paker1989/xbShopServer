@@ -7,12 +7,13 @@ import { newUpdateKey, newUpdateMaxAge } from '../../../static/data/componentMet
 import * as CustomerActionType from '../../actionType/customerActionType';
 
 export function* saveCustomerSaga(reqObj) {
-    const { /* action = '', */ thumbnail, ...otherProps } = reqObj.payload;
+    const { action = '', thumbnail, ...otherProps } = reqObj.payload;
     let res;
     try {
         if (thumbnail && thumbnail[0] instanceof File) {
             const formData = new FormData();
             formData.append('thumbnail', thumbnail[0].compressed, thumbnail[0].name);
+            formData.append('action', action);
             Object.keys(otherProps).forEach((key) => {
                 formData.append(key, otherProps[key]);
             });
@@ -33,7 +34,9 @@ export function* saveCustomerSaga(reqObj) {
 
         // debugger;
         if (res && res.data) {
-            cookie.save(newUpdateKey, res.data.customerId, { maxAge: newUpdateMaxAge });
+            if (action !== 'delete') {
+                cookie.save(newUpdateKey, res.data.customerId, { maxAge: newUpdateMaxAge });
+            }
             yield put({
                 type: CustomerActionType._CUSTOMER_SAVE_SUCCESS,
                 payload: {

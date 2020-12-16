@@ -67,4 +67,5 @@ export default {
     'common.registDt': 'Inscrit à',
     'common.recentAccess': 'Derniere connexion',
     'common.email.or.pseudo': 'Email/Surnom',
+    'common.delete.success': 'Supprimé avec succès',
 };
