@@ -12,6 +12,7 @@ const config = {
         address: 60 * 60 * 4, // 4 小时
         meta: 60 * 60 * 4, // 4 小时
         searchMeta: 60 * 2, // 保持两分钟
+        sortMeta: 60 * 60, // 保持1小时
     },
 };
 
@@ -161,6 +162,8 @@ const setCustomerIds = ({ filter, sort, sortOrder, searchStr = '', ids }) => {
             // for search result, set expire times
             if (searchStr.trim().length > 0) {
                 redisClient.expire(cacheKey, config.expire.searchMeta);
+            } else if (filter !== 'NA' || sort !== 'NA') {
+                redisClient.expire(cacheKey, config.expire.sortMeta);
             }
         }
     });

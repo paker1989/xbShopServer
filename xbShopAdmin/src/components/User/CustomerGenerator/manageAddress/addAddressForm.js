@@ -43,7 +43,8 @@ const Core = (props) => {
     const validators = getValidators({ intl });
 
     const cancelEdition = () => {
-        history.push('/dashboard/customerList');
+        // history.push('/dashboard/customerList');
+        history.goBack();
     };
 
     const onSubmit = (e) => {
