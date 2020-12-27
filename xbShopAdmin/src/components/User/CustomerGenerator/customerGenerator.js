@@ -8,6 +8,7 @@ import { withRouter, Switch, Redirect, Route } from 'react-router-dom';
 import ContainerSkeleton from '../../Common/ContainerSkeleton/containerSkeleton';
 import AddCustomerForm from './addCustomerForm/addCustomerForm';
 import ManageAddress from './manageAddress/manageAddress';
+import ManageOrder from './manageOrder/manageOrders';
 import SideBar from './customerSideBar';
 import HLPageHeader from '../../Common/HighLightPageHeader/hLPageHeader';
 
@@ -58,6 +59,7 @@ const CustomerGenerator = ({ match, history, intl }) => {
                                 <Switch>
                                     <Route key="basic" path={`${routerUrl}`} exact component={AddCustomerForm} />
                                     <Route key="address" path={`${routerUrl}/address`} component={ManageAddress} />
+                                    <Route key="order" path={`${routerUrl}/orders`} component={ManageOrder} />
                                     <Redirect path="*" to={routerUrl} />
                                 </Switch>
                             </Suspense>

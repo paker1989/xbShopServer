@@ -3,6 +3,9 @@ const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../../core/db');
 const UserPrefModel = require('./userPref');
 
+// const OrderModel = require('../order/order');
+// const OrderProductModel = require('../order/orderProduct');
+
 class User extends Model {}
 
 User.init(
