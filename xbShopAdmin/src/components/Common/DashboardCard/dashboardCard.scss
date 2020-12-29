@@ -1,0 +1,22 @@
+$card-lg-width: 230px;
+$card-lg-height: 100px;
+
+.dashboard-card {
+    // background-color: attr(data-bg);
+    margin-bottom: 10px;
+
+    .ant-card {
+        width: $card-lg-width;
+        height: $card-lg-height;
+        border-radius: 4px;
+    }
+
+    .ant-statistic .ant-statistic-title {
+        color: #fff;
+    }
+
+    .ant-statistic .ant-statistic-content {
+        color: #fff;
+        text-align: center;
+    }
+}
