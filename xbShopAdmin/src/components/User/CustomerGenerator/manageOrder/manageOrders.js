@@ -3,6 +3,7 @@ import { Card, Row, Col } from 'antd';
 
 import DashboardCard from '../../../Common/DashboardCard/DashboardCard';
 
+// 
 const ManageOrders = () => {
     return (
         <div className="section-container">
