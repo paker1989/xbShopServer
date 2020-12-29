@@ -12,6 +12,11 @@
     "json-server": "json-server --port 1220 --watch ./local-json-server/db.json --routes ./local-json-server/routes.json",
     "start-server": "node xbShopServer/src/app.js"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-admin & npm run lint-server"
+    }
+  },
   "keywords": [
     "node-server",
     "admin"
@@ -85,6 +90,7 @@
     "eslint-plugin-react": "^7.20.2",
     "eslint-plugin-react-hooks": "^4.0.5",
     "file-loader": "^6.0.0",
+    "husky": "^4.3.6",
     "install": "^0.13.0",
     "node-sass": "^4.14.1",
     "npm": "^6.14.5",
