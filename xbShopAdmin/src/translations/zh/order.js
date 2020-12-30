@@ -1,0 +1,17 @@
+export default {
+    'order.common.your.commandes': '您的订单',
+    'order.common.list.commande': '订单列表',
+    'order.common.nb.totalCommande': '订单总数',
+    'order.common.nb.submitted.totalCommande': '成交订单总数',
+    'order.common.total.amount': '消费总额',
+    'order.common.ref': '订单号',
+    'order.common.nbProduct': '数量',
+    'order.common.orderDate': '下单时间',
+    'order.common.print.order': '打印订单',
+    'order.status.completed': '已收货',
+    'order.status.toDeliver': '代发货',
+    'order.status.toReceive': '待收货',
+    'order.status.toPay': '待付款',
+    'order.status.canceled': '交易关闭',
+    'order.status.others': '其他',
+};

@@ -6,7 +6,8 @@ import users from './user';
 import auth from './auth';
 import customer from './customer';
 import country from './country';
+import order from './order';
 
-const zh = { ...products, ...commons, ...menus, ...categories, ...users, ...auth, ...customer, ...country };
+const zh = { ...products, ...commons, ...menus, ...categories, ...users, ...auth, ...customer, ...country, ...order };
 
 export default zh;

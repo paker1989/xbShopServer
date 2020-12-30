@@ -13,7 +13,7 @@ const DashboardCard = ({ title, value, handleClick, bgColor = '#1890FF' }) => {
     return (
         <div className="dashboard-card">
             <Card style={{ backgroundColor: bgColor }}>
-                <Row type="flex" justify="center" align="center">
+                <Row type="flex" justify="center">
                     <Statistic title={title} value={value}></Statistic>
                 </Row>
             </Card>

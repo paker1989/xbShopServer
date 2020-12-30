@@ -13,6 +13,14 @@
     margin: 24px;
 }
 
+.section-title {
+    margin-bottom: 0.5em;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
 .hl-container {
     position: relative;
     padding: 20px 20px 0 20px;
@@ -96,6 +104,10 @@ form {
             width: 420px;
         }
     }
+}
+
+.price {
+    color: $price-color;
 }
 
 // separator wrapper class for options, icons, tags

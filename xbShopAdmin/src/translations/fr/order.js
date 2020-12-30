@@ -1,0 +1,17 @@
+export default {
+    'order.common.your.commandes': 'Votre commandes',
+    'order.common.list.commande': 'Liste de commandes',
+    'order.common.nb.totalCommande': 'No. of total commandes',
+    'order.common.nb.submitted.totalCommande': 'No. de commandes soumis',
+    'order.common.total.amount': 'Consommation Total',
+    'order.common.ref': 'Ref.',
+    'order.common.nbProduct': 'No. de produits',
+    'order.common.orderDate': 'Date de commande',
+    'order.common.print.order': 'Imprimer commande',
+    'order.status.completed': 'Reçu & Terminé',
+    'order.status.toDeliver': 'En attente de livraison',
+    'order.status.toReceive': 'En attente de réception',
+    'order.status.toPay': 'En attente de paiment',
+    'order.status.canceled': 'Annulé',
+    'order.status.others': 'Autres',
+};

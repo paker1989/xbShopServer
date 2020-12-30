@@ -58,3 +58,6 @@ a_payment (optional)
                             - 总计(含运费)
     2.3. `seller_note`
   3. `ship_detail`: (optional)
+
+## 设计
+`customer-details`: 

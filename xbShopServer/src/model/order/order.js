@@ -17,6 +17,11 @@ Order.init(
             type: DataTypes.STRING(32),
             allowNull: false,
         },
+        currency: {
+            type: DataTypes.STRING(16),
+            allowNull: false,
+            defaultValue: 'yuan',
+        },
         payAt: {
             type: DataTypes.DATE,
             allowNull: true,
