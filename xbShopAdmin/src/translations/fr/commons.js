@@ -68,4 +68,7 @@ export default {
     'common.recentAccess': 'Derniere connexion',
     'common.email.or.pseudo': 'Email/Surnom',
     'common.delete.success': 'Supprimé avec succès',
+    'common.view.list': 'Vue de liste',
+    'common.view.info': 'Vue détaillée',
+    'common.switch.view': 'Changer de vue:',
 };

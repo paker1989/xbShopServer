@@ -1,8 +1,11 @@
 $attribut-pairs-padding: 10px;
 $attribut-pairs-label-margin: 8px;
 
+$attribut-component-sm-bottom: 8px;
+$attribut-label-sm-bottom: 8px;
+
 .attribut-searcher {
-    margin-bottom: 10px;
+    padding: 10px 0;
 }
 
 .attribut-pairs {
@@ -11,5 +14,34 @@ $attribut-pairs-label-margin: 8px;
 
     .label {
         margin-right: $attribut-pairs-label-margin;
+    }
+}
+
+@media (max-width: 768px) {
+    .attribut-searcher {
+        flex-wrap: wrap;
+    }
+
+    .attribut-searcher-bar.flex-row-container {
+        flex-wrap: wrap;
+
+        & > .flex-row-container {
+            margin-bottom: $attribut-component-sm-bottom;
+        }
+
+        .attribut-pairs.flex-row-container {
+            flex-wrap: wrap;
+            max-width: 230px;
+        }
+
+        .attribut-pairs > .label {
+            // width: 100px;
+            max-width: 80px;
+            margin-bottom: $attribut-label-sm-bottom;
+        }
+        .attribut-pairs > .ant-input {
+            // width: 220px;
+            max-width: 230px;
+        }
     }
 }

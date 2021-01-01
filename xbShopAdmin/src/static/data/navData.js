@@ -41,6 +41,16 @@ module.exports = [
         link: '/dashboard/category',
     },
     {
+        title: 'menu.orderMgnt',
+        key: 'orderMgnt',
+        type: 'item',
+        icon: {
+            type: 'native',
+            name: 'snippets',
+        },
+        link: '/dashboard/orderList',
+    },
+    {
         title: 'menu.userMgnt',
         key: 'usrL',
         type: 'subMenu',

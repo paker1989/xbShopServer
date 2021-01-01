@@ -1,0 +1,25 @@
+@import '../../../style/theme.scss';
+
+$view-option-padding-left: 15px;
+$view-option-icon-size: 20px;
+
+.order-list {
+    .view-option-container {
+        position: relative;
+        padding-left: $view-option-padding-left;
+
+        .anticon {
+            font-size: $view-option-icon-size;
+            color: $disable-color;
+
+            &.selected {
+                color: $active-color;
+            }
+
+            &:not(.selected):hover {
+                color: $active-color;
+                transition: .2s color ease-in;
+            }
+        }
+    }
+}

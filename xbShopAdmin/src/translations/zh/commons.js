@@ -67,4 +67,7 @@ export default {
     'common.recentAccess': '最后登录',
     'common.email.or.pseudo': '邮箱/昵称',
     'common.delete.success': '删除成功',
+    'common.view.list': '列表视图',
+    'common.view.info': '信息视图',
+    'common.switch.view': '切换视图:',
 };

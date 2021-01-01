@@ -19,7 +19,7 @@ const AttributSearcher = ({
     const submitFn = debounce ? useDebounceFn(onSubmit, { wait: debounceWait }).run : onSubmit;
     return (
         <div className="attribut-searcher flex-row-container middle">
-            <div className="flex-row-container middle">
+            <div className="attribut-searcher-bar flex-row-container middle">
                 {searchPairs.map((pair) => (
                     <span key={pair.labelText} className="attribut-pairs flex-row-container middle">
                         {pair.labelText && (

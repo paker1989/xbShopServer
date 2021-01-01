@@ -1,16 +1,17 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Row, Col, Table, Button } from 'antd';
 
-import TableFilter from '../../../Common/TableFilter/tableFilter';
+// import TableFilter from '../../../Common/TableFilter/tableFilter';
+import AttributSearcher from '../../../Common/AttributSearcher/attributSearcher';
 
 import { getPriceFormatter } from '../../../../utils/data.helper';
 import { getOrderStatus, getCurrencySymbol } from '../../../../utils/component/order.helper';
 
 const OrderTable = ({ intl }) => {
     const handleTableChange = useCallback(() => {}, []);
-
+ 
     const customers = [
         {
             id: 1201,
@@ -110,6 +111,9 @@ const OrderTable = ({ intl }) => {
             ),
         },
     ];
+
+ 
+
     return (
         <div className="order-table-container">
             {/* <TableFilter filters={tableFilterProps} onChange={handleCancelFilter} /> */}

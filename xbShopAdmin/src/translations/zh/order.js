@@ -14,4 +14,7 @@ export default {
     'order.status.toPay': '待付款',
     'order.status.canceled': '交易关闭',
     'order.status.others': '其他',
+    'order.common.orderRef': '订单号',
+    'order.common.shipRef': '快递单号',
+    'order.common.recipient': '收件人',
 };

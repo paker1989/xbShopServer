@@ -6,4 +6,5 @@ export default {
     'menu.productList': '产品列表',
     'menu.customerList': '客户列表',
     'menu.teamList': '管理员',
+    'menu.orderMgnt': '订单管理',
 };

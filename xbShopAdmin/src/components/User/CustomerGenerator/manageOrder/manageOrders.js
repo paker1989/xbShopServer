@@ -10,7 +10,7 @@ const { Title } = Typography;
 const ManageOrders = ({ intl }) => {
     return (
         <div className="manage-orders">
-            <Row type="flex" justify="flex-start">
+            <Row type="flex" justify="start">
                 <Col sm={{ span: 18, offset: 2 }} md={{ span: 22, offset: 0 }}>
                     <Title level={4}>
                         <FormattedMessage id="order.common.your.commandes" />
@@ -34,7 +34,7 @@ const ManageOrders = ({ intl }) => {
                     </Row>
                 </Col>
             </Row>
-            <Row type="flex" justify="flex-start" style={{ marginTop: 20 }}>
+            <Row type="flex" justify="start" style={{ marginTop: 20 }}>
                 <Col span={24}>
                     <Row className="section-title">
                         <FormattedMessage id="order.common.list.commande" />

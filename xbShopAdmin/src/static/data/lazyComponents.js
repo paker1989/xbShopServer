@@ -59,6 +59,12 @@ const lazies = {
                 link: 'addCustomer',
                 source: lazy(() => import('../../components/User/CustomerGenerator/customerGenerator')),
             },
+            {
+                key: 'orderList',
+                access: true,
+                link: 'orderList',
+                source: lazy(() => import('../../components/Order/OrderList/orderList')),
+            },
         ],
     },
 };

@@ -14,4 +14,7 @@ export default {
     'order.status.toPay': 'En attente de paiment',
     'order.status.canceled': 'Annulé',
     'order.status.others': 'Autres',
+    'order.common.orderRef': 'Order ref.',
+    'order.common.shipRef': 'Ship ref.',
+    'order.common.recipient': 'Destinataire',
 };
