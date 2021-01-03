@@ -13,7 +13,7 @@ export default {
     'order.status.toReceive': 'En attente de réception',
     'order.status.toPay': 'En attente de paiment',
     'order.status.canceled': 'Annulé',
-    'order.status.others': 'Autres',
+    'order.status.other': 'Autres',
     'order.common.orderRef': 'Order ref.',
     'order.common.shipRef': 'Ship ref.',
     'order.common.recipient': 'Destinataire',

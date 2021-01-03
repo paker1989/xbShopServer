@@ -11,7 +11,7 @@ import { getOrderStatus, getCurrencySymbol } from '../../../../utils/component/o
 
 const OrderTable = ({ intl }) => {
     const handleTableChange = useCallback(() => {}, []);
- 
+
     const customers = [
         {
             id: 1201,
@@ -111,8 +111,6 @@ const OrderTable = ({ intl }) => {
             ),
         },
     ];
-
- 
 
     return (
         <div className="order-table-container">
