@@ -6,6 +6,11 @@ const _ORDER_STATUS = {
     5: { val: 'canceled', color: '#323232' },
 };
 
+export const _ORDER_SUPPORTED_ADDI_TYPE = {
+    pay_on_present: {
+        color: '#864DB2',
+    },
+};
 const _CURRENCY_CONVERTER = {
     euro: '€',
     yuan: '¥',

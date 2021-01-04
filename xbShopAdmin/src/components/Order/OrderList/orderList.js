@@ -5,28 +5,30 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import OrderComponent from '../OrderComponent';
 import AttributSearcher from '../../Common/AttributSearcher/attributSearcher';
 
+import demoOrderSource from '../../../../../doc/solutions/modules/fullOrder.json';
+
 import './orderList.scss';
 
 const { TabPane } = Tabs;
 const { Text } = Typography;
 const { Simple: SimpleOrder, Full: FullOrder } = OrderComponent;
 
-const customers = [
-    {
-        id: 1201,
-        orderRef: 'SK0010002112',
-        number: 12,
-        price: '122.30',
-        createAt: '2020-11-08 17:11:11',
-        status: 1,
-        currency: 'yuan',
-    },
-];
+// const customers = [
+//     {
+//         id: 1201,
+//         orderRef: 'SK0010002112',
+//         number: 12,
+//         price: '122.30',
+//         createAt: '2020-11-08 17:11:11',
+//         status: 1,
+//         currency: 'yuan',
+//     },
+// ];
 
 const OrderList = ({ intl }) => {
     // const activeTab = useSelector((state) => state.user.admins.teamSubTab);
     const activeTab = 'toDeliver'; // todo
-    const currentView = 'list';
+    const currentView = 'full';
 
     const bindSearch = useState({
         orderRef: '',
@@ -106,7 +108,7 @@ const OrderList = ({ intl }) => {
                     columns={currentView === 'list' ? SimpleOrder.columns(intl) : FullOrder.columns}
                     showHeader={currentView === 'list'}
                     // components={currentView === 'list' ? SimpleComp : FullComp}
-                    dataSource={customers}
+                    dataSource={demoOrderSource}
                     rowKey={(record) => record.id}
                     scroll={{ x: 800 }}
                     // rowClassName={(record) => (record.new ? 'new' : null)}

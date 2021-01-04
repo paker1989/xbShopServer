@@ -79,11 +79,11 @@ module.exports = {
             //     name: 'static/images/[name].[hash:7].[ext]' //打包后存放的位置
             //   }
             // },
-            // {
-            //   test: /\.json$/i,
-            //   type: 'javascript/auto',
-            //   loader: 'json-loader'
-            // },
+            {
+                test: /\.json$/i,
+                type: 'javascript/auto',
+                loader: 'json-loader',
+            },
             // {
             //   test: /\.ts(x?)$/,
             //   exclude: /node_modules/,

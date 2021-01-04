@@ -37,6 +37,7 @@
     "cookie": "^0.4.1",
     "copy-webpack-plugin": "^6.0.2",
     "html-webpack-plugin": "^4.3.0",
+    "json-loader": "^0.5.7",
     "koa": "^2.3.0",
     "koa-body": "^4.2.0",
     "koa-bodyparser": "^4.3.0",

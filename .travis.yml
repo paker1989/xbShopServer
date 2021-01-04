@@ -1,0 +1,16 @@
+language: node_js
+sudo: required
+node_js:
+  - 10.19.0
+cache: npm
+before_script:
+  # - sudo redis-server /etc/redis/redis.conf --port 6379 --requirepass 'secret'
+services:
+  - mysql
+  - redis-server
+script:
+  - npm run lint-admin
+  - npm run lint-server
+  - npm run dev-admin
+  - npm run start-server
+  

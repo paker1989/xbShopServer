@@ -1,0 +1,15 @@
+$full-header-height: 50px;
+$full-header-color: #E6F7FF;
+$full-header-field-padding: 25px;
+
+.full-order-header {
+    position: relative;
+    background-color: $full-header-color;
+    height: $full-header-height;
+    border-radius: 5px;
+
+    .header-meta-section {
+        flex-shrink: 0;
+        padding-left: $full-header-field-padding;
+    }
+}
