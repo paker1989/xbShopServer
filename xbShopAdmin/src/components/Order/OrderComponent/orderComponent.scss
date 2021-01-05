@@ -1,15 +1,52 @@
-$full-header-height: 50px;
-$full-header-color: #E6F7FF;
-$full-header-field-padding: 25px;
+@import '../../../style/theme.scss';
 
-.full-order-header {
-    position: relative;
-    background-color: $full-header-color;
-    height: $full-header-height;
-    border-radius: 5px;
+$full-header-height: 45px;
+$full-header-color: #e6f7ff;
+$full-header-field-padding: 22px;
+$full-header-margin-bottom: 8px;
 
-    .header-meta-section {
-        flex-shrink: 0;
-        padding-left: $full-header-field-padding;
+$full-body-height: 175px;
+$full-body-product-width: 260px;
+
+.full-order-container {
+    .full-order-header {
+        position: relative;
+        background-color: $full-header-color;
+        height: $full-header-height;
+        margin-bottom: $full-header-margin-bottom;
+        border-radius: 5px;
+        width: 100%;
+
+        .header-meta-section {
+            flex-shrink: 0;
+            padding-left: $full-header-field-padding;
+        }
+    }
+
+    .full-order-body {
+        height: $full-body-height;
+        border-bottom: 1px solid $table-border-color;
+
+        .order-product-list-container {
+            width: $full-body-product-width;
+            height: 100%;
+            padding: 0 10px;
+            overflow-y: auto;
+
+            .price {
+                padding-left: 5px;
+            }
+
+            .order-product-list {
+                .ant-list-item-meta {
+                    flex-grow: 0;
+                }
+
+                .order-product-content {
+                    flex-shrink: 0;
+                    flex-grow: 1;
+                }
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ export default {
     'order.common.orderDate': '下单时间',
     'order.common.print.order': '打印订单',
     'order.status.completed': '已收货',
-    'order.status.toDeliver': '代发货',
+    'order.status.toDeliver': '待发货',
     'order.status.toReceive': '待收货',
     'order.status.toPay': '待付款',
     'order.status.canceled': '交易关闭',
@@ -17,4 +17,9 @@ export default {
     'order.common.orderRef': '订单号',
     'order.common.shipRef': '快递单号',
     'order.common.recipient': '收件人',
+    'order.label.createAt': '<b>下单时间:</b> {date}',
+    'order.label.payAt': '<b>支付时间:</b> {date}',
+    'order.label.totalProduct': '共 <b>{nb}</b> 件产品',
+    'order.label.totalPrice': '<b>总金额</b>: <p>{price}</p>',
+    'order.addiSts.payOnPresent': '线下付款',
 };

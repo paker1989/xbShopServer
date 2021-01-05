@@ -17,4 +17,9 @@ export default {
     'order.common.orderRef': 'Order ref.',
     'order.common.shipRef': 'Ship ref.',
     'order.common.recipient': 'Destinataire',
+    'order.label.createAt': '<b>Commandé à</b>: {date}',
+    'order.label.payAt': '<b>Payé à:</b> {date}',
+    'order.label.totalProduct': 'En total de <b>{nb}</b> {nb, plural, one {produit} other {produits}}',
+    'order.label.totalPrice': '<b>Prix total</b>: <p>{price}</p>',
+    'order.addiSts.payOnPresent': 'Paiement en caisse',
 };

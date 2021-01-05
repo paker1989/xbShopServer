@@ -71,4 +71,5 @@ export default {
     'common.view.list': 'Vue de liste',
     'common.view.info': 'Vue détaillée',
     'common.switch.view': 'Changer de vue:',
+    'common.number.count': '<p>No.</p> <b>{nb}</b>',
 };

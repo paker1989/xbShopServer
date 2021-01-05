@@ -9,6 +9,7 @@ const _ORDER_STATUS = {
 export const _ORDER_SUPPORTED_ADDI_TYPE = {
     pay_on_present: {
         color: '#864DB2',
+        val: 'payOnPresent',
     },
 };
 const _CURRENCY_CONVERTER = {

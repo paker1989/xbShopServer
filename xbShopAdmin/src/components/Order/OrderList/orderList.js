@@ -110,7 +110,7 @@ const OrderList = ({ intl }) => {
                     // components={currentView === 'list' ? SimpleComp : FullComp}
                     dataSource={demoOrderSource}
                     rowKey={(record) => record.id}
-                    scroll={{ x: 800 }}
+                    scroll={{ x: 1050 }}
                     // rowClassName={(record) => (record.new ? 'new' : null)}
                 />
             </Card>

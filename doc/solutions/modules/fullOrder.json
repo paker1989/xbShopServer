@@ -12,7 +12,7 @@
             {
                 "id_product": 12012,
                 "sku": "sku2102121",
-                "thumbnail": "http://localhost/img/sample.png",
+                "thumbnail": "http://localhost:3000/upload/thumbnail/2020/12/7/18c97868168737d6c65ac92393292b01_2020127.png",
                 "title": "草鞋",
                 "cnt": 2,
                 "unit_price": 12,
@@ -22,7 +22,43 @@
             {
                 "id_product": 12012,
                 "sku": "sku2102121",
-                "thumbnail": "http://localhost/img/sample.png",
+                "thumbnail": "http://localhost:1221/static/image/avatar_m.png",
+                "title": "草鞋",
+                "cnt": 2,
+                "unit_price": 12
+            },
+            {
+                "id_product": 120124,
+                "sku": "sku21021241",
+                "thumbnail": "http://localhost:3000/upload/thumbnail/2020/12/7/18c97868168737d6c65ac92393292b01_2020127.png",
+                "title": "草鞋",
+                "cnt": 2,
+                "unit_price": 12,
+                "ow_price": 10,
+                "overwritten": true
+            },
+            {
+                "id_product": 120123,
+                "sku": "sku21021213",
+                "thumbnail": "http://localhost:1221/static/image/avatar_m.png",
+                "title": "草鞋",
+                "cnt": 2,
+                "unit_price": 12
+            },
+            {
+                "id_product": 120122,
+                "sku": "sku21021212",
+                "thumbnail": "http://localhost:3000/upload/thumbnail/2020/12/7/18c97868168737d6c65ac92393292b01_2020127.png",
+                "title": "草鞋",
+                "cnt": 2,
+                "unit_price": 12,
+                "ow_price": 10,
+                "overwritten": true
+            },
+            {
+                "id_product": 12013,
+                "sku": "sku21021211",
+                "thumbnail": "http://localhost:1221/static/image/avatar_m.png",
                 "title": "草鞋",
                 "cnt": 2,
                 "unit_price": 12
@@ -31,7 +67,7 @@
         "customer": {
             "id": 12012,
             "pseudo": "Danna",
-            "avatar": "http://localhost/img/sample.png",
+            "avatar": "http://localhost:3000/upload/img/2020/8/7/cbb2fd177fcaff6fb4d8f7df42942666_202087.png",
             "phone": "0123021202"
         },
         "addr": {
