@@ -72,4 +72,5 @@ export default {
     'common.view.info': 'Vue détaillée',
     'common.switch.view': 'Changer de vue:',
     'common.number.count': '<p>No.</p> <b>{nb}</b>',
+    'common.phone.field': '<p>Tél: </p> {phone}',
 };

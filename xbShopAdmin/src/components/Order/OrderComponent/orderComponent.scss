@@ -6,7 +6,16 @@ $full-header-field-padding: 22px;
 $full-header-margin-bottom: 8px;
 
 $full-body-height: 175px;
-$full-body-product-width: 260px;
+
+$full-body-product-width: 250px;
+$full-body-customer-width: 200px;
+$full-body-shipping-width: 300px;
+$full-body-action-width: 200px;
+
+$full-order-content-margin-left: 15px;
+$full-order-padding: 10px 0 10px 20px;
+
+$row-gap: 15px;
 
 .full-order-container {
     .full-order-header {
@@ -27,10 +36,15 @@ $full-body-product-width: 260px;
         height: $full-body-height;
         border-bottom: 1px solid $table-border-color;
 
+        .full-order-content {
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+
         .order-product-list-container {
-            width: $full-body-product-width;
+            flex: 1 0 $full-body-product-width;
             height: 100%;
-            padding: 0 10px;
+            padding: 0 20px 0 0;
             overflow-y: auto;
 
             .price {
@@ -47,6 +61,41 @@ $full-body-product-width: 260px;
                     flex-grow: 1;
                 }
             }
+        }
+
+        .order-component {
+           position: relative;
+           width: 100%;
+           height: 100%;
+           border-left: 1px solid $table-border-color; 
+           padding: 0 0 10px 10px;
+        }
+
+        .row-gap {
+          margin-bottom: $row-gap;
+        }
+
+        .full-order-customer {
+            flex: 1 0 $full-body-customer-width;
+            // margin-left: $full-order-content-margin-left;
+            padding: $full-order-padding;
+            // border-left: 1px solid $table-border-color;
+
+            .customer-avatar {
+                margin-right: 10px;
+            }
+        }
+
+        .full-order-shipping {
+            flex: 1 0 $full-body-shipping-width;
+            padding: $full-order-padding;
+            // margin-left: $full-order-content-margin-left;
+            // padding: $full-order-padding;
+            // border-left: 1px solid $table-border-color;
+        }
+
+        .full-order-action {
+            flex: 0 0 $full-body-action-width;
         }
     }
 }

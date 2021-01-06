@@ -71,4 +71,5 @@ export default {
     'common.view.info': '信息视图',
     'common.switch.view': '切换视图:',
     'common.number.count': '<p>数量:</p> <b>{nb}</b>',
+    'common.phone.field': '<p>手机: </p> {phone}',
 };

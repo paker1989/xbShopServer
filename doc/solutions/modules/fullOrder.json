@@ -89,5 +89,60 @@
         "shipping": {},
         "seller_note": "",
         "buyer_note": ""
+    },
+    {
+        "id": 1202,
+        "additional": "pay_on_present",
+        "sts": 2,
+        "createAt": "2019-11-29 17:06:31",
+        "payAt": "2019-11-29 17:06:31",
+        "total_cnt": 3,
+        "sum_price": 400,
+        "currency": "yuan",
+        "products": [
+            {
+                "id_product": 12012,
+                "sku": "sku2102121",
+                "thumbnail": "http://localhost:3000/upload/thumbnail/2020/12/7/18c97868168737d6c65ac92393292b01_2020127.png",
+                "title": "草鞋",
+                "cnt": 2,
+                "unit_price": 12,
+                "ow_price": 10,
+                "overwritten": true
+            },
+            {
+                "id_product": 12012,
+                "sku": "sku2102121",
+                "thumbnail": "http://localhost:1221/static/image/avatar_m.png",
+                "title": "草鞋",
+                "cnt": 2,
+                "unit_price": 12
+            }
+        ],
+        "customer": {
+            "id": 12012,
+            "pseudo": "Danna",
+            "avatar": "http://localhost:3000/upload/img/2020/8/7/cbb2fd177fcaff6fb4d8f7df42942666_202087.png",
+            "phone": "0123021202"
+        },
+        "addr": {
+            "delivery": {
+                "recepient": "Robert",
+                "phone": "",
+                "address": "3 rue roger salengro, 92140 Clamart, France",
+                "country": "fr",
+                "postcode": 92140
+            },
+            "invoice": {
+                "recepient": "Robert",
+                "phone": "123524124",
+                "address": "3 rue roger salengro, 92140 Clamart, France",
+                "country": "fr",
+                "postcode": 92140
+            }
+        },
+        "shipping": {},
+        "seller_note": "",
+        "buyer_note": ""
     }
 ]

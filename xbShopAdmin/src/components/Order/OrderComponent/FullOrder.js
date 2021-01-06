@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Tag, Typography, List, Avatar } from 'antd';
+import { Tag, Typography, List, Avatar, Row, Col } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 import { _ORDER_SUPPORTED_ADDI_TYPE, getOrderStatus, getCurrencySymbol } from '../../../utils/component/order.helper';
@@ -118,10 +118,49 @@ const ProductList = ({ products }) => {
         </div>
     );
 };
-const BodyMeta = ({ orderContent }) => {
+
+const Customer = ({ customer }) => {
+    const { avatar, pseudo, phone } = customer;
     return (
-        <div className="full-order-body">
-            <ProductList products={orderContent.products} />
+        <div className="full-order-customer">
+            <div className="order-component flex-row-container column">
+                <Row type="flex" align="middle" className="row-gap">
+                    <Avatar src={avatar} className="customer-avatar"/>
+                    <Text strong>{pseudo}</Text>
+                </Row>
+                <Row>
+                    <FormattedMessage
+                        id="common.phone.field"
+                        values={{ p: (chunk) => <Text strong>{chunk}</Text>, phone }}
+                    />
+                </Row>
+            </div>
+        </div>
+    );
+};
+
+const Shipping = ({ shipping }) => {
+    const { } = shipping || {};
+    return (
+    <div className="full-order-shipping">
+        <div className="order-component flex-row-container column">
+           {}
+        </div>
+    </div>
+    );
+};
+
+const BodyMeta = ({ orderContent }) => {
+    console.log(orderContent);
+    return (
+        <div className="full-order-body flex-row-container">
+            <div className="full-order-content flex-row-container">
+                <ProductList products={orderContent.products} />
+                <Customer customer={orderContent.customer} />
+                <Shipping />
+            </div>
+
+            <div className="full-order-action">action</div>
         </div>
     );
 };
