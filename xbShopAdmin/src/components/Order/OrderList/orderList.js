@@ -104,13 +104,15 @@ const OrderList = ({ intl }) => {
                 </Row>
                 <AttributSearcher searchPairs={searchPairs} onSubmit={actionSearch} />
                 <Table
+                    // className="order-table"
+                    rowClassName={`${currentView}-row-cls`}
                     size="large"
                     columns={currentView === 'list' ? SimpleOrder.columns(intl) : FullOrder.columns}
                     showHeader={currentView === 'list'}
                     // components={currentView === 'list' ? SimpleComp : FullComp}
                     dataSource={demoOrderSource}
                     rowKey={(record) => record.id}
-                    scroll={{ x: 1050 }}
+                    scroll={{ x: 1150 }}
                     // rowClassName={(record) => (record.new ? 'new' : null)}
                 />
             </Card>

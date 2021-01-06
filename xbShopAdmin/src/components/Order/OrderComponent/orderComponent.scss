@@ -23,18 +23,21 @@ $row-gap: 15px;
         background-color: $full-header-color;
         height: $full-header-height;
         margin-bottom: $full-header-margin-bottom;
+        padding-left: 5px;
         border-radius: 5px;
         width: 100%;
 
         .header-meta-section {
             flex-shrink: 0;
-            padding-left: $full-header-field-padding;
+            &:not(:first-child) {
+                padding-left: $full-header-field-padding;
+            } 
         }
     }
 
     .full-order-body {
         height: $full-body-height;
-        border-bottom: 1px solid $table-border-color;
+        // border-bottom: 1px solid $table-border-color;
 
         .full-order-content {
             flex-grow: 1;
@@ -73,6 +76,10 @@ $row-gap: 15px;
 
         .row-gap {
           margin-bottom: $row-gap;
+        }
+
+        .label-gap {
+            margin-right: 10px;
         }
 
         .full-order-customer {

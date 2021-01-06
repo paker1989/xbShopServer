@@ -70,25 +70,26 @@
             "avatar": "http://localhost:3000/upload/img/2020/8/7/cbb2fd177fcaff6fb4d8f7df42942666_202087.png",
             "phone": "0123021202"
         },
-        "addr": {
-            "delivery": {
-                "recepient": "Robert",
-                "phone": "",
-                "address": "3 rue roger salengro, 92140 Clamart, France",
-                "country": "fr",
-                "postcode": 92140
-            },
-            "invoice": {
-                "recepient": "Robert",
-                "phone": "123524124",
-                "address": "3 rue roger salengro, 92140 Clamart, France",
-                "country": "fr",
-                "postcode": 92140
+        "shipping": {
+            "addr": {
+                "delivery": {
+                    "recipient": "Robert",
+                    "phone": "",
+                    "address": "3 rue roger salengro, 92140 Clamart, France",
+                    "country": "fr",
+                    "postcode": 92140
+                },
+                "invoice": {
+                    "recpient": "Robert",
+                    "phone": "123524124",
+                    "address": "3 rue roger salengro, 92140 Clamart, France",
+                    "country": "fr",
+                    "postcode": 92140
+                }
             }
         },
-        "shipping": {},
         "seller_note": "",
-        "buyer_note": ""
+        "customer_note": ""
     },
     {
         "id": 1202,
@@ -125,24 +126,29 @@
             "avatar": "http://localhost:3000/upload/img/2020/8/7/cbb2fd177fcaff6fb4d8f7df42942666_202087.png",
             "phone": "0123021202"
         },
-        "addr": {
-            "delivery": {
-                "recepient": "Robert",
-                "phone": "",
-                "address": "3 rue roger salengro, 92140 Clamart, France",
-                "country": "fr",
-                "postcode": 92140
+        "shipping": {
+            "ship_detail": {
+              "companyId": 1,
+              "companyName": "速通快递"
             },
-            "invoice": {
-                "recepient": "Robert",
-                "phone": "123524124",
-                "address": "3 rue roger salengro, 92140 Clamart, France",
-                "country": "fr",
-                "postcode": 92140
+            "addr": {
+                "delivery": {
+                    "recipient": "Robert",
+                    "phone": "06 59 65 77 08",
+                    "address": "3 rue roger salengro, 92140 Clamart, France",
+                    "country": "fr",
+                    "postcode": 92140
+                },
+                "invoice": {
+                    "recipient": "Robert",
+                    "phone": "123524124",
+                    "address": "3 rue roger salengro, 92140 Clamart, France",
+                    "country": "fr",
+                    "postcode": 92140
+                }
             }
         },
-        "shipping": {},
         "seller_note": "",
-        "buyer_note": ""
+        "customer_note": ""
     }
 ]

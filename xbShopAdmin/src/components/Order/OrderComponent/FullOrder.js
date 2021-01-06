@@ -125,7 +125,7 @@ const Customer = ({ customer }) => {
         <div className="full-order-customer">
             <div className="order-component flex-row-container column">
                 <Row type="flex" align="middle" className="row-gap">
-                    <Avatar src={avatar} className="customer-avatar"/>
+                    <Avatar src={avatar} className="customer-avatar" />
                     <Text strong>{pseudo}</Text>
                 </Row>
                 <Row>
@@ -140,13 +140,34 @@ const Customer = ({ customer }) => {
 };
 
 const Shipping = ({ shipping }) => {
-    const { } = shipping || {};
+    const { ship_detail: shipDetail = {}, addr } = shipping || {};
+    const { recipient, phone, address } = addr.delivery;
     return (
-    <div className="full-order-shipping">
-        <div className="order-component flex-row-container column">
-           {}
+        <div className="full-order-shipping">
+            <div className="order-component flex-row-container column">
+                {shipDetail.companyId && <div className="shipping-tag">{shipDetail.companyName}</div>}
+                <div>
+                    <Text className="label-gap" strong>
+                        Recipient:
+                    </Text>
+                    <Text>{recipient}</Text>
+                </div>
+                {phone && (
+                    <div>
+                        <Text className="label-gap" strong>
+                            Tel:
+                        </Text>
+                        <Text>{phone}</Text>
+                    </div>
+                )}
+                <div>
+                    <Text className="label-gap" strong>
+                        Address:
+                    </Text>
+                    <span>{address}</span>
+                </div>
+            </div>
         </div>
-    </div>
     );
 };
 
@@ -157,7 +178,11 @@ const BodyMeta = ({ orderContent }) => {
             <div className="full-order-content flex-row-container">
                 <ProductList products={orderContent.products} />
                 <Customer customer={orderContent.customer} />
-                <Shipping />
+                <Shipping
+                    shipping={orderContent.shipping}
+                    // customer={orderContent.customer}
+                    note={orderContent.buyer_note}
+                />
             </div>
 
             <div className="full-order-action">action</div>

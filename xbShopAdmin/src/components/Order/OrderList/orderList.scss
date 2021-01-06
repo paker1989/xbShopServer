@@ -22,4 +22,8 @@ $view-option-icon-size: 20px;
             }
         }
     }
+
+    .ant-table-tbody > tr.full-row-cls:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+        background-color: inherit;
+    }
 }
