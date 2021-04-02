@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match customIcon snapshot 1`] = `
+<i
+  className="anticon"
+>
+  <img
+    src="/static/image/icon/undefined.svg"
+  />
+</i>
+`;
